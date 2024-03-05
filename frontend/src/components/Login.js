@@ -5,7 +5,7 @@ function Login() {
     var loginPassword;
 
     const [message,setMessage] = useState('');
-    const app_name = 'largeprojectgroup3'
+    const app_name = 'largeprojectgroup3-efcc1eed906f'
     function buildPath(route)
     {
     if (process.env.NODE_ENV === 'production')

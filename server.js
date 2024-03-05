@@ -187,7 +187,7 @@ app.post('/api/addcard', async (req, res, next) =>
 
   try
   {
-    const db = client.db("COP4331Cards");
+    const db = client.db("Group3LargeProject");
     const result = db.collection('Cards').insertOne(newCard);
   }
   catch(e)
@@ -238,7 +238,7 @@ app.post('/api/searchcards', async (req, res, next) =>
 
   var _search = search.trim();
   
-  const db = client.db("COP4331Cards");
+  const db = client.db("Group3LargeProject");
   const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*'}}).toArray();
 
   

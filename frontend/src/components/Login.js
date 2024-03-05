@@ -18,6 +18,10 @@ function Login() {
     }
 }
 
+function toRegister(){
+    window.location.href = '/register';
+}
+
     const doLogin = async event => 
     {
         event.preventDefault();
@@ -65,6 +69,8 @@ function Login() {
 
                 <input type="submit" id="loginButton" class="buttons" value="Do It"
                     onClick={doLogin} />
+                <input type="submit" id="registerButton" class="buttons" value="Register"
+                    onClick={toRegister} />
             </form>
             <span id="loginResult">{message}</span>
         </div>

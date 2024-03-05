@@ -4,8 +4,18 @@ const cors = require('cors');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(url);
-client.connect("mongodb connected");
+const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+async function connectToMongo() {
+  try {
+    await client.connect();
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("Could not connect to MongoDB", error);
+  }
+}
+//client.connect("mongodb connected");
+connectToMongo();
 const path = require('path');
 const PORT = process.env.PORT || 5000;
 

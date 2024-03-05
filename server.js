@@ -8,7 +8,6 @@ const client = new MongoClient(url);
 client.connect();
 const path = require('path');
 const PORT = process.env.PORT || 5000;
-const path = require("path");
 
 const app = express();
 

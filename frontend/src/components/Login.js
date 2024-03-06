@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+//thi is a test
 function toRegister(){
     window.location.href = '/register';
 }

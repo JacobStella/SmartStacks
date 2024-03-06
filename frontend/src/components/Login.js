@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 
+function toRegister(){
+    window.location.href = '/register';
+}
+
 function Login() {
     var loginName;
     var loginPassword;
@@ -18,9 +22,6 @@ function Login() {
     }
 }
 
-function toRegister(){
-    window.location.href = '/register';
-}
 
     const doLogin = async event => 
     {

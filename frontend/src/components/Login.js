@@ -66,23 +66,22 @@ const doLogin = async event =>
 
 
 
-    return (
-        <div id="loginDiv">
-            <form>
-                <span id="inner-title">PLEASE LOG IN</span><br />
-                <input type="text" id="loginName" placeholder="Username" 
-  ref={(c) => loginName = c} /><br />
+return (
+    <div id="loginDiv">
+        <form onSubmit={doLogin}> {/* Note the onSubmit handler here */}
+            <span id="inner-title">PLEASE LOG IN</span><br />
+            <input type="text" id="loginName" placeholder="Username" 
+ref={(c) => loginName = c} /><br />
 <input type="password" id="loginPassword" placeholder="Password" 
-  ref={(c) => loginPassword = c} /><br />
+ref={(c) => loginPassword = c} /><br />
 
-                <input type="submit" id="loginButton" class="buttons" value="Do It"
-                    onClick={doLogin} />
-                <input type="submit" id="registerButton" class="buttons" value="Register"
-                    onClick={toRegister} />
-            </form>
-            <span id="loginResult">{message}</span>
-        </div>
-    );
+            <input type="submit" id="loginButton" className="buttons" value="Do It" />
+            {/* Changed to type="button" and corrected class to className */}
+            <input type="button" id="registerButton" className="buttons" value="Register"
+                onClick={toRegister} />
+        </form>
+        <span id="loginResult">{message}</span>
+    </div>
+);
 }
-
 export default Login;

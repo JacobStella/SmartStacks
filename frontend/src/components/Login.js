@@ -61,7 +61,7 @@ function Login() {
 
     return (
         <div id="loginDiv">
-            <form onSubmit={doLogin}>
+            <form>
                 <span id="inner-title">PLEASE LOG IN</span><br />
                 <input type="text" id="loginName" placeholder="Username" 
   ref={(c) => loginName = c} /><br />

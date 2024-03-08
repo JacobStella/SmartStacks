@@ -23,39 +23,46 @@ function Login() {
 }
 
 
-    const doLogin = async event => 
-    {
-        event.preventDefault();
+const doLogin = async event => 
+{
+    event.preventDefault(); // Prevent the default form submit behavior
 
-        var obj = {login:loginName.value,password:loginPassword.value};
-        var js = JSON.stringify(obj);
+    var obj = {login:loginName.value,password:loginPassword.value};
+    var js = JSON.stringify(obj);
 
-        try
-        {    
-            const response = await fetch (buildPath('api/login'), 
-                {method:'POST',body:js,headers:{'Content-Type': 'application/json'}});
+    try
+    {    
+        const response = await fetch(buildPath('api/login'), {
+            method:'POST',
+            body:js,
+            headers:{'Content-Type': 'application/json'}
+        });
 
-            var res = JSON.parse(await response.text());
-
-            if( res.id <= 0 )
-            {
-                setMessage('User/Password combination incorrect');
-            }
-            else
-            {
-                var user = {firstName:res.firstName,lastName:res.lastName,id:res.id}
-                localStorage.setItem('user_data', JSON.stringify(user));
-
-                setMessage('');
-                window.location.href = '/cards';
-            }
-        }
-        catch(e)
+        // Check if the login was successful based on the response status
+        if(response.status === 200) // Successful login
         {
-            alert(e.toString());
-            return;
-        }    
-    };
+            var res = await response.json(); // Parse JSON response
+            var user = {firstName:res.firstName, lastName:res.lastName, id:res.id};
+            localStorage.setItem('user_data', JSON.stringify(user));
+            setMessage('');
+            window.location.href = '/cards'; // Redirect to another route/page
+        }
+        else if(response.status === 400) // Incorrect credentials
+        {
+            setMessage('User/Password combination incorrect');
+        }
+        else // Other kinds of errors
+        {
+            setMessage('An error occurred. Please try again.');
+        }
+    }
+    catch(e)
+    {
+        alert(e.toString());
+        return;
+    }    
+};
+
 
 
 

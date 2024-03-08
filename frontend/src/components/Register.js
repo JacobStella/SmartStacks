@@ -18,7 +18,7 @@ function Register() {
         }
 
         try {
-            const response = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/', {
+            const response = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

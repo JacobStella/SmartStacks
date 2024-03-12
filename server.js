@@ -209,7 +209,7 @@ app.post('/api/addclass', async (req, res, next) =>
 	
   const { userId, className } = req.body;
 
-  const newClass = {className:className, _id:userId};
+  const newClass = {className:className,_id:userId};
   var error = '';
 
   try

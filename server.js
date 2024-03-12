@@ -201,6 +201,31 @@ app.post('/api/addcard', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+// LETS GET EXPERIMENTAL
+app.post('/api/addclass', async (req, res, next) =>
+{
+  // incoming: userId, className
+  // outgoing: error
+	
+  const { userId, className } = req.body;
+
+  const newCard = {Card:card,UserId:userId};
+  var error = '';
+
+  try
+  {
+    const db = client.db("Group3LargeProject");
+    const result = db.collection('Class').insertOne(newClass);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  var ret = { error: error };
+  res.status(200).json(ret);
+});
+
 app.post('/api/login', async (req, res, next) => {
   // incoming: login, password
   // outgoing: id, firstName, lastName, error

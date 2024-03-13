@@ -69,6 +69,30 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
+    const addSet = async event => {
+        event.preventDefault();
+        // Assume you have state or refs for the setId, cards, and classId
+        let obj = { classId: classId, setId: setId, cards: cardsArray }; // Replace variables with actual state/refs
+        let js = JSON.stringify(obj);
+    
+        try {
+            const response = await fetch(buildPath('api/addset'), {
+                method: 'POST',
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+    
+            let res = await response.json();
+    
+            if (res.error && res.error.length > 0) {
+                setMessage("API Error:" + res.error);
+            } else {
+                setMessage('Set has been added');
+            }
+        } catch (e) {
+            setMessage(e.toString());
+        }
+    };
     
 
     const searchCard = async event => {

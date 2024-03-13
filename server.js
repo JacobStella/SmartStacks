@@ -205,11 +205,12 @@ app.post('/api/addcard', async (req, res, next) =>
 app.post('/api/addclass', async (req, res, next) =>
 {
   // incoming: userId, className
+	// userId is stored as a string (to be changed later?)
   // outgoing: error
 	
   const { userId, className } = req.body;
 
-  const newClass = {className:className,userId:new ObjectId(userId)};
+  const newClass = {className:className,userId: MongoClient.Types.ObjectId(userId)};
 
   var error = '';
 

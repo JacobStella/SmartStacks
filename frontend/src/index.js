@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import * as b from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

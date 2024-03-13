@@ -271,7 +271,7 @@ app.post('/api/addset', async (req, res) => {
 
 
 // UPDATE CLASS
-app.post('/api/updateclass', async (req, res, next) =>
+/*app.post('/api/updateclass', async (req, res, next) =>
 {
   // incoming: userId, className
 	// userId is stored as a string (to be changed later?)
@@ -295,7 +295,7 @@ app.post('/api/updateclass', async (req, res, next) =>
 
   var ret = { error: error };
   res.status(200).json(ret);
-});
+});*/
 
 app.post('/api/login', async (req, res, next) => {
   // incoming: login, password

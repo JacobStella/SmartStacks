@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
-function button2() {
+function Button2() {
   return (
     <div>
       <button>Click me</button>
@@ -18,7 +18,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
-    <button2 />
+    <Button2 />
   </React.StrictMode>
 );
 

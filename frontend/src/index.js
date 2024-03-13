@@ -4,10 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+
+function button2() {
+  return (
+    <div>
+      <button>Click me</button>
+    </div>
+  );
+}
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <App />
+    <button2 />
   </React.StrictMode>
 );
 

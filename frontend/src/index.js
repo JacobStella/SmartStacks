@@ -13,7 +13,7 @@ function Layout() {
     <div className = "container">
       <div className = "row">
         <div className = "col-sm-1">
-          <b.Button>Plus</b.Button>
+          <Button>Plus</Button>
         </div>
       </div>
     </div>

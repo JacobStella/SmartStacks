@@ -228,6 +228,34 @@ app.post('/api/addclass', async (req, res, next) =>
   res.status(200).json(ret);
 });
 
+// UPDATE CLASS
+app.post('/api/updateclass', async (req, res, next) =>
+{
+  // incoming: userId, className
+	// userId is stored as a string (to be changed later?)
+  // outgoing: error
+	
+  const {userId, className } = req.body;
+
+  const newClass = { $set: {className:className}};
+
+  var error = '';
+
+  try
+  {
+    const db = client.db("Group3LargeProject");
+    const result = db.collection('Class').updateOne(userId, newClass);
+  }
+  catch(e)
+  {
+    error = e.toString();
+  }
+
+  var ret = { error: error };
+  res.status(200).json(ret);
+});
+
+
 app.post('/api/login', async (req, res, next) => {
   // incoming: login, password
   // outgoing: id, firstName, lastName, error

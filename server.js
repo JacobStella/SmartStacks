@@ -204,20 +204,27 @@ app.post('/api/addcard', async (req, res, next) =>
 // LETS GET EXPERIMENTAL
 app.post('/api/addclass', async (req, res, next) =>
 {
-  // incoming: userId, className
-	// userId is stored as a string (to be changed later?)
+  // incoming: userId, className, setIds (optional)
+  // userId is stored as a string (to be changed later?)
   // outgoing: error
-	
-  const { userId, className } = req.body;
+  
+  const { userId, className, setIds } = req.body;
 
-  const newClass = {className:className,userId:userId};
+  // If setIds is not provided, default to an empty array
+  const newClass = {
+    className: className,
+    userId: userId,
+    sets: setIds || []
+  };
 
   var error = '';
 
   try
   {
     const db = client.db("Group3LargeProject");
-    const result = db.collection('Class').insertOne(newClass);
+    
+    // Here the await keyword is necessary to wait for the insert operation to complete
+    const result = await db.collection('Class').insertOne(newClass);
   }
   catch(e)
   {
@@ -227,6 +234,7 @@ app.post('/api/addclass', async (req, res, next) =>
   var ret = { error: error };
   res.status(200).json(ret);
 });
+
 
 app.post('/api/login', async (req, res, next) => {
   // incoming: login, password

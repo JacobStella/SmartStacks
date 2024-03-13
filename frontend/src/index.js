@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import * as ReactBootstrap from 'react-bootstrap';
+import * as b from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -13,7 +13,7 @@ function Layout() {
     <div className = "container">
       <div className = "row">
         <div className = "col-sm-1">
-          <Button>Plus</Button>
+          <b.Button>Plus</b.Button>
         </div>
       </div>
     </div>

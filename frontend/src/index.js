@@ -5,10 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
-function Button2() {
+function Layout() {
   return (
-    <div>
-      <button>Click me</button>
+    <div className = "container">
+      <div className = "row">
+        <div className = "col-sm-1">
+          <Button>Plus</Button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -46,6 +46,7 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
+    /*
     const addClass = async event => {
         event.preventDefault();
         let obj = { userId: userId, className: className, setIds: setIds }; // Ensure you have the correct variables declared
@@ -92,7 +93,7 @@ function CardUI() {
         } catch (e) {
             setMessage(e.toString());
         }
-    };
+    };*/
     
 
     const searchCard = async event => {

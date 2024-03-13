@@ -210,7 +210,7 @@ app.post('/api/addclass', async (req, res, next) =>
 	
   const { userId, className } = req.body;
 
-  const newClass = {className:className,userId: MongoClient.Types.ObjectId(userId)};
+  const newClass = {className:className,userId:userId};
 
   var error = '';
 

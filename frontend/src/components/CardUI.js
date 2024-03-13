@@ -46,6 +46,30 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
+    const addClass = async event => {
+        event.preventDefault();
+        let obj = { userId: userId, className: className, setIds: setIds }; // Ensure you have the correct variables declared
+        let js = JSON.stringify(obj);
+    
+        try {
+            const response = await fetch(buildPath('api/addclass'), {
+                method: 'POST',
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+    
+            let res = await response.json();
+    
+            if (res.error && res.error.length > 0) {
+                setMessage("API Error:" + res.error);
+            } else {
+                setMessage('Class has been added');
+            }
+        } catch (e) {
+            setMessage(e.toString());
+        }
+    };
+    
 
     const searchCard = async event => {
         event.preventDefault();

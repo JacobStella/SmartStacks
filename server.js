@@ -277,7 +277,7 @@ app.post('/api/updateclass', async (req, res, next) =>
 	// userId is stored as a string (to be changed later?)
   // outgoing: error
 	
-  const {_id, className } = req.body;
+  const {classId, className } = req.body;
 
   const newClass = { $set: {className:className}};
 
@@ -286,7 +286,7 @@ app.post('/api/updateclass', async (req, res, next) =>
   try
   {
     const db = client.db("Group3LargeProject");
-    const result = db.collection('Class').updateOne(_id, newClass);
+    const result = db.collection('Class').updateOne(classId, newClass);
   }
   catch(e)
   {

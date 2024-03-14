@@ -13,11 +13,13 @@ function Layout() {
     <div className = "container">
       <div className = "row">
         <div className = "col-sm-1" style={{ width: '50px', height: '100px' }}></div>
-        <div className="col-sm-10" style={{ width: '50px', height: '100px' }}></div>
         <div className="col-sm-1" style={{ width: '50px', height: '100px' }}> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>
+    <div className = "row2">
+    <div className="col-sm-10" style={{ width: '50px', height: '100px' }}></div>
+    </div>
     </div>
   );
 }

@@ -56,7 +56,7 @@ function LayoutFooter() {
   return (
     <div className = "container-fluid">
       <div className = "row">
-        <Tabs classname = "mb-1" style = {{"flex", justifyContent: "center"}}>
+        <Tabs classname = "mb-1">
           <Tab title = "Home">Test1</Tab>
           <Tab title = "Home">Test2</Tab>
           <Tab title = "Home">Test3</Tab>

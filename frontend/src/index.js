@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Container, Row, Col, Button } from 'react-bootstrap';
+import { Container, Row, Col, Button, Tabs, Tab } from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';

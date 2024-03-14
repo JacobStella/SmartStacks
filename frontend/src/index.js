@@ -10,11 +10,11 @@ import reportWebVitals from './reportWebVitals';
 
 function Layout() {
   return (
-    <div className = "container-fluid">
+    <div className = "container">
       <div className = "row">
-        <div className = "col-sm-1"></div>
-        <div className="col-sm-10"></div>
-        <div className="col-sm-1"> 
+        <div className = "col-sm-1" style={{ width: '50px', height: '100px' }}></div>
+        <div className="col-sm-10" style={{ width: '50px', height: '100px' }}></div>
+        <div className="col-sm-1" style={{ width: '50px', height: '100px' }}> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>

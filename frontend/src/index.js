@@ -11,9 +11,9 @@ function Layout() {
   return (
     <div className = "container-fluid">
       <div className = "row">
-        <div className = "col-sm-1" style={{height: "100px"}}></div>
-        <div className="col-sm-10" style = {{height: "100px"}}></div>
-        <div className="col-sm-1"> 
+        <div className = "col-1" style={{height: "100px"}}></div>
+        <div className="col-10" style = {{height: "100px"}}></div>
+        <div className="col-1"> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>

@@ -25,6 +25,7 @@ function Layout() {
       </div>
       <div className = "row">
         <div className = "col-6">
+          <img src="frontend\public\Assests\test.png" class = "rounded"></img> 
         </div>
         <div className = "col-6">
         </div>

@@ -11,7 +11,11 @@ function Layout() {
   return (
     <div className = "container-fluid">
       <div className = "row">
-        <div className = "col-1" style={{height: "100px"}}></div>
+        <div className = "col-1">
+          <Button>
+            <span className ="bi-list"></span>
+          </Button>
+        </div>
         <div className="col-10" style = {{height: "100px"}}></div>
         <div className="col-1"> 
           <Button>

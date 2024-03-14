@@ -13,7 +13,7 @@ function Layout() {
       <div className = "row">
         <div className = "col-1">
           <Button>
-            <span className ="bi-list"></span>
+            <span className ="bi-list" styler = {{position: absolute, left: 0}}></span>
           </Button>
         </div>
         <div className="col-10" style = {{height: "100px"}}></div>

@@ -13,7 +13,7 @@ function Layout() {
       <div className = "row">
         <div className = "col-1">
           <Button>
-            <span className ="bi-list"></span>7
+            <span className ="bi-list"></span>
           </Button>
         </div>
         <div className="col-10"></div>
@@ -56,10 +56,11 @@ function LayoutFooter() {
   return (
     <div className = "container-fluid">
       <div className = "row">
-        <Tabs classname = "mb-1"></Tabs>
-          <Tab title = "Home"></Tab>
-          <Tab title = "Home"></Tab>
-          <Tab title = "Home"></Tab>
+        <Tabs classname = "mb-1">
+          <Tab title = "Home">Test1</Tab>
+          <Tab title = "Home">Test2</Tab>
+          <Tab title = "Home">Test3</Tab>
+        </Tabs>
       </div>
     </div>
   );

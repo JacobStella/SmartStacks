@@ -13,14 +13,26 @@ function Layout() {
       <div className = "row">
         <div className = "col-1">
           <Button>
-            <span className ="bi-list" style = {{ left: 0}}></span>
+            <span className ="bi-list"></span>
           </Button>
         </div>
-        <div className="col-10" style = {{height: "100px"}}></div>
+        <div className="col-10"></div>
         <div className="col-1"> 
           <Button>
             <span className ="bi bi-plus"></span>
           </Button>
+        </div>
+      </div>
+      <div className = "row">
+        <div className = "col-6">
+        </div>
+        <div className = "col-6">
+        </div>
+      </div>
+      <div className = "row">
+        <div className = "col-6">
+        </div>
+        <div className = "col-6">
         </div>
       </div>
     </div>

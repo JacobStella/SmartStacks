@@ -10,7 +10,7 @@ import reportWebVitals from './reportWebVitals';
 function Layout() {
   return (
     <div className = "container-fluid">
-      <div className = "row">
+      <div className = "row" class = "top">
         <div className = "col-1">
           <Button>
             <span className ="bi-list"></span>

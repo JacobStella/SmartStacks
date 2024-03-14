@@ -15,7 +15,7 @@ function Layout() {
         <div className="col-10" style = {{height: "100px"}}></div>
         <div className="col-1"> 
           <Button>
-            <span>"bi bi-plus"</span>
+            <span className ="bi bi-plus"></span>
           </Button>
         </div>
       </div>

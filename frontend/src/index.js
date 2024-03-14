@@ -12,9 +12,9 @@ function Layout() {
   return (
     <div className = "container">
       <div className = "row">
-        <div className = "col-sm" style={{ width: '50px', height: '100px' }}></div>
-        <div className="col-sm" style={{ width: '50px', height: '100px' }}></div>
-        <div className="col-sm text-right" style={{ width: '50px', height: '100px' }}> 
+        <div className = "col"></div>
+        <div className="col"></div>
+        <div className="col"> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>

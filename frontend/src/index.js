@@ -14,7 +14,7 @@ function Layout() {
       <div className = "row">
         <div className = "col-sm-1"></div>
         <div className="col-sm-10"></div>
-        <div className="col-sm-1"> 
+        <div className="col-sm-1 text-right"> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>

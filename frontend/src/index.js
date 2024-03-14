@@ -10,16 +10,15 @@ import reportWebVitals from './reportWebVitals';
 
 function Layout() {
   return (
-    <Container>
-    <Row>
-      <Col>
-        {/* Content for the left column */}
-      </Col>
-      <Col className="d-flex justify-content-end">
-        <Button variant="primary">Button</Button>
-      </Col>
-    </Row>
-  </Container>
+    <div className = "container">
+      <div className = "row">
+        <div className = "col"></div>
+        <div className="col"></div>
+        <div className="col"> 
+          <Button variant = "primary">Plus</Button>
+        </div>
+      </div>
+    </div>
   );
 }
 

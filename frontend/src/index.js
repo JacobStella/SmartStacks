@@ -25,18 +25,18 @@ function Layout() {
       </div>
       <div className = "row">
         <div className = "col-6">
-          <img src= "public/Assests/test.png" class = "img-fluid"></img> 
+          <img src= "Assests/test.png" class = "img-fluid"></img> 
         </div>
         <div className = "col-6">
-        <img src= "public/Assests/test.png" class = "img-fluid"></img> 
+        <img src= "Assests/test.png" class = "img-fluid"></img> 
         </div>
       </div>
       <div className = "row">
         <div className = "col-6">
-          <img src= "public/Assests/test.png" class = "img-fluid"></img> 
+          <img src= "Assests/test.png" class = "img-fluid"></img> 
         </div>
         <div className = "col-6">
-          <img src= "public/Assests/test.png" class = "img-fluid"></img> 
+          <img src= "Assests/test.png" class = "img-fluid"></img> 
         </div>
       </div>
     </div>

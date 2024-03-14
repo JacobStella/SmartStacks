@@ -11,10 +11,10 @@ import reportWebVitals from './reportWebVitals';
 function Layout() {
   return (
     <div className = "container">
-      <div className = "row" style = {{height: "100%"}}>
-        <div className = "col-sm-1"></div>
-        <div className="col-sm-10"></div>
-        <div className="col-sm-1 text-right"> 
+      <div className = "row">
+        <div className = "col-sm-1 h-100"></div>
+        <div className="col-sm-10 h-100"></div>
+        <div className="col-sm-1"> 
           <Button variant = "primary">Plus</Button>
         </div>
       </div>

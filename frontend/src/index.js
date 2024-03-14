@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Button } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -10,15 +10,17 @@ import reportWebVitals from './reportWebVitals';
 
 function Layout() {
   return (
-    <div className = "container">
-      <div className = "row">
-        <div className = "col"></div>
-        <div className="col"></div>
-        <div className="col"> 
-          <Button variant = "primary">Plus</Button>
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Row>
+        <Col sm={1}>
+        </Col>
+        <Col sm={10}>
+        </Col>
+        <Col sm={1}>
+          <Button>hi</Button>
+        </Col>
+      </Row>
+    </Container>
   );
 }
 

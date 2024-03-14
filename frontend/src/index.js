@@ -13,7 +13,7 @@ function Layout() {
       <div className = "row">
         <div className = "col-1">
           <Button>
-            <span className ="bi-list"></span>
+            <span className ="bi-list"></span>7
           </Button>
         </div>
         <div className="col-10"></div>
@@ -49,6 +49,27 @@ root.render(
   <React.StrictMode>
     <App />
     <Layout />
+  </React.StrictMode>
+);
+
+function LayoutFooter() {
+  return (
+    <div className = "container-fluid">
+      <div className = "row">
+        <Tabs classname = "mb-1"></Tabs>
+          <Tab title = "Home"></Tab>
+          <Tab title = "Home"></Tab>
+          <Tab title = "Home"></Tab>
+      </div>
+    </div>
+  );
+}
+
+const rootFooter = ReactDOM.createRoot(document.getElementById('rootFooter'));
+rootFooter.render(
+  <React.StrictMode>
+    <App />
+    <LayoutFooter />
   </React.StrictMode>
 );
 

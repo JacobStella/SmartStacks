@@ -69,17 +69,15 @@ function Login()
 
 
 
-    return 
-    (
+    return (
         <div id="loginDiv">
             <form onSubmit={doLogin}> {/* Note the onSubmit handler here */}
                 <span id="inner-title">PLEASE LOG IN</span><br />
                 <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
                 <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
-                <input type="submit" id="loginButton" className="buttons" value="Login" />
+                <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
                 {/* Changed to type="button" and corrected class to className */}
                 <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
-                <input type="button" id="registerButton" className="buttons" value="Register" onClick={toRegister} />
             </form>
             <span id="loginResult">{message}</span>
         </div>

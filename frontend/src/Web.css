@@ -62,9 +62,12 @@ body, h1, h2, h3, p {
   }
   
   /* Link styling */
-  a {
-    color: #333;
-    text-decoration: none;
+  hyperlink {
+    color: #0000FF;
+  }
+
+  hyperlink:hover{
+    text-decoration: underline;
   }
   
   /* Style for a button-like class */

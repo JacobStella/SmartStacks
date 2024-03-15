@@ -69,8 +69,7 @@ function Login()
 
 
 
-    return 
-    (
+    return (
         <div id="loginDiv">
             <form onSubmit={doLogin}> {/* Note the onSubmit handler here */}
                 <span id="inner-title">PLEASE LOG IN</span><br />

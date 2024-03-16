@@ -146,10 +146,11 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: white; /* Or the color of the line you want */
-  width: 1px; /* Adjust the thickness of the line as needed */
+  background-color: rgb(252, 0, 0); /* Or the color of the line you want */
+  width: 10px; /* Adjust the thickness of the line as needed */
   height: 100%;
   margin: 0 20px;
+  color:#0000FF;
 }
 
 .content-container {
@@ -178,9 +179,10 @@ a:hover{
   }
 
   .vertical-line {
-      height: 1px; /* When stacking vertically, turn the line into a horizontal separator */
+      height: 10px; /* When stacking vertically, turn the line into a horizontal separator */
       width: 80%; /* Match the width of your containers or to your preference */
       margin: 20px 0;
+      color:#0000FF;
   }
 
   .link-column {

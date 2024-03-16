@@ -48,7 +48,7 @@ function Login()
                 var user = {firstName:res.firstName, lastName:res.lastName, id:res.id};
                 localStorage.setItem('user_data', JSON.stringify(user)); //stores users info for later use
                 setMessage(''); //wtf is this for 
-                window.location.href = '/cards'; // this will have to be changed is this is a popup, OR if this is a seperate page. We want to return to the page login called from
+                window.location.href = '/landing'; // this will have to be changed is this is a popup, OR if this is a seperate page. We want to return to the page login called from
             }
             else if(response.status === 400) // Incorrect credentials
             {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CreateImage from '../images/create';
+import CreateImage from '../images/create.png';
 import '../Web.css';
 
 function CreateLink() {

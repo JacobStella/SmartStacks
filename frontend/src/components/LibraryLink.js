@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LibraryImage from '../images/create';
+import LibraryImage from '../images/create.png';
 import '../Web.css';
 
 function LibraryLink() {

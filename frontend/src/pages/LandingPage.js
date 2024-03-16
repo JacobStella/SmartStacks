@@ -5,7 +5,7 @@ import LoggedInName from '../components/LoggedInName';
 //import LibraryLink from '../components/LibraryLink'; 
 //import BrowseLink from '../components/BrowseLink'; 
 //import PlayLink from '../components/PlayLink'; 
-//import GetStarted from '../components/GetStarted'; 
+import GetStarted from '../components/GetStarted'; 
 import '../Web.css';
 
 const LandingPage = () => {
@@ -18,8 +18,8 @@ const LandingPage = () => {
                 <LibraryLink />
                 <BrowseLink />
                 <PlayLink />
-            </div>
-    <GetStarted />*/}
+    </div>*/}
+    <GetStarted />
         </div>
     );
 }

@@ -14,12 +14,24 @@ const LandingPage = () => {
             <PageTitle />
             <LoggedInName />
             <div className="main-content">
-                <CreateLink />
-                <LibraryLink />
-                <BrowseLink />
-                <PlayLink />
+                <div className="link-row">
+                    <div className="link-column">
+                        <CreateLink />
+                    </div>
+                    <div className="link-column">
+                        <LibraryLink />
+                    </div>
+                </div>
+                <div className="link-row">
+                    <div className="link-column">
+                        <BrowseLink />
+                    </div>
+                    <div className="link-column">
+                        <PlayLink />
+                    </div>
+                </div>
             </div>
-    <GetStarted />
+            <GetStarted />
         </div>
     );
 }

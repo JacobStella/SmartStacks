@@ -100,10 +100,9 @@ a:hover{
 } 
 
 .main-content {
-  /* Style for the main content layout */
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
 }
 
 .create-section, .library-section, .browse-section, .play-section {
@@ -132,6 +131,31 @@ a:hover{
   opacity: 0.7;
 }
 
+.link-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.link-column {
+  flex-basis: 50%; /* Adjust width as needed */
+  display: flex;
+  justify-content: center;
+  padding: 10px; /* Adjust padding as needed */
+}
+
+/* Add a media query for responsive adjustments */
+@media (max-width: 768px) {
+  .link-row {
+      flex-direction: column;
+  }
+
+  .link-column {
+      width: 100%;
+  }
+}
+
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*////////////////////////////////////////LANDING PAGE END/////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+

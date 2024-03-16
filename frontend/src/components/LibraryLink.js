@@ -8,7 +8,7 @@ function LibraryLink() {
 
     return (
         <div className="library-section">
-            <Link to="/play">
+            <Link to="/library">
                 <img src={LibraryImage} alt="Library" className="image-button" />
             </Link>
         </div>

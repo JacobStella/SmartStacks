@@ -4,7 +4,7 @@ import LoggedInName from '../components/LoggedInName';
 //import CreateLink from '../components/CreateLink'; 
 //import LibraryLink from '../components/LibraryLink'; 
 //import BrowseLink from '../components/BrowseLink'; 
-//import PlayLink from '../components/PlayLink'; 
+import PlayLink from '../components/PlayLink'; 
 import GetStarted from '../components/GetStarted'; 
 import '../Web.css';
 
@@ -13,12 +13,12 @@ const LandingPage = () => {
         <div className="page-container">
             <PageTitle />
             <LoggedInName />
-            {/*<div className="main-content">
-                <CreateLink />
+            <div className="main-content">
+                {/*<CreateLink />
                 <LibraryLink />
-                <BrowseLink />
+                <BrowseLink />*/}
                 <PlayLink />
-    </div>*/}
+            </div>
     <GetStarted />
         </div>
     );

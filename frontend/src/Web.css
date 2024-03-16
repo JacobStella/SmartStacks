@@ -138,24 +138,135 @@ a:hover{
 }
 
 .link-column {
-  flex-basis: 50%; /* Adjust width as needed */
+  flex-basis: calc(50% - 20px); /* Adjust width as needed, subtracting the margin */
   display: flex;
   justify-content: center;
   padding: 10px; /* Adjust padding as needed */
+  margin: 10px;
+}
+
+.vertical-line {
+  background-color: white; /* Or the color of the line you want */
+  width: 1px; /* Adjust the thickness of the line as needed */
+  height: 100%;
+  margin: 0 20px;
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.links-and-started {
+  display: flex;
+  align-items: start;
+  justify-content: center;
+  width: 100%;
+}
+
+.link-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Add a media query for responsive adjustments */
-@media (max-width: 768px) {
-  .link-row {
+@media (max-width: 1024px) {
+  .links-and-started {
       flex-direction: column;
+  }
+
+  .vertical-line {
+      height: 1px; /* When stacking vertically, turn the line into a horizontal separator */
+      width: 80%; /* Match the width of your containers or to your preference */
+      margin: 20px 0;
   }
 
   .link-column {
       width: 100%;
   }
 }
+/* Add any additional styles for alignment, margins, etc., as needed */
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*////////////////////////////////////////LANDING PAGE END/////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////NAVBAR START////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* Additional styling for the navigation bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-button {
+  background: none;
+  border: none;
+  padding: 10px 15px;
+  margin: 0 10px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.navbar .nav-button:hover {
+  background-color: #50a3a2;
+  border-radius: 5px;
+}
+
+/* Search bar in the middle of the navbar */
+.search-bar {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.search-bar input[type="text"] {
+  padding: 10px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 5px;
+  width: 50%; /* You can adjust the width as needed */
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background-color: #50a3a2;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background-color: #333;
+}
+
+/* Profile picture and login button */
+.profile-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 40px; /* Adjust size as needed */
+  height: 40px;
+}
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////NAVBAR END//////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

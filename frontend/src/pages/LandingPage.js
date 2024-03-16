@@ -13,25 +13,30 @@ const LandingPage = () => {
         <div className="page-container">
             <PageTitle />
             <LoggedInName />
-            <div className="main-content">
-                <div className="link-row">
-                    <div className="link-column">
-                        <CreateLink />
+            <div className="content-container">
+                <div className="links-and-started">
+                    <div className="link-grid">
+                        <div className="link-row">
+                            <div className="link-column">
+                                <CreateLink />
+                            </div>
+                            <div className="link-column">
+                                <LibraryLink />
+                            </div>
+                        </div>
+                        <div className="link-row">
+                            <div className="link-column">
+                                <BrowseLink />
+                            </div>
+                            <div className="link-column">
+                                <PlayLink />
+                            </div>
+                        </div>
                     </div>
-                    <div className="link-column">
-                        <LibraryLink />
-                    </div>
-                </div>
-                <div className="link-row">
-                    <div className="link-column">
-                        <BrowseLink />
-                    </div>
-                    <div className="link-column">
-                        <PlayLink />
-                    </div>
+                    <div className="vertical-line"></div>
+                    <GetStarted />
                 </div>
             </div>
-            <GetStarted />
         </div>
     );
 }

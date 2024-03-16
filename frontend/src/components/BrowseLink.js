@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import BrowseImage from '../images/IMAGELINK';
+import BrowseImage from '../images/create';
 import '../Web.css';
 
 function BrowseLink() {

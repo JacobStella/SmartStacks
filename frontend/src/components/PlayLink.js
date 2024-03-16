@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import PlayImage from '../images/IMAGELINK';
+import PlayImage from '../images/create';
 import '../Web.css';
 
 function PlayLink() {

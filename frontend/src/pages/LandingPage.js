@@ -2,7 +2,7 @@ import React from 'react';
 import PageTitle from '../components/PageTitle';
 import LoggedInName from '../components/LoggedInName';
 //import CreateLink from '../components/CreateLink'; 
-//import LibraryLink from '../components/LibraryLink'; 
+import LibraryLink from '../components/LibraryLink'; 
 import BrowseLink from '../components/BrowseLink'; 
 import PlayLink from '../components/PlayLink'; 
 import GetStarted from '../components/GetStarted'; 
@@ -14,8 +14,8 @@ const LandingPage = () => {
             <PageTitle />
             <LoggedInName />
             <div className="main-content">
-                {/*<CreateLink />
-                <LibraryLink />*/}
+                {/*<CreateLink />*/}
+                <LibraryLink />
                 <BrowseLink />
                 <PlayLink />
             </div>

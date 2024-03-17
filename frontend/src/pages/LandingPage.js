@@ -1,6 +1,5 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
-import LoggedInName from '../components/LoggedInName';
+import NavBar from '../components/NavBar';
 import CreateLink from '../components/CreateLink'; 
 import LibraryLink from '../components/LibraryLink'; 
 import BrowseLink from '../components/BrowseLink'; 
@@ -11,8 +10,7 @@ import '../Web.css';
 const LandingPage = () => {
     return (
         <div className="page-container">
-            <PageTitle />
-            <LoggedInName />
+            <NavBar />
             <div className="content-container">
                 <div className="links-and-started">
                     <div className="link-grid">

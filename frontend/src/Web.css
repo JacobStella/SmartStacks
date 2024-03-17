@@ -146,11 +146,10 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: rgb(252, 0, 0); /* Or the color of the line you want */
+  background-color: rgb(255, 0, 0); /* Or the color of the line you want */
   width: 10px; /* Adjust the thickness of the line as needed */
   height: 100%;
   margin: 0 20px;
-  color:#0000FF;
 }
 
 .content-container {
@@ -164,6 +163,7 @@ a:hover{
   align-items: start;
   justify-content: center;
   width: 100%;
+  min-height: 500px; /* Example minimum height */
 }
 
 .link-grid {

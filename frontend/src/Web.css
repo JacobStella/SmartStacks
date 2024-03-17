@@ -178,13 +178,6 @@ a:hover{
       flex-direction: column;
   }
 
-  .vertical-line {
-      height: 10px; /* When stacking vertically, turn the line into a horizontal separator */
-      width: 80%; /* Match the width of your containers or to your preference */
-      margin: 20px 0;
-      color:#0000FF;
-  }
-
   .link-column {
       width: 100%;
   }

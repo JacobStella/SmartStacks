@@ -10,7 +10,7 @@ import '../Web.css';
 const LandingPage = () => {
     return (
         <div className="page-container">
-            <NavBar />
+            {/*<NavBar />*/}
             <div className="content-container">
                 <div className="links-and-started">
                     <div className="link-grid">

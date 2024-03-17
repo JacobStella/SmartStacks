@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './web.css'; // Make sure this import points to where your web.css file is located
+import '../Web.css'; 
 
 const NavBar = ({ isLoggedIn, userProfilePic }) => {
   return (

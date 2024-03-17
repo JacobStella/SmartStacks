@@ -146,10 +146,10 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: rgb(255, 0, 0); /* Or the color of the line you want */
-  width: 10px; /* Adjust the thickness of the line as needed */
-  height: 100%;
+  background-color: #6dbcb9;
+  height: 400px;
   margin: 0 20px;
+  width: 10px
 }
 
 .content-container {
@@ -201,24 +201,29 @@ a:hover{
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: rgba(50, 50, 50, 0.7); /* Updated color with specified opacity */
+  height: 80px; /* Height of the navbar */
+  box-shadow: rgba(0, 0, 0, 0); /* No shadow as per spec */
 }
 
+/* Nav buttons styling */
 .navbar .nav-button {
   background: none;
   border: none;
   padding: 10px 15px;
   margin: 0 10px;
-  color: #fff;
+  color: #6dbcb9; /* Primary button text color */
   font-size: 16px;
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
+  background-color: #474476; /* Button background color */
 }
 
 .navbar .nav-button:hover {
-  background-color: #50a3a2;
-  border-radius: 5px;
+  background-color: #FFFFFF; /* Button hover background color */
+  color: #3366FF; /* Button hover text color */
+  border: 1px solid #3366FF; /* Hover outline */
 }
 
 /* Search bar in the middle of the navbar */
@@ -231,35 +236,26 @@ a:hover{
 .search-bar input[type="text"] {
   padding: 10px;
   margin-right: 10px;
-  border: none;
-  border-radius: 5px;
-  width: 50%; /* You can adjust the width as needed */
+  border: 1px solid #3366FF; /* Border color */
+  background-color: #0d1117; /* Text field background color */
+  color: #6d85a5; /* Text field input color */
+  box-shadow: 0 0 1px 1px #3366FF; /* Text field box shadow */
+  width: 50%; /* Adjust width as needed */
 }
 
 .search-bar button {
   padding: 10px 20px;
-  background-color: #50a3a2;
-  color: white;
+  background-color: #00d5124f; /* Search button background color with opacity */
+  color: white; /* Assuming the text color is white */
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  opacity: 0.5; /* Opacity for the button */
 }
 
 .search-bar button:hover {
-  background-color: #333;
-}
-
-/* Profile picture and login button */
-.profile-button {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.profile-pic {
-  border-radius: 50%;
-  width: 40px; /* Adjust size as needed */
-  height: 40px;
+  background-color: #FFFFFF; /* Search button hover background color */
+  opacity: 1; /* Full opacity on hover */
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

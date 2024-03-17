@@ -1,6 +1,5 @@
 import React from 'react';
 import NavBar2 from '../components/NavBar2';
-{/*import NavBar from '../components/NavBar';*/}
 import CreateLink from '../components/CreateLink'; 
 import LibraryLink from '../components/LibraryLink'; 
 import BrowseLink from '../components/BrowseLink'; 

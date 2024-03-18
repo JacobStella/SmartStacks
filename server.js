@@ -236,25 +236,23 @@ app.post('/api/addclass', async (req, res, next) =>
 });
 
 app.post('/api/addset', async (req, res) => {
-  const { userId, setName, public, cards } = req.body;
-
-  // Perform validation as needed here (e.g., check for required fields, validate userId, etc.)
+  // Notice the change in case to match the case used in your front-end
+  const { UserId, SetName, public, cards } = req.body;
 
   try {
     const db = client.db("Group3LargeProject");
     
-    // Create a new set document including the cards array
+    // The object keys here must match the case expected by your MongoDB schema
     const newSet = {
-      UserId: userId,
-      SetName: setName,
+      UserId: UserId, // Make sure this matches the case used in your database
+      SetName: SetName, // Same as above
       public: public,
-      cards: cards  // Assuming cards is an array of card objects
+      cards: cards // Assuming cards is an array of card objects
     };
     
-    // Insert the new set document into the 'Sets' collection
     const result = await db.collection('Sets').insertOne(newSet);
     
-    if(result.acknowledged) {
+    if (result.acknowledged) {
       res.status(200).json({ message: "New set added successfully", setId: result.insertedId });
     } else {
       throw new Error("Failed to add new set");

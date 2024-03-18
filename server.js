@@ -38,107 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-var cardList = [
-  'Roy Campanella',
-  'Paul Molitor',
-  'Tony Gwynn',
-  'Dennis Eckersley',
-  'Reggie Jackson',
-  'Gaylord Perry',
-  'Buck Leonard',
-  'Rollie Fingers',
-  'Charlie Gehringer',
-  'Wade Boggs',
-  'Carl Hubbell',
-  'Dave Winfield',
-  'Jackie Robinson',
-  'Ken Griffey, Jr.',
-  'Al Simmons',
-  'Chuck Klein',
-  'Mel Ott',
-  'Mark McGwire',
-  'Nolan Ryan',
-  'Ralph Kiner',
-  'Yogi Berra',
-  'Goose Goslin',
-  'Greg Maddux',
-  'Frankie Frisch',
-  'Ernie Banks',
-  'Ozzie Smith',
-  'Hank Greenberg',
-  'Kirby Puckett',
-  'Bob Feller',
-  'Dizzy Dean',
-  'Joe Jackson',
-  'Sam Crawford',
-  'Barry Bonds',
-  'Duke Snider',
-  'George Sisler',
-  'Ed Walsh',
-  'Tom Seaver',
-  'Willie Stargell',
-  'Bob Gibson',
-  'Brooks Robinson',
-  'Steve Carlton',
-  'Joe Medwick',
-  'Nap Lajoie',
-  'Cal Ripken, Jr.',
-  'Mike Schmidt',
-  'Eddie Murray',
-  'Tris Speaker',
-  'Al Kaline',
-  'Sandy Koufax',
-  'Willie Keeler',
-  'Pete Rose',
-  'Robin Roberts',
-  'Eddie Collins',
-  'Lefty Gomez',
-  'Lefty Grove',
-  'Carl Yastrzemski',
-  'Frank Robinson',
-  'Juan Marichal',
-  'Warren Spahn',
-  'Pie Traynor',
-  'Roberto Clemente',
-  'Harmon Killebrew',
-  'Satchel Paige',
-  'Eddie Plank',
-  'Josh Gibson',
-  'Oscar Charleston',
-  'Mickey Mantle',
-  'Cool Papa Bell',
-  'Johnny Bench',
-  'Mickey Cochrane',
-  'Jimmie Foxx',
-  'Jim Palmer',
-  'Cy Young',
-  'Eddie Mathews',
-  'Honus Wagner',
-  'Paul Waner',
-  'Grover Alexander',
-  'Rod Carew',
-  'Joe DiMaggio',
-  'Joe Morgan',
-  'Stan Musial',
-  'Bill Terry',
-  'Rogers Hornsby',
-  'Lou Brock',
-  'Ted Williams',
-  'Bill Dickey',
-  'Christy Mathewson',
-  'Willie McCovey',
-  'Lou Gehrig',
-  'George Brett',
-  'Hank Aaron',
-  'Harry Heilmann',
-  'Walter Johnson',
-  'Roger Clemens',
-  'Ty Cobb',
-  'Whitey Ford',
-  'Willie Mays',
-  'Rickey Henderson',
-  'Babe Ruth'
-];
+
 
 app.post('/api/register', async (req, res) => {
   const { email, firstName, lastName, username, password } = req.body;
@@ -270,15 +170,18 @@ app.post('/api/addset', async (req, res) => {
   }
 });
 
+const { ObjectId } = require('mongodb'); // Make sure to add this line
+
 app.get('/api/getset/:setId', async (req, res) => {
   try {
     const db = client.db("Group3LargeProject");
     const setId = req.params.setId;
 
-    // This example assumes you're using the referencing approach,
-    // where each card stores the setId it belongs to
+    // Now ObjectId is defined, so this should work as expected
     const set = await db.collection('Sets').findOne({ _id: new ObjectId(setId) });
-    const cards = await db.collection('Cards').find({ SetId: setId }).toArray();
+
+    // Make sure you're using the correct field for linking. If SetId is stored as ObjectId, you need to convert it as well
+    const cards = await db.collection('Cards').find({ SetId: new ObjectId(setId) }).toArray();
 
     if (!set) {
       return res.status(404).json({ message: "Set not found" });
@@ -290,6 +193,7 @@ app.get('/api/getset/:setId', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

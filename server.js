@@ -245,8 +245,8 @@ app.post('/api/addset', async (req, res) => {
     
     // Create a new set document including the cards array
     const newSet = {
-      userId: userId,
-      setName: setName,
+      UserId: userId,
+      SetName: setName,
       public: public,
       cards: cards  // Assuming cards is an array of card objects
     };

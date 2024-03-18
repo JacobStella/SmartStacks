@@ -170,29 +170,36 @@ app.post('/api/addset', async (req, res) => {
   }
 });
 
-const { ObjectId } = require('mongodb'); // Make sure to add this line
+const { ObjectId } = require('mongodb');
 
 app.get('/api/getset/:setId', async (req, res) => {
   try {
     const db = client.db("Group3LargeProject");
-    const setId = req.params.setId;
+    // Convert setId from params to ObjectId
+    const setId = new ObjectId(req.params.setId);
 
-    // Now ObjectId is defined, so this should work as expected
-    const set = await db.collection('Sets').findOne({ _id: new ObjectId(setId) });
+    // Fetch the set using its _id
+    const set = await db.collection('Sets').findOne({ _id: setId });
 
-    // Make sure you're using the correct field for linking. If SetId is stored as ObjectId, you need to convert it as well
-    const cards = await db.collection('Cards').find({ SetId: new ObjectId(setId) }).toArray();
+    // Use "SetID" to fetch associated cards, ensuring the field name matches the schema in the Cards collection
+    const cards = await db.collection('Cards').find({ SetID: setId }).toArray();
 
     if (!set) {
       return res.status(404).json({ message: "Set not found" });
     }
 
-    // Combine the set data with its cards and return it
+    // Include the set details and its associated cards in the response
     res.status(200).json({ ...set, cards });
   } catch (e) {
-    res.status(500).json({ error: e.toString() });
+    console.error(e); // Log the error for server-side visibility
+    if (e instanceof TypeError) {
+      res.status(400).json({ error: "Invalid setId format" });
+    } else {
+      res.status(500).json({ error: e.toString() });
+    }
   }
 });
+
 
 
 

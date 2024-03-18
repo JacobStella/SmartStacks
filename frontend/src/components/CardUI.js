@@ -6,6 +6,10 @@ function CardUI() {
     const [message, setMessage] = useState('');
     const [searchResults, setResults] = useState('');
     const [cardList, setCardList] = useState('');
+    const [setName, setSetName] = useState('');
+    const [isPublic, setIsPublic] = useState(false);
+    const [cards, setCards] = useState([]);
+
     const app_name = 'largeprojectgroup3'
     function buildPath(route)
     {

@@ -83,7 +83,7 @@ function CardUI() {
         event.preventDefault();
         // Assuming `cards` is an array of objects, each representing a card with its own properties
         // For example, cards might look like: [{ term: "Term 1", definition: "Definition 1" }, { term: "Term 2", definition: "Definition 2" }]
-        let obj = { UserId: userId, SetName: setName, public: isPublic, cards: cards };
+        let obj = { UserId: userId, SetName: SetName, public: isPublic, cards: cards };
         let js = JSON.stringify(obj);
     
         try {

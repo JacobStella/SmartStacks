@@ -175,31 +175,41 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-app.post('/api/addcard', async (req, res, next) =>
-{
-  // incoming: userId, color
-  // outgoing: error
-	
-  const { userId, card } = req.body;
+app.post('/api/addcard', async (req, res) => {
+  // incoming: userId, term, definition, setId
+  // outgoing: error, id (of new card)
 
-  const newCard = {Card:card,UserId:userId};
+  const { userId, term, definition, setId } = req.body;
   var error = '';
+  var id = null;
 
-  try
-  {
+  try {
     const db = client.db("Group3LargeProject");
-    const result = db.collection('Cards').insertOne(newCard);
-  }
-  catch(e)
-  {
+    const newCard = {
+      Term: term,
+      Definition: definition,
+      UserId: userId,
+      SetId: setId // Store the setId in each card
+    };
+    
+    // insertOne is an async operation, using await to ensure the operation completes before proceeding
+    const result = await db.collection('Cards').insertOne(newCard);
+    
+    // Check if the insert was acknowledged
+    if(result.acknowledged) {
+      id = result.insertedId; // Assign the new card's id for the response
+    } else {
+      throw new Error("Insert was not acknowledged");
+    }
+  } catch(e) {
     error = e.toString();
   }
 
-  cardList.push( card );
-
-  var ret = { error: error };
+  // Response object containing any errors and the id of the new card
+  var ret = { error: error, id: id };
   res.status(200).json(ret);
 });
+
 
 // LETS GET EXPERIMENTAL
 app.post('/api/addclass', async (req, res, next) =>

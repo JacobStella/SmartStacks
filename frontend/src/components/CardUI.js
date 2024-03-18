@@ -104,6 +104,42 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
+
+    app.post('/api/addcard', async (req, res) => {
+        // incoming: userId, term, definition, setId
+        // outgoing: error, id (of new card)
+      
+        const { userId, term, definition, setId } = req.body;
+        var error = '';
+        var id = null;
+      
+        try {
+          const db = client.db("Group3LargeProject");
+          const newCard = {
+            Term: term,
+            Definition: definition,
+            UserId: userId,
+            SetId: setId // Store the setId in each card
+          };
+          
+          // insertOne is an async operation, using await to ensure the operation completes before proceeding
+          const result = await db.collection('Cards').insertOne(newCard);
+          
+          // Check if the insert was acknowledged
+          if(result.acknowledged) {
+            id = result.insertedId; // Assign the new card's id for the response
+          } else {
+            throw new Error("Insert was not acknowledged");
+          }
+        } catch(e) {
+          error = e.toString();
+        }
+      
+        // Response object containing any errors and the id of the new card
+        var ret = { error: error, id: id };
+        res.status(200).json(ret);
+      });
+      
     
     
 

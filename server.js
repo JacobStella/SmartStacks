@@ -241,7 +241,7 @@ app.post('/api/addset', async (req, res) => {
   // Perform validation as needed here (e.g., check for required fields, validate userId, etc.)
 
   try {
-    const db = client.db("YourDatabaseName");
+    const db = client.db("Group3LargeProject");
     
     // Create a new set document including the cards array
     const newSet = {

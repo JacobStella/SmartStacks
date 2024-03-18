@@ -8,6 +8,11 @@ function CardUI() {
     const [cardList, setCardList] = useState('');
     const [setName, setSetName] = useState('');
     const [isPublic, setIsPublic] = useState(false);
+    const [className, setClassName] = useState('');
+    const [setIds, setSetIds] = useState([]);
+
+  // Use className and setIds in your component
+
     const [cards, setCards] = useState([]);
 
     const app_name = 'largeprojectgroup3'

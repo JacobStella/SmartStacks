@@ -93,29 +93,48 @@ function CardUI() {
     };
     const addSet = async event => {
         event.preventDefault();
-        // Assuming `cards` is an array of objects, each representing a card with its own properties
-        // For example, cards might look like: [{ term: "Term 1", definition: "Definition 1" }, { term: "Term 2", definition: "Definition 2" }]
-        let obj = { UserId: userId, SetName: SetName, public: isPublic, cards: cards };
-        let js = JSON.stringify(obj);
+    
+        // First, create the set without including cards
+        let setObj = { UserId: userId, SetName: SetName, public: isPublic };
+        let setJs = JSON.stringify(setObj);
     
         try {
-            const response = await fetch(buildPath('api/addset'), {
+            const setResponse = await fetch(buildPath('api/addset'), {
                 method: 'POST',
-                body: js,
+                body: setJs,
                 headers: {'Content-Type': 'application/json'}
             });
     
-            let res = await response.json();
+            let setRes = await setResponse.json();
     
-            if (res.error && res.error.length > 0) {
-                setMessage("API Error:" + res.error);
+            if (setRes.error && setRes.error.length > 0) {
+                setMessage("API Error:" + setRes.error);
+                return; // Stop the process if there was an error creating the set
             } else {
-                setMessage('Set has been added');
+                // Set has been successfully created, proceed to add cards
+                const setId = setRes.setId; // Get the newly created set's ID
+    
+                // Iterate through each card and create it with the new setId
+                for (let card of cards) {
+                    let cardObj = { ...card, UserId: userId, SetId: setId };
+                    let cardJs = JSON.stringify(cardObj);
+    
+                    await fetch(buildPath('api/addcard'), {
+                        method: 'POST',
+                        body: cardJs,
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    // Note: Here we're not handling the response for individual card creations.
+                    // You might want to add logic to handle errors or confirmations for each card.
+                }
+    
+                setMessage('Set and cards have been added');
             }
         } catch (e) {
             setMessage(e.toString());
         }
     };
+    
 
 
       

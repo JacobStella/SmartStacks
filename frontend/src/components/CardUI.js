@@ -10,6 +10,9 @@ function CardUI() {
     const [isPublic, setIsPublic] = useState(false);
     const [className, setClassName] = useState('');
     const [setIds, setSetIds] = useState([]);
+    const [term, setTerm] = useState('');
+    const [definition, setDefinition] = useState('');
+    const [setId, setSetId] = useState('');
 
   // Use className and setIds in your component
 

@@ -236,38 +236,34 @@ app.post('/api/addclass', async (req, res, next) =>
 });
 
 app.post('/api/addset', async (req, res) => {
-  // incoming: classId, setId, cards (array of card objects)
-  // outgoing: error
+  const { userId, setName, public, cards } = req.body;
 
-  const { classId, setId, cards } = req.body;
-  var error = '';
+  // Perform validation as needed here (e.g., check for required fields, validate userId, etc.)
 
   try {
-    const db = client.db("Group3LargeProject");
+    const db = client.db("YourDatabaseName");
     
-    // Create a new set document
+    // Create a new set document including the cards array
     const newSet = {
-      _id: setId, // This would be better as a generated ID by the database
-      cards: cards, // This should be an array of card objects
-      classId: classId // This is the ID of the class this set belongs to
+      userId: userId,
+      setName: setName,
+      public: public,
+      cards: cards  // Assuming cards is an array of card objects
     };
-
+    
     // Insert the new set document into the 'Sets' collection
     const result = await db.collection('Sets').insertOne(newSet);
-
-    // Optionally, if you want to immediately attach this set to a class, do an update on the Class collection
-    // This is assuming that the 'Class' collection has an 'sets' array field
-    const updateResult = await db.collection('Class').updateOne(
-      { _id: classId },
-      { $addToSet: { sets: setId } } // Use $addToSet to avoid duplicates
-    );
     
+    if(result.acknowledged) {
+      res.status(200).json({ message: "New set added successfully", setId: result.insertedId });
+    } else {
+      throw new Error("Failed to add new set");
+    }
   } catch(e) {
-    error = e.toString();
+    res.status(500).json({ error: e.toString() });
   }
-
-  res.status(200).json({ error: error });
 });
+
 
 
 // UPDATE CLASS

@@ -46,7 +46,7 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
-    /*
+    
     const addClass = async event => {
         event.preventDefault();
         let obj = { userId: userId, className: className, setIds: setIds }; // Ensure you have the correct variables declared
@@ -72,8 +72,9 @@ function CardUI() {
     };
     const addSet = async event => {
         event.preventDefault();
-        // Assume you have state or refs for the setId, cards, and classId
-        let obj = { classId: classId, setId: setId, cards: cardsArray }; // Replace variables with actual state/refs
+        // Assuming `cards` is an array of objects, each representing a card with its own properties
+        // For example, cards might look like: [{ term: "Term 1", definition: "Definition 1" }, { term: "Term 2", definition: "Definition 2" }]
+        let obj = { userId: userId, setName: setName, public: isPublic, cards: cards };
         let js = JSON.stringify(obj);
     
         try {
@@ -93,7 +94,8 @@ function CardUI() {
         } catch (e) {
             setMessage(e.toString());
         }
-    };*/
+    };
+    
     
 
     const searchCard = async event => {

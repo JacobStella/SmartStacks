@@ -135,7 +135,23 @@ function CardUI() {
         }
     };
     
-
+    const fetchSetWithCards = async (setId) => {
+        try {
+            // Use buildPath to construct the URL
+            const url = buildPath(`api/getset/${setId}`);
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            return data; // This includes the set and its associated cards
+        } catch (error) {
+            console.error("There was an error fetching the set:", error);
+            return null;
+        }
+    };
+    
+    
 
       
     

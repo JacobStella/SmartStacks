@@ -270,6 +270,27 @@ app.post('/api/addset', async (req, res) => {
   }
 });
 
+app.get('/api/getset/:setId', async (req, res) => {
+  try {
+    const db = client.db("Group3LargeProject");
+    const setId = req.params.setId;
+
+    // This example assumes you're using the referencing approach,
+    // where each card stores the setId it belongs to
+    const set = await db.collection('Sets').findOne({ _id: new ObjectId(setId) });
+    const cards = await db.collection('Cards').find({ SetId: setId }).toArray();
+
+    if (!set) {
+      return res.status(404).json({ message: "Set not found" });
+    }
+
+    // Combine the set data with its cards and return it
+    res.status(200).json({ ...set, cards });
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
 
 
 

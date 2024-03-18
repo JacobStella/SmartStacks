@@ -175,20 +175,20 @@ const { ObjectId } = require('mongodb');
 app.get('/api/getset/:setId', async (req, res) => {
   try {
     const db = client.db("Group3LargeProject");
-    // Convert setId from params to ObjectId
-    const setId = new ObjectId(req.params.setId);
+    // Keep setId as a string, since SetId in Cards is stored as a string
+    const setId = req.params.setId;
 
-    // Fetch the set using its _id
-    const set = await db.collection('Sets').findOne({ _id: setId });
+    // Fetch the set using its _id, converting setId to ObjectId for this query
+    const set = await db.collection('Sets').findOne({ _id: new ObjectId(setId) });
 
-    // Use "SetID" to fetch associated cards, ensuring the field name matches the schema in the Cards collection
-    const cards = await db.collection('Cards').find({ SetID: setId }).toArray();
+    // Now query using SetId as a string to match the stored format in Cards
+    const cards = await db.collection('Cards').find({ SetId: setId }).toArray();
 
     if (!set) {
       return res.status(404).json({ message: "Set not found" });
     }
 
-    // Include the set details and its associated cards in the response
+    // Return the set details along with its associated cards
     res.status(200).json({ ...set, cards });
   } catch (e) {
     console.error(e); // Log the error for server-side visibility
@@ -199,6 +199,7 @@ app.get('/api/getset/:setId', async (req, res) => {
     }
   }
 });
+
 
 
 

@@ -34,8 +34,15 @@ function CardUI() {
     
     const addCard = async event => {
         event.preventDefault();
-        let obj = { userId: userId, card: card };
-        let js = JSON.stringify(obj);
+        
+        // Create an object with the new card details
+        let cardObj = { 
+            userId: userId, // Make sure userId is defined in your component, fetched from user data
+            term: term,
+            definition: definition,
+            setId: setId // Make sure setId is obtained from the state or props
+        };
+        let js = JSON.stringify(cardObj);
 
         try {
             const response = await fetch(buildPath('api/addcard'), {
@@ -46,10 +53,12 @@ function CardUI() {
 
             let res = await response.json();
 
-            if (res.error && res.error.length > 0) {
-                setMessage("API Error:" + res.error);
+            if (res.error) {
+                setMessage('API Error: ' + res.error);
             } else {
                 setMessage('Card has been added');
+                setTerm(''); // Clear the input after successful addition
+                setDefinition(''); // Clear the input after successful addition
             }
         } catch (e) {
             setMessage(e.toString());
@@ -105,40 +114,7 @@ function CardUI() {
         }
     };
 
-    app.post('/api/addcard', async (req, res) => {
-        // incoming: userId, term, definition, setId
-        // outgoing: error, id (of new card)
-      
-        const { userId, term, definition, setId } = req.body;
-        var error = '';
-        var id = null;
-      
-        try {
-          const db = client.db("Group3LargeProject");
-          const newCard = {
-            Term: term,
-            Definition: definition,
-            UserId: userId,
-            SetId: setId // Store the setId in each card
-          };
-          
-          // insertOne is an async operation, using await to ensure the operation completes before proceeding
-          const result = await db.collection('Cards').insertOne(newCard);
-          
-          // Check if the insert was acknowledged
-          if(result.acknowledged) {
-            id = result.insertedId; // Assign the new card's id for the response
-          } else {
-            throw new Error("Insert was not acknowledged");
-          }
-        } catch(e) {
-          error = e.toString();
-        }
-      
-        // Response object containing any errors and the id of the new card
-        var ret = { error: error, id: id };
-        res.status(200).json(ret);
-      });
+
       
     
     

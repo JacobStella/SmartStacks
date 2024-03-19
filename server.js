@@ -183,28 +183,31 @@ app.get('/api/search', async (req, res) => {
 
   try {
     const db = client.db("Group3LargeProject");
-    const searchRegex = new RegExp(searchTerm, 'i');
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Trim searchTerm to remove extra spaces
 
-    // Directly find cards by UserId and optionally by search criteria
-    // Make sure to match the exact field name for UserId as stored in your Cards collection
+    // Correct field names must be used. Assuming the field is named "UserId" in all collections.
+    // Use trim() to ensure no leading/trailing whitespace is causing issues
+    const userIdTrimmed = userId.trim();
+
+    // Query for Classes
+    const classes = await db.collection('Class').find({
+      userId: userIdTrimmed, // Be mindful of the exact field name and case
+      className: { $regex: searchRegex }
+    }).toArray();
+
+    // Query for Sets
+    const sets = await db.collection('Sets').find({
+      UserId: userIdTrimmed, // Be mindful of the exact field name and case
+      SetName: { $regex: searchRegex }
+    }).toArray();
+
+    // Query for Cards, this assumes that cards do have a UserId field
     const cards = await db.collection('Cards').find({
-      UserId: userId, // This field name must be exact; case-sensitive
+      UserId: userIdTrimmed, // Use UserId to directly filter cards
       $or: [
         { FrontText: { $regex: searchRegex } },
         { BackText: { $regex: searchRegex } }
       ]
-    }).toArray();
-
-    // Fetch classes, ensuring to filter by userId and match the field names exactly
-    const classes = await db.collection('Class').find({
-      userId: userId, // This field name must be exact; case-sensitive
-      className: { $regex: searchRegex }
-    }).toArray();
-
-    // Fetch sets, ensuring to filter by userId and match the field names exactly
-    const sets = await db.collection('Sets').find({
-      UserId: userId, // This field name must be exact; case-sensitive
-      SetName: { $regex: searchRegex }
     }).toArray();
 
     // Combine results into a single object to return
@@ -220,6 +223,7 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

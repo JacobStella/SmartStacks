@@ -178,34 +178,37 @@ app.get('/api/getClassAndSets/:classId', async (req, res) => {
 
 app.get('/api/search', async (req, res) => {
   const { userId, searchTerm } = req.query;
+
   try {
       const db = client.db("Group3LargeProject");
       const searchRegex = new RegExp(searchTerm, 'i');
 
       // Fetch sets belonging to the user
       const userSets = await db.collection('Sets').find({
-          UserId: userId,
+          UserId: userId, // Assuming UserId is the correct field name in your Sets collection
           SetName: { $regex: searchRegex }
       }).toArray();
 
-      // Extract set IDs
-      const setIds = userSets.map(set => set._id.toString());
+      // Extract SetId values
+      const setIds = userSets.map(set => set.SetId); // Assuming SetId is stored as a custom string
 
-      // Now, find cards that belong to any of these sets
+      // Find cards that belong to any of these sets
       const cards = await db.collection('Cards').find({
-          SetId: { $in: setIds },
-          // Optionally add additional search criteria here
+          SetId: { $in: setIds }, // Use SetId directly since it's a string
+          // Add additional search criteria here if necessary
       }).toArray();
 
-      // Fetch classes and other collections as needed, ensuring to filter by userId
+      const results = {
+          cards // Assuming you only want to return cards in this example
+      };
 
-      const results = { /* classes, sets, */ cards };
       res.json(results);
   } catch(e) {
       console.error(e);
       res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

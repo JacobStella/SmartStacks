@@ -182,43 +182,45 @@ app.get('/api/search', async (req, res) => {
   const { userId, searchTerm } = req.query;
 
   try {
-      const db = client.db("Group3LargeProject");
-      const searchRegex = new RegExp(searchTerm, 'i');
+    const db = client.db("Group3LargeProject");
+    const searchRegex = new RegExp(searchTerm, 'i');
 
-      // Directly find cards by UserId and optionally by search criteria
-      const cards = await db.collection('Cards').find({
-          UserId: userId, // Use UserId to directly filter cards
-          $or: [ // Assuming you want to search by text on either the front or back of the card
-              { FrontText: { $regex: searchRegex } },
-              { BackText: { $regex: searchRegex } }
-          ]
-      }).toArray();
+    // Directly find cards by UserId and optionally by search criteria
+    // Make sure to match the exact field name for UserId as stored in your Cards collection
+    const cards = await db.collection('Cards').find({
+      UserId: userId, // This field name must be exact; case-sensitive
+      $or: [
+        { FrontText: { $regex: searchRegex } },
+        { BackText: { $regex: searchRegex } }
+      ]
+    }).toArray();
 
-      // Fetch other collections as needed, ensuring to filter by userId
-      // For example, fetching classes and sets similarly
-      const classes = await db.collection('Class').find({
-          userId: userId,
-          className: { $regex: searchRegex }
-      }).toArray();
+    // Fetch classes, ensuring to filter by userId and match the field names exactly
+    const classes = await db.collection('Class').find({
+      userId: userId, // This field name must be exact; case-sensitive
+      className: { $regex: searchRegex }
+    }).toArray();
 
-      const sets = await db.collection('Sets').find({
-          UserId: userId,
-          SetName: { $regex: searchRegex }
-      }).toArray();
+    // Fetch sets, ensuring to filter by userId and match the field names exactly
+    const sets = await db.collection('Sets').find({
+      UserId: userId, // This field name must be exact; case-sensitive
+      SetName: { $regex: searchRegex }
+    }).toArray();
 
-      // Combine results into a single object to return
-      const results = {
-          classes,
-          sets,
-          cards
-      };
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
 
-      res.json(results);
+    res.json(results);
   } catch(e) {
-      console.error(e);
-      res.status(500).json({ error: e.toString() });
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

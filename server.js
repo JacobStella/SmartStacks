@@ -179,31 +179,36 @@ app.get('/api/getClassAndSets/:classId', async (req, res) => {
 });
 
 app.get('/api/search', async (req, res) => {
-  const { userId, searchTerm } = req.query;
+  // Destructure with default empty strings to prevent undefined errors
+  const { userId = '', searchTerm = '' } = req.query;
 
   try {
     const db = client.db("Group3LargeProject");
-    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Trim searchTerm to remove extra spaces
+    
+    // Ensure we have a valid userId and searchTerm before proceeding
+    if (!userId || !searchTerm) {
+      return res.status(400).json({ error: "userId and searchTerm are required." });
+    }
 
-    // Correct field names must be used. Assuming the field is named "UserId" in all collections.
-    // Use trim() to ensure no leading/trailing whitespace is causing issues
-    const userIdTrimmed = userId.trim();
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Trim to remove whitespace
 
-    // Query for Classes
+    const userIdTrimmed = userId.trim(); // Trim the userId to remove whitespace
+
+    // Fetch classes, ensuring to filter by userIdTrimmed
     const classes = await db.collection('Class').find({
-      userId: userIdTrimmed, // Be mindful of the exact field name and case
+      userId: userIdTrimmed,
       className: { $regex: searchRegex }
     }).toArray();
 
-    // Query for Sets
+    // Fetch sets, ensuring to filter by userIdTrimmed
     const sets = await db.collection('Sets').find({
-      UserId: userIdTrimmed, // Be mindful of the exact field name and case
+      UserId: userIdTrimmed,
       SetName: { $regex: searchRegex }
     }).toArray();
 
-    // Query for Cards, this assumes that cards do have a UserId field
+    // Fetch cards, ensuring to filter by userIdTrimmed
     const cards = await db.collection('Cards').find({
-      UserId: userIdTrimmed, // Use UserId to directly filter cards
+      UserId: userIdTrimmed,
       $or: [
         { FrontText: { $regex: searchRegex } },
         { BackText: { $regex: searchRegex } }
@@ -223,6 +228,7 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

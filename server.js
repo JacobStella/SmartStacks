@@ -113,7 +113,7 @@ app.post('/api/addcard', async (req, res) => {
 
 // Delete Card
 app.post('/api/deletecard', async (req, res, next) => {
-	const { cardId } = req.params; // Get cardId from request
+	const { cardId } = req.body; // Get cardId from request
 
 	// Running command
 	try {
@@ -122,6 +122,8 @@ app.post('/api/deletecard', async (req, res, next) => {
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
 
+		// check if card was deleted correctly
+		// result returns true if card was deleted
 		if(!result){
 			res.status(400).json({ message: "Generic Error" });
 		}
@@ -183,23 +185,32 @@ app.get('/api/search', async (req, res) => {
       const db = client.db("Group3LargeProject");
       const searchRegex = new RegExp(searchTerm, 'i');
 
-      // Fetch sets belonging to the user
-      const userSets = await db.collection('Sets').find({
-          UserId: userId, // Assuming UserId is the correct field name in your Sets collection
+      // Directly find cards by UserId and optionally by search criteria
+      const cards = await db.collection('Cards').find({
+          UserId: userId, // Use UserId to directly filter cards
+          $or: [ // Assuming you want to search by text on either the front or back of the card
+              { FrontText: { $regex: searchRegex } },
+              { BackText: { $regex: searchRegex } }
+          ]
+      }).toArray();
+
+      // Fetch other collections as needed, ensuring to filter by userId
+      // For example, fetching classes and sets similarly
+      const classes = await db.collection('Class').find({
+          userId: userId,
+          className: { $regex: searchRegex }
+      }).toArray();
+
+      const sets = await db.collection('Sets').find({
+          UserId: userId,
           SetName: { $regex: searchRegex }
       }).toArray();
 
-      // Extract SetId values
-      const setIds = userSets.map(set => set.SetId); // Assuming SetId is stored as a custom string
-
-      // Find cards that belong to any of these sets
-      const cards = await db.collection('Cards').find({
-          SetId: { $in: setIds }, // Use SetId directly since it's a string
-          // Add additional search criteria here if necessary
-      }).toArray();
-
+      // Combine results into a single object to return
       const results = {
-          cards // Assuming you only want to return cards in this example
+          classes,
+          sets,
+          cards
       };
 
       res.json(results);
@@ -208,6 +219,7 @@ app.get('/api/search', async (req, res) => {
       res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 

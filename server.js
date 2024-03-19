@@ -120,7 +120,7 @@ app.post('/api/deletecard', async (req, res, next) => {
 		const db = client.db("Group3LargeProject")
 		
 		// delete card
-		const result = await db.collections('Cards').deleteOne({ _id: new ObjectId(cardId) });
+		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
 		res.status(200).json({ message: "Card deleted successfully"})
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });

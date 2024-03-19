@@ -13,6 +13,7 @@ function CardUI() {
     const [term, setTerm] = useState('');
     const [definition, setDefinition] = useState('');
     const [setId, setSetId] = useState('');
+    const [classId, setClassId] = useState('');
 
   // Use className and setIds in your component
 
@@ -67,16 +68,18 @@ function CardUI() {
             setMessage(e.toString());
         }
     };
-    
+
     const addClass = async event => {
         event.preventDefault();
-        let obj = { userId: userId, className: className, setIds: setIds }; // Ensure you have the correct variables declared
-        let js = JSON.stringify(obj);
+    
+        // Ensure userId and className are populated from your form or application state
+        let classObj = { userId: userId, className: className };
+        let classJson = JSON.stringify(classObj);
     
         try {
             const response = await fetch(buildPath('api/addclass'), {
                 method: 'POST',
-                body: js,
+                body: classJson,
                 headers: {'Content-Type': 'application/json'}
             });
     
@@ -85,55 +88,87 @@ function CardUI() {
             if (res.error && res.error.length > 0) {
                 setMessage("API Error:" + res.error);
             } else {
-                setMessage('Class has been added');
+                // Notify the user that the class has been added
+                setMessage(`Class has been added. Class ID: ${res.classId}`);
+    
+                // If you have a follow-up action that requires the class ID, you can call it here
+                // For example, if you have a function to update sets with this new class ID:
+                // updateSetsWithClassId(res.classId);
+                
+                // This assumes that your backend is indeed returning the `classId` in the response
+                // and that `updateSetsWithClassId` is a function you've defined elsewhere
             }
         } catch (e) {
             setMessage(e.toString());
         }
     };
-    const addSet = async event => {
-        event.preventDefault();
     
-        // First, create the set without including cards
-        let setObj = { UserId: userId, SetName: SetName, public: isPublic };
-        let setJs = JSON.stringify(setObj);
-    
+    const getClassAndSets = async (classId) => {
         try {
-            const setResponse = await fetch(buildPath('api/addset'), {
-                method: 'POST',
-                body: setJs,
+            const url = buildPath(`api/getClassAndSets/${classId}`);
+            const response = await fetch(url, {
+                method: 'GET', // Method is optional here since GET is the default value
                 headers: {'Content-Type': 'application/json'}
             });
     
-            let setRes = await setResponse.json();
-    
-            if (setRes.error && setRes.error.length > 0) {
-                setMessage("API Error:" + setRes.error);
-                return; // Stop the process if there was an error creating the set
-            } else {
-                // Set has been successfully created, proceed to add cards
-                const setId = setRes.setId; // Get the newly created set's ID
-    
-                // Iterate through each card and create it with the new setId
-                for (let card of cards) {
-                    let cardObj = { ...card, UserId: userId, SetId: setId };
-                    let cardJs = JSON.stringify(cardObj);
-    
-                    await fetch(buildPath('api/addcard'), {
-                        method: 'POST',
-                        body: cardJs,
-                        headers: {'Content-Type': 'application/json'}
-                    });
-                    // Note: Here we're not handling the response for individual card creations.
-                    // You might want to add logic to handle errors or confirmations for each card.
-                }
-    
-                setMessage('Set and cards have been added');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
-        } catch (e) {
-            setMessage(e.toString());
+    
+            const classAndSets = await response.json();
+            console.log('Class and its sets:', classAndSets);
+            // Here you can further handle the response, like updating the UI accordingly
+        } catch (error) {
+            console.error('Error fetching class and sets:', error);
         }
     };
+    
+    
+
+    
+const addSet = async event => {
+    event.preventDefault();
+
+    // Assume classId is available and correctly set, representing the class this set belongs to
+    let setObj = { UserId: userId, SetName: SetName, public: isPublic, classId: classId }; // Include classId here
+    let setJs = JSON.stringify(setObj);
+
+    try {
+        const setResponse = await fetch(buildPath('api/addset'), {
+            method: 'POST',
+            body: setJs,
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        let setRes = await setResponse.json();
+
+        if (setRes.error && setRes.error.length > 0) {
+            setMessage("API Error:" + setRes.error);
+            return; // Stop the process if there was an error creating the set
+        } else {
+            // Set has been successfully created, proceed to add cards
+            const setId = setRes.setId; // Get the newly created set's ID
+
+            // Iterate through each card and create it with the new setId
+            for (let card of cards) {
+                let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
+                let cardJs = JSON.stringify(cardObj);
+
+                await fetch(buildPath('api/addcard'), {
+                    method: 'POST',
+                    body: cardJs,
+                    headers: {'Content-Type': 'application/json'}
+                });
+                // Consider handling response for individual card creations
+            }
+
+            setMessage('Set and cards have been added');
+        }
+    } catch (e) {
+        setMessage(e.toString());
+    }
+};
+
     
     const fetchSetWithCards = async (setId) => {
         try {

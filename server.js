@@ -112,63 +112,76 @@ app.post('/api/addcard', async (req, res) => {
 
 
 // LETS GET EXPERIMENTAL
-app.post('/api/addclass', async (req, res, next) =>
-{
-  // incoming: userId, className, setIds (optional)
-  // userId is stored as a string (to be changed later?)
-  // outgoing: error
-  
-  const { userId, className, setIds } = req.body;
-
-  // If setIds is not provided, default to an empty array
-  const newClass = {
-    className: className,
-    userId: userId,
-    sets: setIds || []
-  };
-
-  var error = '';
-
-  try
-  {
-    const db = client.db("Group3LargeProject");
-    
-    // Here the await keyword is necessary to wait for the insert operation to complete
-    const result = await db.collection('Class').insertOne(newClass);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
-
-app.post('/api/addset', async (req, res) => {
-  const { UserId, SetName, public } = req.body; // Remove cards from here
+app.post('/api/addclass', async (req, res, next) => {
+  const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
 
   try {
     const db = client.db("Group3LargeProject");
-    
-    // Insert the new set document into the 'Sets' collection
-    const setResult = await db.collection('Sets').insertOne({
-      UserId: UserId,
-      SetName: SetName,
-      public: public,
-      // Don't include cards array here initially
+
+    // Insert the new class
+    const result = await db.collection('Class').insertOne({
+      className: className,
+      userId: userId,
+      // Removed the sets array since sets will now reference this class via classID in their own documents
     });
-    
-    if (setResult.acknowledged) {
-      // If you want to add cards separately, you can do so here or on the client-side by making separate requests to an addCard endpoint
-      res.status(200).json({ message: "New set added successfully", setId: setResult.insertedId });
-    } else {
-      throw new Error("Failed to add new set");
-    }
+
+    // Respond with success and the ID of the newly created class
+    res.status(200).json({ message: "Class added successfully", classId: result.insertedId });
   } catch(e) {
     res.status(500).json({ error: e.toString() });
   }
 });
+
+app.get('/api/getClassAndSets/:classId', async (req, res) => {
+  const { classId } = req.params; // Get classId from the route parameters
+
+  try {
+      const db = client.db("Group3LargeProject");
+      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
+      if (!classDoc) {
+          res.status(404).json({ error: "Class not found" });
+          return;
+      }
+
+      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
+      const result = {
+          ...classDoc,
+          sets: sets
+      };
+
+      res.status(200).json(result);
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
+  }
+});
+
+
+
+
+app.post('/api/addset', async (req, res) => {
+  const { UserId, SetName, public, classId } = req.body;
+
+  try {
+      const db = client.db("Group3LargeProject");
+      
+      // Insert the new set document into the 'Sets' collection
+      const setResult = await db.collection('Sets').insertOne({
+          UserId: UserId,
+          SetName: SetName,
+          public: public,
+          classId: classId, // Linking set to class via classId
+      });
+      
+      if (setResult.acknowledged) {
+          res.status(200).json({ message: "New set added successfully", setId: setResult.insertedId });
+      } else {
+          throw new Error("Failed to add new set");
+      }
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
+  }
+});
+
 
 const { ObjectId } = require('mongodb');
 

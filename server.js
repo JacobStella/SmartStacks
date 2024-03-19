@@ -75,6 +75,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Add card
 app.post('/api/addcard', async (req, res) => {
   // incoming: userId, term, definition, setId
   // outgoing: error, id (of new card)
@@ -110,6 +111,21 @@ app.post('/api/addcard', async (req, res) => {
   res.status(200).json(ret);
 });
 
+// Delete Card
+app.post('/api/deletecard', async (req, res, next) => {
+	const { cardId } = req.params; // Get cardId from request
+
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject")
+		
+		// delete card
+		const result = await db.collections('Cards').deleteOne({ _id: new ObjectId(cardId) });
+		res.status(200).json({ message: "Card deleted successfully"})
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
 
 // LETS GET EXPERIMENTAL
 app.post('/api/addclass', async (req, res, next) => {
@@ -192,10 +208,6 @@ app.get('/api/search', async (req, res) => {
       res.status(500).json({ error: e.toString() });
   }
 });
-
-
-
-
 
 app.post('/api/addset', async (req, res) => {
   const { UserId, SetName, public, classId } = req.body;

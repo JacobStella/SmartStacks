@@ -183,7 +183,8 @@ const addSet = async event => {
     }
 };
 const searchItems = async (userId, searchTerm) => {
-    event.preventDefault(); // Prevent default if this is tied to a form submit event
+
+    
 
     try {
         // Construct the search URL with query parameters for userId and searchTerm

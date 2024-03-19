@@ -171,6 +171,44 @@ app.get('/api/getClassAndSets/:classId', async (req, res) => {
   }
 });
 
+app.get('/api/search', async (req, res) => {
+  const { userId, searchTerm } = req.query; // Get user ID and search term from query parameters
+
+  try {
+      const db = client.db("Group3LargeProject");
+      const searchRegex = new RegExp(searchTerm, 'i'); // Case-insensitive regex for the search term
+
+      // Query each collection
+      const classes = await db.collection('Class').find({
+          userId: userId,
+          className: { $regex: searchRegex }
+      }).toArray();
+
+      const sets = await db.collection('Sets').find({
+          UserId: userId,
+          SetName: { $regex: searchRegex }
+      }).toArray();
+
+      const cards = await db.collection('Cards').find({
+          UserId: userId,
+          // Assuming 'CardName' or similar; adjust based on your schema
+          CardName: { $regex: searchRegex }
+      }).toArray();
+
+      // Combine results into a single object
+      const results = {
+          classes,
+          sets,
+          cards
+      };
+
+      res.json(results);
+  } catch(e) {
+      console.error(e);
+      res.status(500).json({ error: e.toString() });
+  }
+});
+
 app.post('/api/addset', async (req, res) => {
   const { UserId, SetName, public, classId } = req.body;
 

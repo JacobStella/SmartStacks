@@ -210,8 +210,8 @@ app.get('/api/search', async (req, res) => {
     const cards = await db.collection('Cards').find({
       UserId: userIdTrimmed,
       $or: [
-        { FrontText: { $regex: searchRegex } },
-        { BackText: { $regex: searchRegex } }
+        { Term : { $regex: searchRegex } },
+        { Definition : { $regex: searchRegex } }
       ]
     }).toArray();
 

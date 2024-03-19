@@ -121,9 +121,11 @@ app.post('/api/deletecard', async (req, res, next) => {
 		
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
+
 		if(!result){
 			res.status(400).json({ message: "Generic Error" });
 		}
+    
 		res.status(200).json({ message: "Card deleted successfully"})
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
@@ -175,27 +177,27 @@ app.get('/api/getClassAndSets/:classId', async (req, res) => {
 });
 
 app.get('/api/search', async (req, res) => {
-  const { userId, searchTerm } = req.query; // Get user ID and search term from query parameters
+  const { userId, searchTerm } = req.query; // Assuming userId is passed correctly as a string
 
   try {
       const db = client.db("Group3LargeProject");
       const searchRegex = new RegExp(searchTerm, 'i'); // Case-insensitive regex for the search term
 
-      // Query each collection
+      // Ensure userId is used as a string. Since it's already a string, no conversion is necessary,
+      // but be mindful to match the exact field name and type as stored in your collections.
       const classes = await db.collection('Class').find({
-          userId: userId,
+          userId: userId, // Matching as a string
           className: { $regex: searchRegex }
       }).toArray();
 
       const sets = await db.collection('Sets').find({
-          UserId: userId,
+          UserId: userId, // Ensure this matches the exact field name in your collection
           SetName: { $regex: searchRegex }
       }).toArray();
 
       const cards = await db.collection('Cards').find({
-          UserId: userId,
-          // Assuming 'CardName' or similar; adjust based on your schema
-          CardName: { $regex: searchRegex }
+          UserId: userId, // Matching as a string
+          // Add other search criteria as necessary, depending on your Cards collection schema
       }).toArray();
 
       // Combine results into a single object
@@ -211,6 +213,7 @@ app.get('/api/search', async (req, res) => {
       res.status(500).json({ error: e.toString() });
   }
 });
+
 
 app.post('/api/addset', async (req, res) => {
   const { UserId, SetName, public, classId } = req.body;

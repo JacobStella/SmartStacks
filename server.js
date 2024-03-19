@@ -113,7 +113,7 @@ app.post('/api/addcard', async (req, res) => {
 
 // Delete Card
 app.post('/api/deletecard', async (req, res, next) => {
-	const { cardId } = req.params; // Get cardId from request
+	const { cardId } = req.body; // Get cardId from request
 
 	// Running command
 	try {
@@ -122,6 +122,8 @@ app.post('/api/deletecard', async (req, res, next) => {
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
 
+		// check if card was deleted correctly
+		// result returns true if card was deleted
 		if(!result){
 			res.status(400).json({ message: "Generic Error" });
 		}

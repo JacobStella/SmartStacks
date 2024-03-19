@@ -121,6 +121,9 @@ app.post('/api/deletecard', async (req, res, next) => {
 		
 		// delete card
 		const result = await db.collections('Cards').deleteOne({ _id: new ObjectId(cardId) });
+		if(!result){
+			res.status(400).json({ message: "Generic Error" });
+		}
 		res.status(200).json({ message: "Card deleted successfully"})
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });

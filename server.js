@@ -38,107 +38,7 @@ app.use((req, res, next) => {
     next();
 });
 
-var cardList = [
-  'Roy Campanella',
-  'Paul Molitor',
-  'Tony Gwynn',
-  'Dennis Eckersley',
-  'Reggie Jackson',
-  'Gaylord Perry',
-  'Buck Leonard',
-  'Rollie Fingers',
-  'Charlie Gehringer',
-  'Wade Boggs',
-  'Carl Hubbell',
-  'Dave Winfield',
-  'Jackie Robinson',
-  'Ken Griffey, Jr.',
-  'Al Simmons',
-  'Chuck Klein',
-  'Mel Ott',
-  'Mark McGwire',
-  'Nolan Ryan',
-  'Ralph Kiner',
-  'Yogi Berra',
-  'Goose Goslin',
-  'Greg Maddux',
-  'Frankie Frisch',
-  'Ernie Banks',
-  'Ozzie Smith',
-  'Hank Greenberg',
-  'Kirby Puckett',
-  'Bob Feller',
-  'Dizzy Dean',
-  'Joe Jackson',
-  'Sam Crawford',
-  'Barry Bonds',
-  'Duke Snider',
-  'George Sisler',
-  'Ed Walsh',
-  'Tom Seaver',
-  'Willie Stargell',
-  'Bob Gibson',
-  'Brooks Robinson',
-  'Steve Carlton',
-  'Joe Medwick',
-  'Nap Lajoie',
-  'Cal Ripken, Jr.',
-  'Mike Schmidt',
-  'Eddie Murray',
-  'Tris Speaker',
-  'Al Kaline',
-  'Sandy Koufax',
-  'Willie Keeler',
-  'Pete Rose',
-  'Robin Roberts',
-  'Eddie Collins',
-  'Lefty Gomez',
-  'Lefty Grove',
-  'Carl Yastrzemski',
-  'Frank Robinson',
-  'Juan Marichal',
-  'Warren Spahn',
-  'Pie Traynor',
-  'Roberto Clemente',
-  'Harmon Killebrew',
-  'Satchel Paige',
-  'Eddie Plank',
-  'Josh Gibson',
-  'Oscar Charleston',
-  'Mickey Mantle',
-  'Cool Papa Bell',
-  'Johnny Bench',
-  'Mickey Cochrane',
-  'Jimmie Foxx',
-  'Jim Palmer',
-  'Cy Young',
-  'Eddie Mathews',
-  'Honus Wagner',
-  'Paul Waner',
-  'Grover Alexander',
-  'Rod Carew',
-  'Joe DiMaggio',
-  'Joe Morgan',
-  'Stan Musial',
-  'Bill Terry',
-  'Rogers Hornsby',
-  'Lou Brock',
-  'Ted Williams',
-  'Bill Dickey',
-  'Christy Mathewson',
-  'Willie McCovey',
-  'Lou Gehrig',
-  'George Brett',
-  'Hank Aaron',
-  'Harry Heilmann',
-  'Walter Johnson',
-  'Roger Clemens',
-  'Ty Cobb',
-  'Whitey Ford',
-  'Willie Mays',
-  'Rickey Henderson',
-  'Babe Ruth'
-];
+
 
 app.post('/api/register', async (req, res) => {
   const { email, firstName, lastName, username, password } = req.body;
@@ -175,99 +75,226 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-app.post('/api/addcard', async (req, res, next) =>
-{
-  // incoming: userId, color
-  // outgoing: error
-	
-  const { userId, card } = req.body;
+// Add card
+app.post('/api/addcard', async (req, res) => {
+  // incoming: userId, term, definition, setId
+  // outgoing: error, id (of new card)
 
-  const newCard = {Card:card,UserId:userId};
+  const { userId, term, definition, setId } = req.body;
   var error = '';
-
-  try
-  {
-    const db = client.db("Group3LargeProject");
-    const result = db.collection('Cards').insertOne(newCard);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-
-  cardList.push( card );
-
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
-
-// LETS GET EXPERIMENTAL
-app.post('/api/addclass', async (req, res, next) =>
-{
-  // incoming: userId, className, setIds (optional)
-  // userId is stored as a string (to be changed later?)
-  // outgoing: error
-  
-  const { userId, className, setIds } = req.body;
-
-  // If setIds is not provided, default to an empty array
-  const newClass = {
-    className: className,
-    userId: userId,
-    sets: setIds || []
-  };
-
-  var error = '';
-
-  try
-  {
-    const db = client.db("Group3LargeProject");
-    
-    // Here the await keyword is necessary to wait for the insert operation to complete
-    const result = await db.collection('Class').insertOne(newClass);
-  }
-  catch(e)
-  {
-    error = e.toString();
-  }
-
-  var ret = { error: error };
-  res.status(200).json(ret);
-});
-
-app.post('/api/addset', async (req, res) => {
-  // incoming: classId, setId, cards (array of card objects)
-  // outgoing: error
-
-  const { classId, setId, cards } = req.body;
-  var error = '';
+  var id = null;
 
   try {
     const db = client.db("Group3LargeProject");
-    
-    // Create a new set document
-    const newSet = {
-      _id: setId, // This would be better as a generated ID by the database
-      cards: cards, // This should be an array of card objects
-      classId: classId // This is the ID of the class this set belongs to
+    const newCard = {
+      Term: term,
+      Definition: definition,
+      UserId: userId,
+      SetId: setId // Store the setId in each card
     };
-
-    // Insert the new set document into the 'Sets' collection
-    const result = await db.collection('Sets').insertOne(newSet);
-
-    // Optionally, if you want to immediately attach this set to a class, do an update on the Class collection
-    // This is assuming that the 'Class' collection has an 'sets' array field
-    const updateResult = await db.collection('Class').updateOne(
-      { _id: classId },
-      { $addToSet: { sets: setId } } // Use $addToSet to avoid duplicates
-    );
     
+    // insertOne is an async operation, using await to ensure the operation completes before proceeding
+    const result = await db.collection('Cards').insertOne(newCard);
+    
+    // Check if the insert was acknowledged
+    if(result.acknowledged) {
+      id = result.insertedId; // Assign the new card's id for the response
+    } else {
+      throw new Error("Insert was not acknowledged");
+    }
   } catch(e) {
     error = e.toString();
   }
 
-  res.status(200).json({ error: error });
+  // Response object containing any errors and the id of the new card
+  var ret = { error: error, id: id };
+  res.status(200).json(ret);
 });
+
+// Delete Card
+app.post('/api/deletecard', async (req, res, next) => {
+	const { cardId } = req.body; // Get cardId from request
+
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject")
+		
+		// delete card
+		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
+
+		// check if card was deleted correctly
+		// result returns true if card was deleted
+		if(!result){
+			res.status(400).json({ message: "Generic Error" });
+		}
+    
+		res.status(200).json({ message: "Card deleted successfully"})
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+// LETS GET EXPERIMENTAL
+app.post('/api/addclass', async (req, res, next) => {
+  const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
+
+  try {
+    const db = client.db("Group3LargeProject");
+
+    // Insert the new class
+    const result = await db.collection('Class').insertOne({
+      className: className,
+      userId: userId,
+      // Removed the sets array since sets will now reference this class via classID in their own documents
+    });
+
+    // Respond with success and the ID of the newly created class
+    res.status(200).json({ message: "Class added successfully", classId: result.insertedId });
+  } catch(e) {
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+app.get('/api/getClassAndSets/:classId', async (req, res) => {
+  const { classId } = req.params; // Get classId from the route parameters
+
+  try {
+      const db = client.db("Group3LargeProject");
+      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
+      if (!classDoc) {
+          res.status(404).json({ error: "Class not found" });
+          return;
+      }
+
+      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
+      const result = {
+          ...classDoc,
+          sets: sets
+      };
+
+      res.status(200).json(result);
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
+  }
+});
+
+app.get('/api/search', async (req, res) => {
+  // Destructure with default empty strings to prevent undefined errors
+  const { userId = '', searchTerm = '' } = req.query;
+
+  try {
+    const db = client.db("Group3LargeProject");
+    
+    // Ensure we have a valid userId and searchTerm before proceeding
+    if (!userId || !searchTerm) {
+      return res.status(400).json({ error: "userId and searchTerm are required." });
+    }
+
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Trim to remove whitespace
+
+    const userIdTrimmed = userId.trim(); // Trim the userId to remove whitespace
+
+    // Fetch classes, ensuring to filter by userIdTrimmed
+    const classes = await db.collection('Class').find({
+      userId: userIdTrimmed,
+      className: { $regex: searchRegex }
+    }).toArray();
+
+    // Fetch sets, ensuring to filter by userIdTrimmed
+    const sets = await db.collection('Sets').find({
+      UserId: userIdTrimmed,
+      SetName: { $regex: searchRegex }
+    }).toArray();
+
+    // Fetch cards, ensuring to filter by userIdTrimmed
+    const cards = await db.collection('Cards').find({
+      UserId: userIdTrimmed,
+      $or: [
+        { Term : { $regex: searchRegex } },
+        { Definition : { $regex: searchRegex } }
+      ]
+    }).toArray();
+
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
+
+    res.json(results);
+  } catch(e) {
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+
+
+
+
+
+
+
+app.post('/api/addset', async (req, res) => {
+  const { UserId, SetName, public, classId } = req.body;
+
+  try {
+      const db = client.db("Group3LargeProject");
+      
+      // Insert the new set document into the 'Sets' collection
+      const setResult = await db.collection('Sets').insertOne({
+          UserId: UserId,
+          SetName: SetName,
+          public: public,
+          classId: classId, // Linking set to class via classId
+      });
+      
+      if (setResult.acknowledged) {
+          res.status(200).json({ message: "New set added successfully", setId: setResult.insertedId });
+      } else {
+          throw new Error("Failed to add new set");
+      }
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
+  }
+});
+
+
+const { ObjectId } = require('mongodb');
+
+app.get('/api/getset/:setId', async (req, res) => {
+  try {
+    const db = client.db("Group3LargeProject");
+    // Keep setId as a string, since SetId in Cards is stored as a string
+    const setId = req.params.setId;
+
+    // Fetch the set using its _id, converting setId to ObjectId for this query
+    const set = await db.collection('Sets').findOne({ _id: new ObjectId(setId) });
+
+    // Now query using SetId as a string to match the stored format in Cards
+    const cards = await db.collection('Cards').find({ SetId: setId }).toArray();
+
+    if (!set) {
+      return res.status(404).json({ message: "Set not found" });
+    }
+
+    // Return the set details along with its associated cards
+    res.status(200).json({ ...set, cards });
+  } catch (e) {
+    console.error(e); // Log the error for server-side visibility
+    if (e instanceof TypeError) {
+      res.status(400).json({ error: "Invalid setId format" });
+    } else {
+      res.status(500).json({ error: e.toString() });
+    }
+  }
+});
+
+
+
+
+
 
 
 // UPDATE CLASS

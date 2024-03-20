@@ -127,13 +127,12 @@ app.post('/api/deletecard', async (req, res, next) => {
 		if(!result){
 			res.status(400).json({ message: "Generic Error" });
 		}
-    
-    res.status(200).json({ message: "Card deleted successfully"});
-    
+		res.status(200).json({ message: "Card deleted successfully"});
 	} catch(e) {
-    res.status(500).json({ error: e.toString() });
+		res.status(500).json({ error: e.toString() });
 	}
 });
+
 
 // Update Card
 app.put('/api/updatecard', async (req, res, next) => {

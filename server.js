@@ -128,9 +128,10 @@ app.post('/api/deletecard', async (req, res, next) => {
 			res.status(400).json({ message: "Generic Error" });
 		}
     
-		res.status(200).json({ message: "Card deleted successfully"});
+    res.status(200).json({ message: "Card deleted successfully"});
+    
 	} catch(e) {
-		res.status(500).json({ error: e.toString() });
+    res.status(500).json({ error: e.toString() });
 	}
 });
 
@@ -146,6 +147,7 @@ app.post('/api/updatecard', async (req, res, next) => {
 		const result = await db.collection('Cards').updateOne({ _id: new ObjectId(cardId) }, { $set { Term : newTerm } });
 
 		res.status(200).json({ message: "Card updated successfully"});
+    
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
 	}

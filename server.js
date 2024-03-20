@@ -134,23 +134,6 @@ app.post('/api/deletecard', async (req, res, next) => {
 	}
 });
 
-// Update Card
-app.post('/api/updatecard', async (req, res, next) => {
-	const { cardId, newTerm } = req.body; // cardId of card to be updated
-
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject")
-
-		// update card
-		const result = await db.collection('Cards').update({ _id: new ObjectId(cardId)}, { $set { Term : newTerm}});
-
-		res.status(200).json({ message: "Card updated successfully"})
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
-
 // LETS GET EXPERIMENTAL
 app.post('/api/addclass', async (req, res, next) => {
   const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here

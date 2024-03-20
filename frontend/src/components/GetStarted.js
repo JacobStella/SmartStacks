@@ -1,5 +1,5 @@
 import React from 'react';
-//import '../Web.css';
+import '../Web.css';
 
 function GetStarted() {
     // Include instructions or any interactive guide elements

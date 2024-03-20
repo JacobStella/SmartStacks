@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import CreateImage from '../images/create.png';
-import '../Web.css';
+//import '../Web.css';
 
 function CreateLink() {
     // Include state and functions specific to creating content

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PlayImage from '../images/play.png';
-import '../Web.css';
+//import '../Web.css';
 
 function PlayLink() {
     // Include state and functions for play functionality

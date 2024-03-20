@@ -95,164 +95,65 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*////////////////////////////////////////LANDING PAGE START///////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-.page-container {
-  /* Style for the page layout */
-} 
-
-.main-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.create-section, .library-section, .browse-section, .play-section {
-  /* Common style for each section */
-  margin: 10px;
-  padding: 20px;
-  border: 1px solid #ccc;
-  /* You can add more like width, height, etc. */
-}
-
-.get-started-section {
-  /* Style for the get started section */
-  margin: 10px;
-  padding: 20px;
-  /* Any additional styling */
-}
-
-.image-button {
-  max-width: 100px; /* Or whatever size you prefer */
-  border: none;
-  cursor: pointer;
-  transition: opacity 0.3s ease;
-}
-
-.image-button:hover {
-  opacity: 0.7;
-}
-
-.link-row {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.link-column {
-  flex-basis: calc(50% - 20px); /* Adjust width as needed, subtracting the margin */
-  display: flex;
-  justify-content: center;
-  padding: 10px; /* Adjust padding as needed */
-  margin: 10px;
-}
-
-.vertical-line {
-  background-color: #6dbcb9;
-  height: 400px;
-  margin: 0 20px;
-  width: 10px
-}
-
-.content-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.links-and-started {
-  display: flex;
-  align-items: start;
-  justify-content: center;
-  width: 100%;
-  min-height: 500px; /* Example minimum height */
-}
-
-.link-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-/* Add a media query for responsive adjustments */
-@media (max-width: 1024px) {
-  .links-and-started {
-      flex-direction: column;
-  }
-
-  .link-column {
-      width: 100%;
-  }
-}
-/* Add any additional styles for alignment, margins, etc., as needed */
-
-/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*////////////////////////////////////////LANDING PAGE END/////////////////////////////////////////////////*/
-/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-
-
-
-/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////NAVBAR START////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-
-/* Additional styling for the navigation bar */
 .navbar {
-    align-items: center;
-    background-color: #595757;
-    box-shadow: #0000;
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    padding: 0 20px;
+  align-items: center;
+  background-color: #595757;
+  box-shadow: #0000;
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .navbar .nav-button {
-    border-radius: 5px;
-    color: #450c71;
-    cursor: pointer;
-    font-family: 'Arial Rounded MT Bold', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 25px;
+  border-radius: 5px;
+  color: #450c71;
+  cursor: pointer;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 25px;
 }
 
 .navbar .nav-button:hover {
-    color: #450c71;
-    background-color: transparent;
-    border: none;
-    text-decoration-color: #0d1117;
+  color: #450c71; 
+  background-color: transparent;
+  border: none;
+  text-decoration-color: #0d1117;
 }
 
 .search-bar {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
 }
 
 .search-bar input[type=text] {
-    background-color: #0d1117;
-    border: 1px solid #450c71;
-    box-shadow: 0 0 2px 2px #2d034d;
-    color: #6d85a5;
-    margin-right: 10px;
-    padding: 10px;
-    width: 50%;
+  background-color: #0d1117;
+  border: 1px solid #450c71;
+  box-shadow: 0 0 2px 2px #2d034d;
+  color: #6d85a5;
+  margin-right: 10px;
+  padding: 10px;
+  width: 50%;
+  border-radius: 5px;
 }
 
 .search-bar button {
-    background-color: #450c71;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    padding: 8px 15px;
+  background-color: #450c71;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 15px;
 }
 
 .search-bar button:hover {
-    background-color: #61248f;
-    text-decoration: underline;
-    text-decoration-color: #0d1117;
+  background-color: #61248f;
+  text-decoration: underline;
+  text-decoration-color: #0d1117;
 }
+/* hello */
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////NAVBAR END//////////////////////////////////////////////////////*/

@@ -117,7 +117,7 @@ app.post('/api/deletecard', async (req, res, next) => {
 
 	// Running command
 	try {
-		const db = client.db("Group3LargeProject")
+		const db = client.db("Group3LargeProject");
 		
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });

@@ -22,7 +22,7 @@ const LandingPage = () => {
             <NavBar isLoggedIn={isLoggedIn} userProfilePic={userProfilePic} />
             */}
             <NavBar2 />
-
+            {/*
             <div className="content-container">
                 <div className="links-and-started">
                     <div className="link-grid">
@@ -47,7 +47,30 @@ const LandingPage = () => {
                     <GetStarted />
                 </div>
             </div>
+            */}
+
+            <div class="container">
+            <div class="row">
+                <div class="col">
+                    <CreateLink />
+                </div>
+                <div class="col">
+                    <LibraryLink />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <BrowseLink />
+                </div>
+                <div class="col">
+                    <PlayLink />
+                </div>
+            </div>
+            </div>
         </div>
+
+        
+        
     );
 }
 

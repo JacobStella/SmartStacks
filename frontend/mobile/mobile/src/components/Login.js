@@ -15,22 +15,45 @@ const formInput = (userName, pass) =>{
 };
 
 
-const submit = () => {
+const submit = async () => {
     //transfer updated state data
+    try{
+        const res = await fetch ("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/login",{
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                login:data.userName,
+                password: data.password,
+            }),
+        });
 
+        if(!res.ok){
+            const resData = await res.json();
+            console.log(resData);
+            throw new Error("Login failed");
+        }
+        else{
+            console.log("success");
+        }
+       
+    }catch(e){
+        console.log(e);
+    }
 };
 
     return (
         <View style = {styles.container}>
             <TextInput style = {styles.input}
                 placeholder = "Username"
-                onChangeText = { (input) => formInput(input, "password")}/>
+                onChangeText = { (input) => formInput("userName", input)}/>
 
             <TextInput style = {styles.input}
             placeholder = "Password"
-            onChangeText = { (input) => formInput("userName", input)}/>
+            onChangeText = { (input) => formInput("password", input)}/>
 
-        <Button title = "Submit" />
+        <Button title = "Submit" onPress = {submit} />
         </View>
     );
 };

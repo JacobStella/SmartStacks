@@ -121,12 +121,6 @@ app.post('/api/deletecard', async (req, res, next) => {
 		
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
-
-		// check if card was deleted correctly
-		// result returns true if card was deleted
-		if(!result){
-			res.status(400).json({ message: "Generic Error" });
-		}
     
 		res.status(200).json({ message: "Card deleted successfully"});
 	} catch(e) {
@@ -144,6 +138,9 @@ app.post('/api/updatecard', async (req, res, next) => {
 
 		// update card
 		const result = await db.collection('Cards').updateOne({ _id: new ObjectId(cardId) }, { $set { 'Term' : 'newTerm' } });
+		if (!result){
+			res.status(500).json({ message : "Generic error"});
+		}
 
 		res.status(200).json({ message: "Card updated successfully"});   
 	} catch(e) {

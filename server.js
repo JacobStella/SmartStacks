@@ -229,6 +229,110 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
+const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
+
+app.post('/api/test', async (req, res) => {
+  // incoming: userId
+  // outgoing: test, error
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required' });
+  }
+
+  try {
+    const db = client.db("Group3LargeProject");
+    const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+
+    if (userCards.length < 5) {
+      return res.status(400).json({ error: 'User has less than 5 cards' });
+    }
+
+    const testQuestions = [];
+    const allAnswers = [];
+
+    for (let i = 0; i < 5; i++) {
+      const randomIndex = Math.floor(Math.random() * userCards.length);
+      const card = userCards[randomIndex];
+      const correctAnswer = card.Term;
+      testQuestions.push(card.Definition);
+
+      allAnswers.push(correctAnswer);
+      allAnswers.push(
+        ...shuffle([
+          ...getIncorrectAnswers(correctAnswer, card.Definition, userCards),
+        ])
+      );
+    }
+
+    const userTest = {
+      id: uuidv4(),
+      questions: testQuestions,
+      answers: allAnswers,
+    };
+
+    res.status(200).json({ test: userTest, error: '' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// Helper function to get three incorrect answers for each question
+function getIncorrectAnswers(correctAnswer, currentQuestion, userCards) {
+  const incorrectAnswers = userCards
+    .filter((card) => card.Definition !== currentQuestion)
+    .map((x) => x.Term)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
+
+  return incorrectAnswers.filter((term) => term !== correctAnswer);
+}
+
+// Helper function to shuffle an array
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+app.post('/api/validate-test', async (req, res) => {
+    // incoming: testId, userAnswers
+    // outgoing: score, error
+    const { testId, userAnswers } = req.body;
+  
+    if (!testId || !userAnswers) {
+      return res.status(400).json({ error: 'testId and userAnswers are required' });
+    }
+  
+    try {
+      const db = client.db("Group3LargeProject");
+      const test = await db
+        .collection('Test')
+        .findOne({ id: testId });
+  
+      if (!test) {
+        return res.status(400).json({ error: 'Test not found' });
+      }
+  
+      let score = 0;
+  
+      test.answers.forEach((answer, index) => {
+        if (answer === userAnswers[index]) {
+          score++;
+        }
+      });
+  
+      res.status(200).json({ score: score, error: '' });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+
 
 
 

@@ -140,7 +140,7 @@ function CardUI() {
     
 
     
-const addSet = async event => {
+ const addSet = async event => {
     event.preventDefault();
 
     // Assume classId is available and correctly set, representing the class this set belongs to
@@ -181,8 +181,8 @@ const addSet = async event => {
     } catch (e) {
         setMessage(e.toString());
     }
-};
-const searchItems = async (userId, searchTerm) => {
+ };
+ const searchItems = async (userId, searchTerm) => {
 
     
 
@@ -211,7 +211,7 @@ const searchItems = async (userId, searchTerm) => {
         console.error("Search Fetch Error:", e.toString());
         setMessage(e.toString());
     }
-};
+ };
 
 
     
@@ -258,6 +258,98 @@ const searchItems = async (userId, searchTerm) => {
             setResults(e.toString());
         }
     };
+
+
+
+    const TestComponent = ({ userId }) => {
+      const [test, setTest] = useState(null);
+      const [userAnswers, setUserAnswers] = useState({});
+      const [score, setScore] = useState(null);
+    
+      useEffect(() => {
+        const fetchTest = async () => {
+          try {
+            const response = await fetch('/api/test', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ userId }),
+            });
+            const data = await response.json();
+            setTest(data.test);
+            // Initialize answers
+            let initialAnswers = {};
+            data.test.questions.forEach((_, index) => {
+              initialAnswers[index] = '';
+            });
+            setUserAnswers(initialAnswers);
+          } catch (error) {
+            console.error('Error fetching test', error);
+          }
+        };
+    
+        fetchTest();
+      }, [userId]);
+    
+      const handleOptionChange = (questionIndex, answer) => {
+        setUserAnswers({
+          ...userAnswers,
+          [questionIndex]: answer,
+        });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch('/api/validate-test', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              testId: test.id,
+              userAnswers: Object.values(userAnswers),
+            }),
+          });
+          const data = await response.json();
+          setScore(data.score);
+    } catch (error) {
+          console.error('Error submitting answers', error);
+        }
+      };
+    
+      if (score !== null) {
+        return <div>Your score is: {score}</div>;
+      }
+    
+      return (
+        <div>
+          {test && test.questions.map((question, index) => (
+            <div key={index}>
+              <p>{question}</p>
+              {test.answers.slice(index * 4, (index + 1) * 4).map((option, optionIndex) => (
+                <label key={optionIndex}>
+                  <input
+                    type="radio"
+                    name={`question-${index}`}
+                    value={option}
+                    checked={userAnswers[index] === option}
+                    onChange={() => handleOptionChange(index, option)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          ))}
+          <button onClick={handleSubmit}>Submit Answers</button>
+        </div>
+      );
+    };
+    
+
+    
+      
 
     return (
         <div id="accessUIDiv">

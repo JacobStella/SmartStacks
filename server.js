@@ -129,7 +129,7 @@ app.post('/api/deletecard', async (req, res, next) => {
 });
 
 // Update Card
-app.post('/api/updatecard', async (req, res, next) => {
+app.post('/api/updatecard', async (req, res) => {
 	const { cardId, newTerm } = req.body; // cardId of card to be updated
 
 	// Running command

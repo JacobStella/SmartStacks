@@ -20,10 +20,10 @@ const LandingPage = () => {
             {/*
              code relating to the navbar clickable profile pic
             <NavBar isLoggedIn={isLoggedIn} userProfilePic={userProfilePic} />
-            */}
             <NavBar2 />
+            */}
             {/*
-            <div className="content-container">
+            <div className="content-container"> 
                 <div className="links-and-started">
                     <div className="link-grid">
                         <div className="link-row">

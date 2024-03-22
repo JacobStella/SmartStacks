@@ -267,9 +267,13 @@ app.post('/api/test', async (req, res) => {
 
     const userTest = {
       id: uuidv4(),
+      userId: userId,
       questions: testQuestions,
       answers: allAnswers,
     };
+
+    // Insert the generated test into the 'Test' collection
+    await db.collection('Test').insertOne(userTest);
 
     res.status(200).json({ test: userTest, error: '' });
   } catch (error) {
@@ -277,6 +281,7 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 // Helper function to get three incorrect answers for each question
 function getIncorrectAnswers(correctAnswer, currentQuestion, userCards) {

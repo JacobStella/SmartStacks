@@ -229,7 +229,7 @@ app.get('/api/search', async (req, res) => {
   }
 });
 
-const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
+//const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
 
 app.post('/api/test', async (req, res) => {
   // incoming: userId
@@ -266,7 +266,7 @@ app.post('/api/test', async (req, res) => {
     }
 
     const userTest = {
-      id: uuidv4(),
+      //id: uuidv4(),
       userId: userId,
       questions: testQuestions,
       answers: allAnswers,

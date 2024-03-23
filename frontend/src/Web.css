@@ -96,8 +96,10 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*////////////////////////////////////////LANDING PAGE START///////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-.page-container {
-  /* Style for the page layout */
+.page-container-landing {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* This will make sure your page takes up at least the full height of the viewport */
 } 
 
 .main-content {
@@ -147,18 +149,21 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #6dbcb9;
+  background-color: #595757;
   height: 400px;
   margin: 0 20px;
   width: 10px
 }
 
 .content-container-landing {
+  flex: 1; /* This will allow the content container to expand and fill the available space */
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-top: 80px; 
 }
+
 
 .links-and-started {
   display: flex;
@@ -292,8 +297,8 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #000; /* Assuming a dark footer */
-  color: #fff; /* Light text */
+  background-color: #595757; /* Assuming a dark footer */
+  color: #450c71; /* Light text */
   padding: 20px 0;
 }
 

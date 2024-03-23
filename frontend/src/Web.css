@@ -299,8 +299,7 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #595757; /* Assuming a dark footer */
-  color: #450c71; /* Light text */
+  background-color: #595757; /* footer background color */
   padding: 20px 0;
 }
 
@@ -319,10 +318,11 @@ a:hover{
 
 .footer-section h3 {
   margin-bottom: 10px;
+  color: #450c71; /* footer header colors */
 }
 
 .footer-section a {
-  color: #fff; /* Light links */
+  color: #fff; /*link colors */
   text-decoration: none;
   margin-bottom: 5px; /* Spacing between links */
 }
@@ -333,6 +333,7 @@ a:hover{
 
 .footer-section p {
   margin-top: 10px;
+  color: #fff; /*copyrite color*/
 }
 
 @media (max-width: 768px) {

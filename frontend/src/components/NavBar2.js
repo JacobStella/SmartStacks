@@ -1,19 +1,16 @@
 import React from 'react';
-import { LinkContainer } from 'react-router-bootstrap'; // Import LinkContainer
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Make sure to import Link
+import { LinkContainer } from 'react-router-bootstrap';
 
 const NavBar2 = () => {
   return (
     <Navbar bg="light" expand="lg">
-      {/* Use LinkContainer for the brand/logo redirect */}
       <LinkContainer to="/home">
         <Navbar.Brand>YourBrand</Navbar.Brand>
       </LinkContainer>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto">
-          {/* Use LinkContainer for navigation links */}
           <LinkContainer to="/landing">
             <Nav.Link>Home</Nav.Link>
           </LinkContainer>
@@ -26,8 +23,8 @@ const NavBar2 = () => {
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          {/* Utilize Link for the search button if it redirects to a search page. Otherwise, handle the search logic within an onClick handler. */}
-          <Button variant="outline-success" as={Link} to="/search">Search</Button>
+          {/* The search button will need functionality to handle the search query */}
+          <Button variant="outline-success">Search</Button>
         </Form>
       </Navbar.Collapse>
     </Navbar>
@@ -35,6 +32,7 @@ const NavBar2 = () => {
 };
 
 export default NavBar2;
+
 
 
 

@@ -149,7 +149,7 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #6dbcb9;
+  background-color: #595757;
   height: 400px;
   margin: 0 20px;
   width: 10px
@@ -297,8 +297,8 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #000; /* Assuming a dark footer */
-  color: #fff; /* Light text */
+  background-color: #595757; /* Assuming a dark footer */
+  color: #450c71; /* Light text */
   padding: 20px 0;
 }
 

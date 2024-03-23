@@ -207,10 +207,11 @@ a:hover{
 /* Additional styling for the navigation bar */
 .navbar {
   align-items: center;
-  background-color: #222222;
+  background-color: #595757;
   display: flex;
   height: 60px;
   padding: 0 20px;
+  background: linear-gradient(to bottom, #595757, #333333);
 }
 
 .nav-buttons-container {

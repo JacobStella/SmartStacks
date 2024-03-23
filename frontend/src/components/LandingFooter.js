@@ -22,7 +22,7 @@ const LandingFooter = () => {
                     <h3>Legal</h3>
                     <Link to="/terms">Terms of Use</Link>
                     <Link to="/privacy">Privacy Policy</Link>
-                    <p>&copy; {new Date().getFullYear()} Sunworks Inc. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Skunkworks Inc. All rights reserved.</p>
                 </div>
             </div>
         </footer>

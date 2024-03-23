@@ -89,6 +89,7 @@ const Register = () => {
             justifyContent: 'center',
             alignItems: 'center',
             width: '40%',
+            marginTop: "50%"
         },
         inputContainer: {
             width: '100%',
@@ -103,6 +104,10 @@ const Register = () => {
             borderWidth: 1,
             borderRadius: 5,
             paddingLeft: 10,
+            marginBottom: 20,
+        },
+        space: {
+            marginBottom: 20,
         },
     });
 

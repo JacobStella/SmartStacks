@@ -159,6 +159,7 @@ a:hover{
   flex: 1; /* This will allow the content container to expand and fill the available space */
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   margin-top: 80px; 
 }

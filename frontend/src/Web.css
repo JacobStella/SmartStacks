@@ -121,7 +121,7 @@ a:hover{
   /* Style for the get started section */
   margin: 10px;
   padding: 20px;
-  color: #508911;
+  color: #508991;
   /* Any additional styling */
 }
 
@@ -151,7 +151,7 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #508911;
+  background-color: #508991;
   height: 400px;
   margin: 0 20px;
   width: 10px
@@ -307,7 +307,7 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #508911; /* footer background color */
+  background-color: #508991; /* footer background color */
   padding: 20px 0;
 }
 

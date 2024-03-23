@@ -98,7 +98,7 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 .page-container-landing {
   display: flex;
-  background-color: #595757;
+  background-color: #d8dcff;
   flex-direction: column;
   min-height: 100vh; /* This will make sure your page takes up at least the full height of the viewport */
 } 
@@ -121,7 +121,7 @@ a:hover{
   /* Style for the get started section */
   margin: 10px;
   padding: 20px;
-  color: #fff;
+  color: #508911;
   /* Any additional styling */
 }
 
@@ -151,7 +151,7 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #fff;
+  background-color: #508911;
   height: 400px;
   margin: 0 20px;
   width: 10px
@@ -207,11 +207,10 @@ a:hover{
 /* Additional styling for the navigation bar */
 .navbar {
   align-items: center;
-  background-color: #595757;
+  background-color: #508991;
   display: flex;
   height: 60px;
   padding: 0 20px;
-  background: linear-gradient(to bottom, #595757, #333333);
 }
 
 .nav-buttons-container {
@@ -222,7 +221,7 @@ a:hover{
 
 .navbar .nav-button {
   border-radius: 5px;
-  color: #450c71;
+  color: #172a3a;
   cursor: pointer;
   font-family: Arial Rounded MT Bold,sans-serif;
   font-size: 20px;
@@ -246,10 +245,10 @@ a:hover{
 }
 
 .search-bar input[type=text] {
-  background-color: #0d1117;
-  border: 1px solid #450c71;
+  background-color: #172a3a;
+  border: 1px solid #004346;
   border-radius: 5px;
-  box-shadow: 0 0 2px 2px #2d034d;
+  box-shadow: 0 0 2px 2px #004346;
   color: #6d85a5;
   height: 30px;
   padding: 6px 10px;
@@ -258,13 +257,13 @@ a:hover{
 }
 
 .search-bar input[type=text]:focus {
-  border-color: #61248f; 
+  border-color: #014b4f; 
   color: #fff;
   outline: none;
 }
 
 .search-bar button {
-  background-color: #450c71;
+  background-color: #172a3a;
   border: none;
   border-radius: 5px;
   color: #fff;
@@ -308,9 +307,8 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #333333; /* footer background color */
+  background-color: #508911; /* footer background color */
   padding: 20px 0;
-  background: linear-gradient(0deg, #595757, #333);
 }
 
 .footer-container {
@@ -328,7 +326,7 @@ a:hover{
 
 .footer-section h3 {
   margin-bottom: 10px;
-  color: #450c71; /* footer header colors */
+  color: #172a3a; /* footer header colors */
 }
 
 .footer-section a {

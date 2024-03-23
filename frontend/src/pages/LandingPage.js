@@ -11,7 +11,8 @@ const LandingPage = () => {
     
     return (
         
-
+<div className="page-container">
+            <NavBar2 />
 <div className="content-container"> 
 <div className="links-and-started">
     <div className="link-grid">
@@ -34,6 +35,7 @@ const LandingPage = () => {
     </div>
     <div className="vertical-line"></div>
     <GetStarted />
+</div>
 </div>
 </div>
         
@@ -73,6 +75,6 @@ export default LandingPage;
                 </div>
             </div>
             </div>
-        </div>
+        
             
             */}

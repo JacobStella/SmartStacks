@@ -43,6 +43,10 @@ const submit = async () => {
     }
 };
 
+const register = ({navigation}) => {
+   navigation.navigate("Register");
+};
+
     return (
         <View style = {styles.container}>
             <TextInput style = {styles.input}
@@ -54,6 +58,7 @@ const submit = async () => {
             onChangeText = { (input) => formInput("password", input)}/>
 
         <Button title = "Submit" onPress = {submit} />
+        <Button title = "Register" onPress = {register} />
         </View>
     );
 };

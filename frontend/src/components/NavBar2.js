@@ -13,14 +13,10 @@ const NavBar2 = () => {
                 <input type="text" placeholder="Search..." />
                 <button type="submit">Search</button>
             </div>
+
+            <Link to="/login" className="nav-button">Login</Link>
         </nav>
     );
 };
 
 export default NavBar2;
-
-
-
-
-
-

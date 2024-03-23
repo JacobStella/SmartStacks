@@ -13,7 +13,7 @@ const LandingPage = () => {
         
 <div className="page-container">
             <NavBar2 />
-<div className="content-container"> 
+<div className="content-container-landing"> 
 <div className="links-and-started">
     <div className="link-grid">
         <div className="link-row">
@@ -44,37 +44,3 @@ const LandingPage = () => {
 
 export default LandingPage;
 
-{/*
-             code relating to the navbar clickable profile pic
-            <NavBar isLoggedIn={isLoggedIn} userProfilePic={userProfilePic} />
-            */}
-{/*
-    code relating to the navbar clickable profile pic
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Default to not logged in
-    const [userProfilePic, setUserProfilePic] = useState('path_to_default_profile_pic.png');
-    */}
-{/*
-
-<div className="page-container">
-            <NavBar2 />
-            <div className="container">
-            <div className="row">
-                <div className="col">
-                    <CreateLink />
-                </div>
-                <div className="col">
-                    <LibraryLink />
-                </div>
-            </div>
-            <div className="row">
-                <div className="col">
-                    <BrowseLink />
-                </div>
-                <div className="col">
-                    <PlayLink />
-                </div>
-            </div>
-            </div>
-        
-            
-            */}

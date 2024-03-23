@@ -37,6 +37,7 @@ const LandingPage = () => {
     <GetStarted />
 </div>
 </div>
+        <LandingFooter />
 </div>
         
     );

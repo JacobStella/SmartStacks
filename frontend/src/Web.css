@@ -254,6 +254,12 @@ a:hover{
   margin-left: 80px
 }
 
+.search-bar input[type=text]:focus {
+  border-color: #61248f; 
+  color: #fff;
+  outline: none;
+}
+
 .search-bar button {
   background-color: #450c71;
   border: none;

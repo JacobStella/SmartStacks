@@ -198,63 +198,76 @@ a:hover{
 
 /* Additional styling for the navigation bar */
 .navbar {
-    align-items: center;
-    background-color: #595757;
-    box-shadow: #0000;
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    padding: 0 20px;
+  align-items: center;
+  background-color: #595757;
+  box-shadow: #0000;
+  display: flex;
+  height: 50px;
+  justify-content: space-between;
+  padding: 0 20px;
 }
 
 .navbar .nav-button {
-    border-radius: 5px;
-    color: #450c71;
-    cursor: pointer;
-    font-family: 'Arial Rounded MT Bold', sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    margin: 0 25px;
+  border-radius: 5px;
+  color: #450c71;
+  cursor: pointer;
+  font-family: 'Arial Rounded MT Bold', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0 25px;
 }
 
 .navbar .nav-button:hover {
-    color: #450c71;
-    background-color: transparent;
-    border: none;
-    text-decoration-color: #0d1117;
+  background-color: initial;
+  border: none;
+  color: #450c71;
+  text-decoration-color: #450c71;
 }
 
 .search-bar {
-    display: flex;
-    flex-grow: 1;
-    justify-content: center;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
 }
 
 .search-bar input[type=text] {
-    background-color: #0d1117;
-    border: 1px solid #450c71;
-    box-shadow: 0 0 2px 2px #2d034d;
-    color: #6d85a5;
-    margin-right: 10px;
-    padding: 10px;
-    width: 50%;
-    border-radius: 5px;
+  background-color: #0d1117;
+  border: 1px solid #450c71;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px #2d034d;
+  color: #6d85a5;
+  margin-right: 10px;
+  padding: 10px;
+  padding: 6px 10px; /* Adjust padding to make it shorter */
+  width: 50%;
+  height: 30px; /* Adjust height to make it shorter */
 }
 
 .search-bar button {
-    background-color: #450c71;
-    border: none;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-    padding: 8px 15px;
+  background-color: #450c71;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  padding: 8px 15px;
 }
 
 .search-bar button:hover {
-    background-color: #61248f;
-    text-decoration: underline;
-    text-decoration-color: #0d1117;
+  background-color: #61248f;
+  text-decoration: underline;
+  text-decoration-color: #0d1117
 }
 
+@media (max-width: 768px) { /* You can adjust the 768px to the point where your navbar begins to wrap */
+.navbar {
+  flex-wrap: nowrap;
+  overflow-x: auto; /* This will allow horizontal scrolling on smaller screens */
+}
+
+.navbar .nav-button {
+  margin: 0 10px; /* Reduce margin on smaller screens if necessary */
+  font-size: 16px; /* You can also reduce the font size on smaller screens if necessary */
+}
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////NAVBAR END//////////////////////////////////////////////////////*/

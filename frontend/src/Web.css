@@ -308,8 +308,9 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #595757; /* footer background color */
+  background-color: #333333; /* footer background color */
   padding: 20px 0;
+  background: linear-gradient(0deg, #595757, #333);
 }
 
 .footer-container {

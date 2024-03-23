@@ -1,5 +1,5 @@
 import React from 'react';
-import AppNavbar from '../components/AppNavbar';
+import NavBar2 from '../components/NavBar2';
 import CreateLink from '../components/CreateLink'; 
 import LibraryLink from '../components/LibraryLink'; 
 import BrowseLink from '../components/BrowseLink'; 
@@ -11,7 +11,7 @@ const LandingPage = () => {
     
     return (
         <div className="page-container">
-            <AppNavbar />
+            <NavBar2 />
             <div className="container">
             <div className="row">
                 <div className="col">

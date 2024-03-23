@@ -12,7 +12,7 @@ const LandingPage = () => {
     
     return (
         
-<div className="page-container">
+<div className="page-container-landing">
             <NavBar2 />
 <div className="content-container-landing"> 
 <div className="links-and-started">

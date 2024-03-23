@@ -120,6 +120,7 @@ a:hover{
   /* Style for the get started section */
   margin: 10px;
   padding: 20px;
+  color: #fff;
   /* Any additional styling */
 }
 
@@ -149,7 +150,7 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #595757;
+  background-color: #fff;
   height: 400px;
   margin: 0 20px;
   width: 10px
@@ -162,6 +163,7 @@ a:hover{
   justify-content: center;
   align-items: center;
   margin-top: 80px; 
+  background-color: #595757;
 }
 
 

@@ -297,8 +297,8 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 .landingFooter {
-  background-color: #595757; /* Assuming a dark footer */
-  color: #450c71; /* Light text */
+  background-color: #595757; /* footer background color */
+  color: #450c71; /* footer header colors */
   padding: 20px 0;
 }
 
@@ -320,7 +320,7 @@ a:hover{
 }
 
 .footer-section a {
-  color: #fff; /* Light links */
+  color: #0d1117; /* Light links */
   text-decoration: none;
   margin-bottom: 5px; /* Spacing between links */
 }

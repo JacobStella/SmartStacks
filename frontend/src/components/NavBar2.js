@@ -1,37 +1,44 @@
 import React from 'react';
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button, Container } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 
 const NavBar2 = () => {
   return (
     <Navbar bg="light" expand="lg">
-      <LinkContainer to="/home">
-        <Navbar.Brand>YourBrand</Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav">
-        <Nav className="mr-auto">
-          <LinkContainer to="/landing">
-            <Nav.Link>Home</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/library">
-            <Nav.Link>Library</Nav.Link>
-          </LinkContainer>
-          <LinkContainer to="/create">
-            <Nav.Link>Create</Nav.Link>
-          </LinkContainer>
-        </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          {/* The search button will need functionality to handle the search query */}
-          <Button variant="outline-success">Search</Button>
-        </Form>
-      </Navbar.Collapse>
+      <Container>
+        <LinkContainer to="/home">
+          <Navbar.Brand>YourBrand</Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
+          <Nav className="me-auto">
+            <LinkContainer to="/landing">
+              <Nav.Link>Home</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/library">
+              <Nav.Link>Library</Nav.Link>
+            </LinkContainer>
+            <LinkContainer to="/create">
+              <Nav.Link>Create</Nav.Link>
+            </LinkContainer>
+          </Nav>
+          <Form className="d-flex">
+            <FormControl
+              type="search"
+              placeholder="Search"
+              className="me-2"
+              aria-label="Search"
+            />
+            <Button variant="outline-success">Search</Button>
+          </Form>
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 };
 
 export default NavBar2;
+
 
 
 

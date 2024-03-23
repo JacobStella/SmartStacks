@@ -49,20 +49,20 @@ const LandingPage = () => {
             </div>
             */}
 
-            <div class="container">
-            <div class="row">
-                <div class="col">
+            <div className="container">
+            <div className="row">
+                <div className="col">
                     <CreateLink />
                 </div>
-                <div class="col">
+                <div className="col">
                     <LibraryLink />
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
+            <div className="row">
+                <div className="col">
                     <BrowseLink />
                 </div>
-                <div class="col">
+                <div className="col">
                     <PlayLink />
                 </div>
             </div>

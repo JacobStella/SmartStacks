@@ -13,7 +13,7 @@ body {
   line-height: 1.6;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background-color: #d8dcff;
   color: #333;
 }
 
@@ -458,5 +458,94 @@ button:hover {
 
 /* Further styling can be added as needed to match the exact design */
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////create card END//////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////create card END/////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////login/register Start//////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* Web.css */
+
+/* Styles for the username input */
+#loginName {
+  /* Add your specific styles for the username input here */
+  background-color: #172a3a;
+  border: 1px solid #004346;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px #004346;
+  color: #6d85a5;
+  width: 100%; /* Example: make the input full width */
+  padding: 10px; /* Example: add padding for better text input */
+  margin-bottom: 10px; /* Example: add some space below the input */
+}
+
+/* Styles for the password input */
+#loginPassword {
+  /* Add your specific styles for the password input here */
+  background-color: #172a3a;
+  border: 1px solid #004346;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px #004346;
+  color: #6d85a5;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Styles for the submit button */
+#loginButton {
+  /* Add your specific styles for the submit button here */
+  background-color: #172a3a; /* Example: a nice blue background */
+  color: white; /* Example: text color for the button */
+  border: none; /* Example: remove the default border */
+  padding: 10px 20px; /* Example: add padding to increase the button size */
+  cursor: pointer; /* Example: show a pointer cursor on hover */
+  display: block; /* Example: block-level element to occupy its own line */
+  margin: auto; /* Example: center the button if the parent is also centered */
+}
+
+/* Adding a hover effect for the button */
+#loginButton:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive design: Adjusting the width of inputs on smaller screens */
+@media (max-width: 768px) {
+  #loginName,
+  #loginPassword,
+  #loginButton {
+    width: 90%; /* Slightly smaller width on small screens */
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

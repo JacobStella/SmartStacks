@@ -3,6 +3,15 @@ import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../Web.css';
 
+const CardPair = ({ number }) => (
+  <div className="term-definition-pair">
+    <div className="number">{number}</div>
+    <input type="text" placeholder="Enter term" className="term-input" />
+    <input type="text" placeholder="Enter definition" className="definition-input" />
+    <div className="image-placeholder">IMAGE</div>
+  </div>
+);
+
 const LandingPage = () => {
   return (
     <div className="page-container-landing">
@@ -21,9 +30,10 @@ const LandingPage = () => {
         </div>
 
         <div className="terms-container">
-          <TermDefinitionPair number={1} />
-          <TermDefinitionPair number={2} />
-          {/* Add more TermDefinitionPair components as needed */}
+          {/* Updated component names to CardPair */}
+          <CardPair number={1} />
+          <CardPair number={2} />
+          {/* Add more CardPair components as needed */}
         </div>
 
         <button className="create-button">Create</button>

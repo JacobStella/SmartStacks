@@ -507,10 +507,13 @@ button:hover {
 @media (max-width: 768px) {
   #loginName,
   #loginPassword,
-  #loginButton {
-    max-width: 90%; /* Take up to 90% of the screen width on small screens */
+  #loginButton,
+  .login-container form {
+    width: 100%;
+    max-width: 400px; /* Adjust for smaller screens */
   }
 }
+
 
 /* Centering container */
 /* This will be the parent container of your login elements */
@@ -576,7 +579,12 @@ input[type="submit"] {
   flex-direction: column;
   justify-content: space-between; /* This will push the footer to the bottom */
   min-height: 100vh;
+  margin: auto;
+  padding: 20px;
 }
+
+
+
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/

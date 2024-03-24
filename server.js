@@ -240,15 +240,16 @@ function shuffle(array) {
 }
 
 // Define the getIncorrectAnswers function to get three incorrect answers for each question
-function getIncorrectAnswers(correctAnswer, currentQuestion, userCards) {
-  const incorrectAnswers = userCards
-    .filter((card) => card.Term !== correctAnswer && card.Definition !== currentQuestion)
-    .map((card) => card.Term)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
+function getIncorrectAnswers(correctAnswer, otherCards) {
+  // Select "Definition" from other cards, ensuring they are not the same as the correct answer
+  const incorrectAnswers = otherCards
+    .map(card => card.Definition)
+    .filter(definition => definition !== correctAnswer)
+    .sort(() => 0.5 - Math.random()); // Shuffle to randomize the selection
 
-  return incorrectAnswers;
+  return incorrectAnswers.slice(0, 3); // Return only 3 incorrect answers
 }
+
 
 function generateTestId() {
   const timestamp = Date.now().toString();
@@ -276,20 +277,21 @@ app.post('/api/test', async (req, res) => {
     // Shuffle the cards to randomize which cards are selected for the test
     shuffle(userCards);
 
-    for (let i = 0; i < 5; i++) {
-      const card = userCards[i];
-      const correctAnswer = card.Definition;
+    // Ensure a diverse selection of questions and answers
+    userCards.slice(0, 5).forEach((card, index, arr) => {
       const question = card.Term;
+      const correctAnswer = card.Definition;
       
-      let incorrectAnswers = getIncorrectAnswers(correctAnswer, question, userCards);
-      
-      // Ensure we have exactly 3 incorrect answers
-      incorrectAnswers = incorrectAnswers.slice(0, 3);
+      // Filter out the current card to avoid using its definition as an incorrect answer
+      const otherCards = arr.filter(c => c.Term !== question);
+      let incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
 
+      // Make sure we only have 3 incorrect answers and shuffle them with the correct one
+      incorrectAnswers = incorrectAnswers.slice(0, 3);
       const answers = shuffle([correctAnswer, ...incorrectAnswers]);
 
       testQuestions.push({ question, answers });
-    }
+    });
 
     const testId = generateTestId();
     const userTest = {
@@ -301,10 +303,9 @@ app.post('/api/test', async (req, res) => {
     // Insert the generated test into the 'Test' collection
     await db.collection('Test').insertOne(userTest);
 
-    // Return test data but omit the correct answers to maintain test integrity
     const returnTestData = {
       testId: userTest.testId,
-      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
+      questions: testQuestions,
     };
 
     res.status(200).json({ test: returnTestData, error: '' });
@@ -313,6 +314,7 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

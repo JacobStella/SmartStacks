@@ -322,35 +322,43 @@ app.post('/api/test', async (req, res) => {
 
 app.post('/api/validate-test', async (req, res) => {
   const { testId, userAnswers } = req.body;
+  console.log('Received testId:', testId); // Log the received testId
 
   if (!testId || !userAnswers) {
+    console.log('Validation error: Missing testId or userAnswers');
     return res.status(400).json({ error: 'testId and userAnswers are required' });
   }
 
   try {
     const db = client.db("Group3LargeProject");
-    // Ensure the property used to find the test matches how it's stored
-    const test = await db.collection('Test').findOne({ testId: testId }); 
+    console.log(`Looking for test with testId: ${testId}`);
+    const test = await db.collection('Test').findOne({ testId: testId });
 
+    console.log('Test query result:', test); // Log the result of the query
     if (!test) {
+      console.log('Test not found in the database');
       return res.status(400).json({ error: 'Test not found' });
     }
 
     let score = 0;
 
-    // Iterate over the correct answers and compare them to the user's answers
+    // Debugging: Verify the structure of the correct answers
+    console.log('Correct answers from the test:', test.correctAnswers);
     test.correctAnswers.forEach((correctAnswer, index) => {
+      console.log(`Checking answer ${index + 1}:`, userAnswers[index], correctAnswer);
       if (userAnswers[index] === correctAnswer) {
         score++; // Increment score for each correct answer
       }
     });
 
+    console.log(`Final score for testId ${testId}:`, score);
     res.status(200).json({ score: score, error: '' });
   } catch (error) {
-    console.error('Error validating test answers', error);
+    console.error('Error validating test answers:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

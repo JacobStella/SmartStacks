@@ -249,7 +249,7 @@ function getIncorrectAnswers(correctAnswer, otherCards) {
 
   return incorrectAnswers.slice(0, 3); // Return only 3 incorrect answers
 }
-
+ 
 
 function generateTestId() {
   const timestamp = Date.now().toString();

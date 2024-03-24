@@ -375,56 +375,82 @@ a:hover{
 
 
 
-.card-pair {
-  background-color: #2a2a2a; /* Dark rectangle */
-  border: 1px solid #333; /* Slightly lighter border for definition */
-  margin-bottom: 15px; /* Space between card pairs */
-}
 
-.card-pair-header {
-  display: flex;
-  justify-content: space-between;
-  padding: 5px 10px;
-  background-color: #1a1a1a; /* Darker header */
-}
 
-.card-pair-number {
-  font-weight: bold;
-}
 
-.card-pair-actions button {
-  background: none;
-  border: none;
+.create-study-set-container {
+  background-color: #1e1e1e; /* Dark background */
   color: white;
-  cursor: pointer;
+  padding: 20px;
+  max-width: 800px; /* Adjust as needed */
+  margin: auto;
 }
 
-.card-pair-body {
-  display: flex;
-  padding: 10px;
-}
-
-.card-pair-body > input {
-  flex: 1; /* Inputs take up the available space */
-  margin: 0 10px;
-  background-color: #333; /* Darker input background */
-  color: white;
-  border: none;
-  padding: 10px;
-}
-
-.divider {
-  background-color: #333; /* Divider color */
-  width: 2px; /* Divider width */
-  margin: 0 10px; /* Space around the divider */
-}
-
-.image-upload-button {
-  cursor: pointer;
-  padding: 10px;
+.title-input, .description-textarea, .university-input, .course-input {
   background-color: #333;
+  border: none;
   color: white;
-  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+}
+
+.description-textarea {
+  height: 100px; /* Adjust as needed */
+}
+
+.import-options button {
+  background-color: #555;
+  color: white;
+  border: none;
+  margin-right: 10px;
+  padding: 10px 15px;
+}
+
+.term-definition-pair {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.number {
+  margin-right: 10px;
+  color: #aaa; /* Light grey for the number */
+}
+
+.term-input, .definition-input {
+  background-color: #333;
+  border: none;
+  color: white;
+  margin-right: 10px;
+  padding: 10px;
+  flex: 1; /* Allows inputs to fill space */
+}
+
+.image-placeholder {
+  width: 60px; /* Adjust as needed */
+  height: 60px; /* Adjust as needed */
+  background-color: #555; /* Placeholder color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-button {
+  background-color: #4caf50; /* Adjust the color as needed */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+/* Apply global styles for buttons */
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
 }
 
 /* Add more CSS for the rest of the styles, such as hover effects */

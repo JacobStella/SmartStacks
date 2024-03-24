@@ -553,31 +553,22 @@ input[type="submit"] {
   justify-content: center;
 }
 
+.root-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  background-color: #f0f0f0; /* Or any other color you prefer */
+}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.login-container {
+  width: 100%; /* Full width on smaller screens */
+  max-width: 400px; /* Adjust this to fit your design */
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
+  background-color: white; /* Or any other color, matching your design */
+  border-radius: 5px; /* Optional: Rounds the corners for a softer look */
+}
 
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

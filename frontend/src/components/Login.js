@@ -80,7 +80,8 @@ function Login()
             <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
             <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
             <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
-            <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
+            <span id="inner-title">Don't have an account?</span> <Link to="/register">Register</Link>
+
         </form>
         <span id="loginResult">{message}</span>
     </div>

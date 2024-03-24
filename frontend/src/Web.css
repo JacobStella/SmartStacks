@@ -470,46 +470,37 @@ button:hover {
 /* Web.css */
 
 /* Styles for the username input */
-#loginName {
-  /* Add your specific styles for the username input here */
-  background-color: #172a3a;
-  border: 1px solid #004346;
-  border-radius: 5px;
-  box-shadow: 0 0 2px 2px #004346;
-  color: #6d85a5;
-  width: 100%; /* Example: make the input full width */
-  padding: 10px; /* Example: add padding for better text input */
-  margin-bottom: 10px; /* Example: add some space below the input */
-}
+/* Web.css */
 
-/* Styles for the password input */
+/* Common styles for inputs */
+#loginName,
 #loginPassword {
-  /* Add your specific styles for the password input here */
   background-color: #172a3a;
   border: 1px solid #004346;
   border-radius: 5px;
   box-shadow: 0 0 2px 2px #004346;
   color: #6d85a5;
-  width: 100%;
+  width: 100%; /* Full width to fit parent */
+  max-width: 300px; /* Maximum width of the input fields */
   padding: 10px;
   margin-bottom: 10px;
 }
 
 /* Styles for the submit button */
 #loginButton {
-  /* Add your specific styles for the submit button here */
-  background-color: #172a3a; /* Example: a nice blue background */
-  color: white; /* Example: text color for the button */
-  border: none; /* Example: remove the default border */
-  padding: 10px 20px; /* Example: add padding to increase the button size */
-  cursor: pointer; /* Example: show a pointer cursor on hover */
-  display: block; /* Example: block-level element to occupy its own line */
-  margin: auto; /* Example: center the button if the parent is also centered */
+  background-color: #172a3a;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Match the input fields */
+  padding: 10px 20px;
+  cursor: pointer;
+  display: block;
+  max-width: 300px; /* Maximum width of the button */
+  margin: 10px auto; /* Center the button with automatic horizontal margins */
 }
 
-/* Adding a hover effect for the button */
 #loginButton:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #0056b3;
 }
 
 /* Responsive design: Adjusting the width of inputs on smaller screens */
@@ -517,9 +508,29 @@ button:hover {
   #loginName,
   #loginPassword,
   #loginButton {
-    width: 90%; /* Slightly smaller width on small screens */
+    max-width: 90%; /* Take up to 90% of the screen width on small screens */
   }
 }
+
+/* Centering container */
+#loginDiv {
+  display: flex; /* Using flexbox for centering */
+  flex-direction: column; /* Align children vertically */
+  align-items: center; /* Center children horizontally */
+  justify-content: center; /* Center children vertically */
+}
+
+/* Style the background of the entire page */
+/* You need to add this class to the root div of your application */
+.root {
+  background-color: #f0f0f0; /* Your desired background color */
+  min-height: 100vh; /* Full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
 
 
 

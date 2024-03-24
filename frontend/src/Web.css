@@ -239,8 +239,8 @@ a:hover{
 .navbar .nav-button:hover {
   background-color: initial;
   border: none;
-  color: #450c71;
-  text-decoration-color: #450c71;
+  color: #014b4f;
+  text-decoration-color: #014b4f;
 }
 
 .search-bar {
@@ -281,9 +281,9 @@ a:hover{
 }
 
 .search-bar button:hover {
-  background-color: #61248f;
+  background-color: #014b4f;
   text-decoration: underline;
-  text-decoration-color: #0d1117;
+  text-decoration-color: #fff;
 }
 
 @media (max-width: 768px) {

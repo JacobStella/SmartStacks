@@ -563,10 +563,11 @@ input[type="submit"] {
 
 .login-container {
   width: 100%; /* Full width on smaller screens */
-  max-width: 400px; /* Adjust this to fit your design */
+  max-width: 800px; /* Adjust this to fit your design */
+  max-height: 800px;
   padding: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
-  background-color: white; /* Or any other color, matching your design */
+  background-color: d8dcff; /* Or any other color, matching your design */
   border-radius: 5px; /* Optional: Rounds the corners for a softer look */
 }
 

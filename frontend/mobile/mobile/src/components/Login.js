@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Button, StyleSheet, TextInput, View} from "react-native";
+import {Button, SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [data, newData] = useState({
         userName: "",
         password: ""
@@ -43,7 +43,7 @@ const submit = async () => {
     }
 };
 
-const register = ({navigation}) => {
+const register = () => {
    navigation.navigate("Register");
 };
 

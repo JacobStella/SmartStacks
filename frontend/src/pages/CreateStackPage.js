@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../Web.css';
@@ -13,29 +13,30 @@ const CardPair = ({ number }) => (
 );
 
 const LandingPage = () => {
+  const [cardPairs, setCardPairs] = useState([1, 2, 3]); // Initial card pair numbers
+
+  // Function to add a new card pair
+  const addCardPair = () => {
+    setCardPairs([...cardPairs, cardPairs.length + 1]);
+  };
+
   return (
     <div className="page-container-landing">
       <NavBar2 />
       <div className="create-study-set-container">
         <h1>Create a new study set</h1>
-        <input type="text" placeholder="Enter a title, like “Biology - Chapter 22: Evolution”" className="title-input" />
-        <textarea placeholder="Add a description..." className="description-textarea"></textarea>
-        <input type="text" placeholder="University of Central Florida - Orlando, FL" className="university-input" />
+        <input type="text" placeholder="Title" className="title-input" />
+        <textarea placeholder="Description..." className="description-textarea"></textarea>
+        <input type="text" placeholder="Folder Name" className="university-input" />
         <input type="text" placeholder="Enter the course code or name or select it from the list" className="course-input" />
-        
-        <div className="import-options">
-          <button>Import</button>
-          <button>Add diagram</button>
-          <button>Create from notes</button>
-        </div>
 
         <div className="terms-container">
-          {/* Updated component names to CardPair */}
-          <CardPair number={1} />
-          <CardPair number={2} />
-          {/* Add more CardPair components as needed */}
+          {cardPairs.map((number) => (
+            <CardPair key={number} number={number} />
+          ))}
         </div>
 
+        <button onClick={addCardPair} className="add-card-button">+ Add Card</button>
         <button className="create-button">Create</button>
       </div>
       <LandingFooter />

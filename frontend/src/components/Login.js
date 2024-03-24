@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 //thi is a test
 function toRegister(){
     window.location.href = '/register';
@@ -8,7 +9,7 @@ function Login()
 {
     var loginName;
     var loginPassword;
-
+    const navigate = useNavigate();
     const [message,setMessage] = useState('');
     const app_name = 'largeprojectgroup3-efcc1eed906f'
     
@@ -48,7 +49,9 @@ function Login()
                 var user = {firstName:res.firstName, lastName:res.lastName, id:res.id};
                 localStorage.setItem('user_data', JSON.stringify(user)); //stores users info for later use
                 setMessage(''); //wtf is this for 
-                window.location.href = '/landing'; // this will have to be changed is this is a popup, OR if this is a seperate page. We want to return to the page login called from
+                const preLoginPath = localStorage.getItem('preLoginPath') || '/';
+                localStorage.removeItem('preLoginPath'); // Clean up after retrieval
+                navigate(preLoginPath); // Redirect the user
             }
             else if(response.status === 400) // Incorrect credentials
             {

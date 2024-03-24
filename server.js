@@ -231,6 +231,13 @@ app.get('/api/search', async (req, res) => {
 
 //const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
 
+function generateTestId() {
+  const timestamp = Date.now().toString();
+  const randomPortion = Math.random().toString(36).substring(2, 15);
+  return timestamp + randomPortion;
+}
+
+
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -239,22 +246,13 @@ function shuffle(array) {
   return array;
 }
 
-// Define the getIncorrectAnswers function to get three incorrect answers for each question
-function getIncorrectAnswers(correctAnswer, otherCards) {
-  // Select "Definition" from other cards, ensuring they are not the same as the correct answer
-  const incorrectAnswers = otherCards
-    .map(card => card.Definition)
-    .filter(definition => definition !== correctAnswer)
-    .sort(() => 0.5 - Math.random()); // Shuffle to randomize the selection
-
-  return incorrectAnswers.slice(0, 3); // Return only 3 incorrect answers
-}
- 
-
-function generateTestId() {
-  const timestamp = Date.now().toString();
-  const randomPortion = Math.random().toString(36).substring(2, 15);
-  return timestamp + randomPortion;
+function getIncorrectAnswers(correctAnswer, allCards) {
+  // Shuffle to randomize the order before slicing
+  const shuffledCards = shuffle(allCards);
+  
+  return shuffledCards.filter(card => card.Definition !== correctAnswer)
+                      .map(card => card.Definition)
+                      .slice(0, 3); // Get only 3 incorrect answers
 }
 
 app.post('/api/test', async (req, res) => {
@@ -272,9 +270,6 @@ app.post('/api/test', async (req, res) => {
       return res.status(400).json({ error: 'User has less than 5 cards' });
     }
 
-    // For debugging: Directly check a sample card
-    console.log("Sample Card:", userCards[0]);
-
     shuffle(userCards); // Shuffle the cards
     userCards = userCards.slice(0, 5); // Limit to first 5 cards after shuffle
 
@@ -285,33 +280,31 @@ app.post('/api/test', async (req, res) => {
       const question = card.Term;
       const correctAnswer = card.Definition;
 
-      // Debugging: Verify the correct answer at this point
-      console.log(`Question: ${question}, Correct Answer: ${correctAnswer}`);
+      // Get other cards to find incorrect answers
+      const otherCards = userCards.filter(c => c.Term !== question);
+      const incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
 
-      // Simplify the process: Use placeholder incorrect answers for debugging
-      const answers = [correctAnswer, "Incorrect 1", "Incorrect 2", "Incorrect 3"];
-      shuffle(answers);
+      // Combine correct answer with incorrect ones and shuffle
+      const answers = shuffle([correctAnswer, ...incorrectAnswers]);
 
       testQuestions.push({ question, answers });
       correctAnswers.push(correctAnswer);
     });
 
-    const testId = generateTestId();
+    const testId = generateTestId(); // A function to generate a unique testId
     const userTest = {
       testId,
       userId,
       questions: testQuestions,
-      correctAnswers, // Directly use the populated correctAnswers array
+      correctAnswers, // Store the correct answers for validation
     };
-
-    // Debugging: Verify the final structure before saving
-    console.log("User Test Object:", userTest);
 
     await db.collection('Test').insertOne(userTest);
 
+    // Return test object without the correct answers
     const returnTestData = {
       testId: userTest.testId,
-      questions: userTest.questions,
+      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
     };
 
     res.status(200).json({ test: returnTestData, error: '' });
@@ -320,6 +313,7 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

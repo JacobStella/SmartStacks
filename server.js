@@ -231,61 +231,84 @@ app.get('/api/search', async (req, res) => {
 
 //const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
 
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// Define the getIncorrectAnswers function to get three incorrect answers for each question
+function getIncorrectAnswers(correctAnswer, currentQuestion, userCards) {
+  const incorrectAnswers = userCards
+    .filter((card) => card.Term !== correctAnswer && card.Definition !== currentQuestion)
+    .map((card) => card.Term)
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
+
+  return incorrectAnswers;
+}
+
+function generateTestId() {
+  const timestamp = Date.now().toString();
+  const randomPortion = Math.random().toString(36).substring(2, 15);
+  return timestamp + randomPortion;
+}
+
 app.post('/api/test', async (req, res) => {
-  const { userId } = req.body;
+const { userId } = req.body;
 
-  if (!userId) {
-    return res.status(400).json({ error: 'userId is required' });
+if (!userId) {
+  return res.status(400).json({ error: 'userId is required' });
+}
+
+try {
+  const db = client.db("Group3LargeProject");
+  const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+
+  if (userCards.length < 5) {
+    return res.status(400).json({ error: 'User has less than 5 cards' });
   }
 
-  try {
-    const db = client.db("Group3LargeProject");
-    const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+  let testQuestions = [];
+  let testAnswers = [];
 
-    if (userCards.length < 5) {
-      return res.status(400).json({ error: 'User has less than 5 cards' });
-    }
+  userCards.forEach(card => {
+    let incorrectAnswers = getIncorrectAnswers(card.Term, card.Definition, userCards);
+    let answers = shuffle([...incorrectAnswers, card.Term]);
+    testQuestions.push({ question: card.Definition, correctAnswer: card.Term, answers });
+  });
 
-    let testQuestions = [];
-    let testAnswers = [];
+  // Randomly select 5 questions for the test
+  testQuestions = shuffle(testQuestions).slice(0, 5);
+  testAnswers = testQuestions.map(q => q.correctAnswer);
 
-    userCards.forEach(card => {
-      let incorrectAnswers = getIncorrectAnswers(card.Term, card.Definition, userCards);
-      // Shuffle incorrect answers to mix the correct answer location
-      let answers = shuffle([...incorrectAnswers, card.Term]);
+  const testId = generateTestId(); // Use the new function to generate testId
+  const userTest = {
+    testId: testId,
+    userId: userId,
+    questions: testQuestions.map(q => q.question),
+    answers: testAnswers,
+    fullQuestions: testQuestions,
+  };
 
-      testQuestions.push({ question: card.Definition, correctAnswer: card.Term, answers });
-    });
+  // Insert the generated test into the 'Test' collection
+  await db.collection('Test').insertOne(userTest);
 
-    // Randomly select 5 questions for the test
-    testQuestions = shuffle(testQuestions).slice(0, 5);
-    testAnswers = testQuestions.map(q => q.correctAnswer);
+  const minimalTestData = {
+    testId: userTest.testId,
+    questions: userTest.questions,
+    answerOptions: testQuestions.map(q => q.answers),
+  };
 
-    const testId = uuidv4();
-    const userTest = {
-      testId: testId,
-      userId: userId,
-      questions: testQuestions.map(q => q.question),
-      answers: testAnswers, // Store only the correct answers for validation
-      fullQuestions: testQuestions, // Store full questions for debugging or future use
-    };
-
-    // Insert the generated test into the 'Test' collection
-    await db.collection('Test').insertOne(userTest);
-
-    // Return minimal test data to avoid giving away answers
-    const minimalTestData = {
-      testId: userTest.testId,
-      questions: userTest.questions,
-      answerOptions: testQuestions.map(q => q.answers),
-    };
-
-    res.status(200).json({ test: minimalTestData, error: '' });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
+  res.status(200).json({ test: minimalTestData, error: '' });
+} catch (error) {
+  console.log(error);
+  res.status(500).json({ error: 'Internal server error' });
+}
 });
+
 
 
 app.post('/api/validate-test', async (req, res) => {

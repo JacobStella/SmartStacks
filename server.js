@@ -273,49 +273,49 @@ app.post('/api/test', async (req, res) => {
     }
 
     let testQuestions = [];
+    shuffle(userCards); // Shuffle the cards to randomize which cards are selected for the test
 
-    // Shuffle the cards to randomize which cards are selected for the test
-    shuffle(userCards);
-
-    // Ensure a diverse selection of questions and answers
-    userCards.slice(0, 5).forEach((card, index, arr) => {
+    userCards.slice(0, 5).forEach(card => {
       const question = card.Term;
       const correctAnswer = card.Definition;
-      
+
       // Filter out the current card to avoid using its definition as an incorrect answer
-      const otherCards = arr.filter(c => c.Term !== question);
+      const otherCards = userCards.filter(c => c.Definition !== correctAnswer);
       let incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
 
-      // Make sure we only have 3 incorrect answers and shuffle them with the correct one
-      incorrectAnswers = incorrectAnswers.slice(0, 3);
+      incorrectAnswers = incorrectAnswers.slice(0, 3); // Ensure only 3 incorrect answers are selected
       const answers = shuffle([correctAnswer, ...incorrectAnswers]);
 
       testQuestions.push({ question, answers });
     });
 
+    const correctAnswers = testQuestions.map(q => q.correctAnswer); // Directly map correct answers from testQuestions
+
+    console.log("Correct Answers being stored:", correctAnswers); // Diagnostic logging
+
     const testId = generateTestId();
     const userTest = {
       testId: testId,
       userId: userId,
-      questions: testQuestions.map(q => ({ question: q.question, answers: q.answers })), // Keeps the original format
-      correctAnswers: testQuestions.map(q => q.correctAnswer), // Stores correct answers for validation
+      questions: testQuestions,
+      correctAnswers: correctAnswers, // Ensure correctAnswers are stored
     };
-    
 
-    // Insert the generated test into the 'Test' collection
     await db.collection('Test').insertOne(userTest);
 
+    // Return only necessary data to avoid giving away correct answers
     const returnTestData = {
       testId: userTest.testId,
-      questions: testQuestions,
+      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
     };
 
     res.status(200).json({ test: returnTestData, error: '' });
   } catch (error) {
-    console.log(error);
+    console.error('Error creating test', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

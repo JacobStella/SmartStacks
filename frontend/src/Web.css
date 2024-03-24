@@ -368,3 +368,89 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////FOOTER END//////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////create card start//////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+.create-study-set-container {
+  background-color: #1e1e1e; /* Dark background */
+  color: white;
+  padding: 20px;
+  max-width: 800px; /* Adjust as needed */
+  margin: auto;
+}
+
+.title-input, .description-textarea, .university-input, .course-input {
+  background-color: #333;
+  border: none;
+  color: white;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+}
+
+.description-textarea {
+  height: 100px; /* Adjust as needed */
+}
+
+.import-options button {
+  background-color: #555;
+  color: white;
+  border: none;
+  margin-right: 10px;
+  padding: 10px 15px;
+}
+
+.term-definition-pair {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.number {
+  margin-right: 10px;
+  color: #aaa; /* Light grey for the number */
+}
+
+.term-input, .definition-input {
+  background-color: #333;
+  border: none;
+  color: white;
+  margin-right: 10px;
+  padding: 10px;
+  flex: 1; /* Allows inputs to fill space */
+}
+
+.image-placeholder {
+  width: 60px; /* Adjust as needed */
+  height: 60px; /* Adjust as needed */
+  background-color: #555; /* Placeholder color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.create-button {
+  background-color: #4caf50; /* Adjust the color as needed */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+/* Apply global styles for buttons */
+button {
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Further styling can be added as needed to match the exact design */
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////create card END//////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

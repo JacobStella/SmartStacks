@@ -561,7 +561,7 @@ input[type="submit"] {
   justify-content: center;
   align-items: center;
   min-height: 100vh; /* Ensure it takes up at least the full viewport height */
-  background-color: #f0f0f0; /* Or any other color you prefer */
+  background-color: #d8dcff; /* Or any other color you prefer */
 }
 
 .login-container {

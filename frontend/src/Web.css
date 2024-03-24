@@ -513,12 +513,35 @@ button:hover {
 }
 
 /* Centering container */
+/* This will be the parent container of your login elements */
 #loginDiv {
-  display: flex; /* Using flexbox for centering */
-  flex-direction: column; /* Align children vertically */
-  align-items: center; /* Center children horizontally */
-  justify-content: center; /* Center children vertically */
+  display: flex; /* Establishes a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  align-items: center; /* Centers children along the cross axis (horizontal) */
+  justify-content: center; /* Centers children along the main axis (vertical) */
+  min-height: 100vh; /* Minimum height of 100% of the viewport height */
+  text-align: center; /* Centers the text inside the children elements */
+
+  /* If you have additional padding or specific positioning needs, you can add them here */
+  padding: 20px;
 }
+
+/* Ensure the <body> or root <div> takes up at least the height of the viewport */
+/* If you are using Create React App, this could be applied to the #root or .App class in App.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Centering the contents inside inputs and button */
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+  margin: 10px auto; /* Adds margin on the top and bottom, and auto on the sides for horizontal centering */
+  display: block; /* Makes the input block-level to respect margin auto */
+}
+
 
 /* Style the background of the entire page */
 /* You need to add this class to the root div of your application */

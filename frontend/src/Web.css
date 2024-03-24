@@ -571,6 +571,12 @@ input[type="submit"] {
   border-radius: 5px; /* Optional: Rounds the corners for a softer look */
 }
 
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* This will push the footer to the bottom */
+  min-height: 100vh;
+}
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/

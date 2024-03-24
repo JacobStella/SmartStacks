@@ -1,8 +1,7 @@
 import React, {useState} from "react";
-import { SliderBox } from "react-native-image-slider-box";
 import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
 
-const Register = () => {
+const Register = (navigation) => {
     const [data, newData] = useState({
         firstName: "",
         lastName: "",
@@ -18,6 +17,7 @@ const Register = () => {
         }));
     };
 
+    
     const handleRegister = async () => {
         try{
             const res = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
@@ -34,12 +34,13 @@ const Register = () => {
                 }),
             });
 
-            if(!res.ok){
+            if(!res.status != 200 || res.status != 201){
                 const resData = await res.json();
                 console.log(resData);
                 throw new Error("Register failed");
             }else{
                 console.log("Success");
+                navigation.navigate("Login");
             }
 
         }catch(e){

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Button, StyleSheet, TextInput, View} from "react-native";
+import {Button, SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 
-const Login = () => {
+const Login = ({navigation}) => {
     const [data, newData] = useState({
         userName: "",
         password: ""
@@ -43,6 +43,10 @@ const submit = async () => {
     }
 };
 
+const register = () => {
+   navigation.navigate("Register");
+};
+
     return (
         <View style = {styles.container}>
             <TextInput style = {styles.input}
@@ -54,6 +58,7 @@ const submit = async () => {
             onChangeText = { (input) => formInput("password", input)}/>
 
         <Button title = "Submit" onPress = {submit} />
+        <Button title = "Register" onPress = {register} />
         </View>
     );
 };

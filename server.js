@@ -266,47 +266,52 @@ app.post('/api/test', async (req, res) => {
 
   try {
     const db = client.db("Group3LargeProject");
-    const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+    let userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
 
     if (userCards.length < 5) {
       return res.status(400).json({ error: 'User has less than 5 cards' });
     }
 
-    let testQuestions = [];
-    shuffle(userCards); // Shuffle the cards to randomize which cards are selected for the test
+    // For debugging: Directly check a sample card
+    console.log("Sample Card:", userCards[0]);
 
-    userCards.slice(0, 5).forEach(card => {
+    shuffle(userCards); // Shuffle the cards
+    userCards = userCards.slice(0, 5); // Limit to first 5 cards after shuffle
+
+    const testQuestions = [];
+    const correctAnswers = [];
+
+    userCards.forEach(card => {
       const question = card.Term;
       const correctAnswer = card.Definition;
 
-      // Filter out the current card to avoid using its definition as an incorrect answer
-      const otherCards = userCards.filter(c => c.Definition !== correctAnswer);
-      let incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
+      // Debugging: Verify the correct answer at this point
+      console.log(`Question: ${question}, Correct Answer: ${correctAnswer}`);
 
-      incorrectAnswers = incorrectAnswers.slice(0, 3); // Ensure only 3 incorrect answers are selected
-      const answers = shuffle([correctAnswer, ...incorrectAnswers]);
+      // Simplify the process: Use placeholder incorrect answers for debugging
+      const answers = [correctAnswer, "Incorrect 1", "Incorrect 2", "Incorrect 3"];
+      shuffle(answers);
 
       testQuestions.push({ question, answers });
+      correctAnswers.push(correctAnswer);
     });
-
-    const correctAnswers = testQuestions.map(q => q.correctAnswer); // Directly map correct answers from testQuestions
-
-    console.log("Correct Answers being stored:", correctAnswers); // Diagnostic logging
 
     const testId = generateTestId();
     const userTest = {
-      testId: testId,
-      userId: userId,
+      testId,
+      userId,
       questions: testQuestions,
-      correctAnswers: correctAnswers, // Ensure correctAnswers are stored
+      correctAnswers, // Directly use the populated correctAnswers array
     };
+
+    // Debugging: Verify the final structure before saving
+    console.log("User Test Object:", userTest);
 
     await db.collection('Test').insertOne(userTest);
 
-    // Return only necessary data to avoid giving away correct answers
     const returnTestData = {
       testId: userTest.testId,
-      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
+      questions: userTest.questions,
     };
 
     res.status(200).json({ test: returnTestData, error: '' });
@@ -315,6 +320,7 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

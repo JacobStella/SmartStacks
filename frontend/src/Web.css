@@ -55,11 +55,14 @@ header {
 /* Headings */
 h1, h2, h3 {
   padding: 10px 0;
+  color: #172a3a;
+
 }
 
 /* Paragraphs */
 p {
   margin: 10px 0;
+  color: #508991
 }
 
 /* Link styling */
@@ -151,7 +154,7 @@ a:hover{
 }
 
 .vertical-line {
-  background-color: #508991;
+  background-color: #172a3a;
   height: 400px;
   margin: 0 20px;
   width: 10px

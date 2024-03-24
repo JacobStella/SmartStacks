@@ -232,8 +232,6 @@ app.get('/api/search', async (req, res) => {
 //const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
 
 app.post('/api/test', async (req, res) => {
-  // incoming: userId
-  // outgoing: test, error
   const { userId } = req.body;
 
   if (!userId) {
@@ -248,60 +246,47 @@ app.post('/api/test', async (req, res) => {
       return res.status(400).json({ error: 'User has less than 5 cards' });
     }
 
-    const testQuestions = [];
-    const allAnswers = [];
+    let testQuestions = [];
+    let testAnswers = [];
 
-    for (let i = 0; i < 5; i++) {
-      const randomIndex = Math.floor(Math.random() * userCards.length);
-      const card = userCards[randomIndex];
-      const correctAnswer = card.Term;
-      testQuestions.push(card.Definition);
+    userCards.forEach(card => {
+      let incorrectAnswers = getIncorrectAnswers(card.Term, card.Definition, userCards);
+      // Shuffle incorrect answers to mix the correct answer location
+      let answers = shuffle([...incorrectAnswers, card.Term]);
 
-      allAnswers.push(correctAnswer);
-      allAnswers.push(
-        ...shuffle([
-          ...getIncorrectAnswers(correctAnswer, card.Definition, userCards),
-        ])
-      );
-    }
+      testQuestions.push({ question: card.Definition, correctAnswer: card.Term, answers });
+    });
 
+    // Randomly select 5 questions for the test
+    testQuestions = shuffle(testQuestions).slice(0, 5);
+    testAnswers = testQuestions.map(q => q.correctAnswer);
+
+    const testId = uuidv4();
     const userTest = {
-      //id: uuidv4(),
+      testId: testId,
       userId: userId,
-      questions: testQuestions,
-      answers: allAnswers,
+      questions: testQuestions.map(q => q.question),
+      answers: testAnswers, // Store only the correct answers for validation
+      fullQuestions: testQuestions, // Store full questions for debugging or future use
     };
 
     // Insert the generated test into the 'Test' collection
     await db.collection('Test').insertOne(userTest);
 
-    res.status(200).json({ test: userTest, error: '' });
+    // Return minimal test data to avoid giving away answers
+    const minimalTestData = {
+      testId: userTest.testId,
+      questions: userTest.questions,
+      answerOptions: testQuestions.map(q => q.answers),
+    };
+
+    res.status(200).json({ test: minimalTestData, error: '' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-
-// Helper function to get three incorrect answers for each question
-function getIncorrectAnswers(correctAnswer, currentQuestion, userCards) {
-  const incorrectAnswers = userCards
-    .filter((card) => card.Definition !== currentQuestion)
-    .map((x) => x.Term)
-    .sort(() => 0.5 - Math.random())
-    .slice(0, 3);
-
-  return incorrectAnswers.filter((term) => term !== correctAnswer);
-}
-
-// Helper function to shuffle an array
-function shuffle(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}
 
 app.post('/api/validate-test', async (req, res) => {
     // incoming: testId, userAnswers

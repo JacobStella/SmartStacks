@@ -1,22 +1,20 @@
 import React from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import '../Web.css'; 
-// Import your logo image if it's stored locally
-import logo from '../images/browse.png'; // Update this path to where your actual logo is stored
-
-
-
-
+import { useNavigate, useLocation, Link } from 'react-router-dom'; // Ensure Link is imported
+import '../Web.css';
+import logo from '../images/browse.png'; // Make sure the path is correct
 
 const NavBar2 = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
     const handleLoginClick = () => {
         // Store the current location before redirecting to login
         localStorage.setItem('preLoginPath', location.pathname);
         navigate('/login');
     };
+
     return (
         <nav className="navbar">
-            {/* Insert the img tag for the logo with the className "navbar-logo" */}
             <img src={logo} alt="Company Logo" className="navbar-logo" />
             
             <Link to="/landing" className="nav-button">Home</Link>
@@ -28,6 +26,7 @@ const NavBar2 = () => {
                 <button type="submit">Search</button>
             </div>
 
+            {/* Replaced Link with button and added navigation logic */}
             <button onClick={handleLoginClick} className="nav-button">Login</button>
         </nav>
     );

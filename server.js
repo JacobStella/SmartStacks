@@ -257,56 +257,61 @@ function generateTestId() {
 }
 
 app.post('/api/test', async (req, res) => {
-const { userId } = req.body;
+  const { userId } = req.body;
 
-if (!userId) {
-  return res.status(400).json({ error: 'userId is required' });
-}
-
-try {
-  const db = client.db("Group3LargeProject");
-  const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
-
-  if (userCards.length < 5) {
-    return res.status(400).json({ error: 'User has less than 5 cards' });
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required' });
   }
 
-  let testQuestions = [];
-  let testAnswers = [];
+  try {
+    const db = client.db("Group3LargeProject");
+    const userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
 
-  userCards.forEach(card => {
-    let incorrectAnswers = getIncorrectAnswers(card.Term, card.Definition, userCards);
-    let answers = shuffle([...incorrectAnswers, card.Term]);
-    testQuestions.push({ question: card.Definition, correctAnswer: card.Term, answers });
-  });
+    if (userCards.length < 5) {
+      return res.status(400).json({ error: 'User has less than 5 cards' });
+    }
 
-  // Randomly select 5 questions for the test
-  testQuestions = shuffle(testQuestions).slice(0, 5);
-  testAnswers = testQuestions.map(q => q.correctAnswer);
+    let testQuestions = [];
 
-  const testId = generateTestId(); // Use the new function to generate testId
-  const userTest = {
-    testId: testId,
-    userId: userId,
-    questions: testQuestions.map(q => q.question),
-    answers: testAnswers,
-    fullQuestions: testQuestions,
-  };
+    // Shuffle the cards to randomize which cards are selected for the test
+    shuffle(userCards);
 
-  // Insert the generated test into the 'Test' collection
-  await db.collection('Test').insertOne(userTest);
+    for (let i = 0; i < 5; i++) {
+      const card = userCards[i];
+      const correctAnswer = card.Definition;
+      const question = card.Term;
+      
+      let incorrectAnswers = getIncorrectAnswers(correctAnswer, question, userCards);
+      
+      // Ensure we have exactly 3 incorrect answers
+      incorrectAnswers = incorrectAnswers.slice(0, 3);
 
-  const minimalTestData = {
-    testId: userTest.testId,
-    questions: userTest.questions,
-    answerOptions: testQuestions.map(q => q.answers),
-  };
+      const answers = shuffle([correctAnswer, ...incorrectAnswers]);
 
-  res.status(200).json({ test: minimalTestData, error: '' });
-} catch (error) {
-  console.log(error);
-  res.status(500).json({ error: 'Internal server error' });
-}
+      testQuestions.push({ question, answers });
+    }
+
+    const testId = generateTestId();
+    const userTest = {
+      testId: testId,
+      userId: userId,
+      questions: testQuestions,
+    };
+
+    // Insert the generated test into the 'Test' collection
+    await db.collection('Test').insertOne(userTest);
+
+    // Return test data but omit the correct answers to maintain test integrity
+    const returnTestData = {
+      testId: userTest.testId,
+      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
+    };
+
+    res.status(200).json({ test: returnTestData, error: '' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 

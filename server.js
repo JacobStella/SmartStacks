@@ -297,8 +297,10 @@ app.post('/api/test', async (req, res) => {
     const userTest = {
       testId: testId,
       userId: userId,
-      questions: testQuestions,
+      questions: testQuestions.map(q => ({ question: q.question, answers: q.answers })), // Keeps the original format
+      correctAnswers: testQuestions.map(q => q.correctAnswer), // Stores correct answers for validation
     };
+    
 
     // Insert the generated test into the 'Test' collection
     await db.collection('Test').insertOne(userTest);
@@ -319,38 +321,37 @@ app.post('/api/test', async (req, res) => {
 
 
 app.post('/api/validate-test', async (req, res) => {
-    // incoming: testId, userAnswers
-    // outgoing: score, error
-    const { testId, userAnswers } = req.body;
-  
-    if (!testId || !userAnswers) {
-      return res.status(400).json({ error: 'testId and userAnswers are required' });
+  const { testId, userAnswers } = req.body;
+
+  if (!testId || !userAnswers) {
+    return res.status(400).json({ error: 'testId and userAnswers are required' });
+  }
+
+  try {
+    const db = client.db("Group3LargeProject");
+    // Ensure the property used to find the test matches how it's stored
+    const test = await db.collection('Test').findOne({ testId: testId }); 
+
+    if (!test) {
+      return res.status(400).json({ error: 'Test not found' });
     }
-  
-    try {
-      const db = client.db("Group3LargeProject");
-      const test = await db
-        .collection('Test')
-        .findOne({ id: testId });
-  
-      if (!test) {
-        return res.status(400).json({ error: 'Test not found' });
+
+    let score = 0;
+
+    // Iterate over the correct answers and compare them to the user's answers
+    test.correctAnswers.forEach((correctAnswer, index) => {
+      if (userAnswers[index] === correctAnswer) {
+        score++; // Increment score for each correct answer
       }
-  
-      let score = 0;
-  
-      test.answers.forEach((answer, index) => {
-        if (answer === userAnswers[index]) {
-          score++;
-        }
-      });
-  
-      res.status(200).json({ score: score, error: '' });
-    } catch (error) {
-      console.log(error);
-      res.status(500).json({ error: 'Internal server error' });
-    }
-  });
+    });
+
+    res.status(200).json({ score: score, error: '' });
+  } catch (error) {
+    console.error('Error validating test answers', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 
 

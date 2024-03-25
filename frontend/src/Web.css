@@ -27,19 +27,19 @@ body {
 /* Navigation bar */
 .navbar {
   background-color: #333;
-  color: #ffffff;
+  color: #d8dcff;
   padding: 10px 0;
 }
 
 .navbar a {
-  color: #ffffff;
+  color: #d8dcff;
   text-decoration: none;
   padding: 10px 20px;
   display: inline-block;
 }
 
 .navbar a:hover {
-  background-color: #ddd;
+  background-color: #d8dcff;
   color: #333;
 }
 
@@ -278,8 +278,8 @@ a:hover{
 }
 
 .search-bar input[type=text]:focus {
-  border-color: #014b4f; 
-  color: #fff;
+  border-color: #09bc8a; 
+  color: #d8dcff;
   outline: none;
 }
 
@@ -287,7 +287,7 @@ a:hover{
   background-color: #172a3a;
   border: none;
   border-radius: 5px;
-  color: #fff;
+  color: #d8dcff;
   cursor: pointer;
   margin-left: 10px;
   margin-right: 80px;
@@ -297,7 +297,7 @@ a:hover{
 .search-bar button:hover {
   background-color: #014b4f;
   text-decoration: underline;
-  text-decoration-color: #fff;
+  text-decoration-color: #d8dcff;
 }
 
 @media (max-width: 768px) {
@@ -356,7 +356,7 @@ a:hover{
 }
 
 .footer-section a {
-  color: #fff; /*link colors */
+  color: #d8dcff; /*link colors */
   text-decoration: none;
   margin-bottom: 5px; /* Spacing between links */
 }
@@ -367,7 +367,7 @@ a:hover{
 
 .footer-section p {
   margin-top: 10px;
-  color: #fff; /*copyrite color*/
+  color: #d8dcff; /*copyrite color*/
 }
 
 @media (max-width: 768px) {
@@ -386,29 +386,42 @@ a:hover{
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////create card start//////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////create stack start//////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
-
-
-
-
 .create-study-set-container {
-  background-color: #1e1e1e; /* Dark background */
-  color: white;
-  padding: 20px;
-  max-width: 800px; /* Adjust as needed */
+  background-color: #172a3a;
+  border-radius: 30px;
+  border: 5px solid #004346;
+  color: #d8dcff;
   margin: auto;
+  max-width: 800px;
+  padding: 20px
 }
 
-.title-input, .description-textarea, .university-input, .course-input {
-  background-color: #333;
-  border: none;
-  color: white;
+.create-study-set-container h1{
+  color: #508991;
+}
+
+.course-input ,.description-textarea,.title-input,.university-input, .term-input, .definition-input {
+  background-color: #508991;
+  border-radius: 10px;
+  border-color: #014b4f;
   margin: 10px 0;
   padding: 10px;
   width: 100%;
+}
+
+.course-input::placeholder, .description-textarea::placeholder, .title-input::placeholder, .university-input::placeholder,  .term-input::placeholder, .definition-input::placeholder  {
+  color: #d8dcff; /* Placeholder text color */
+  /* You can add other styles here if needed */
+}
+
+.course-input:focus, .description-textarea:focus, .title-input:focus, .university-input:focus,  .term-input:focus, .definition-input:focus {
+  border-color: #09bc8a; /* Changes the border color to white on focus */
+  outline: none; /* Optional: removes the default focus outline */
+  /* You can add more styles here to visually indicate focus, such as changing background color, adding a shadow, etc. */
 }
 
 .description-textarea {
@@ -417,47 +430,53 @@ a:hover{
 
 .import-options button {
   background-color: #555;
-  color: white;
   border: none;
+  color: #d8dcff;
   margin-right: 10px;
-  padding: 10px 15px;
+  padding: 10px 15px
 }
 
 .term-definition-pair {
-  display: flex;
+  background-color: #508991;
+  border-color: #014b4f;
+  border-radius: 10px;
   align-items: center;
-  margin: 10px 0;
+  display: flex;
+  margin: 10px 0
 }
 
 .number {
   margin-right: 10px;
-  color: #aaa; /* Light grey for the number */
+  color: #d8dcff; /* Light grey for the number */
 }
 
-.term-input, .definition-input {
-  background-color: #333;
-  border: none;
-  color: white;
+.definition-input,.term-input {
+  background-color: #014b4f;
+  border-color: #004346;
+  color: #d8dcff;
+  flex: 1 1;
   margin-right: 10px;
-  padding: 10px;
-  flex: 1; /* Allows inputs to fill space */
+  padding: 10px
 }
 
 .image-placeholder {
-  width: 60px; /* Adjust as needed */
-  height: 60px; /* Adjust as needed */
-  background-color: #555; /* Placeholder color */
-  display: flex;
   align-items: center;
+  background-color: #014b4f;
+  border-color: #004346;
+  color: #d8dcff;
+  display: flex;
+  height: 60px;
   justify-content: center;
+  width: 60px
 }
 
 .create-button {
-  background-color: #4caf50; /* Adjust the color as needed */
-  color: white;
-  border: none;
-  padding: 10px 20px;
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  color: #d8dcff;
   margin-top: 20px;
+  padding: 10px 20px;
 }
 
 /* Apply global styles for buttons */
@@ -474,7 +493,7 @@ button:hover {
 
 /* Further styling can be added as needed to match the exact design */
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
-/*/////////////////////////////////////////create card END/////////////////////////////////////////////////*/
+/*/////////////////////////////////////////create Stack END/////////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
 
@@ -565,7 +584,7 @@ input[type="submit"] {
 /* Style the background of the entire page */
 /* You need to add this class to the root div of your application */
 .root {
-  background-color: #f0f0f0; /* Your desired background color */
+  background-color: #d8dcff; /* Your desired background color */
   min-height: 100vh; /* Full height of the viewport */
   display: flex;
   align-items: center;

@@ -130,14 +130,17 @@ app.post('/api/deletecard', async (req, res, next) => {
 
 // Update Card
 app.post('/api/updatecard', async (req, res) => {
-	const { cardId, newTerm } = req.body; // cardId of card to be updated
+	const { cardId, Term } = req.body; // cardId of card to be updated
+	const newTerm = { $set: {Term:Term}};
 
+  	var error = '';
+	
 	// Running command
 	try {
 		const db = client.db("Group3LargeProject");
 
 		// update card
-		const result = await db.collection('Cards').updateOne({ "_id": ObjectId(cardId) }, { $set { "Term" : "Testing" } });
+		const result = await db.collection('Cards').updateOne({ "_id": ObjectId(cardId) }, newTerm);
 
 		res.status(200).json({ message: "Card updated successfully"});
 	} catch(e) {

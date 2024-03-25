@@ -25,9 +25,8 @@ const LandingPage = () => {
       <div className="create-study-set-container">
         <h1>Create a new study set</h1>
         <input type="text" placeholder="Title" className="title-input" />
-        <textarea placeholder="Description..." className="description-textarea"></textarea>
-        <input type="text" placeholder="Folder Name" className="university-input" />
-        <input type="text" placeholder="Enter the course code or name or select it from the list" className="course-input" />
+        <textarea placeholder="Description..." className="description-input"></textarea>
+        <input type="text" placeholder="Folder Name" className="folder-input" />
 
         <div className="terms-container">
           {cardPairs.map((number) => (

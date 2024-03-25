@@ -214,6 +214,7 @@ a:hover{
   display: flex;
   height: 60px;
   padding: 0 20px;
+  flex-wrap: nowrap;
 }
 
 .navbar-logo {

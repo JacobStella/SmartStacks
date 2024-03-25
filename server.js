@@ -140,7 +140,7 @@ app.post('/api/updatecard', async (req, res) => {
 		const db = client.db("Group3LargeProject");
 
 		// update card
-		const result = await db.collection('Cards').updateOne({ "_id": ObjectId(cardId) }, newTerm);
+		const result = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
 
 		res.status(200).json({ message: "Card updated successfully"});
 	} catch(e) {

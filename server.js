@@ -134,21 +134,6 @@ app.post('/api/updatecard', async (req, res) => {
 	const { cardId, upIn, code } = req.body; 
 	const newTerm = { $set: {Term:Term}};
 
-	// Decides what to update
-	/*switch(code){
-		case "1":
-			// update term
-			const upDate = { $set: {Term:upIn}};
-			break;
-		case "2":
-			// update definition
-			const upDate = { $set: {Definition:upIn}};
-			break;
-		default:
-			// error
-			res.status(404).json({ error: "Code not found" });
-	}*/
-
   	var error = '';
 	
 	// Running command

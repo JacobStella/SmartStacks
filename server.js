@@ -131,7 +131,7 @@ app.post('/api/deletecard', async (req, res, next) => {
 // Update Card
 app.post('/api/updatecard', async (req, res) => {
 	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { cardId, upIn, code } = req.body; 
+	const { cardId, Term } = req.body; 
 	const newTerm = { $set: {Term:Term}};
 
   	var error = '';

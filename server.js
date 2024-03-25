@@ -132,10 +132,10 @@ app.post('/api/deletecard', async (req, res, next) => {
 app.post('/api/updatecard', async (req, res) => {
 	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
 	const { cardId, upIn, code } = req.body; 
-	//const newTerm = { $set: {Term:Term}};
+	const newTerm = { $set: {Term:Term}};
 
 	// Decides what to update
-	switch(code){
+	/*switch(code){
 		case "1":
 			// update term
 			const upDate = { $set: {Term:upIn}};
@@ -147,7 +147,7 @@ app.post('/api/updatecard', async (req, res) => {
 		default:
 			// error
 			res.status(404).json({ error: "Code not found" });
-	}
+	}*/
 
   	var error = '';
 	
@@ -156,7 +156,7 @@ app.post('/api/updatecard', async (req, res) => {
 		const db = client.db("Group3LargeProject");
 
 		// update card
-		const result = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, upDate);
+		const result = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
 
 		res.status(200).json({ message: "Card updated successfully"});
 	} catch(e) {

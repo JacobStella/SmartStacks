@@ -136,11 +136,11 @@ app.post('/api/updatecard', async (req, res) => {
 
 	// Decides what to update
 	switch(code){
-		case 1:
+		case '1':
 			// update term
 			const upDate = { $set: {Term:upIn}};
 			break;
-		case 2:
+		case '2':
 			// update definition
 			const upDate = { $set: {Definition:upIn}};
 			break;

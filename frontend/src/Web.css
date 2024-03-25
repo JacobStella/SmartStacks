@@ -246,6 +246,16 @@ a:hover{
   text-decoration-color: #014b4f;
 }
 
+.navbar button {
+  border: transparent;
+  background-color: transparent;
+}
+
+.navbar button:hover {
+  text-decoration: underline;
+  text-decoration-color: #014b4f
+}
+
 .search-bar {
   display: flex;
   justify-content: space-between; /* This will space out the child elements */
@@ -298,6 +308,11 @@ a:hover{
   .navbar .nav-button {
       font-size: 16px;
       padding: 8px 12px; /* Reduced padding for smaller screens */
+  }
+
+  .navbar button {
+    font-size: 16px;
+    padding: 8px 12px; /* Reduced padding for smaller screens */
   }
 
   .search-bar {

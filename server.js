@@ -121,7 +121,7 @@ app.post('/api/deletecard', async (req, res, next) => {
 		
 		// delete card
 		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(cardId) });
-    
+   
 		res.status(200).json({ message: "Card deleted successfully"});
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
@@ -243,6 +243,139 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+
+//const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
+
+function generateTestId() {
+  const timestamp = Date.now().toString();
+  const randomPortion = Math.random().toString(36).substring(2, 15);
+  return timestamp + randomPortion;
+}
+
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getIncorrectAnswers(correctAnswer, allCards) {
+  // Shuffle to randomize the order before slicing
+  const shuffledCards = shuffle(allCards);
+  
+  return shuffledCards.filter(card => card.Definition !== correctAnswer)
+                      .map(card => card.Definition)
+                      .slice(0, 3); // Get only 3 incorrect answers
+}
+
+app.post('/api/test', async (req, res) => {
+  const { userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ error: 'userId is required' });
+  }
+
+  try {
+    const db = client.db("Group3LargeProject");
+    let userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+
+    if (userCards.length < 5) {
+      return res.status(400).json({ error: 'User has less than 5 cards' });
+    }
+
+    shuffle(userCards); // Shuffle the cards
+    userCards = userCards.slice(0, 5); // Limit to first 5 cards after shuffle
+
+    const testQuestions = [];
+    const correctAnswers = [];
+
+    userCards.forEach(card => {
+      const question = card.Term;
+      const correctAnswer = card.Definition;
+
+      // Get other cards to find incorrect answers
+      const otherCards = userCards.filter(c => c.Term !== question);
+      const incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
+
+      // Combine correct answer with incorrect ones and shuffle
+      const answers = shuffle([correctAnswer, ...incorrectAnswers]);
+
+      testQuestions.push({ question, answers });
+      correctAnswers.push(correctAnswer);
+    });
+
+    const testId = generateTestId(); // A function to generate a unique testId
+    const userTest = {
+      testId,
+      userId,
+      questions: testQuestions,
+      correctAnswers, // Store the correct answers for validation
+    };
+
+    await db.collection('Test').insertOne(userTest);
+
+    // Return test object without the correct answers
+    const returnTestData = {
+      testId: userTest.testId,
+      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
+    };
+
+    res.status(200).json({ test: returnTestData, error: '' });
+  } catch (error) {
+    console.error('Error creating test', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+
+app.post('/api/validate-test', async (req, res) => {
+  const { testId, userAnswers } = req.body;
+  console.log('Received testId:', testId); // Log the received testId
+
+  if (!testId || !userAnswers) {
+    console.log('Validation error: Missing testId or userAnswers');
+    return res.status(400).json({ error: 'testId and userAnswers are required' });
+  }
+
+  try {
+    const db = client.db("Group3LargeProject");
+    console.log(`Looking for test with testId: ${testId}`);
+    const test = await db.collection('Test').findOne({ testId: testId });
+
+    console.log('Test query result:', test); // Log the result of the query
+    if (!test) {
+      console.log('Test not found in the database');
+      return res.status(400).json({ error: 'Test not found' });
+    }
+
+    let score = 0;
+
+    // Debugging: Verify the structure of the correct answers
+    console.log('Correct answers from the test:', test.correctAnswers);
+    test.correctAnswers.forEach((correctAnswer, index) => {
+      console.log(`Checking answer ${index + 1}:`, userAnswers[index], correctAnswer);
+      if (userAnswers[index] === correctAnswer) {
+        score++; // Increment score for each correct answer
+      }
+    });
+
+    console.log(`Final score for testId ${testId}:`, score);
+    res.status(200).json({ score: score, error: '' });
+  } catch (error) {
+    console.error('Error validating test answers:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 
 
 

@@ -271,32 +271,32 @@ function getIncorrectAnswers(correctAnswer, allCards) {
 }
 
 app.post('/api/test', async (req, res) => {
-  const { userId } = req.body;
+  const { setId } = req.body; // Use setId instead of userId
 
-  if (!userId) {
-    return res.status(400).json({ error: 'userId is required' });
+  if (!setId) {
+    return res.status(400).json({ error: 'setId is required' });
   }
 
   try {
     const db = client.db("Group3LargeProject");
-    let userCards = await db.collection('Cards').find({ UserId: userId }).toArray();
+    let setCards = await db.collection('Cards').find({ SetId: setId }).toArray(); // Find by SetId
 
-    if (userCards.length < 5) {
-      return res.status(400).json({ error: 'User has less than 5 cards' });
+    if (setCards.length < 5) {
+      return res.status(400).json({ error: 'Set has less than 5 cards' });
     }
 
-    shuffle(userCards); // Shuffle the cards
-    userCards = userCards.slice(0, 5); // Limit to first 5 cards after shuffle
+    shuffle(setCards); // Shuffle the cards
+    setCards = setCards.slice(0, 5); // Limit to first 5 cards after shuffle
 
     const testQuestions = [];
     const correctAnswers = [];
 
-    userCards.forEach(card => {
+    setCards.forEach(card => {
       const question = card.Term;
       const correctAnswer = card.Definition;
 
       // Get other cards to find incorrect answers
-      const otherCards = userCards.filter(c => c.Term !== question);
+      const otherCards = setCards.filter(c => c.Term !== question);
       const incorrectAnswers = getIncorrectAnswers(correctAnswer, otherCards);
 
       // Combine correct answer with incorrect ones and shuffle
@@ -307,19 +307,19 @@ app.post('/api/test', async (req, res) => {
     });
 
     const testId = generateTestId(); // A function to generate a unique testId
-    const userTest = {
+    const setTest = {
       testId,
-      userId,
+      setId, // Store setId instead of userId
       questions: testQuestions,
       correctAnswers, // Store the correct answers for validation
     };
 
-    await db.collection('Test').insertOne(userTest);
+    await db.collection('Test').insertOne(setTest);
 
     // Return test object without the correct answers
     const returnTestData = {
-      testId: userTest.testId,
-      questions: userTest.questions.map(q => ({ question: q.question, answers: q.answers })),
+      testId: setTest.testId,
+      questions: setTest.questions.map(q => ({ question: q.question, answers: q.answers })),
     };
 
     res.status(200).json({ test: returnTestData, error: '' });
@@ -328,6 +328,7 @@ app.post('/api/test', async (req, res) => {
     res.status(500).json({ error: 'Internal server error' });
   }
 });
+
 
 
 

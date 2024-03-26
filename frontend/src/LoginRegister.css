@@ -39,16 +39,17 @@
 }
 
 /* Responsive design: Adjusting the width of inputs on smaller screens */
+/*
 @media (max-width: 768px) {
   #loginName,
   #loginPassword,
   #loginButton,
   .login-container form {
     width: 100%;
-    max-width: 400px; /* Adjust for smaller screens */
+    max-width: 400px; 
   }
 }
-
+*/
 
 /* Centering container */
 /* This will be the parent container of your login elements */
@@ -100,23 +101,14 @@ input[type="submit"] {
 }
 
 .login-container {
-  width: 100%; /* Full width on smaller screens */
-  max-width: 800px; /* Adjust this to fit your design */
-  max-height: 800px;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow for depth */
-  background-color: d8dcff; /* Or any other color, matching your design */
-  border-radius: 5px; /* Optional: Rounds the corners for a softer look */
-}
-
-.login-container {
+  background-color: d8dcff;
+  background-color: #d8dcff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px #0000001a;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* This will push the footer to the bottom */
-  min-height: 100vh;
+  justify-content: space-between;
   margin: auto;
-  padding: 20px;
-  background-color: #d8dcff;
 }
 
 

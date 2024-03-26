@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
 
-const Register = (navigation) => {
+const Register = ({navigation}) => {
     const [data, newData] = useState({
         firstName: "",
         lastName: "",
@@ -20,34 +20,37 @@ const Register = (navigation) => {
     
     const handleRegister = async () => {
         try{
+           console.log(JSON.stringify(data));
             const res = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
                 method: "POST",
                 headers:{
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    firstName:newData.firstName,
-                    lastName:newData.lastName,
-                    login:newData.username,
-                    password:newData.password,
-                    email:newData.email,
+                    email: data.email,
+                    firstName: data.firstName,
+                    lastName: data.lastName,
+                    username: data.username,
+                    password: data.password,
+                    
                 }),
             });
-
-            if(!res.status != 200 || res.status != 201){
+            
+            console.log(res.status);
+            if(res.status === 201){
+                console.log("Success");
+                navigation.navigate("Login");
+            }else{
                 const resData = await res.json();
                 console.log(resData);
                 throw new Error("Register failed");
-            }else{
-                console.log("Success");
-                navigation.navigate("Login");
             }
 
         }catch(e){
             console.log(e);
         }
 
-        console.log('User Data: ', newData); // shows the inputted user data on console screen
+        //console.log('User Data: ', data); // shows the inputted user data on console screen
     };
 
     return (
@@ -56,27 +59,27 @@ const Register = (navigation) => {
                 <TextInput style={styles.input}
                     placeholder = "First Name"
                     onChangeText={text => formInput("firstName", text)}
-                    value={newData.firstName}
+                    value={data.firstName}
                 />
                 <TextInput style={styles.input}
                     placeholder = "Last Name"
                     onChangeText={text => formInput("lastName", text)}
-                    value={newData.lastName}
+                    value={data.lastName}
                 />
                 <TextInput style={styles.input}
                     placeholder = "email"
                     onChangeText={text => formInput("email", text)}
-                    value={newData.email}
+                    value={data.email}
                 />
                 <TextInput style={styles.input}
                     placeholder = "Username"
                     onChangeText={text => formInput("username", text)}
-                    value={newData.username}
+                    value={data.username}
                 />
                 <TextInput style={styles.input}
                     placeholder = "Password"
                     onChangeText={text => formInput("password", text)}
-                    value={newData.password}
+                    value={data.password}
                 />
             </View>
             <Button title="Submit" onPress={handleRegister} />

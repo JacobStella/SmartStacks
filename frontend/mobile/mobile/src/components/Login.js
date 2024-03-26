@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button, SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 
+
 const Login = ({navigation}) => {
     const [data, newData] = useState({
         userName: "",
@@ -36,6 +37,7 @@ const submit = async () => {
         }
         else{
             console.log("success");
+            library();
         }
        
     }catch(e){
@@ -46,6 +48,14 @@ const submit = async () => {
 const register = () => {
    navigation.navigate("Register");
 };
+
+const library = () => {
+    navigation.navigate("Library");
+ };
+
+ const test = () => {
+    navigation.navigate("Test");
+ };
 
     return (
         <View style = {styles.container}>
@@ -59,6 +69,7 @@ const register = () => {
 
         <Button title = "Submit" onPress = {submit} />
         <Button title = "Register" onPress = {register} />
+        <Button title = "test" onPress = {test} />
         </View>
     );
 };

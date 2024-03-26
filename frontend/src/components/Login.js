@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import '../LoginRegister.css';
+
 //thi is a test
 function toRegister(){
     window.location.href = '/register';

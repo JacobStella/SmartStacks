@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
 
-const Library = () => {
+const Library = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Library</Text>

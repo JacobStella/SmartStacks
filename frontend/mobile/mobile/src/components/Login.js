@@ -36,6 +36,7 @@ const submit = async () => {
         }
         else{
             console.log("success");
+            library();
         }
        
     }catch(e){
@@ -46,6 +47,10 @@ const submit = async () => {
 const register = () => {
    navigation.navigate("Register");
 };
+
+const library = () => {
+    navigation.navigate("Library");
+ };
 
     return (
         <View style = {styles.container}>

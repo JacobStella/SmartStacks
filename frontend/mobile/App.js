@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './mobile/src/components/Login';
 import Register from './mobile/src/components/Register';
+import Library from './mobile/src/components/Library';
 
 
 const Stack = createNativeStackNavigator();
@@ -19,6 +20,10 @@ const App = () => {
         <Stack.Screen
           name ="Register"
           component = {Register}
+        />
+        <Stack.Screen
+          name ="Library"
+          component = {Library}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -3,25 +3,14 @@ create-study-set-container {
     border-radius: 30px;
     border: 5px solid #004346;
     color: #d8dcff;
-    margin: auto;
-    max-width: 90%; /* Adjusted from 800px to 90% */
+    margin: 20px auto; /* Increased margin for better centering */
+    width: 90%; /* This sets the width to be 90% of the parent element */
+    max-width: 1200px; /* This will now allow the container to grow up to 1200px */
     padding: 20px;
+    box-sizing: border-box; /* This makes sure padding doesn't add to the width */
   }
   
   /* Rest of the CSS remains unchanged */
-  
-  /* If you're using a responsive design, you might also consider using media queries to adjust the size on different screen sizes */
-  @media (min-width: 768px) {
-    .create-study-set-container {
-      max-width: 1200px; /* For larger screens, increase the max width */
-    }
-  }
-  
-  @media (min-width: 992px) {
-    .create-study-set-container {
-      max-width: 1400px; /* For even larger screens, you can increase it further */
-    }
-  }
   
   
   .create-study-set-container h1{

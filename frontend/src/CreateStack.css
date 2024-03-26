@@ -4,9 +4,25 @@ create-study-set-container {
     border: 5px solid #004346;
     color: #d8dcff;
     margin: auto;
-    max-width: 800px;
-    padding: 20px
+    max-width: 90%; /* Adjusted from 800px to 90% */
+    padding: 20px;
   }
+  
+  /* Rest of the CSS remains unchanged */
+  
+  /* If you're using a responsive design, you might also consider using media queries to adjust the size on different screen sizes */
+  @media (min-width: 768px) {
+    .create-study-set-container {
+      max-width: 1200px; /* For larger screens, increase the max width */
+    }
+  }
+  
+  @media (min-width: 992px) {
+    .create-study-set-container {
+      max-width: 1400px; /* For even larger screens, you can increase it further */
+    }
+  }
+  
   
   .create-study-set-container h1{
     color: #508991;

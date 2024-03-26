@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {Button, SafeAreaView, StyleSheet, TextInput, View} from "react-native";
 
+
 const Login = ({navigation}) => {
     const [data, newData] = useState({
         userName: "",
@@ -52,6 +53,10 @@ const library = () => {
     navigation.navigate("Library");
  };
 
+ const test = () => {
+    navigation.navigate("Test");
+ };
+
     return (
         <View style = {styles.container}>
             <TextInput style = {styles.input}
@@ -64,6 +69,7 @@ const library = () => {
 
         <Button title = "Submit" onPress = {submit} />
         <Button title = "Register" onPress = {register} />
+        <Button title = "test" onPress = {test} />
         </View>
     );
 };

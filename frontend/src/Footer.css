@@ -1,0 +1,56 @@
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////FOOTER START////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+.landingFooter {
+    background-color: #508991; /* footer background color */
+    padding: 20px 0;
+  }
+  
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 1200px; /* Adjust as needed */
+    /*padding: 0 20px;*/
+  }
+  
+  .footer-section {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer-section h3 {
+    margin-bottom: 10px;
+    color: #172a3a; /* footer header colors */
+  }
+  
+  .footer-section a {
+    color: #d8dcff; /*link colors */
+    text-decoration: none;
+    margin-bottom: 5px; /* Spacing between links */
+  }
+  
+  .footer-section a:hover {
+    text-decoration: underline; /* Hover effect */
+  }
+  
+  .footer-section p {
+    margin-top: 10px;
+    color: #d8dcff; /*copyrite color*/
+  }
+  
+  @media (max-width: 768px) {
+    .footer-container {
+        align-items:center;
+        flex-direction: column
+    }
+  
+    .footer-section a,.footer-section p, .footer-section h3 {
+        text-align: center
+    }
+  }
+  
+  /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+  /*/////////////////////////////////////////FOOTER END//////////////////////////////////////////////////////*/
+  /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

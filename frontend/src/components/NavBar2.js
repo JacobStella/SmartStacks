@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom'; // Ensure Link is imported
-import '../Web.css';
+import '../NavBar.css';
 import logo from '../images/browse.png'; // Make sure the path is correct
 
 const NavBar2 = () => {

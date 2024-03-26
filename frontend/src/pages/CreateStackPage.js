@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
-import '../Web.css';
+import '../CreateStack.css';
 
 const CardPair = ({ number }) => (
   <div className="term-definition-pair">

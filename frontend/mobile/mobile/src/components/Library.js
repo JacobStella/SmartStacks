@@ -1,13 +1,15 @@
 import React, {useState} from "react";
 import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
 
-const Library = ({navigation}) => {
+function Library({navigation}) {
     return (
         
         <View style={styles.container}>
+            <Text onPress={() => navigation.navigate('Library')}
+            style={{ fontSize: 26, fontWeight: 'bold'}}>Library Screen</Text>
             <Text style={styles.title}>Library</Text>
             <View style={styles.subheader}>
-                <Text style={styles.subheaderTitle}>Classes</Text>
+                <Text style={styles.subheaderTitle}>Bene Gesserit</Text>
             </View>
             <View style={styles.iconContainer}>
                 <View style={{flexDirection: 'column'}}>

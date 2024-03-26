@@ -74,7 +74,7 @@ function Login()
 
     return (
         <div className="root-div">
-    <div className="login-container">
+    <>
         <form onSubmit={doLogin}>
             <span id="inner-title">PLEASE LOG IN</span><br />
             <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
@@ -83,7 +83,7 @@ function Login()
             <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
         </form>
         <span id="loginResult">{message}</span>
-    </div>
+    </>
 </div>
 
     );

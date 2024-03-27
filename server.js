@@ -137,11 +137,11 @@ app.post('/api/updatecard', async (req, res) => {
 	switch(code){
 		case 1:
 			// update Term
-			let newTerm = { $set: {Term:newInfo}};
+			var newTerm = { $set: {Term:newInfo}};
 			break;
 		case 2:
 			// update def
-			let newDef = { $set: {Definition:newInfo}};
+			var newDef = { $set: {Definition:newInfo}};
 			break;
 		default:
 			res.status(404).json({ error: "Control Code not found (assignment)" });

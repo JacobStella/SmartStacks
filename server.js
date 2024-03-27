@@ -131,8 +131,22 @@ app.post('/api/deletecard', async (req, res, next) => {
 // Update Card
 app.post('/api/updatecard', async (req, res) => {
 	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { cardId, Term } = req.body; 
-	const newTerm = { $set: {Term:Term}};
+	const { cardId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+	
+	switch(code){
+		case 1:
+			// update Term
+			const newTerm = { $set: {Term:newInfo}};
+			break;
+		case 2:
+			// update def
+			const newDef = { $set: {Definition:newInfo}};
+			break;
+		default:
+			res.status(404).json({ error: "Control Code not found (assignment)" });
+	}
+	
 
   	var error = '';
 	
@@ -141,7 +155,19 @@ app.post('/api/updatecard', async (req, res) => {
 		const db = client.db("Group3LargeProject");
 
 		// update card
-		const result = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
+		switch(code){
+			case 1:
+				// update Term
+				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
+				break;
+			case 2:
+				// update Def
+				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
+				break;
+			default:
+				res.status(404).json({ error: "Control Code not found (update func)" });
+		}
+		
 
 		res.status(200).json({ message: "Card updated successfully"});
 	} catch(e) {

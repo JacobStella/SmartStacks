@@ -144,7 +144,7 @@ app.post('/api/updatecard', async (req, res) => {
 			var newDef = { $set: {Definition:newInfo}};
 			break;
 		default:
-			res.status(404).json({ error: "Control Code not found (assignment)" });
+			res.status(101).json({ error: "Control Code not found (assignment)" });
 	}
 	
 
@@ -165,7 +165,7 @@ app.post('/api/updatecard', async (req, res) => {
 				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
 				break;
 			default:
-				res.status(404).json({ error: "Control Code not found (update func)" });
+				res.status(101).json({ error: "Control Code not found (update func)" });
 		}
 		
 

@@ -12,23 +12,18 @@ import Library from './components/Library.js'
 import StudyGame from './components/StudyGame.js'
 import Browse from './components/Browse.js'
 import Search from './components/Search.js'
+import HomeScreen from './components/HomeScreen.js'
 import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 
 // screen names
+const homeName = 'Home'
 const libraryName = 'Library';
 const searchName = 'Search';
 const browseName = 'Browse';
 const studyGameName = 'Study';
 
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text>Home Screen</Text>
-    </View>
-  );
-}
 
 function DetailsScreen() {
   return(
@@ -37,8 +32,6 @@ function DetailsScreen() {
     </View>
   );
 }
-
-const Stack = createNativeStackNavigator(); 
 
 function NavBar() {
   return (
@@ -50,11 +43,11 @@ function NavBar() {
           let iconName;
           let rn = route.name;
           if(rn == libraryName){
-            iconName = focused ? 'library' : 'home-outline'
+            iconName = focused ? 'library' : 'library-outline'
           } else if (rn == searchName){
             iconName = focused ? 'search' : 'search-outline'
           } else if (rn == browseName){
-            iconName = focused ? 'browse' : 'search-outline'
+            iconName = focused ? 'search' : 'search-outline'
           } else if (rn == studyGameName){
             iconName = focused ? 'list' : 'list-outline'
           } 
@@ -65,23 +58,32 @@ function NavBar() {
 
         <Tab.Screen name={libraryName} component={Library}/>
         <Tab.Screen name={searchName} component={Search}/>
-        <Tab.Screen name={studyGameName} component={StudyGame}/>
         <Tab.Screen name={browseName} component={Browse}/>
+        <Tab.Screen name={studyGameName} component={StudyGame}/>
 
       </Tab.Navigator>
     </NavigationContainer>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    alignContent: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-});
-
 export default NavBar;
+
+/*export default function NavBar() {
+  function MyStack(){
+    <Stack.Navigator>
+      <Stack.Screen name="Tabs" component={MyTabs} />
+    </Stack.Navigator>
+  }
+  function MyTabs(){
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name="SearchTabs" component={Search} />
+      </Tab.Navigator>
+    );
+  }
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  )
+}*/

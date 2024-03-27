@@ -68,7 +68,7 @@ app.post('/api/register', async (req, res) => {
           Verified: verified,
       });
 
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(200).json({ message: 'User registered successfully' });
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.toString() });
@@ -144,7 +144,7 @@ app.post('/api/updatecard', async (req, res) => {
 			var newDef = { $set: {Definition:newInfo}};
 			break;
 		default:
-			res.status(101).json({ error: "Control Code not found (assignment)" });
+			res.status(500).json({ error: "Control Code not found (assignment)" });
 	}
 	
 
@@ -165,7 +165,7 @@ app.post('/api/updatecard', async (req, res) => {
 				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
 				break;
 			default:
-				res.status(101).json({ error: "Control Code not found (update func)" });
+				res.status(500).json({ error: "Control Code not found (update func)" });
 		}
 		
 
@@ -269,6 +269,57 @@ app.get('/api/search', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+
+app.get('/api/public-search', async (req, res) => {
+  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+
+  try {
+    const db = client.db("Group3LargeProject");
+    
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Create a case-insensitive regex from searchTerm
+
+    // Define a variable to determine if a searchTerm is provided
+    const isSearchTermProvided = searchTerm.trim() !== '';
+
+    // Fetch classes without filtering by userId, and conditionally filter by searchTerm if provided
+    const classes = isSearchTermProvided ? await db.collection('Class').find({
+      className: { $regex: searchRegex }
+    }).toArray() : await db.collection('Class').find({}).toArray();
+
+    // Fetch sets without filtering by userId, and conditionally filter by searchTerm if provided
+    const sets = isSearchTermProvided ? await db.collection('Sets').find({
+      SetName: { $regex: searchRegex }
+    }).toArray() : await db.collection('Sets').find({}).toArray();
+
+    // Fetch cards without filtering by userId, and conditionally filter by searchTerm if provided
+    const cardsQuery = isSearchTermProvided ? {
+      $or: [
+        { Term: { $regex: searchRegex } },
+        { Definition: { $regex: searchRegex } }
+      ]
+    } : {};
+
+    const cards = await db.collection('Cards').find(cardsQuery).toArray();
+
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
+
+    res.json(results);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+
+
+
+
+
 
 //const { v4: uuidv4 } = require('uuid'); // Import a package to generate unique IDs for each test
 

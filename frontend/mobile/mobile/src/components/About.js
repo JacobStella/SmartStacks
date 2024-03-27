@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
 
-const Test = ({navigation}) => {
+const About = ({navigation}) => {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Test</Text>
+            <Text style={styles.title}>About</Text>
             
         </View>
     );
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default Test;
+export default About;

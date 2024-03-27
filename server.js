@@ -68,7 +68,7 @@ app.post('/api/register', async (req, res) => {
           Verified: verified,
       });
 
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(200).json({ message: 'User registered successfully' });
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.toString() });
@@ -144,7 +144,7 @@ app.post('/api/updatecard', async (req, res) => {
 			var newDef = { $set: {Definition:newInfo}};
 			break;
 		default:
-			res.status(101).json({ error: "Control Code not found (assignment)" });
+			res.status(500).json({ error: "Control Code not found (assignment)" });
 	}
 	
 
@@ -165,7 +165,7 @@ app.post('/api/updatecard', async (req, res) => {
 				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
 				break;
 			default:
-				res.status(101).json({ error: "Control Code not found (update func)" });
+				res.status(500).json({ error: "Control Code not found (update func)" });
 		}
 		
 

@@ -35,7 +35,7 @@ function Register() {
             if(response.ok) {
                 setMessage('User registered successfully');
                 // Consider clearing the form or redirecting the user after successful registration
-                window.location.href = "https://largeprojectgroup3-efcc1eed906f.herokuapp.com/";
+                window.location.href = "https://largeprojectgroup3-efcc1eed906f.herokuapp.com/login";
             } else {
                 setMessage('Failed to register user');
             }

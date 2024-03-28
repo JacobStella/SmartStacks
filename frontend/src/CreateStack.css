@@ -5,7 +5,7 @@ create-study-set-container {
     color: #d8dcff;
     margin: 20px auto; /* Increased margin for better centering */
     width: 90%; /* This sets the width to be 90% of the parent element */
-    max-width: 1200px; /* This will now allow the container to grow up to 1200px */
+    width: 700px; /* This will now allow the container to grow up to 1200px */
     padding: 20px;
     box-sizing: border-box; /* This makes sure padding doesn't add to the width */
   }
@@ -56,11 +56,6 @@ create-study-set-container {
     align-items: center;
     display: flex;
     margin: 10px 0
-  }
-  
-  .number {
-    margin-right: 10px;
-    color: #d8dcff; /* Light grey for the number */
   }
   
   .definition-input,.term-input {

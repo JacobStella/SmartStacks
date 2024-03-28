@@ -1,15 +1,12 @@
-.create-study-set-container {
+  .create-study-set-container {
     background-color: #172a3a;
-    border-radius: 30px;
     border: 5px solid #004346;
+    border-radius: 30px;
     color: #d8dcff;
-    margin: 20px auto; /* Increased margin for better centering */
-    width: 90%; /* This sets the width to be 90% of the parent element */
-    width: 700px; /* This will now allow the container to grow up to 1200px */
-    padding: 20px;
-    box-sizing: border-box; /* This makes sure padding doesn't add to the width */
+    margin: 30px auto;
+    padding: 30px;
+    width: 700px;
   }
-  
   
   .create-study-set-container h1{
     color: #508991;
@@ -93,4 +90,19 @@
   button:hover {
     opacity: 0.8;
   }
+
+  .arrow-button {
+    background-color: transparent;
+    border: none;
+    color: #d8dcff;
+    cursor: pointer;
+    font-size: 1.5rem; /* Adjust size as needed */
+    padding: 5px;
+    margin-left: 5px;
+  }
+  
+  .arrow-button:hover {
+    color: #09bc8a; /* Change color on hover */
+  }
+  
   

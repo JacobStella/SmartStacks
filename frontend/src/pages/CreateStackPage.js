@@ -4,20 +4,39 @@ import LandingFooter from '../components/LandingFooter';
 import '../CreateStack.css';
 import '../Web.css';
 
-// Removed the number prop as it's no longer needed
-const CardPair = () => (
+// Updated CardPair component with arrow buttons and move functionality
+const CardPair = ({ onMoveUp, onMoveDown, index }) => (
   <div className="term-definition-pair">
     <input type="text" placeholder="Enter term" className="term-input" />
     <input type="text" placeholder="Enter definition" className="definition-input" />
+    <button onClick={() => onMoveUp(index)} className="arrow-button">↑</button>
+    <button onClick={() => onMoveDown(index)} className="arrow-button">↓</button>
   </div>
 );
 
 const LandingPage = () => {
-  const [cardPairCount, setCardPairCount] = useState(3); // Use count for card pairs instead of an array
+  // Use an array to keep track of the card pairs
+  const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
+
+  // Function to move a card pair up
+  const moveCardUp = (index) => {
+    if (index === 0) return;
+    const newCardPairs = [...cardPairs];
+    [newCardPairs[index], newCardPairs[index - 1]] = [newCardPairs[index - 1], newCardPairs[index]];
+    setCardPairs(newCardPairs);
+  };
+
+  // Function to move a card pair down
+  const moveCardDown = (index) => {
+    if (index === cardPairs.length - 1) return;
+    const newCardPairs = [...cardPairs];
+    [newCardPairs[index], newCardPairs[index + 1]] = [newCardPairs[index + 1], newCardPairs[index]];
+    setCardPairs(newCardPairs);
+  };
 
   // Function to add a new card pair
   const addCardPair = () => {
-    setCardPairCount(cardPairCount + 1); // Increment card pair count
+    setCardPairs([...cardPairs, { id: cardPairs.length }]);
   };
 
   return (
@@ -30,9 +49,14 @@ const LandingPage = () => {
         <input type="text" placeholder="Folder Name" className="folder-input" />
 
         <div className="terms-container">
-          {/* Using Array.from to create an array of the specified length and map over it */}
-          {Array.from({ length: cardPairCount }, (_, index) => (
-            <CardPair key={index} />
+          {/* Map over the cardPairs array and pass the move functions down to CardPair */}
+          {cardPairs.map((cardPair, index) => (
+            <CardPair
+              key={cardPair.id}
+              index={index}
+              onMoveUp={moveCardUp}
+              onMoveDown={moveCardDown}
+            />
           ))}
         </div>
 

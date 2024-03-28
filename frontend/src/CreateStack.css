@@ -10,8 +10,6 @@ create-study-set-container {
     box-sizing: border-box; /* This makes sure padding doesn't add to the width */
   }
   
-  /* Rest of the CSS remains unchanged */
-  
   
   .create-study-set-container h1{
     color: #508991;

@@ -8,7 +8,7 @@ import Library from './mobile/src/components/Library';
 import About from './mobile/src/components/About';
 import Settings from './mobile/src/components/Settings';
 import Test from './mobile/src/components/Test';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
 
 

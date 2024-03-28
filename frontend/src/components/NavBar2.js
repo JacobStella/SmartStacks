@@ -17,7 +17,7 @@ const NavBar2 = () => {
         <nav className="navbar">
             <img src={logo} alt="Company Logo" className="navbar-logo" />
             
-            <Link to="/landing" className="nav-button">Home</Link>
+            <Link to="/" className="nav-button">Home</Link>
             <Link to="/library" className="nav-button">Library</Link>
             <Link to="/create" className="nav-button">Create</Link>
 

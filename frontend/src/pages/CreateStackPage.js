@@ -17,6 +17,7 @@ const CardPair = ({ onMoveUp, onMoveDown, index }) => (
 const LandingPage = () => {
   // Use an array to keep track of the card pairs
   const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
+  const [isPublic, setIsPublic] = useState(true); // State to track if the study set is public or private
 
   // Function to move a card pair up
   const moveCardUp = (index) => {
@@ -39,17 +40,31 @@ const LandingPage = () => {
     setCardPairs([...cardPairs, { id: cardPairs.length }]);
   };
 
+  // Function to toggle the switch between public and private
+  const toggleSwitch = () => {
+    setIsPublic(!isPublic);
+  };
+
   return (
     <div className="page-container-landing">
       <NavBar2 />
       <div className="create-study-set-container">
         <h1>Create a new study set</h1>
         <input type="text" placeholder="Title" className="title-input" />
-        <textarea placeholder="Description..." className="description-input"></textarea>
+
+        <div className="description-switch-container">
+          <textarea placeholder="Description..." className="description-input"></textarea>
+          {/* Switch element */}
+          <label className="switch">
+            <input type="checkbox" checked={isPublic} onChange={toggleSwitch} />
+            <span className="slider round"></span>
+          </label>
+          <span className="switch-label">{isPublic ? 'Public' : 'Private'}</span>
+        </div>
+
         <input type="text" placeholder="Folder Name" className="folder-input" />
 
         <div className="terms-container">
-          {/* Map over the cardPairs array and pass the move functions down to CardPair */}
           {cardPairs.map((cardPair, index) => (
             <CardPair
               key={cardPair.id}

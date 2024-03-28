@@ -59,6 +59,10 @@
     flex-grow: 1; /* This allows the search bar to take up the available space */
     padding: 0 20px; /* Adjust as needed for spacing on the sides */
   }
+
+  .search-bar input::placeholder{
+    color: #d8dcff;
+  }
   
   .search-bar input[type=text] {
     background-color: #172a3a;

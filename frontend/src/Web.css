@@ -24,25 +24,6 @@ body {
   overflow: hidden;
 }
 
-/* Navigation bar */
-.navbar {
-  background-color: #333;
-  color: #d8dcff;
-  padding: 10px 0;
-}
-
-.navbar a {
-  color: #d8dcff;
-  text-decoration: none;
-  padding: 10px 20px;
-  display: inline-block;
-}
-
-.navbar a:hover {
-  background-color: #d8dcff;
-  color: #333;
-}
-
 /* Header styles */
 header {
   background: #50a3a2;

@@ -3,20 +3,20 @@ import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../CreateStack.css';
 
-const CardPair = ({ number }) => (
+// Removed the number prop as it's no longer needed
+const CardPair = () => (
   <div className="term-definition-pair">
-    <div className="number">{number}</div>
     <input type="text" placeholder="Enter term" className="term-input" />
     <input type="text" placeholder="Enter definition" className="definition-input" />
   </div>
 );
 
 const LandingPage = () => {
-  const [cardPairs, setCardPairs] = useState([1, 2, 3]); // Initial card pair numbers
+  const [cardPairCount, setCardPairCount] = useState(3); // Use count for card pairs instead of an array
 
   // Function to add a new card pair
   const addCardPair = () => {
-    setCardPairs([...cardPairs, cardPairs.length + 1]);
+    setCardPairCount(cardPairCount + 1); // Increment card pair count
   };
 
   return (
@@ -29,8 +29,9 @@ const LandingPage = () => {
         <input type="text" placeholder="Folder Name" className="folder-input" />
 
         <div className="terms-container">
-          {cardPairs.map((number) => (
-            <CardPair key={number} number={number} />
+          {/* Using Array.from to create an array of the specified length and map over it */}
+          {Array.from({ length: cardPairCount }, (_, index) => (
+            <CardPair key={index} />
           ))}
         </div>
 

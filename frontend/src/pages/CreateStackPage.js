@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../CreateStack.css';
+import '../Web.css';
 
 // Removed the number prop as it's no longer needed
 const CardPair = () => (

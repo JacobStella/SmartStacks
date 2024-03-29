@@ -11,6 +11,7 @@ function LibraryLink() {
             <Link to="/library">
                 <img src={LibraryImage} alt="Library" className="image-button" />
             </Link>
+            <p className="library-section-text">Library</p>
         </div>
     );
 }

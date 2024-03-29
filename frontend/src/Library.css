@@ -21,10 +21,6 @@
     gap: 10px; /* Adds space between the items */
 }
 
-.search-container {
-    flex-grow: 1; /* Allows the search container to grow and fill the space */
-}
-
 
 .search-container, .new-folder-btn, .filter-dropdown {
     /* This will apply to all three elements */

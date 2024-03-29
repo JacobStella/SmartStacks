@@ -1,6 +1,6 @@
 .library-header {
     display: flex;
-    flex-direction: row; /* Keeps the content arranged vertically */
+    flex-direction: column; /* Keeps the content arranged vertically */
     align-items: center; /* Centers items horizontally */
     gap: 20px; /* Space between the header and the control elements */
     width: 100%; /* Full width of the parent container */
@@ -80,4 +80,5 @@
     flex-shrink: 0; /* Do not allow the select to shrink */
     margin: 5px;
 }
+
 

@@ -1,6 +1,6 @@
 .library-header {
     display: flex;
-    flex-direction: column; /* Keeps the content arranged vertically */
+    flex-direction: row; /* Keeps the content arranged vertically */
     align-items: center; /* Centers items horizontally */
     gap: 20px; /* Space between the header and the control elements */
     width: 100%; /* Full width of the parent container */

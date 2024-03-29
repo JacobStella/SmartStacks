@@ -8,9 +8,10 @@
     width: 700px;
   }
   
-  .create-study-set-container h1{
+  .create-study-set-container h1 {
     color: #508991;
-  }
+    text-align: center;
+}
   
   .description-input,.title-input,.folder-input, .term-input, .definition-input {
     background-color: #508991;
@@ -82,14 +83,34 @@
   }
   
   .create-button {
+    width:30%;
+    height: 69.34px;
     background-color: #09bc8a;
     border-color: #004346;
     border-radius: 10px;
     color: #d8dcff;
     margin-top: 20px;
     padding: 10px 20px;
-  }
-  
+    display: block;
+    margin-left: 70%;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.add-card-button {
+    background-color: #508991;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 69.34px;    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: #d8dcff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
   /* Apply global styles for buttons */
   button {
     cursor: pointer;

@@ -1,13 +1,30 @@
 .library-header {
     display: flex;
-    flex-direction: column; /* Makes sure the content is arranged vertically */
-    align-items: center; /* Centers the items horizontally */
-    gap: 20px; /* Adds space between the flex items */
+    flex-direction: column; /* Keeps the content arranged vertically */
+    align-items: center; /* Centers items horizontally */
+    gap: 20px; /* Space between the header and the control elements */
 }
 
 .library-header > h1 {
     /* Style for the "Your Library" header */
+    /* You can set text-align to center if you want it centered in the full width */
+    text-align: center;
+    width: 100%; /* Ensures full width if not already set */
 }
+
+.header-controls {
+    display: flex;
+    flex-direction: row; /* Aligns children horizontally */
+    align-items: center; /* Centers items vertically within the container */
+    justify-content: space-between; /* Spreads out the children to use the available space */
+    width: 100%; /* Takes up the full width */
+    gap: 10px; /* Adds space between the items */
+}
+
+.search-container {
+    flex-grow: 1; /* Allows the search container to grow and fill the space */
+}
+
 
 .search-container, .new-folder-btn, .filter-dropdown {
     /* This will apply to all three elements */
@@ -22,6 +39,7 @@
     border-radius: 5px;
     box-shadow: 0 0 2px 2px #004346;
     color: #d8dcff;
+    width: 100%;
 }
 
   .search-input::placeholder{

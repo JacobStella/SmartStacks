@@ -25,3 +25,5 @@ const LibraryHeader = () => {
         </header>
     );
 };
+
+export default LibraryHeader;

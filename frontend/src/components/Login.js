@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import '../LoginRegister.css';
+
 //thi is a test
 function toRegister(){
     window.location.href = '/register';
@@ -8,7 +11,7 @@ function Login()
 {
     var loginName;
     var loginPassword;
-
+    const navigate = useNavigate();
     const [message,setMessage] = useState('');
     const app_name = 'largeprojectgroup3-efcc1eed906f'
     
@@ -48,7 +51,9 @@ function Login()
                 var user = {firstName:res.firstName, lastName:res.lastName, id:res.id};
                 localStorage.setItem('user_data', JSON.stringify(user)); //stores users info for later use
                 setMessage(''); //wtf is this for 
-                window.location.href = '/landing'; // this will have to be changed is this is a popup, OR if this is a seperate page. We want to return to the page login called from
+                const preLoginPath = localStorage.getItem('preLoginPath') || '/';
+                localStorage.removeItem('preLoginPath'); // Clean up after retrieval
+                navigate(preLoginPath); // Redirect the user
             }
             else if(response.status === 400) // Incorrect credentials
             {
@@ -70,17 +75,19 @@ function Login()
 
 
     return (
-        <div id="loginDiv">
-            <form onSubmit={doLogin}> {/* Note the onSubmit handler here */}
-                <span id="inner-title">PLEASE LOG IN</span><br />
-                <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
-                <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
-                <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
-                {/* Changed to type="button" and corrected class to className */}
-                <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
-            </form>
-            <span id="loginResult">{message}</span>
-        </div>
+        <div className="root-div">
+    <>
+        <form onSubmit={doLogin}>
+            <span id="inner-title">PLEASE LOG IN</span><br />
+            <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
+            <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
+            <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
+            <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
+        </form>
+        <span id="loginResult">{message}</span>
+    </>
+</div>
+
     );
 }
 export default Login;

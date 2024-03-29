@@ -23,9 +23,9 @@ function App() {
         <Route path="/create" element={<CreateStackPage />} />
         <Route path="/forgor" element={<ForgorPage />} />
         <Route path="/game" element={<GamePage />} />
-        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/library" element={<LibraryPage />} />
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/study" element={<StudyPage />} />
         <Route path="/settings" element={<UserSettingsPage />} />

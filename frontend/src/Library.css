@@ -3,22 +3,27 @@
     flex-direction: column; /* Keeps the content arranged vertically */
     align-items: center; /* Centers items horizontally */
     gap: 20px; /* Space between the header and the control elements */
+    width: 100%; /* Full width of the parent container */
 }
 
 .library-header > h1 {
-    /* Style for the "Your Library" header */
-    /* You can set text-align to center if you want it centered in the full width */
-    text-align: center;
-    width: 100%; /* Ensures full width if not already set */
+    text-align: center; /* Centers the header text */
+    width: 100%; /* Full width */
 }
 
 .header-controls {
     display: flex;
     flex-direction: row; /* Aligns children horizontally */
-    align-items: center; /* Centers items vertically within the container */
-    justify-content: space-between; /* Spreads out the children to use the available space */
+    align-items: center; /* Centers items vertically within the container */; /* Spreads out the children to use the available space */
     width: 100%; /* Takes up the full width */
     gap: 10px; /* Adds space between the items */
+}
+
+.search-container {
+    flex-grow: 0; /* Do not allow the search container to grow */
+    flex-shrink: 1; /* Allows it to shrink if necessary */
+    flex-basis: 50%; /* Search bar takes up 50% of the available space */
+    margin: 5px;
 }
 
 
@@ -35,7 +40,7 @@
     border-radius: 5px;
     box-shadow: 0 0 2px 2px #004346;
     color: #d8dcff;
-    width: 100%;
+    width: 100%; /* Ensures the input field fills its container */
 }
 
   .search-input::placeholder{
@@ -43,33 +48,36 @@
   }
   
 
-.new-folder-btn {
+  .new-folder-btn {
     padding: 5px 10px; /* Adjust padding as needed */
     font-size: 16px; /* Adjusts the button text size */
-    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
     background-color: #172a3a;
     border: none;
     border-radius: 5px;
     color: #d8dcff;
     cursor: pointer;
-}
+    flex-grow: 0; /* Do not allow the button to grow */
+    flex-shrink: 0; /* Do not allow the button to shrink */
+    margin: 5px;
+}   
 
   
 .new-folder-btn:hover {
-background-color: #014b4f;
-text-decoration: underline;
-text-decoration-color: #d8dcff;
+    background-color: #014b4f;
+    text-decoration: underline;
+    text-decoration-color: #d8dcff;
 }
 
 .filter-select {
     padding: 5px;
     font-size: 16px; /* Adjusts the dropdown text size */
+    background-color: #172a3a;
+    border: 1px solid #004346;
+    border-radius: 5px;
+    color: #d8dcff;
+    flex-grow: 0; /* Do not allow the select to grow */
+    flex-shrink: 0; /* Do not allow the select to shrink */
+    margin: 5px;
 }
 
-/* Additional Flexbox setup to align search bar, button, and dropdown next to each other */
-.header-controls {
-    display: flex;
-    flex-direction: row; /* Aligns children horizontally */
-    align-items: center; /* Centers items vertically within the container */
-    gap: 10px; /* Adds space between the items */
-}
+

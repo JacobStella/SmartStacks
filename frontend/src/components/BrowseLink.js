@@ -11,6 +11,7 @@ function BrowseLink() {
             <Link to="/browse">
                 <img src={BrowseImage} alt="Browse" className="image-button" />
             </Link>
+            <p className="browse-section-text">Browse</p>
         </div>
     );
 }

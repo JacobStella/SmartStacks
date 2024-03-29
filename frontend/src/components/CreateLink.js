@@ -11,6 +11,7 @@ function CreateLink() {
             <Link to="/create">
                 <img src={CreateImage} alt="Create" className="image-button" />
             </Link>
+            <p className="create-section-text">Create</p>
         </div>
     );
 }

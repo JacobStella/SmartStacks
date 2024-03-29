@@ -8,12 +8,12 @@ const FolderTemplate = ({ name }) => {
         <div className="folder-template">
             <div className="folder-image">
                 {/* Placeholder for folder icon */}
-                <img src="../images/FolderIcon.png" alt="Folder" />
+                <img src="./images/FolderIcon.png" alt="Folder" />
             </div>
             <span className="folder-name">{name}</span>
             <button className="folder-action-button">
                 {/* Placeholder for button icon */}
-                <img src="../images/EditIcon.png" alt="Action" />
+                <img src="./images/EditIcon.png" alt="Action" />
             </button>
         </div>
     );

@@ -36,7 +36,7 @@ const submit = async () => {
             throw new Error("Login failed");
         }
         else{
-            console.log("success");
+            console.log("Logged in successfully");
             library();
         }
        

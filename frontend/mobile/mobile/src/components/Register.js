@@ -38,7 +38,7 @@ const Register = ({navigation}) => {
             
             console.log(res.status);
             if(res.status === 201){
-                console.log("Success");
+                console.log("Registered Successfully");
                 navigation.navigate("Login");
             }else{
                 const resData = await res.json();

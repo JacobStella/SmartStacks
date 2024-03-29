@@ -93,12 +93,24 @@ a:hover{
   align-items: center;
 }
 
-.create-section, .library-section, .browse-section, .play-section {
-  /* Common style for each section */
+.browse-section,.create-section,.library-section,.play-section {
   margin: 10px;
   padding: 20px;
-  border: 1px solid #ccc;
-  /* You can add more like width, height, etc. */
+  
+}
+
+.browse-section-text,.create-section-text,.library-section-text,.play-section-text {
+  margin: 10px;
+  color: #172a3a;
+  cursor: pointer;
+  font-family: Arial Rounded MT Bold,sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.browse-section-text,.create-section-text,.library-section-text {
+ padding: 5px;
 }
 
 .get-started-section {
@@ -136,8 +148,9 @@ a:hover{
 
 .vertical-line {
   background-color: #172a3a;
-  height: 400px;
-  margin: 0 20px;
+  height: 425px;
+  margin-bottom: 20px;
+  margin-top: 30px;
   width: 10px
 }
 

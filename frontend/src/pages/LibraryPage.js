@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar2 from '../components/NavBar2';
 import LibraryHeader from '../components/LibraryHeader';
-import LibraryHeader from '../components/FolderStacksDisplay';
+import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import '../Library.css';
 
 

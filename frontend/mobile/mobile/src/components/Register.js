@@ -97,7 +97,6 @@ const Register = ({navigation}) => {
         },
         inputContainer: {
             width: '100%',
-            marginBottom: 20,
             padding: 10,
             justifyContent: 'center',
         },

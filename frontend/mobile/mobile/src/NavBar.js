@@ -12,7 +12,6 @@ import Library from './components/Library.js'
 import StudyGame from './components/StudyGame.js'
 import Browse from './components/Browse.js'
 import Search from './components/Search.js'
-import HomeScreen from './components/HomeScreen.js'
 import { isSearchBarAvailableForCurrentPlatform } from 'react-native-screens';
 
 // screen names
@@ -33,11 +32,11 @@ function DetailsScreen() {
   );
 }
 
-function NavBar() {
+const NavBar = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator 
-      initialRouteName={libraryName}
+      
       screenOptions={({route}) => ({
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
@@ -60,6 +59,7 @@ function NavBar() {
         <Tab.Screen name={searchName} component={Search}/>
         <Tab.Screen name={browseName} component={Browse}/>
         <Tab.Screen name={studyGameName} component={StudyGame}/>
+        
 
       </Tab.Navigator>
     </NavigationContainer>

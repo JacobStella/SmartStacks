@@ -7,13 +7,62 @@ import Register from './mobile/src/components/Register';
 import Library from './mobile/src/components/Library';
 import About from './mobile/src/components/About';
 import Settings from './mobile/src/components/Settings';
+import Browse from './mobile/src/components/Browse';
+import StudyGame from './mobile/src/components/StudyGame';
+import Study from './mobile/src/components/Study';
 import Test from './mobile/src/components/Test';
+import Search from './mobile/src/components/Search';
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 
 
 const Stack = createNativeStackNavigator();
 const HamburgerMenu = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+const libraryName = 'Library';
+const searchName = 'Search';
+const browseName = 'Browse';
+const studyGameName = 'Study';
+
+
+
+const NavBar = () => {
+  const name = useRoute();
+  console.log(name);
+  return (
+    
+      <Tab.Navigator 
+      
+      screenOptions={({route}) => ({
+        tabBarIcon: ({focused, color, size}) => {
+          let iconName;
+          let rn = route.name;
+          if(rn == libraryName){
+            iconName = focused ? 'library' : 'library-outline'
+          } else if (rn == searchName){
+            iconName = focused ? 'search' : 'search-outline'
+          } else if (rn == browseName){
+            iconName = focused ? 'search' : 'search-outline'
+          } else if (rn == studyGameName){
+            iconName = focused ? 'list' : 'list-outline'
+          } 
+
+          return <Ionicons name={iconName} size={size} color={color}/>
+        },
+      })}>
+
+        <Tab.Screen name={libraryName} component={MainApp}/>
+        <Tab.Screen name={searchName} component={MainApp}/>
+        <Tab.Screen name={browseName} component={MainApp}/>
+        <Tab.Screen name={studyGameName} component={MainApp}/>
+        
+
+      </Tab.Navigator>
+      
+  );
+}
 
 
 const customDrawerContent = ({navigation}) => {
@@ -79,11 +128,16 @@ const MainApp = () => {
  
   //Might implement a switch statement for this
  let screenName = useRoute().name;
+ console.log(screenName);
+ console.log("hi");
+ let flag = 0;
   if(screenName == "Library"){
     screen = Library;
+    
   }
   else if(screenName == "Test"){
     screen = Test;
+    
   }
   else if(screenName == "About"){
     screen = About;
@@ -91,13 +145,22 @@ const MainApp = () => {
   else if(screenName == "Settings"){
     screen = Settings;
   }
+  else if(screenName == "Browse"){
+    screen = Browse;
+  }
+  else if(screenName == "Search"){
+    screen = Search;
+  }
+  else if(screenName == "Study"){
+    screen = Study;
+  }
  //console.log(screen);
 
   return (
     
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen
-        name = "Toggle Hamburger"
+        name = "ToggleHamburger"
         component={screen}
         options = {{
           title: "",
@@ -199,10 +262,6 @@ const MainApp = () => {
             backgroundColor: "#c6cbef",
           }
         }}
-        
-          
-         
-        
         />
     </HamburgerMenu.Navigator>
     
@@ -214,40 +273,30 @@ const MainApp = () => {
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator  screenOptions={{
+      <Stack.Navigator screenOptions={{
         headerShown: false
       }}>
         <Stack.Screen
-          name = "Login"
-          component = {Login}
-        />
+          name="Login"
+          component={Login} />
         <Stack.Screen
-          name ="Register"
-          component = {Register}
-        />
+          name="Register"
+          component={Register} />
         <Stack.Screen
-          name ="Library"
-          component = {MainApp}
-         
-        />
+          name="Library"
+          component={NavBar} />
         <Stack.Screen
-          name ="Test"
-          component = {MainApp}
-          
-        />
+          name="Test"
+          component={NavBar} />
         <Stack.Screen
-          name ="About"
-          component = {MainApp}
-          
-        />
+          name="About"
+          component={NavBar} />
         <Stack.Screen
-          name ="Settings"
-          component = {MainApp}
-          
-        />
+          name="Settings"
+          component={NavBar} />
       </Stack.Navigator>
     </NavigationContainer>
-  );
+    );
 };
 
 

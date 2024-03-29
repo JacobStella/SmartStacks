@@ -19,10 +19,44 @@
     font-size: 16px; /* Adjusts the size of the input text */
 }
 
+  .search-input input::placeholder{
+    color: #d8dcff;
+  }
+  
+  .search-input input[type=text] {
+    background-color: #172a3a;
+    border: 1px solid #004346;
+    border-radius: 5px;
+    box-shadow: 0 0 2px 2px #004346;
+    color: #d8dcff;
+    height: 30px;
+    padding: 6px 10px;
+    width: 100%;
+    margin-left: 80px
+  }
+  
+  .search-input input[type=text]:focus {
+    border-color: #09bc8a; 
+    color: #d8dcff;
+    outline: none;
+  }
+
 .new-folder-btn {
     padding: 5px 10px; /* Adjust padding as needed */
     font-size: 16px; /* Adjusts the button text size */
     cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+    background-color: #172a3a;
+    border: none;
+    border-radius: 5px;
+    color: #d8dcff;
+    cursor: pointer;
+}
+
+  
+.new-folder-btn button:hover {
+background-color: #014b4f;
+text-decoration: underline;
+text-decoration-color: #d8dcff;
 }
 
 .filter-select {

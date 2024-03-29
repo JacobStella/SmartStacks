@@ -1,6 +1,8 @@
 import React from 'react';
 import NavBar2 from '../components/NavBar2';
-import '../Web.css';
+import LibraryHeader from '../components/LibraryHeader';
+import LibraryHeader from '../components/FolderStacksDisplay';
+import '../Library.css';
 
 
 const LandingPage = () => {

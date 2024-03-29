@@ -1,11 +1,37 @@
+// FolderStacksDisplay.js
+
 import React from 'react';
 import '../Library.css';
 
+const FolderTemplate = ({ name }) => {
+    return (
+        <div className="folder-template">
+            <div className="folder-image">
+                {/* Placeholder for folder icon */}
+                <img src="/path-to-your-folder-icon.png" alt="Folder" />
+            </div>
+            <span className="folder-name">{name}</span>
+            <button className="folder-action-button">
+                {/* Placeholder for button icon */}
+                <img src="/path-to-your-action-icon.png" alt="Action" />
+            </button>
+        </div>
+    );
+};
+
 const FolderStacksDisplay = () => {
+    // Sample data - eventually this would be dynamic
+    const folders = [
+        { id: 1, name: 'Folder 1' },
+        // ... other folders
+    ];
+
     return (
         <section className="folders-and-stacks">
-            {/* This is where you will map over your folders and stacks to display them */}
-            <div className="folder-stack-placeholder">Folders and Stacks will be displayed here</div>
+            {/* Map over your folders to display them */}
+            {folders.map(folder => (
+                <FolderTemplate key={folder.id} name={folder.name} />
+            ))}
         </section>
     );
 };

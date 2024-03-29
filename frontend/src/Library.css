@@ -41,7 +41,6 @@
     box-shadow: 0 0 2px 2px #004346;
     color: #d8dcff;
     width: 100%; /* Ensures the input field fills its container */
-    margin-right: auto;
 }
 
   .search-input::placeholder{
@@ -81,4 +80,37 @@
     margin: 5px;
 }
 
+/* Library.css */
 
+.folders-and-stacks {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.folder-template {
+    display: flex;
+    align-items: center;
+    background-color: #f5f5f5; /* Example background color */
+    padding: 10px;
+    border-radius: 5px;
+    width: 80%; /* Adjust the width as needed */
+    gap: 10px; /* Space between items */
+}
+
+.folder-image img {
+    width: 40px; /* Adjust size as needed */
+}
+
+.folder-name {
+    flex-grow: 1;
+}
+
+.folder-action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+/* Adjust the padding, margin, and other styles as needed */

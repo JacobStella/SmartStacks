@@ -77,32 +77,39 @@ app.post('/api/register', async (req, res) => {
 
 // Add card
 app.post('/api/addcard', async (req, res) => {
-  // incoming: userId, term, definition, setId
+  // incoming: userId, term, definition, setId, difficulty
   // outgoing: error, id (of new card)
 
-  const { userId, term, definition, setId } = req.body;
+  const { userId, term, definition, setId, difficulty } = req.body;
   var error = '';
   var id = null;
 
   try {
     const db = client.db("Group3LargeProject");
+
+    // Validate difficulty to ensure it is 1, 2, or 3
+    if (![1, 2, 3].includes(difficulty)) {
+      throw new Error("Difficulty must be 1, 2, or 3");
+    }
+
     const newCard = {
       Term: term,
       Definition: definition,
       UserId: userId,
-      SetId: setId // Store the setId in each card
+      SetId: setId, // Store the setId in each card
+      Difficulty: difficulty // Adding the "Difficulty" field to categorize the card
     };
     
     // insertOne is an async operation, using await to ensure the operation completes before proceeding
     const result = await db.collection('Cards').insertOne(newCard);
     
     // Check if the insert was acknowledged
-    if(result.acknowledged) {
+    if (result.acknowledged) {
       id = result.insertedId; // Assign the new card's id for the response
     } else {
       throw new Error("Insert was not acknowledged");
     }
-  } catch(e) {
+  } catch (e) {
     error = e.toString();
   }
 
@@ -110,6 +117,7 @@ app.post('/api/addcard', async (req, res) => {
   var ret = { error: error, id: id };
   res.status(200).json(ret);
 });
+
 
 // Delete Card
 app.post('/api/deletecard', async (req, res, next) => {

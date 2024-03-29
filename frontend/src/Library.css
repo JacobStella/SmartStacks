@@ -20,11 +20,13 @@
 }
 
 .search-container {
-    flex-grow: 0; /* Do not allow the search container to grow */
-    flex-shrink: 1; /* Allows it to shrink if necessary */
-    flex-basis: 50%; /* Search bar takes up 50% of the available space */
+    margin-left: auto; /* Pushes the search container to the right */
+    flex-grow: 0;
+    flex-shrink: 1;
+    flex-basis: 50%; /* Or any other size you prefer */
     margin: 5px;
 }
+
 
 
 .search-container, .new-folder-btn, .filter-dropdown {

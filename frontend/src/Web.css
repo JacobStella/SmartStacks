@@ -2,12 +2,6 @@
 /*/////////////////////////////////////////Basic Elements Start///////////////////////////////////////////*/
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
-body, h1, h2, h3, p {
-  margin: 0;
-  padding: 0;
-}
-
-/* Body styling */
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -17,14 +11,12 @@ body {
   color: #333;
 }
 
-/* Container for content */
 .container {
   width: 80%;
   margin: auto;
   overflow: hidden;
 }
 
-/* Header styles */
 header {
   background: #50a3a2;
   color: white;
@@ -33,14 +25,14 @@ header {
   border-bottom: 1px solid #eaeaea;
 }
 
-/* Headings */
-h1, h2, h3 {
-  padding: 10px 0;
+h1,h2,h3 {
   color: #172a3a;
-
+  cursor: pointer;
+  font-family: Arial Rounded MT Bold,sans-serif;
+  font-size: 35px;
+  font-weight: 300;    
 }
 
-/* Paragraphs */
 p {
   margin: 10px 0;
   color: #508991

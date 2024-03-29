@@ -1,0 +1,39 @@
+.library-header {
+    display: flex;
+    flex-direction: column; /* Makes sure the content is arranged vertically */
+    align-items: center; /* Centers the items horizontally */
+    gap: 20px; /* Adds space between the flex items */
+}
+
+.library-header > h1 {
+    /* Style for the "Your Library" header */
+}
+
+.search-container, .new-folder-btn, .filter-dropdown {
+    /* This will apply to all three elements */
+    margin: 5px; /* Adds some margin around each element */
+}
+
+.search-input {
+    padding: 5px;
+    font-size: 16px; /* Adjusts the size of the input text */
+}
+
+.new-folder-btn {
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjusts the button text size */
+    cursor: pointer; /* Changes the cursor to a pointer when hovering over the button */
+}
+
+.filter-select {
+    padding: 5px;
+    font-size: 16px; /* Adjusts the dropdown text size */
+}
+
+/* Additional Flexbox setup to align search bar, button, and dropdown next to each other */
+.header-controls {
+    display: flex;
+    flex-direction: row; /* Aligns children horizontally */
+    align-items: center; /* Centers items vertically within the container */
+    gap: 10px; /* Adds space between the items */
+}

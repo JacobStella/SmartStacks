@@ -1,3 +1,6 @@
+import React from 'react';
+import '../Library.css';
+
 const FolderStacksDisplay = () => {
     return (
         <section className="folders-and-stacks">
@@ -6,3 +9,5 @@ const FolderStacksDisplay = () => {
         </section>
     );
 };
+
+export default FolderStacksDisplay;

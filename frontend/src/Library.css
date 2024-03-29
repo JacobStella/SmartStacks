@@ -20,7 +20,7 @@
 }
 
 .search-container {
-    margin-left: auto; /* Pushes the search container to the right */
+    margin-right: auto; /* Pushes the search container to the right */
     flex-grow: 0;
     flex-shrink: 1;
     flex-basis: 50%; /* Or any other size you prefer */

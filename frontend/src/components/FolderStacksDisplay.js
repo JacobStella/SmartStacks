@@ -1,8 +1,8 @@
 // FolderStacksDisplay.js
 
 import React from 'react';
-import FolderIcon from '../images/FolderIcon';
-import EditIcon from '../images/EditIcon';
+import FolderIcon from '../images/FolderIcon.png';
+import EditIcon from '../images/EditIcon.png';
 import '../Library.css';
 
 const FolderTemplate = ({ name }) => {

@@ -455,23 +455,18 @@ app.post('/api/validate-test', async (req, res) => {
 
 
 
-
-
-
-
-
-
-
 app.post('/api/addset', async (req, res) => {
-  const { UserId, SetName, public, classId } = req.body;
+  // Including "Description" in the destructured object from req.body
+  const { UserId, SetName, Description, public, classId } = req.body;
 
   try {
       const db = client.db("Group3LargeProject");
       
-      // Insert the new set document into the 'Sets' collection
+      // Insert the new set document into the 'Sets' collection with the "Description" field
       const setResult = await db.collection('Sets').insertOne({
           UserId: UserId,
           SetName: SetName,
+          Description: Description, // Adding the "Description" field
           public: public,
           classId: classId, // Linking set to class via classId
       });
@@ -485,6 +480,7 @@ app.post('/api/addset', async (req, res) => {
       res.status(500).json({ error: e.toString() });
   }
 });
+
 
 
 const { ObjectId } = require('mongodb');

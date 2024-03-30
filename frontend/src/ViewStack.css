@@ -1,27 +1,23 @@
-.view-stack-page {
+    .view-stack-page {
     align-items: center;
     height: 100vh;
     justify-content: center;
     width: 100%;
     
-}
+    }
 
-div.card-container, div.card-container.flipped {
+    div.card-container, div.card-container.flipped {
     width: 100%;
     height: 60%;
     align-items: center;
     justify-content: center;
-}
-
-div.card-front, div.card-back {
-    width: 60%;
-    margin-left: 20%;
-    margin-right: 30%;
-}
+    }
   
-  .stack-title {
+    .stack-title {
     margin-bottom: 20px;
     font-size: 2em;
+    text-align: center;
+    margin-top: 20px;
   }
   
   .card-container {
@@ -31,20 +27,22 @@ div.card-front, div.card-back {
     height: 200px; /* Adjust height as needed */
   }
   
-  .card-front,
-  .card-back {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
+  .card-back,.card-front {
+    margin-left: 20%;
+    margin-right: 20%;
     align-items: center;
-    justify-content: center;
-    border: 1px solid #ccc;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background-color: #508991;
+    border: 3px solid #172a3a;
     border-radius: 10px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
     padding: 15px;
-    background-color: #fff;
-  }
+    position: absolute;
+    width: 60%;
+}
   
   .card-front {
     transform: rotateY(0deg);
@@ -66,7 +64,7 @@ div.card-front, div.card-back {
   
   .navigation-buttons {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     margin-top: 20px;
   }
@@ -75,8 +73,8 @@ div.card-front, div.card-back {
     padding: 10px 20px;
     margin: 0 10px;
     cursor: pointer;
-    background-color: #007bff;
-    color: white;
+    background-color: #172a3a;
+    color: #d8dcff;
     border: none;
     border-radius: 5px;
     font-size: 1em;
@@ -86,7 +84,8 @@ div.card-front, div.card-back {
     background-color: #ccc;
   }
   
-  .card-counter {
+  span.card-counter {
+    color: #508991;
     font-size: 1.2em;
   }
   

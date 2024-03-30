@@ -5,10 +5,10 @@ import '../Web.css';
 
 function BrowseLink() {
     // Include state and functions for browsing
-
+    //temporarily renamed the link to /view rther than /browse. (browse is also not in the app.js file)
     return (
         <div className="browse-section">
-            <Link to="/browse">
+            <Link to="/view">
                 <img src={BrowseImage} alt="Browse" className="image-button" />
             </Link>
             <p className="browse-section-text">Browse</p>

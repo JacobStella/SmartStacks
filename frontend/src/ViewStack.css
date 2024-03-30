@@ -1,0 +1,81 @@
+.view-stack-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .stack-title {
+    margin-bottom: 20px;
+    font-size: 2em;
+  }
+  
+  .card-container {
+    perspective: 1000px;
+    cursor: pointer;
+    width: 300px; /* Adjust width as needed */
+    height: 200px; /* Adjust height as needed */
+  }
+  
+  .card-front,
+  .card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 15px;
+    background-color: #fff;
+  }
+  
+  .card-front {
+    transform: rotateY(0deg);
+  }
+  
+  .card-back {
+    transform: rotateY(180deg);
+    position: absolute;
+    top: 0;
+  }
+  
+  .flipped .card-front {
+    transform: rotateY(-180deg);
+  }
+  
+  .flipped .card-back {
+    transform: rotateY(0deg);
+  }
+  
+  .navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+  }
+  
+  .card-counter {
+    font-size: 1.2em;
+  }
+  
+  /* Add responsive design or specific animations as needed */
+  

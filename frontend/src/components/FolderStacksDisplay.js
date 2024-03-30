@@ -20,21 +20,20 @@ const FolderTemplate = ({ name }) => {
         </div>
     );
 };
-const FolderStacksDisplay = () => {
-    // Sample data - eventually this would be dynamic
-    const folders = [
-        { id: 1, name: 'Folder 1' },
-        // ... other folders
-    ];
 
+const FolderStacksDisplay = ({ folders, createNewFolder }) => {
     return (
         <section className="folders-and-stacks">
-            {/* Map over your folders to display them */}
             {folders.map(folder => (
                 <FolderTemplate key={folder.id} name={folder.name} />
             ))}
+            <button onClick={createNewFolder} className="create-folder-button">
+                {/* Assuming you want to use the EditIcon as the 'create new folder' button icon */}
+                <img src={EditIcon} alt="Create new folder" />
+            </button>
         </section>
     );
 };
 
 export default FolderStacksDisplay;
+

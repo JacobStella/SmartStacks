@@ -23,14 +23,9 @@
     flex-grow: 0; /* Do not allow the search container to grow */
     flex-shrink: 1; /* Allows it to shrink if necessary */
     flex-basis: 50%; /* Search bar takes up 50% of the available space */
-    margin: 5px;
+    margin-left: 30%;
 }
 
-
-.search-container, .new-folder-btn, .filter-dropdown {
-    /* This will apply to all three elements */
-    margin: 5px; /* Adds some margin around each element */
-}
 
 .search-input {
     padding: 5px;

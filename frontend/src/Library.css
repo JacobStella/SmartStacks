@@ -110,31 +110,11 @@ div.filter-dropdown {
     margin: 5px;
 }
 
-/* Library.css */
-
 .folders-and-stacks {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-}
-
-.folder-template {
-    display: flex;
-    align-items: center;
-    background-color: #f5f5f5; /* Example background color */
-    padding: 10px;
-    border-radius: 5px;
-    width: 80%; /* Adjust the width as needed */
-    gap: 10px; /* Space between items */
-}
-
-.folder-image img {
-    width: 40px; /* Adjust size as needed */
-}
-
-.folder-name {
-    flex-grow: 1;
 }
 
 .folder-action-button {
@@ -143,4 +123,42 @@ div.filter-dropdown {
     cursor: pointer;
 }
 
-/* Adjust the padding, margin, and other styles as needed */
+div.folder-template {
+    background-color: #172a3a;
+    border: 9px solid #004346;
+    border-radius: 30px;
+    color: #d8dcff;
+    margin: 30px auto;
+    padding: 30px;
+    width: 80%;
+}
+
+button.folder-edit-button img{
+    height: 100px;
+    width: 100px;
+    background-color: #172a3a;
+    padding: 0;
+}
+
+button.folder-edit-button{
+    height: 90px;
+    width: 90px;
+    background-color: #172a3a;
+    border: none;
+    padding: 0;
+}
+
+div.folder-image img{
+    height: 80px;
+    width: 80px;
+}
+
+span.folder-name {
+    flex-grow: 1;
+    font-size:25px;
+    font-family: Arial Rounded MT Bold,sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 10px 15px
+}
+

@@ -20,6 +20,7 @@
     border-color: #014b4f;
     margin: 10px 0;
     padding: 10px;
+    color: #d8dcff;
   }
 
   .description-input{
@@ -38,7 +39,7 @@
   .description-input:focus, .title-input:focus, .folder-input:focus,  .term-input:focus, .definition-input:focus {
     border-color: #09bc8a; /* Changes the border color to white on focus */
     outline: none; /* Optional: removes the default focus outline */
-    /* You can add more styles here to visually indicate focus, such as changing background color, adding a shadow, etc. */
+    color: #d8dcff;
   }
   
   .description-input {

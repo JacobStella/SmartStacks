@@ -70,6 +70,12 @@ header.library-header {
   .search-input::placeholder{
     color: #d8dcff;
   }
+
+  input.search-input:focus {
+    border-color: #09bc8a;
+    color: #d8dcff;
+    outline: none
+}
   
 
   .new-folder-btn {

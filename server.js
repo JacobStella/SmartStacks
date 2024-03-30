@@ -151,6 +151,12 @@ app.post('/api/updatecard', async (req, res) => {
 			// update def
 			var newDef = { $set: {Definition:newInfo}};
 			break;
+		case 3:
+			// update difficulty
+			var newDiff = { $set: {Difficulty:newInfo}};
+		case 4:
+			// update Set
+			var newSet = { $set: {SetId:newInfo}};
 		default:
 			res.status(500).json({ error: "Control Code not found (assignment)" });
 	}
@@ -171,6 +177,12 @@ app.post('/api/updatecard', async (req, res) => {
 			case 2:
 				// update Def
 				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
+				break;
+			case 3:
+				const resultDiff = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDiff);
+				break;
+			case 4:
+				const resultSet = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newSet);
 				break;
 			default:
 				res.status(500).json({ error: "Control Code not found (update func)" });

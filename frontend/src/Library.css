@@ -11,6 +11,15 @@
     width: 100%; /* Full width */
 }
 
+header.library-header {
+    gap: 20px;
+    width: 100%;
+    background-color: #d8dcff;
+    border-color: #172a3a;
+    border-width: 5px;
+    margin-bottom: 20px;
+}
+
 .header-controls {
     display: flex;
     flex-direction: row; /* Aligns children horizontally */

@@ -6,7 +6,7 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import '../Library.css';
 
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]); // Initialized state
 
     // Function to handle the creation of a new folder
     const createNewFolder = () => {
@@ -17,8 +17,6 @@ const LibraryPage = () => {
 
     // Function to handle the editing of a folder name
     const editFolderName = (folderId) => {
-        // Placeholder functionality for editing a folder name
-        // In a real scenario, you would implement a prompt or a form to change the name
         const newName = prompt('Enter new folder name:');
         if (newName) {
             const updatedFolders = folders.map(folder => {
@@ -35,9 +33,9 @@ const LibraryPage = () => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
+                {/* LibraryHeader now receives the createNewFolder function as a prop */}
                 <div className="library-header-container">
-                    <LibraryHeader />
-                    <button className="new-folder-button" onClick={createNewFolder}>Create New Folder</button>
+                    <LibraryHeader createNewFolder={createNewFolder} />
                 </div>
                 <div className="folder-stacks-display-container">
                     <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} />

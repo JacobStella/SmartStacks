@@ -1,7 +1,8 @@
 import React from 'react';
 import '../Library.css';
 
-const LibraryHeader = () => {
+// Add the prop createNewFolder in the function parameter list
+const LibraryHeader = ({ createNewFolder }) => {
     return (
         <header className="library-header">
             <h1>Your Library</h1>
@@ -17,12 +18,11 @@ const LibraryHeader = () => {
                         <option value="type">Type</option>
                     </select>
                 </div>
-                {/* Button for creating a new folder */}
-                <button className="new-folder-btn">Create New Folder</button>
+                {/* Button for creating a new folder, now with onClick event handler */}
+                <button className="new-folder-btn" onClick={createNewFolder}>Create New Folder</button>
                 {/* Search bar and button */}
                 <div className="search-container">
                     <input type="text" placeholder="Search your library..." className="search-input"/>
-                    {/* Add search button next to the search bar */}
                     <button type="submit" className="search-btn">Search</button>
                 </div>
             </div>

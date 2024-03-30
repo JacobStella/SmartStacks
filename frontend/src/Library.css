@@ -124,6 +124,8 @@ div.filter-dropdown {
 }
 
 div.folder-template {
+    display: flex;
+    align-items: center;
     background-color: #172a3a;
     border: 9px solid #004346;
     border-radius: 30px;

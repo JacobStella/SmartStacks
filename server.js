@@ -75,6 +75,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Card Ops
 // Add card
 app.post('/api/addcard', async (req, res) => {
   // incoming: userId, term, definition, setId, difficulty
@@ -195,6 +196,7 @@ app.post('/api/updatecard', async (req, res) => {
 	}
 });
 
+// Class Ops
 // Add Class
 app.post('/api/addclass', async (req, res, next) => {
   const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
@@ -530,7 +532,8 @@ app.post('/api/validate-test', async (req, res) => {
 
 
 
-
+// Set ops
+// Add Set
 app.post('/api/addset', async (req, res) => {
   // Including "Description" in the destructured object from req.body
   const { UserId, SetName, Description, public, classId } = req.body;
@@ -557,7 +560,71 @@ app.post('/api/addset', async (req, res) => {
   }
 });
 
+// Delete Set
+app.post('/api/deleteset', async (req, res, next) => {
+	const { setId } = req.body; // Get setId from request
 
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+		
+		// delete set
+		const result = await db.collection('Sets').deleteOne({ _id: new ObjectId(setId) });
+   		
+		if(result){
+			res.status(200).json({ message: "Set deleted successfully"});
+		}
+		
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+// Update Set
+app.post('/api/updateset', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { setId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+
+	// control code
+	switch(code){
+		case 1:
+			// update Name
+			var newName = { $set: {SetName:newInfo}};
+			break;
+		case 2:
+			// update public value
+			var newPub = { $set: {public:newInfo}};
+			break;
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update class control code
+		switch(code){
+			case 1:
+				// update SetName
+				const resultTerm = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newName);
+				break;
+			case 2:
+				// update set public value
+				const resultVal = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newPub);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+
+		res.status(200).json({ message: "Set updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
 
 const { ObjectId } = require('mongodb');
 

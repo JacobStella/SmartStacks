@@ -22,6 +22,18 @@ const ViewStackPage = () => {
     setCurrentIndex((prevIndex) => (prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex));
   };
 
+  const toggleFullScreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch((e) => {
+        console.error("Fullscreen mode failed: ", e);
+      });
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
   return (
     <div className="view-stack-page">
         <NavBar2 />
@@ -37,6 +49,7 @@ const ViewStackPage = () => {
         <button onClick={goToPreviousCard}>&lt; Prev</button>
         <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
         <button onClick={goToNextCard}>Next &gt;</button>
+        <button onClick={toggleFullScreen}>Full Screen</button> {/* Full Screen toggle button */}
       </div>
     </div>
   );

@@ -107,8 +107,13 @@
     border: none;
     cursor: pointer;
     font-size: 24px;
+    margin-right: 30px;
 }
 
+.slider-toggle-button:focus {
+  outline: none; /* Remove the default focus outline */
+  /* Add your alternative focus styles here if desired, for example: */
+}
 .difficulty-slider {
   background-color: #172a3a;
   border-radius: 5px;

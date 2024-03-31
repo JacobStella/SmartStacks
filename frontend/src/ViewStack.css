@@ -164,33 +164,50 @@
     align-items: center;
   }
 
+
   .full-screen-button {
-    margin-left:85%
+    margin-left: 85%
 }
 
-:-webkit-full-screen, :fullscreen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
+
+:-webkit-full-screen,:fullscreen {
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw
 }
 
-:-webkit-full-screen .card-container, :fullscreen .card-container {
-  height: 80vh;
+
+:-webkit-full-screen .card-container,:fullscreen .card-container, :fullscreen .card-back, :fullscreen .card-front {
+    height: 80vh;
+    width: 100vw;
 }
 
-:-webkit-full-screen .view-stack-page, :fullscreen .view-stack-page {
-  width: 100vw;
-  height: 100vh;
+:fullscreen .card-back, :fullscreen .card-front, -webkit-full-screen .card-back, -webkit-full-screen .card-front {
+    align-items: center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    background-color: #508991;
+    border: 3px solid #172a3a;
+    border-radius: 10px;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    margin-left: 5%;
+    margin-right: 5%;
+    padding: 15px;
+    position: absolute;
+    width: 90%
+}
+
+:-webkit-full-screen .view-stack-page,:fullscreen .view-stack-page, -webkit-full-screen, -webkit-full-screen {
+    height: 100vh;
+    width: 100vw
 }
 
 .full-screen-button {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
+    bottom: 20px;
+    position: fixed;
+    right: 20px
 }
-  
-  
-  /* Add responsive design or specific animations as needed */
-  

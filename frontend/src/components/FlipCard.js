@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import '../ViewStack.css';
 import '../Web.css';
 
-
 const DifficultySlider = ({ onChange }) => {
   return (
     <div className="difficulty-slider">
@@ -37,7 +36,10 @@ const FlipCard = ({ front, back }) => {
   return (
     <div className={`card-container ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
       <div className="card-front">
-        <button className="slider-toggle-button" onClick={toggleSlider}>☰</button>
+        {/* Update the button content based on showSlider state */}
+        <button className="slider-toggle-button" onClick={toggleSlider}>
+          {showSlider ? '>' : '<'}
+        </button>
         {showSlider && <DifficultySlider onChange={handleDifficultyChange} />}
         {front}
       </div>

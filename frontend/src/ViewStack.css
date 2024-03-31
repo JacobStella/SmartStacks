@@ -95,49 +95,55 @@
     font-size: 1.2em;
   }
 
-  .slider-toggle-button {
+  .slider-toggle-button, .difficulty-slider {
     position: absolute;
-    top: 10px; /* Adjust as necessary */
-    right: 10px; /* Adjust as necessary */
+    right: 10px; /* Adjust this value to place the slider exactly where you want it */
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.slider-toggle-button {
     background: none;
     border: none;
     cursor: pointer;
-    font-size: 24px; /* Adjust as necessary */
-  }
-  
-  .difficulty-slider {
-    position: absolute;
-    top: 50px; /* Adjust as necessary */
-    right: 10px; /* Adjust as necessary */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .difficulty-slider input[type='radio'] {
-    display: none; /* Hide the radio input */
-  }
-  
-  .difficulty-slider label {
-    display: block;
-    width: 20px; /* Adjust as necessary */
-    height: 20px; /* Adjust as necessary */
-    border-radius: 50%;
+    font-size: 24px;
+}
+
+.difficulty-slider {
+    background-color: #172a3a;
+    border-radius: 5px;
+    
+}
+
+.difficulty-slider input[type=radio] {
+    display: none
+}
+
+.difficulty-slider label {
+    border-radius: 5px;
     cursor: pointer;
-  }
-  
-  /* Customize your difficulty levels with colors */
-  .difficulty-slider label[for='difficultyRed'] {
+    display: block;
+    height: 20px;
+    width: 20px
+}
+
+.difficulty-slider label[for=difficultyRed] {
     background-color: red;
-  }
-  
-  .difficulty-slider label[for='difficultyYellow'] {
-    background-color: yellow;
-  }
-  
-  .difficulty-slider label[for='difficultyGreen'] {
+    margin: 5px;
+    }
+
+.difficulty-slider label[for=difficultyYellow] {
+    background-color: #ff0;
+    margin: 5px;
+
+}
+
+.difficulty-slider label[for=difficultyGreen] {
     background-color: green;
-  }
+    margin: 5px;
+
+
+}
   
   /* Add a hover effect for labels */
   .difficulty-slider label:hover {

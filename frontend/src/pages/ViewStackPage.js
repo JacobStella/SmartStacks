@@ -50,9 +50,7 @@ const ViewStackPage = () => {
         <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
         <button onClick={goToNextCard}>Next &gt;</button>
       </div>
-      <div classname="ullscreen">
-        <button onClick={toggleFullScreen}>Full Screen</button> {/* Full Screen toggle button */}
-      </div>
+      <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
     </div>
   );
 }

@@ -596,6 +596,10 @@ app.post('/api/updateset', async (req, res) => {
 			// update public value
 			var newPub = { $set: {public:newInfo}};
 			break;
+		case 3:
+			// update description
+			var newDesc = { $set: {Description:newInfo}};
+			break;
 		default:
 			res.status(500).json({ error: "Control Code not found (assignment)" });
 	}
@@ -615,6 +619,10 @@ app.post('/api/updateset', async (req, res) => {
 			case 2:
 				// update set public value
 				const resultVal = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newPub);
+				break;
+			case 3:
+				// update description
+				const resultDesc = awai db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newDesc);
 				break;
 			default:
 				res.status(500).json({ error: "Control Code not found (update func)" });

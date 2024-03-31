@@ -225,7 +225,7 @@ app.post('/api/deleteclass', async (req, res, next) => {
 		const db = client.db("Group3LargeProject");
 		
 		// delete card
-		const result = await db.collection('Cards').deleteOne({ _id: new ObjectId(classId) });
+		const result = await db.collection('Class').deleteOne({ _id: new ObjectId(classId) });
    
 		res.status(200).json({ message: "Class deleted successfully"});
 	} catch(e) {

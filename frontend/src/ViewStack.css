@@ -94,6 +94,56 @@
     color: #508991;
     font-size: 1.2em;
   }
+
+  .slider-toggle-button {
+    position: absolute;
+    top: 10px; /* Adjust as necessary */
+    right: 10px; /* Adjust as necessary */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px; /* Adjust as necessary */
+  }
+  
+  .difficulty-slider {
+    position: absolute;
+    top: 50px; /* Adjust as necessary */
+    right: 10px; /* Adjust as necessary */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .difficulty-slider input[type='radio'] {
+    display: none; /* Hide the radio input */
+  }
+  
+  .difficulty-slider label {
+    display: block;
+    width: 20px; /* Adjust as necessary */
+    height: 20px; /* Adjust as necessary */
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  /* Customize your difficulty levels with colors */
+  .difficulty-slider label[for='difficultyRed'] {
+    background-color: red;
+  }
+  
+  .difficulty-slider label[for='difficultyYellow'] {
+    background-color: yellow;
+  }
+  
+  .difficulty-slider label[for='difficultyGreen'] {
+    background-color: green;
+  }
+  
+  /* Add a hover effect for labels */
+  .difficulty-slider label:hover {
+    opacity: 0.7;
+  }
+  
   
   /* Add responsive design or specific animations as needed */
   

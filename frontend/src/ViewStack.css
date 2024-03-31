@@ -179,9 +179,9 @@
 }
 
 
-:-webkit-full-screen .card-container,:fullscreen .card-container, :fullscreen .card-back, :fullscreen .card-front {
-    height: 80vh;
-    width: 100vw;
+:-webkit-full-screen .card-container,:fullscreen .card-back,:fullscreen .card-container,:fullscreen .card-front, :-webkit-full-screen .card-container.flipped ,:fullscreen .card-container.flipped {
+  height: 80vh;
+  width: 100vw;
 }
 
 :fullscreen .card-back, :fullscreen .card-front, -webkit-full-screen .card-back, -webkit-full-screen .card-front {

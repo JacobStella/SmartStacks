@@ -266,7 +266,7 @@ app.post('/api/updateclass', async (req, res) => {
 		}
 		
 
-		res.status(200).json({ message: "Classupdated successfully"});
+		res.status(200).json({ message: "Class updated successfully"});
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
 	}

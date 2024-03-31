@@ -570,8 +570,11 @@ app.post('/api/deleteset', async (req, res, next) => {
 		
 		// delete set
 		const result = await db.collection('Sets').deleteOne({ _id: new ObjectId(setId) });
-   
-		res.status(200).json({ message: "Set deleted successfully"});
+   		
+		if(result){
+			res.status(200).json({ message: "Set deleted successfully"});
+		}
+		
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
 	}

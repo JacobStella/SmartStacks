@@ -243,7 +243,7 @@ app.post('/api/updateclass', async (req, res) => {
 	switch(code){
 		case 1:
 			// update Name
-			var newName = { $set: {Name:newInfo}};
+			var newName = { $set: {className:newInfo}};
 			break;
 		default:
 			res.status(500).json({ error: "Control Code not found (assignment)" });
@@ -258,7 +258,7 @@ app.post('/api/updateclass', async (req, res) => {
 		// update class control code
 		switch(code){
 			case 1:
-				// update Name
+				// update className
 				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(classId) }, newName);
 				break;
 			default:

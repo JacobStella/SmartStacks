@@ -1,27 +1,9 @@
 import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
 import PlayButton from '../components/PlayButton'; 
+import FlipCard from '../components/FlipCard'
 import '../ViewStack.css';
 import '../Web.css';
-
-const FlipCard = ({ front, back }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-
-  const handleClick = () => {
-    setIsFlipped(!isFlipped);
-  };
-
-  return (
-    <div className={`card-container ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
-      <div className="card-front">
-        {front}
-      </div>
-      <div className="card-back">
-        {back}
-      </div>
-    </div>
-  );
-};
 
 const ViewStackPage = () => {
   const [cards, setCards] = useState([

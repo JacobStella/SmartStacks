@@ -163,6 +163,33 @@
     justify-content: center;
     align-items: center;
   }
+
+  .full-screen-button {
+    margin-left:85%
+}
+
+:-webkit-full-screen, :fullscreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+:-webkit-full-screen .card-container, :fullscreen .card-container {
+  height: 80vh;
+}
+
+:-webkit-full-screen .view-stack-page, :fullscreen .view-stack-page {
+  width: 100vw;
+  height: 100vh;
+}
+
+.full-screen-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
   
   
   /* Add responsive design or specific animations as needed */

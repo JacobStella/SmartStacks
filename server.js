@@ -594,7 +594,7 @@ app.post('/api/updateset', async (req, res) => {
 			break;
 		case 2:
 			// update public value
-			var newPub = { $set: {Public:newInfo}};
+			var newPub = { $set: {public:newInfo}};
 			break;
 		default:
 			res.status(500).json({ error: "Control Code not found (assignment)" });

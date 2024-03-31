@@ -79,6 +79,18 @@
     border-radius: 5px;
     font-size: 1em;
   }
+
+  .play-section button:hover {
+    background-color: #014b4f;
+    text-decoration: underline;
+    text-decoration-color: #d8dcff
+  }
+
+  .navigation-button button:hover {
+    background-color: #014b4f;
+    text-decoration: underline;
+    text-decoration-color: #d8dcff
+  }
   
   button:disabled {
     background-color: #ccc;

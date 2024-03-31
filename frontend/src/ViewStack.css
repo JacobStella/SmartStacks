@@ -80,13 +80,7 @@
     font-size: 1em;
   }
 
-  .play-section button:hover {
-    background-color: #014b4f;
-    text-decoration: underline;
-    text-decoration-color: #d8dcff
-  }
-
-  .navigation-button button:hover {
+  .play-section button:hover, .navigation-buttons button:hover {
     background-color: #014b4f;
     text-decoration: underline;
     text-decoration-color: #d8dcff

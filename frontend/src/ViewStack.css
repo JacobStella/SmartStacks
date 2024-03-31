@@ -180,7 +180,7 @@
 
 
 :-webkit-full-screen .card-container,:fullscreen .card-container, :fullscreen .card-back, :fullscreen .card-front {
-    height: 80vh;
+    height: 100vh;
     width: 100vw;
 }
 
@@ -192,13 +192,13 @@
     border: 3px solid #172a3a;
     border-radius: 10px;
     display: flex;
-    height: 100%;
+    height: 80vh;
     justify-content: center;
     margin-left: 5%;
     margin-right: 5%;
     padding: 15px;
     position: absolute;
-    width: 90%
+    width: 90vw;
 }
 
 :-webkit-full-screen .view-stack-page,:fullscreen .view-stack-page, -webkit-full-screen, -webkit-full-screen {

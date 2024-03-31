@@ -622,7 +622,7 @@ app.post('/api/updateset', async (req, res) => {
 				break;
 			case 3:
 				// update description
-				const resultDesc = awai db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newDesc);
+				const resultDesc = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newDesc);
 				break;
 			default:
 				res.status(500).json({ error: "Control Code not found (update func)" });

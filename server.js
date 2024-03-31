@@ -259,7 +259,7 @@ app.post('/api/updateclass', async (req, res) => {
 		switch(code){
 			case 1:
 				// update className
-				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(classId) }, newName);
+				const resultTerm = await db.collection('Class').updateOne({ "_id": new ObjectId(classId) }, newName);
 				break;
 			default:
 				res.status(500).json({ error: "Control Code not found (update func)" });

@@ -236,7 +236,7 @@ app.post('/api/deleteclass', async (req, res, next) => {
 // Update Class
 app.post('/api/updateclass', async (req, res) => {
 	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { cardId, newInfo, code } = req.body; 
+	const { classId, newInfo, code } = req.body; 
 	// const newTerm = { $set: {Term:Term}};
 
 	// control code

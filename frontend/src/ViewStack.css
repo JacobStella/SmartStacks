@@ -180,7 +180,7 @@
 
 
 :-webkit-full-screen .card-container,:fullscreen .card-container, :fullscreen .card-back, :fullscreen .card-front {
-    height: 100vh;
+    height: 80vh;
     width: 100vw;
 }
 

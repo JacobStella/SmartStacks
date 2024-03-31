@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
-import PlayLink from '../components/PlayLink'; 
+import PlayButton from '../components/PlayButton'; 
 import '../ViewStack.css';
 import '../Web.css';
 
@@ -43,7 +43,7 @@ const ViewStackPage = () => {
   return (
     <div className="view-stack-page">
         <NavBar2 />
-        <PlayLink />
+        <PlayButton />
       <h1 className="stack-title">Stack Title</h1>
       {cards.length > 0 && (
         <FlipCard

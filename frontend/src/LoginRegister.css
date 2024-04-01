@@ -159,8 +159,20 @@ input#loginButton.buttons:hover {
   opacity: .8;
  }
 
- #loginName, #loginPassword {
+ form #loginName,form #loginPassword {
   background-color: #d8dcff;
+  box-shadow: 0 0 3px 3px #004346;
+  border-width: 2px;
+}
+
+form #loginName::placeholder,form #loginPassword::placeholder {
+  color: #172a3a;
+}
+
+form #loginName:focus,form #loginPassword:focus {
+  border-color: #017c81;
+  color: #172a3a;
+  outline: none;
 }
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

@@ -49,12 +49,12 @@ function Register() {
             <h1 id="title">Welcome to Smart Stacks!</h1>
             <form onSubmit={doRegister}>
                 <span id="inner-title">PLEASE REGISTER</span><br />
-                <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
-                <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
-                <input type="text" id="registerName" placeholder="Username" ref={(c) => registerName = c} /><br />
-                <input type="email" id="email" placeholder="Email" ref={(c) => email = c} /><br /> {/* Email input field */}
-                <input type="password" id="registerPassword" placeholder="Password" ref={(c) => registerPassword = c} /><br />
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} /><br />
+                <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} />
+                <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} />
+                <input type="text" id="registerName" placeholder="Username" ref={(c) => registerName = c} />
+                <input type="email" id="email" placeholder="Email" ref={(c) => email = c} />
+                <input type="password" id="registerPassword" placeholder="Password" ref={(c) => registerPassword = c} />
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} />
                 <input type="submit" id="registerButton" className="buttons" value="Register" />
             </form>
             <span id="registerResult">{message}</span>

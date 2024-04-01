@@ -14,7 +14,7 @@ const LibraryPage = () => {
     // Function to retrieve user data from localStorage
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
-        if (userDataString === null) {
+        if (userDataString.id === null) {
             console.log('No user data found in localStorage.');
             handleRedirect();
             return null; // It's important to return here to avoid further execution in this case

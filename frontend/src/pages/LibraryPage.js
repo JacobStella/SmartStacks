@@ -5,11 +5,11 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
-const getClassAndSets = async (userId) => {
+const getClassAndSets = async (classId) => {
     try {
-        const url = buildPath(`api/getClassAndSets/${userId}`); // Ensure this path is correct
+        const url = buildPath(`api/getClassAndSets/${classId}`);
         const response = await fetch(url, {
-            method: 'GET',
+            method: 'GET', // Method is optional here since GET is the default value
             headers: {'Content-Type': 'application/json'}
         });
 
@@ -19,12 +19,12 @@ const getClassAndSets = async (userId) => {
 
         const classAndSets = await response.json();
         console.log('Class and its sets:', classAndSets);
-        return classAndSets; // Returning the fetched classes
+        // Here you can further handle the response, like updating the UI accordingly
     } catch (error) {
         console.error('Error fetching class and sets:', error);
-        return []; // Returning empty array in case of error
     }
 };
+
 
 function buildPath(route)
 {

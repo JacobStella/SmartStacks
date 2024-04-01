@@ -13,9 +13,9 @@ const LibraryPage = () => {
     // Function to retrieve user data from localStorage
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
-        if (!userDataString) {
+        if (userDataString === null) {
             console.log('No user data found in localStorage.');
-            localStorage.setItem('preLoginPath', window.location.pathname); // Store the current path
+            localStorage.setItem('preLoginPath', location.pathname); // Store the current path
             navigate('/login'); // Redirect to login
             return null; // It's important to return here to avoid further execution in this case
         }

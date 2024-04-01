@@ -110,7 +110,49 @@ input[type="submit"] {
   margin: auto;
 }
 
+.root-div form {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 30px auto;
+  padding: 30px;
+  width: 400px
+}
+input#loginButton.buttons{
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  height: 50.34px;
+  margin-left: 35%;
+  padding: 10px;
+  width: 30%
+}
 
+form {
+  text-align: center;
+}
+
+form span#inner-title, form a{
+  font-size: 20px;
+}
+
+form a{
+  color: #09bc8a;
+  text-decoration: underline;
+}
+
+form a:hover{
+  color: #007b59;
+  text-decoration: underline;
+}
+
+div.root-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

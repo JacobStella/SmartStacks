@@ -1,11 +1,10 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
 import Register from '../components/Register';
 
 const RegisterPage = () => {
     return (
         <div>
-            <PageTitle />
+            <h1 id="title">Welcome to Smart Stacks!</h1>
             <Register />
         </div>
     );

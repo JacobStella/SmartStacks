@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import NavBar2 from '../components/NavBar2';
 import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
+import { useNavigate, useLocation, Link } from 'react-router-dom'; // Import useNavigate hook
 import '../Library.css';
 
 const LibraryPage = () => {
@@ -14,6 +14,10 @@ const LibraryPage = () => {
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
         if (userDataString === null) {
+
+            const navigate = useNavigate();
+            const location = useLocation();
+
             console.log('No user data found in localStorage.');
             localStorage.setItem('preLoginPath', location.pathname); // Store the current path
             navigate('/login'); // Redirect to login

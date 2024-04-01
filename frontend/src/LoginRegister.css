@@ -129,6 +129,24 @@ input#loginButton.buttons{
   width: 30%
 }
 
+form {
+  text-align: center;
+}
+
+form span#inner-title, form a{
+  font-size: 20px;
+}
+
+form a{
+  color: #09bc8a;
+  text-decoration: underline;
+}
+
+form a:hover{
+  color: #007b59;
+  text-decoration: underline;
+}
+
 
 
 

@@ -65,8 +65,9 @@ app.post('/api/register', async (req, res) => {
       //const hashedPassword = await bcrypt.hash(password, salt);
 
 	// email validation
-	if(!isEmailValid(email)){
-		return res.status(400).json({ error: 'Email is not valid'});
+	const { valid, reason, validators} = await isEmailValid(email);
+	if(!valid){
+		return res.status(400).json({ error: 'Email is not valid', reason: validators[reason].reason});
 	}
 	  
       // Insert new user

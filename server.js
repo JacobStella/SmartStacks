@@ -5,6 +5,12 @@ require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+// Email Validation
+const emailValidator = require('deep-email-validator');
+
+async function isEmailValid(email) {
+	return emailValidator.validate(email);
+}
 
 async function connectToMongo() {
   try {
@@ -58,6 +64,12 @@ app.post('/api/register', async (req, res) => {
       //const salt = await bcrypt.genSalt(10);
       //const hashedPassword = await bcrypt.hash(password, salt);
 
+	// email validation
+	const { valid, reason, validators} = await isEmailValid("baitemail@email.com");
+	if(!valid){
+		return res.status(400).json({ error:'Email is not valid', reasons:validators[reason].reason });
+	}
+	  
       // Insert new user
       await usersCollection.insertOne({
           Email: email,

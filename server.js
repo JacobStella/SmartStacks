@@ -68,7 +68,10 @@ app.post('/api/register', async (req, res) => {
 	const { valid, reason, validators} = await isEmailValid("baitemail@email.com");
 	if(!valid){
 		return res.status(400).json({ error:'Email is not valid', reasons:validators[reason].reason });
+	} else {
+		verified = true;
 	}
+	
 	  
       // Insert new user
       await usersCollection.insertOne({

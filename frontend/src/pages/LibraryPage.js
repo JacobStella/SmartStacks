@@ -37,6 +37,7 @@ const LibraryPage = () => {
     
 
     const handleRedirect = () => {
+        console.log('in function');
         localStorage.setItem('preLoginPath', location.pathname);
         navigate('/login');
 

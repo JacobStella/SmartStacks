@@ -192,6 +192,16 @@ input#loginPassword:-webkit-autofill:active {
     -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
     background-color: #d8dcff !important; /* Replace with your desired background color */
 }
+
+div#root form {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 30px auto;
+  padding: 30px;
+  width: 400px
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

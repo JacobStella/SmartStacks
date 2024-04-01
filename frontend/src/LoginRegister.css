@@ -159,10 +159,39 @@ input#loginButton.buttons:hover {
   opacity: .8;
  }
 
- #loginName, #loginPassword {
+ form #loginName,form #loginPassword {
   background-color: #d8dcff;
+  box-shadow: 0 0 3px 3px #004346;
+  border-width: 2px;
 }
 
+form #loginName::placeholder,form #loginPassword::placeholder {
+  color: #172a3a;
+}
+
+form #loginName:focus,form #loginPassword:focus {
+  border-color: #017c81;
+  color: #172a3a;
+  outline: none;
+}
+
+input#loginName:-webkit-autofill,
+input#loginName:-webkit-autofill:hover, 
+input#loginName:-webkit-autofill:focus, 
+input#loginName:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
+
+input#loginPassword:-webkit-autofill,
+input#loginPassword:-webkit-autofill:hover, 
+input#loginPassword:-webkit-autofill:focus, 
+input#loginPassword:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

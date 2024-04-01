@@ -51,16 +51,12 @@ const LibraryPage = () => {
     }; // Missing closing brace for editFolderName function was added
 
     const addFolder = async (folderName) => {
-        if (!userData) { // Ensure userData is not null before proceeding
-            console.log('No user data available.');
-            return;
-        }
         const userId = userData.id;
-        let classObj = { userId, className: folderName };
+        let classObj = { userId: userId, className: folderName };
         let classJson = JSON.stringify(classObj);
 
         try {
-            const response = await fetch('http://localhost:5000/api/addclass', { // Update your API endpoint accordingly
+            const response = await fetch('api/addclass', { // Update your API endpoint accordingly
                 method: 'POST',
                 body: classJson,
                 headers: {'Content-Type': 'application/json'}

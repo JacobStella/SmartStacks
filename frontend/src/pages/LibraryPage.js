@@ -26,6 +26,18 @@ const getClassAndSets = async (userId) => {
     }
 };
 
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + app_name + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");

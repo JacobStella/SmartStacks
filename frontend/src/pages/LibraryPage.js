@@ -5,20 +5,56 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
+const getClassAndSets = async (userId) => {
+    try {
+        const url = buildPath(`api/getClassAndSets/${userId}`); // Ensure this path is correct
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const classAndSets = await response.json();
+        console.log('Class and its sets:', classAndSets);
+        return classAndSets; // Returning the fetched classes
+    } catch (error) {
+        console.error('Error fetching class and sets:', error);
+        return []; // Returning empty array in case of error
+    }
+};
+
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
 
-    useEffect(() => { // Correct usage of useEffect to handle redirection if user data is not found
+    useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
         if (!userDataString) {
             console.log('No user data found in localStorage.');
             localStorage.setItem('preLoginPath', location.pathname);
             navigate('/login');
+        } else {
+            const userData = JSON.parse(userDataString);
+            if (userData && userData.id) {
+                // Fetch classes as soon as we have the user's ID
+                getClassAndSets(userData.id).then(classes => {
+                    if (classes && classes.length > 0) {
+                        setFolders(classes); // Assuming the API returns an array of classes
+                    } else {
+                        console.log('No classes found for this user.');
+                    }
+                });
+            } else {
+                console.log('User data is invalid or ID is missing.');
+                navigate('/login');
+            }
         }
-    }, [navigate, location.pathname]); // Dependence on navigate and location.pathname
+    }, [navigate, location.pathname]);// Dependence on navigate and location.pathname
 
     const handleRedirect = () => {
         console.log('Redirecting to login...');

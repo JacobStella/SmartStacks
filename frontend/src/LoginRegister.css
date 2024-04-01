@@ -117,7 +117,7 @@ input[type="submit"] {
   color: #d8dcff;
   margin: 30px auto;
   padding: 30px;
-  width: 400px
+  width: 500px
 }
 input#loginButton.buttons{
   background-color: #09bc8a;
@@ -198,9 +198,9 @@ div#root form {
   border: 9px solid #004346;
   border-radius: 30px;
   color: #d8dcff;
-  margin: 30px auto;
+  margin: 35px auto;
   padding: 30px;
-  width: 400px
+  width: 500px
 }
 
 div#registerDiv {
@@ -221,13 +221,15 @@ input#registerButton.buttons:hover {
   opacity: .8;
  }
 
-div#registerDiv input {
-    height: 45px;
-    width: 80%;
-    border-radius:10px;
-    background-color: #d8dcff;
-    box-shadow: 0 0 3px 3px #004346;
-    border-width: 2px;
+ div#registerDiv input {
+  background-color: #d8dcff;
+  border-radius: 10px;
+  border-width: 2px;
+  box-shadow: 0 0 3px 3px #004346;
+  height: 45px;
+  width: 80%;
+  margin-bottom:35px;
+  margin-top: 0px;
 }
 
 div#registerDiv input::placeholder {
@@ -238,6 +240,15 @@ div#registerDiv input:focus {
   border-color: #017c81;
   color: #172a3a;
   outline: none;
+}
+
+form input#firstName, form input#registerButton.buttons {
+  margin-top: 35px;
+}
+
+div#registerDiv form{
+  width: 500px;
+  height: 700px;
 }
 
 div#registerDiv input:-webkit-autofill,

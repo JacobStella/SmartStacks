@@ -8,7 +8,7 @@ const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology:
 // Email Validation
 const emailValidator = require('deep-email-validator');
 
-aysnc function isEmailValid(email) {
+async function isEmailValid(email) {
 	return emailValidator.validate(email);
 }
 

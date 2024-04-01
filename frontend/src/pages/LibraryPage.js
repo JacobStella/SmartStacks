@@ -7,20 +7,16 @@ import '../Library.css';
 
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
-    const [message, setMessage] = useState(""); // For API call feedback
-    const navigate = useNavigate(); // Initialize useNavigate hook
+    const [message, setMessage] = useState(""); // For API call feedback // Initialize useNavigate hook
+    const navigate = useNavigate();
+    const location = useLocation();
 
     // Function to retrieve user data from localStorage
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
         if (userDataString === null) {
-
-            const navigate = useNavigate();
-            const location = useLocation();
-
             console.log('No user data found in localStorage.');
-            localStorage.setItem('preLoginPath', location.pathname); // Store the current path
-            navigate('/login'); // Redirect to login
+            handleRedirect();
             return null; // It's important to return here to avoid further execution in this case
         }
         try {
@@ -31,6 +27,12 @@ const LibraryPage = () => {
             return null;
         }
     };
+
+    const handleRedirect = () => {
+        localStorage.setItem('preLoginPath', location.pathname);
+        navigate('/login');
+
+    }
 
     const userData = getUserData(); // Retrieve user data at the beginning
 

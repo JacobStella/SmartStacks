@@ -47,6 +47,7 @@ function Register() {
     return (
         <div id="registerDiv">
             <form onSubmit={doRegister}>
+                <h1 id="title">Welcome to Smart Stacks!</h1>
                 <span id="inner-title">PLEASE REGISTER</span><br />
                 <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
                 <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />

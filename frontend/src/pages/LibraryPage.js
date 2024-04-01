@@ -14,7 +14,7 @@ const LibraryPage = () => {
     // Function to retrieve user data from localStorage
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
-        if (!userData || !userData.id) {
+        if (!userDataString) {
             console.log('No user data found in localStorage.');
             localStorage.setItem('preLoginPath', location.pathname);
             navigate('/login');

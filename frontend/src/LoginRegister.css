@@ -110,6 +110,25 @@ input[type="submit"] {
   margin: auto;
 }
 
+.root-div form {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 30px auto;
+  padding: 30px;
+  width: 400px
+}
+input#loginButton.buttons{
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  height: 50.34px;
+  margin-left: 35%;
+  padding: 10px;
+  width: 30%
+}
+
 
 
 

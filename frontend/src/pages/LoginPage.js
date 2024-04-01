@@ -1,5 +1,4 @@
 import React from 'react';
-import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
@@ -10,7 +9,7 @@ const LoginPage = () => {
         <>
             <NavBar2 />
             <div className="login-container">
-                <PageTitle />
+                <h1 id="title">Welcome to Smart Stacks!</h1>
                 <Login />
             </div>
             <LandingFooter />

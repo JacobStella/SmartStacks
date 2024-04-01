@@ -202,6 +202,49 @@ div#root form {
   padding: 30px;
   width: 400px
 }
+
+div#registerDiv {
+    text-align: center;
+}
+
+input#registerButton.buttons{
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  height: 50.34px;
+  margin-left: 35%;
+  padding: 10px;
+  width: 30%
+}
+
+input#registerButton.buttons:hover {
+  opacity: .8;
+ }
+
+div#registerDiv input {
+    background-color: #d8dcff;
+    box-shadow: 0 0 3px 3px #004346;
+    border-width: 2px;
+}
+
+div#registerDiv input::placeholder {
+  color: #172a3a;
+}
+
+div#registerDiv input:focus {
+  border-color: #017c81;
+  color: #172a3a;
+  outline: none;
+}
+
+div#registerDiv input:-webkit-autofill,
+div#registerDiv input:-webkit-autofill:hover, 
+div#registerDiv input:-webkit-autofill:focus, 
+div#registerDiv input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

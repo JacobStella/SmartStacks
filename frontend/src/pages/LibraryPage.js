@@ -14,19 +14,25 @@ const LibraryPage = () => {
     // Function to retrieve user data from localStorage
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
-        if (userDataString.id === null) {
+        if (!userDataString) { // Check if the userDataString is null or undefined
             console.log('No user data found in localStorage.');
             handleRedirect();
-            return null; // It's important to return here to avoid further execution in this case
+            return null;
         }
         try {
             const userData = JSON.parse(userDataString);
+            if (!userData || userData.id === null) { // Check if userData is null or if it doesn't have an id
+                console.log('No user data found in localStorage.');
+                handleRedirect();
+                return null;
+            }
             return userData;
         } catch (error) {
             console.error('Error parsing user data from localStorage:', error);
             return null;
         }
     };
+    
 
     const handleRedirect = () => {
         localStorage.setItem('preLoginPath', location.pathname);

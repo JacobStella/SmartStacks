@@ -142,8 +142,9 @@ form a{
   text-decoration: underline;
 }
 
-form a:hover{
-  color: #007b59;
+form a:hover {
+  color: #09bc8a;
+  opacity: .8;
   text-decoration: underline;
 }
 
@@ -154,6 +155,13 @@ div.root-div {
   justify-content: center;
 }
 
+input#loginButton.buttons:hover {
+  opacity: .8;
+ }
+
+ #loginName, #loginPassword {
+  background-color: #d8dcff;
+}
 
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/

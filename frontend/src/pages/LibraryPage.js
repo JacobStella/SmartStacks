@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'; // useContext might be need
 import NavBar2 from '../components/NavBar2';
 import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
+import { useNavigate } from 'react-router-dom';
 import '../Library.css';
 
 const LibraryPage = () => {
@@ -27,6 +28,19 @@ const LibraryPage = () => {
             return null;
         }
     };
+
+     // Function to handle the editing of a folder name
+     const editFolderName = (folderId) => {
+        const newName = prompt('Enter new folder name:');
+        if (newName) {
+            const updatedFolders = folders.map(folder => {
+                if (folder.id === folderId) {
+                    return { ...folder, name: newName };
+                }
+                return folder;
+            });
+            setFolders(updatedFolders);
+        }
 
     const userData = getUserData();
 

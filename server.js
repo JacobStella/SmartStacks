@@ -67,7 +67,7 @@ app.post('/api/register', async (req, res) => {
 	// email validation
 	const { valid, reason, validators} = await isEmailValid(email);
 	if(!valid){
-		return res.status(400).json({ error: 'Email is not valid', reason: validators[reason].reason});
+		return res.status(400).json({ error: 'Email is not valid'});
 	}
 	  
       // Insert new user

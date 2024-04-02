@@ -49,7 +49,7 @@ const LandingPage = () => {
     <div className="page-container-landing">
       <NavBar2 />
       <div className="create-study-set-container">
-        <h1>Create a new study set</h1>
+        <h1>Create new stack</h1>
         <input type="text" placeholder="Title" className="title-input" />
 
         <div className="description-switch-container">

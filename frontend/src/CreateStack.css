@@ -1,16 +1,18 @@
-  .create-study-set-container {
-    background-color: #172a3a;
-    border: 5px solid #004346;
-    border-radius: 30px;
-    color: #d8dcff;
-    margin: 30px auto;
-    padding: 30px;
-    width: 700px;
-  }
+.create-study-set-container {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 30px auto;
+  padding: 30px;
+  width: 800px;
+}
   
-  .create-study-set-container h1{
+  .create-study-set-container h1 {
     color: #508991;
-  }
+    text-align: center;
+    margin-bottom: 30px;
+}
   
   .description-input,.title-input,.folder-input, .term-input, .definition-input {
     background-color: #508991;
@@ -18,6 +20,7 @@
     border-color: #014b4f;
     margin: 10px 0;
     padding: 10px;
+    color: #d8dcff;
   }
 
   .description-input{
@@ -36,7 +39,7 @@
   .description-input:focus, .title-input:focus, .folder-input:focus,  .term-input:focus, .definition-input:focus {
     border-color: #09bc8a; /* Changes the border color to white on focus */
     outline: none; /* Optional: removes the default focus outline */
-    /* You can add more styles here to visually indicate focus, such as changing background color, adding a shadow, etc. */
+    color: #d8dcff;
   }
   
   .description-input {
@@ -82,14 +85,34 @@
   }
   
   .create-button {
+    width:20%;
+    height: 50.34px;
     background-color: #09bc8a;
     border-color: #004346;
     border-radius: 10px;
     color: #d8dcff;
-    margin-top: 20px;
-    padding: 10px 20px;
-  }
-  
+    margin-top: 40px;
+    padding: 10px 10px;
+    display: block;
+    margin-left: 80%;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.add-card-button {
+    background-color: #508991;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+    height: 59.34px;    
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    color: #d8dcff;
+    font-size: 20px;
+    font-weight: 800;
+}
+
   /* Apply global styles for buttons */
   button {
     cursor: pointer;

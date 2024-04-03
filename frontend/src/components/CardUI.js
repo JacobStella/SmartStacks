@@ -122,20 +122,18 @@ function CardUI() {
             const url = buildPath(`api/getClassAndSets/${classId}`);
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
-                headers: {'Content-Type': 'application/json'}
+                headers: {'Content-Type': 'application/json'},
+                mode: 'no-cors' // Add this line to specify the request mode
             });
     
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-    
-            const classAndSets = await response.json();
-            console.log('Class and its sets:', classAndSets);
-            // Here you can further handle the response, like updating the UI accordingly
+            // Note: The response is opaque; you cannot access `response.json()` or any response data
+            console.log('Request sent, but response is not readable due to no-cors mode');
+            // The code related to handling the response data should be removed or modified
         } catch (error) {
             console.error('Error fetching class and sets:', error);
         }
     };
+    
     
     
 

@@ -15,6 +15,9 @@ function CardUI() {
     const [setId, setSetId] = useState('');
     const [classId, setClassId] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
+    const [difficulty, setDifficulty] = useState(2); // Default difficulty level
+    const [description , setDescription] = useState('');
+
   // Use className and setIds in your component
 
     const [cards, setCards] = useState([]);
@@ -53,35 +56,38 @@ function CardUI() {
     const addCard = async event => {
         event.preventDefault();
         
-        // Create an object with the new card details
+        // Include the "difficulty" in the card details object
         let cardObj = { 
-            userId: userId, // Make sure userId is defined in your component, fetched from user data
+            userId: userId, // Ensure userId is defined in your component, fetched from user data
             term: term,
             definition: definition,
-            setId: setId // Make sure setId is obtained from the state or props
+            setId: setId, // Ensure setId is obtained from the state or props
+            difficulty: difficulty // Include the difficulty level
         };
         let js = JSON.stringify(cardObj);
-
+    
         try {
             const response = await fetch(buildPath('api/addcard'), {
                 method: 'POST',
                 body: js,
                 headers: {'Content-Type': 'application/json'}
             });
-
+    
             let res = await response.json();
-
+    
             if (res.error) {
                 setMessage('API Error: ' + res.error);
             } else {
                 setMessage('Card has been added');
                 setTerm(''); // Clear the input after successful addition
                 setDefinition(''); // Clear the input after successful addition
+                setDifficulty(1); // Reset the difficulty to its default value after adding
             }
         } catch (e) {
             setMessage(e.toString());
         }
     };
+    
 
     const addClass = async event => {
         event.preventDefault();
@@ -140,48 +146,55 @@ function CardUI() {
     
 
     
- const addSet = async event => {
-    event.preventDefault();
-
-    // Assume classId is available and correctly set, representing the class this set belongs to
-    let setObj = { UserId: userId, SetName: SetName, public: isPublic, classId: classId }; // Include classId here
-    let setJs = JSON.stringify(setObj);
-
-    try {
-        const setResponse = await fetch(buildPath('api/addset'), {
-            method: 'POST',
-            body: setJs,
-            headers: {'Content-Type': 'application/json'}
-        });
-
-        let setRes = await setResponse.json();
-
-        if (setRes.error && setRes.error.length > 0) {
-            setMessage("API Error:" + setRes.error);
-            return; // Stop the process if there was an error creating the set
-        } else {
-            // Set has been successfully created, proceed to add cards
-            const setId = setRes.setId; // Get the newly created set's ID
-
-            // Iterate through each card and create it with the new setId
-            for (let card of cards) {
-                let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
-                let cardJs = JSON.stringify(cardObj);
-
-                await fetch(buildPath('api/addcard'), {
-                    method: 'POST',
-                    body: cardJs,
-                    headers: {'Content-Type': 'application/json'}
-                });
-                // Consider handling response for individual card creations
+    const addSet = async event => {
+        event.preventDefault();
+    
+        // Include "Description" in the setObj
+        let setObj = { 
+            UserId: userId, 
+            SetName: SetName, 
+            Description: description, // Include the Description field here
+            public: isPublic, 
+            classId: classId 
+        }; 
+        let setJs = JSON.stringify(setObj);
+    
+        try {
+            const setResponse = await fetch(buildPath('api/addset'), {
+                method: 'POST',
+                body: setJs,
+                headers: {'Content-Type': 'application/json'}
+            });
+    
+            let setRes = await setResponse.json();
+    
+            if (setRes.error && setRes.error.length > 0) {
+                setMessage("API Error:" + setRes.error);
+                return; // Stop the process if there was an error creating the set
+            } else {
+                // Set has been successfully created, proceed to add cards
+                const setId = setRes.setId; // Get the newly created set's ID
+    
+                // Iterate through each card and create it with the new setId
+                for (let card of cards) {
+                    let cardObj = { ...card, UserId: userId, SetId: setId };
+                    let cardJs = JSON.stringify(cardObj);
+    
+                    await fetch(buildPath('api/addcard'), {
+                        method: 'POST',
+                        body: cardJs,
+                        headers: {'Content-Type': 'application/json'}
+                    });
+                    // Consider handling response for individual card creations
+                }
+    
+                setMessage('Set and cards have been added');
             }
-
-            setMessage('Set and cards have been added');
+        } catch (e) {
+            setMessage(e.toString());
         }
-    } catch (e) {
-        setMessage(e.toString());
-    }
- };
+    };
+    
  const searchItems = async (userId, searchTerm) => {
 
     
@@ -259,93 +272,125 @@ function CardUI() {
         }
     };
 
+    const publicSearch = async event => {
+        event.preventDefault();
+        let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
+        let js = JSON.stringify(obj);
+    
+        try {
+            const response = await fetch(buildPath('api/public-search'), { // Assuming 'api/search' is your endpoint
+                method: 'POST', // If your backend is expecting a GET request for searches, this needs adjustment
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+    
+            let res = await response.json();
+    
+            if (res.error) {
+                alert(res.error);
+                setResults(res.error);
+            } else {
+                // Assuming the response structure you want is an array of card details
+                // Adjust how you handle and display these results accordingly
+                let resultText = res.cards?.map(card => `${card.Term}: ${card.Definition}`).join(', ') || '';
+                setResults('Card(s) have been retrieved');
+                setCardList(resultText);
+            }
+        } catch (e) {
+            alert(e.toString());
+            setResults(e.toString());
+        }
+    };
+    
+
 
 
     const TestComponent = ({ userId }) => {
-      const [test, setTest] = useState(null);
-      const [userAnswers, setUserAnswers] = useState({});
-      const [score, setScore] = useState(null);
-    
-      useEffect(() => {
-        const fetchTest = async () => {
+        const [test, setTest] = useState(null);
+        const [userAnswers, setUserAnswers] = useState({});
+        const [score, setScore] = useState(null);
+      
+        useEffect(() => {
+          const fetchTest = async () => {
+            try {
+              const response = await fetch('/api/test', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId }),
+              });
+              const data = await response.json();
+              setTest(data.test);
+              // Initialize answers with empty strings
+              let initialAnswers = {};
+              data.test.questions.forEach((_, index) => {
+                initialAnswers[index] = '';
+              });
+              setUserAnswers(initialAnswers);
+            } catch (error) {
+              console.error('Error fetching test', error);
+            }
+          };
+      
+          fetchTest();
+        }, [userId]);
+      
+        const handleOptionChange = (questionIndex, answer) => {
+          setUserAnswers({
+            ...userAnswers,
+            [questionIndex]: answer,
+          });
+        };
+      
+        const handleSubmit = async (e) => {
+          e.preventDefault();
           try {
-            const response = await fetch('/api/test', {
+            const response = await fetch('/api/validate-test', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ userId }),
+              body: JSON.stringify({
+                testId: test.testId, // Ensure this matches the structure sent by your backend
+                userAnswers: Object.values(userAnswers),
+              }),
             });
             const data = await response.json();
-            setTest(data.test);
-            // Initialize answers
-            let initialAnswers = {};
-            data.test.questions.forEach((_, index) => {
-              initialAnswers[index] = '';
-            });
-            setUserAnswers(initialAnswers);
+            setScore(data.score);
           } catch (error) {
-            console.error('Error fetching test', error);
+            console.error('Error submitting answers', error);
           }
         };
-    
-        fetchTest();
-      }, [userId]);
-    
-      const handleOptionChange = (questionIndex, answer) => {
-        setUserAnswers({
-          ...userAnswers,
-          [questionIndex]: answer,
-        });
-      };
-    
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          const response = await fetch('/api/validate-test', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              testId: test.id,
-              userAnswers: Object.values(userAnswers),
-            }),
-          });
-          const data = await response.json();
-          setScore(data.score);
-    } catch (error) {
-          console.error('Error submitting answers', error);
+      
+        if (score !== null) {
+          return <div>Your score is: {score}</div>;
         }
+      
+        return (
+          <div>
+            {test && test.questions.map((question, index) => (
+              <div key={index}>
+                <p>{question.question}</p> {/* Adjusted if question is an object */}
+                {question.answers.map((option, optionIndex) => ( // Adjusted for mapping answers
+                  <label key={optionIndex}>
+                    <input
+                      type="radio"
+                      name={`question-${index}`}
+                      value={option}
+                      checked={userAnswers[index] === option}
+                      onChange={() => handleOptionChange(index, option)}
+                    />
+                    {option}
+                  </label>
+                ))}
+              </div>
+            ))}
+            <button onClick={handleSubmit}>Submit Answers</button>
+          </div>
+        );
       };
-    
-      if (score !== null) {
-        return <div>Your score is: {score}</div>;
-      }
-    
-      return (
-        <div>
-          {test && test.questions.map((question, index) => (
-            <div key={index}>
-              <p>{question}</p>
-              {test.answers.slice(index * 4, (index + 1) * 4).map((option, optionIndex) => (
-                <label key={optionIndex}>
-                  <input
-                    type="radio"
-                    name={`question-${index}`}
-                    value={option}
-                    checked={userAnswers[index] === option}
-                    onChange={() => handleOptionChange(index, option)}
-                  />
-                  {option}
-                </label>
-              ))}
-            </div>
-          ))}
-          <button onClick={handleSubmit}>Submit Answers</button>
-        </div>
-      );
-    };
+      
     
 
     

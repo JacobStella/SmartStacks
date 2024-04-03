@@ -9,8 +9,9 @@ const getClassAndSets = async (classId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${classId}`);
         const response = await fetch(url, {
-            method: 'POST', // Method is optional here since GET is the default value
-            headers: {'Content-Type': 'application/json'}
+            method: 'GET', // Method is optional here since GET is the default value
+            headers: {'Content-Type': 'application/json'},
+            mode: 'no-cors'
         });
 
         if (!response.ok) {

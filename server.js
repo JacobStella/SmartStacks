@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 app.use(cors({ origin: '*' }));
 
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Headers',
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
         'GET, POST, PATCH, DELETE, OPTIONS'
     );
     next();
-});
+});*/
 
 
 
@@ -159,26 +159,29 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.post('/api/getClassAndSets', async (req, res) => {
-  const { classId } = req.body; // Access classId from request body
+app.get('/api/getClassAndSets/:classId', async (req, res) => {
+  // Now, thanks to the `cors` middleware, CORS headers are automatically added.
+  // There's no need to manually set CORS headers here unless you want to override or customize them further.
+  
+  const { classId } = req.params;
 
   try {
-      const db = client.db("Group3LargeProject");
-      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
-      if (!classDoc) {
-          res.status(404).json({ error: "Class not found" });
-          return;
-      }
+    const db = client.db("Group3LargeProject");
+    const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
+    if (!classDoc) {
+      res.status(404).json({ error: "Class not found" });
+      return;
+    }
 
-      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
-      const result = {
-          ...classDoc,
-          sets: sets
-      };
+    const sets = await db.collection('Sets').find({ classId: classId }).toArray();
+    const result = {
+      ...classDoc,
+      sets: sets
+    };
 
-      res.status(200).json(result);
+    res.status(200).json(result);
   } catch(e) {
-      res.status(500).json({ error: e.toString() });
+    res.status(500).json({ error: e.toString() });
   }
 });
 

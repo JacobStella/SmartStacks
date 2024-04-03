@@ -2,6 +2,12 @@
 /*/////////////////////////////////////////Basic Elements Start///////////////////////////////////////////*/
 /*////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 
+body, h1, h2, h3, p {
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styling */
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
@@ -11,12 +17,14 @@ body {
   color: #333;
 }
 
+/* Container for content */
 .container {
   width: 80%;
   margin: auto;
   overflow: hidden;
 }
 
+/* Header styles */
 header {
   background: #50a3a2;
   color: white;
@@ -25,14 +33,14 @@ header {
   border-bottom: 1px solid #eaeaea;
 }
 
-h1,h2,h3 {
+/* Headings */
+h1, h2, h3 {
+  padding: 10px 0;
   color: #172a3a;
-  cursor: pointer;
-  font-family: Arial Rounded MT Bold,sans-serif;
-  font-size: 35px;
-  font-weight: 300;    
+
 }
 
+/* Paragraphs */
 p {
   margin: 10px 0;
   color: #508991
@@ -85,24 +93,12 @@ a:hover{
   align-items: center;
 }
 
-.browse-section,.create-section,.library-section,.play-section {
+.create-section, .library-section, .browse-section, .play-section {
+  /* Common style for each section */
   margin: 10px;
   padding: 20px;
-  
-}
-
-.browse-section-text,.create-section-text,.library-section-text,.play-section-text {
-  margin: 10px;
-  color: #172a3a;
-  cursor: pointer;
-  font-family: Arial Rounded MT Bold,sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  text-align: center;
-}
-
-.browse-section-text,.create-section-text,.library-section-text {
- padding: 5px;
+  border: 1px solid #ccc;
+  /* You can add more like width, height, etc. */
 }
 
 .get-started-section {
@@ -140,9 +136,8 @@ a:hover{
 
 .vertical-line {
   background-color: #172a3a;
-  height: 425px;
-  margin-bottom: 20px;
-  margin-top: 30px;
+  height: 400px;
+  margin: 0 20px;
   width: 10px
 }
 

@@ -6,6 +6,11 @@ const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
+const customCorsOptions = {
+  origin: 'https://largeprojectgroup3-efcc1eed906f.herokuapp.com/', // Or whatever your client's origin is
+  optionsSuccessStatus: 200 // Some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+
 async function connectToMongo() {
   try {
     await client.connect();
@@ -155,7 +160,7 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
+app.get('/api/getClassAndSets/:classId', cors(customCorsOptions), async (req, res) => {
   const { classId } = req.params; // Get classId from the route parameters
 
   try {

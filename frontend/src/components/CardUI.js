@@ -117,7 +117,7 @@ function CardUI() {
         }
     };
     
-    const getClassesAndSets = async (userId) => {
+    const getClassAndSets = async (userId) => {
         try {
             const url = buildPath(`api/getClassesAndSets/${userId}`);
             const response = await fetch(url, {

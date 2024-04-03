@@ -5,7 +5,7 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
-const getClassesAndSets = async (userId) => {
+const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassesAndSets/${userId}`);
         const response = await fetch(url, {

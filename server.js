@@ -159,7 +159,7 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.get('/api/getClassesAndSets/:userId', async (req, res) => {
+app.get('/api/getClassAndSets/:userId', async (req, res) => {
   const { userId } = req.params;
 
   try {

@@ -117,22 +117,29 @@ function CardUI() {
         }
     };
     
-    const getClassAndSets = async (classId) => {
+    const getClassesAndSetsByUser = async (userId) => {
         try {
-            const url = buildPath(`api/getClassAndSets/${classId}`);
+            const url = buildPath(`api/getClassesAndSetsByUser/${userId}`);
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
                 headers: {'Content-Type': 'application/json'},
-                mode: 'no-cors' // Add this line to specify the request mode
+                // Removed mode: 'no-cors' to allow reading the response. Adjust the server's CORS policy as necessary.
             });
     
-            // Note: The response is opaque; you cannot access `response.json()` or any response data
-            console.log('Request sent, but response is not readable due to no-cors mode');
-            // The code related to handling the response data should be removed or modified
+            if (!response.ok) {
+                console.error('Error fetching classes and sets:', response.statusText);
+                return;
+            }
+    
+            // Assuming the response is not opaque now, we can try to read it
+            const data = await response.json();
+            console.log('Classes and sets received:', data);
+            return data; // You can return the data here if needed
         } catch (error) {
-            console.error('Error fetching class and sets:', error);
+            console.error('Error fetching classes and sets:', error);
         }
     };
+    
     
     
     

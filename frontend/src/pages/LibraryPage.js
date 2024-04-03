@@ -5,26 +5,27 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
-const getClassAndSets = async (classId) => {
+const getClassesAndSetsByUser = async (userId) => {
     try {
-        const url = buildPath(`api/getClassAndSets/${classId}`);
+        const url = buildPath(`api/getClassesAndSetsByUser/${userId}`);
         const response = await fetch(url, {
             method: 'GET', // Method is optional here since GET is the default value
             headers: {'Content-Type': 'application/json'},
-            mode: 'no-cors'
+            // Omitting mode: 'no-cors' to ensure the response can be read. Ensure CORS is handled server-side.
         });
 
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
 
-        const classAndSets = await response.json();
-        console.log('Class and its sets:', classAndSets);
+        const classesAndSets = await response.json();
+        console.log('Classes and their sets:', classesAndSets);
         // Here you can further handle the response, like updating the UI accordingly
     } catch (error) {
-        console.error('Error fetching class and sets:', error);
+        console.error('Error fetching classes and sets:', error);
     }
 };
+
 
 
 function buildPath(route)

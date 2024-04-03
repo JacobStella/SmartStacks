@@ -159,31 +159,34 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
-  // Now, thanks to the `cors` middleware, CORS headers are automatically added.
-  // There's no need to manually set CORS headers here unless you want to override or customize them further.
-  
-  const { classId } = req.params;
+app.get('/api/getClassesAndSetsByUser/:userId', async (req, res) => {
+  const { userId } = req.params;
 
   try {
     const db = client.db("Group3LargeProject");
-    const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
-    if (!classDoc) {
-      res.status(404).json({ error: "Class not found" });
+    // Assuming classes are related to users by a userId field in the Class collection
+    const classes = await db.collection('Class').find({ userId: userId }).toArray();
+
+    if (!classes.length) {
+      res.status(404).json({ error: "No classes found for this user" });
       return;
     }
 
-    const sets = await db.collection('Sets').find({ classId: classId }).toArray();
-    const result = {
-      ...classDoc,
-      sets: sets
-    };
+    // For each class, find the associated sets
+    const classesWithSets = await Promise.all(classes.map(async (classDoc) => {
+      const sets = await db.collection('Sets').find({ classId: classDoc._id.toString() }).toArray();
+      return {
+        ...classDoc,
+        sets: sets
+      };
+    }));
 
-    res.status(200).json(result);
-  } catch(e) {
+    res.status(200).json(classesWithSets);
+  } catch (e) {
     res.status(500).json({ error: e.toString() });
   }
 });
+
 
 app.get('/api/search', async (req, res) => {
   // Destructure with default empty strings to prevent undefined errors

@@ -24,7 +24,7 @@ const getClassAndSets = async (userId) => {
             throw new Error("Received non-JSON response from server");
         }
 
-        const classesAndSets = await response.json();
+        const classAndSets = await response.json();
         console.log('Classes and their sets:', classAndSets);
     } catch (error) {
         console.error('Error fetching classes and sets:', error);

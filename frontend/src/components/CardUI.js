@@ -119,7 +119,7 @@ function CardUI() {
     
     const getClassAndSets = async (userId) => {
         try {
-            const url = buildPath(`api/getClassesAndSets/${userId}`);
+            const url = buildPath(`api/getClassAndSets/${userId}`);
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
                 headers: {'Content-Type': 'application/json'},

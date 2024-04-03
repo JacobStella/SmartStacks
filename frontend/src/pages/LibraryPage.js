@@ -7,24 +7,30 @@ import '../Library.css';
 
 const getClassAndSets = async (userId) => {
     try {
-        const url = buildPath(`api/getClassesAndSets/${userId}`);
+        const url = buildPath(`api/getClassAndSets/${userId}`);
+        console.log(`Fetching from URL: ${url}`); // This will log the full URL being requested
         const response = await fetch(url, {
-            method: 'GET', // Method is optional here since GET is the default value
+            method: 'GET',
             headers: {'Content-Type': 'application/json'},
-            // Omitting mode: 'no-cors' to ensure the response can be read. Ensure CORS is handled server-side.
         });
 
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        // Before attempting to parse JSON, check if the response is actually JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Received non-JSON response from server");
         }
 
         const classesAndSets = await response.json();
-        console.log('Classes and their sets:', classesAndSets);
-        // Here you can further handle the response, like updating the UI accordingly
+        console.log('Classes and their sets:', classAndSets);
     } catch (error) {
         console.error('Error fetching classes and sets:', error);
     }
 };
+;
 
 
 

@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 
 app.use(cors({ origin: '*' }));
 
-/*app.use((req, res, next) => {
+app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
         'Access-Control-Allow-Headers',
@@ -40,7 +40,7 @@ app.use(cors({ origin: '*' }));
         'GET, POST, PATCH, DELETE, OPTIONS'
     );
     next();
-});*/
+});
 
 
 

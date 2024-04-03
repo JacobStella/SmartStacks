@@ -1,3 +1,4 @@
+//this fucking sucks 
 import React from 'react';
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap'; // Make sure this is installed too

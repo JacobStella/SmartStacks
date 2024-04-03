@@ -2,26 +2,26 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
-const MongoClient = require('mongodb').MongoClient;
-const ObjectId = require('mongodb').ObjectId; // Moved here for organization
-
 const url = process.env.MONGODB_URI;
+const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
+
+
 async function connectToMongo() {
-    try {
-        await client.connect();
-        console.log("MongoDB connected");
-    } catch (error) {
-        console.error("Could not connect to MongoDB", error);
-    }
+  try {
+    await client.connect();
+    console.log("MongoDB connected");
+  } catch (error) {
+    console.error("Could not connect to MongoDB", error);
+  }
 }
-
+//client.connect("mongodb connected");
 connectToMongo();
-
-const app = express();
+const path = require('path');
 const PORT = process.env.PORT || 5000;
 
+const app = express();
 
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
@@ -157,7 +157,12 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
+app.use('/api/getClassAndSets/:classId', (req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  next();
+}, async (req, res) => {
+
   const { classId } = req.params; // Get classId from the route parameters
 
   try {

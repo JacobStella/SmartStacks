@@ -17,6 +17,7 @@ const formInput = (userName, pass) =>{
 
 
 const submit = async () => {
+    console.log("Call to API -> Login")
     //transfer updated state data
     try{
         const res = await fetch ("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/login",{
@@ -50,7 +51,7 @@ const register = () => {
 };
 
 const library = () => {
-    navigation.navigate("Library");
+    navigation.navigate("MainApp");
  };
 
  const test = () => {

@@ -11,7 +11,7 @@ const getClassAndSets = async (classId) => {
         const response = await fetch(url, {
             method: 'GET', // Method is optional here since GET is the default value
             headers: {'Content-Type': 'application/json'},
-            //mode: 'no-cors'
+            mode: 'no-cors'
         });
 
         if (!response.ok) {

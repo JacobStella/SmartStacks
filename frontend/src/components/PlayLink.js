@@ -8,10 +8,9 @@ function PlayLink() {
 
     return (
         <div className="play-section">
-            <Link to="/game">
+            <Link to="/play">
                 <img src={PlayImage} alt="Play" className="image-button" />
             </Link>
-            <p className="play-section-text">Play</p>
         </div>
     );
 }

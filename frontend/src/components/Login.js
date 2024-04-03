@@ -76,20 +76,17 @@ function Login()
 
     return (
         <div className="root-div">
-            <h1 id="title">Welcome to Smart Stacks!</h1>
-
-            <>
-                <form onSubmit={doLogin}>
-                    <span id="inner-title">PLEASE LOG IN</span><br />
-                    <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
-                    <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
-                    <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/forgor">Forgot Password?</a>
-                    <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
-                    <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
-                </form>
-                <span id="loginResult">{message}</span>
-            </>
-        </div>
+    <>
+        <form onSubmit={doLogin}>
+            <span id="inner-title">PLEASE LOG IN</span><br />
+            <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
+            <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} /><br />
+            <input type="submit" id="loginButton" className="buttons" value="Login" /><br />
+            <span id="inner-title">Don't have an account?</span> <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/register">Register</a>
+        </form>
+        <span id="loginResult">{message}</span>
+    </>
+</div>
 
     );
 }

@@ -123,7 +123,7 @@ function CardUI() {
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
                 headers: {'Content-Type': 'application/json'},
-                mode: 'no-cors' // Add this line to specify the request mode
+                //mode: 'no-cors' // Add this line to specify the request mode
             });
     
             // Note: The response is opaque; you cannot access `response.json()` or any response data

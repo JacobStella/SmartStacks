@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import CardPage from './pages/CardPage';
 import CreateStackPage from './pages/CreateStackPage';
 import ForgorPage from './pages/ForgorPage';
-import PlayPage from './pages/GamePage';
+import GamePage from './pages/GamePage';
 import LandingPage from './pages/LandingPage';
 import LibraryPage from './pages/LibraryPage';
 import LoginPage from './pages/LoginPage';
@@ -22,7 +22,7 @@ function App() {
         <Route path="/cards" element={<CardPage />} />
         <Route path="/create" element={<CreateStackPage />} />
         <Route path="/forgor" element={<ForgorPage />} />
-        <Route path="/game" element={<PlayPage />} />
+        <Route path="/game" element={<GamePage />} />
         <Route path="/" element={<LandingPage />} />
         <Route path="/library" element={<LibraryPage />} />
         <Route path="/login" element={<LoginPage />} />

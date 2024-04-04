@@ -259,6 +259,19 @@ div#registerDiv form{
   height: 700px;
 }
 
+.back-to-login {
+  color: #09bc8a;
+  text-decoration: underline;
+  font-size: 20px;
+  display: block; /* to make the link take its own line */
+  margin: 20px 0; /* give some space above and below the link */
+  cursor: pointer; /* change the cursor to indicate it's clickable */
+}
+
+.back-to-login:hover {
+  opacity: 0.8;
+}
+
 #registerDiv {
   display: flex;
   flex-direction: column;

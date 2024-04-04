@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import '../Forgor.css';
+
 
 const ForgorPage = () => {
   const [email, setEmail] = useState('');

@@ -67,23 +67,3 @@ const NavBar = () => {
 }
 
 export default NavBar;
-
-/*export default function NavBar() {
-  function MyStack(){
-    <Stack.Navigator>
-      <Stack.Screen name="Tabs" component={MyTabs} />
-    </Stack.Navigator>
-  }
-  function MyTabs(){
-    return (
-      <Tab.Navigator>
-        <Tab.Screen name="SearchTabs" component={Search} />
-      </Tab.Navigator>
-    );
-  }
-  return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
-  )
-}*/

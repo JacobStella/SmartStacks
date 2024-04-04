@@ -14,7 +14,7 @@ import Test from './mobile/src/components/Test';
 import Search from './mobile/src/components/Search';
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 
 
@@ -37,6 +37,13 @@ const NavBar = ({name}) => {
     
       <Tab.Navigator 
       screenOptions={({route}) => ({
+        // making the bottom bar look pretty
+        tabBarInactiveBackgroundColor: '#508991',
+        tabBarActiveBackgroundColor: '#004346',
+        tabBarActiveTintColor: '#09BC8A',
+        tabBarInactiveTintColor: '#004346',
+        
+        
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           let rn = route.name;

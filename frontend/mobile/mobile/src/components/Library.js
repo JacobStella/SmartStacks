@@ -5,11 +5,9 @@ function Library({navigation}) {
     return (
         
         <View style={styles.container}>
-            <Text onPress={() => navigation.navigate('Library')}
-            style={{ fontSize: 26, fontWeight: 'bold'}}>Library Screen</Text>
-            <Text style={styles.title}>Library</Text>
+            <Text onPress={() => navigation.navigate('Library')}></Text>
             <View style={styles.subheader}>
-                <Text style={styles.subheaderTitle}>Bene Gesserit</Text>
+                <Text style={styles.subheaderTitle}>Classes</Text>
             </View>
             <View style={styles.iconContainer}>
                 <View style={{flexDirection: 'column'}}>
@@ -47,6 +45,7 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start',
         paddingHorizontal: 20,
         paddingTop: 50,
+        backgroundColor: '#D8DCFF'
     },
     title: {
         fontSize: 35,
@@ -62,7 +61,7 @@ const styles = StyleSheet.create({
         flex:1,
         fontSize: 28,
         fontWeight: 'bold',
-        color: 'red',
+        color: '#172A3A',
         marginLeft: 10,
         marginBottom: 10
     },

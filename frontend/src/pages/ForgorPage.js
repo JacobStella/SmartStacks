@@ -33,8 +33,8 @@ const ForgorPage = () => {
           required
         />
         {error && <div className="error-message">{error}</div>}
-        <button type="submit" className="submit-button">Submit</button>
-        <a href="/login">Back to Login</a>
+        <button type="submit" className="submit-button">Submit</button><br/>
+        <a href="/login"> &lt; Back to Login</a>
       </form>
     </div>
   );

@@ -51,4 +51,16 @@
   a:hover {
     text-decoration: underline;
   }
+
+  .forgot-password-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+}
+
+.forgot-password-container form h2{
+    color: #D8DCFF;
+    margin-bottom: 30px;
+}
   

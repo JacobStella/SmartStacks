@@ -57,4 +57,19 @@
     font-family: 'Your font family', sans-serif; /* Replace with your actual font family */
     background-color: #d8dcff; /* Ensure the body background matches */
   }
+
+  div#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+div.forgot-password-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
   

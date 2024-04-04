@@ -1,16 +1,3 @@
-.forgot-password-container {
-    background-color: #172a3a; /* Match the login page background */
-    border: 9px solid #004346; /* Match the login page border */
-    border-radius: 30px; /* Match the login page border-radius */
-    color: #D8DCFF; /* Match the login page text color */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding: 30px; /* Match the login page padding */
-    width: 500px; /* Match the login page width */
-  }
   
   .forgot-password-container h2 {
     color: #D8DCFF; /* Match the login page header color */

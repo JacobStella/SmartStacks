@@ -24,12 +24,13 @@ const ForgorPage = () => {
 
   return (
     <div className="forgot-password-container">
-        <h2>Forgot Password</h2>
+        <h2>Forgot Password?</h2>
         <form onSubmit={handleSubmit}>
             <label htmlFor="email">Enter your email and we'll send you a link to reset your password.</label>
             <input
             type="email"
             id="email"
+            placeholder="email"
             value={email}
             onChange={handleEmailChange}
             required

@@ -1,7 +1,7 @@
   
   .forgot-password-container h2 {
     color: #172a3a; /* Match the login page header color */
-    margin-bottom: 30px; /* Match the login page spacing */
+    margin-bottom: 8px; /* Match the login page spacing */
   }
 
   .forgot-password-container label {

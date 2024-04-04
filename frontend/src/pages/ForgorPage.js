@@ -24,16 +24,16 @@ const ForgorPage = () => {
 
   return (
     <div className="forgot-password-container">
-      <form onSubmit={handleSubmit}>
         <h2>Forgot Password</h2>
-        <label htmlFor="email">Enter your email and we'll send you a link to reset your password.</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-          required
-        />
+        <form onSubmit={handleSubmit}>
+            <label htmlFor="email">Enter your email and we'll send you a link to reset your password.</label>
+            <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={handleEmailChange}
+            required
+            />
         {error && <div className="error-message">{error}</div>}
         <button type="submit" className="submit-button">Submit</button><br/>
         <a href="/login"> &lt; Back to Login</a>

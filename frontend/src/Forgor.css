@@ -1,6 +1,11 @@
   
   .forgot-password-container h2 {
-    color: #D8DCFF; /* Match the login page header color */
+    color: #172a3a; /* Match the login page header color */
+    margin-bottom: 30px; /* Match the login page spacing */
+  }
+
+  .forgot-password-container label {
+    color: #d8dcff; /* Match the login page header color */
     margin-bottom: 30px; /* Match the login page spacing */
   }
   
@@ -24,7 +29,7 @@
     background-color: #09bc8a; /* Match the login page button color */
     border: none; /* Match the login page button border */
     border-radius: 10px; /* Match the login page button border-radius */
-    color: white; /* Match the login page button text color */
+    color: #d8dcff; /* Match the login page button text color */
     cursor: pointer;
     display: block;
     margin: 10px auto; /* Center the button */

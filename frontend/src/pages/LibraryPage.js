@@ -154,7 +154,7 @@ const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
         const updatedFolders = folders.map(folder => {
-            if (folder.id === folderId) {
+            if (folder._id === folderId) {
                 return { ...folder, name: newName };
             }
             return folder;

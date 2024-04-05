@@ -24,7 +24,7 @@ const getClassAndSets = async (userId) => {
         if (!contentType || !contentType.includes("application/json")) {
             throw new Error("Received non-JSON response from server");
         }
-
+d
         const classAndSets = await response.json();
         console.log('Classes and their sets:', classAndSets);
     } catch (error) {
@@ -134,7 +134,7 @@ const LibraryPage = () => {
     };
 
     const userData = getUserData(); // Attempt to retrieve user data at component mount
-
+/*
     const editFolderName = (folderId) => {
         const newName = prompt('Enter new folder name:');
         if (newName) {
@@ -147,6 +147,21 @@ const LibraryPage = () => {
             setFolders(updatedFolders);
         }
     };
+*/
+
+const editFolderName = (folderId) => {
+    const newName = prompt('Enter new folder name:');
+    if (newName) {
+        const updatedFolders = folders.map(folder => {
+            if (folder.id === folderId) {
+                return { ...folder, name: newName };
+            }
+            return folder;
+        });
+        setFolders(updatedFolders);
+    }
+};
+
 
     const addFolder = async (folderName) => {
         if (!userData) return; // Early return if userData is null

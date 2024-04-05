@@ -164,32 +164,34 @@ const editFolderName = (folderId) => {
 };
 
 
-    const addFolder = async (folderName) => {
-        if (!userData) return; // Early return if userData is null
+const addFolder = async (folderName) => {
+    if (!userData) return; // Early return if userData is null
 
-        const userId = userData.id;
-        let classObj = { userId: userId, className: folderName };
-        let classJson = JSON.stringify(classObj);
+    const userId = userData.id;
+    let classObj = { userId: userId, className: folderName };
+    let classJson = JSON.stringify(classObj);
 
-        try {
-            const response = await fetch('api/addclass', { // Ensure this endpoint is correct
-                method: 'POST',
-                body: classJson,
-                headers: {'Content-Type': 'application/json'}
-            });
+    try {
+        const response = await fetch('api/addclass', {
+            method: 'POST',
+            body: classJson,
+            headers: {'Content-Type': 'application/json'}
+        });
 
-            const res = await response.json();
+        const res = await response.json();
 
-            if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.id, name: res.className }]);
-                setMessage("Folder has been added.");
-            } else {
-                setMessage("API Error: " + (res.error || "Failed to add folder."));
-            }
-        } catch (error) {
-            setMessage("API Error: " + error.toString());
+        if (response.ok) {
+            // Assuming your backend returns the new folder with an _id and className property
+            setFolders(prevFolders => [...prevFolders, { _id: res._id, className: res.className }]);
+            setMessage("Folder has been added.");
+        } else {
+            setMessage("API Error: " + (res.error || "Failed to add folder."));
         }
-    };
+    } catch (error) {
+        setMessage("API Error: " + error.toString());
+    }
+};
+
 
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');

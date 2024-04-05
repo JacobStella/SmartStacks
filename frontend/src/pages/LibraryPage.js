@@ -155,7 +155,7 @@ const editFolderName = (folderId) => {
     if (newName) {
         const updatedFolders = folders.map(folder => {
             if (folder._id === folderId) {
-                return { ...folder, name: newName };
+                return { ...folder, className: newName };
             }
             return folder;
         });

@@ -20,7 +20,7 @@ const FolderTemplate = ({ name, onEdit }) => {
 };
 
 const FolderStacksDisplay = ({ folders, onEditFolder }) => {
-    console.log(folders);
+    console.log('Folder names:', folders.map(folder => folder.name));
     return (
         <section className="folders-and-stacks">
             {folders.map(folder => (

@@ -94,7 +94,7 @@ const LibraryPage = () => {
                 getClassAndSets(userData.id).then(classes => {
                     if (classes && classes.length > 0) {
                         setFolders(classes); // Assuming the API returns an array of classes
-                        console.error(classes);
+                        console.log(classes);
                     } else {
                         console.log('No classes found for this user.');
                     }
@@ -181,7 +181,7 @@ const editFolderName = (folderId) => {
             const res = await response.json();
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.id, name: res.className }]);
+                setFolders(prevFolders => [...prevFolders, { id: res.id, className: res.className }]);
                 setMessage("Folder has been added.");
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

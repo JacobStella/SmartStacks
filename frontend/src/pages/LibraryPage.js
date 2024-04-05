@@ -93,6 +93,9 @@ const LibraryPage = () => {
                 // Fetch classes as soon as we have the user's ID
                 getClassAndSets(userData.id).then(classes => {
                     if (classes && classes.length > 0) {
+                        const foldersData = classes.map(cls => {
+                            return { id: cls.id, name: cls.className }; // Make sure cls.className is not null
+                        });
                         setFolders(classes); // Assuming the API returns an array of classes
                         console.error(classes);
                     } else {

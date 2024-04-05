@@ -181,7 +181,7 @@ const editFolderName = (folderId) => {
             const res = await response.json();
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.id, name: res.name }]);
+                setFolders(prevFolders => [...prevFolders, { id: res.id, name: res.className }]);
                 setMessage("Folder has been added.");
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

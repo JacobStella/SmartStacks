@@ -5,6 +5,7 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
+/*             OLD GETCLASSANDSETS
 const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);
@@ -31,6 +32,34 @@ const getClassAndSets = async (userId) => {
     }
 };
 ;
+*/
+
+const getClassAndSets = async (userId) => {
+    try {
+        const url = buildPath(`api/getClassAndSets/${userId}`);
+        console.log(`Fetching from URL: ${url}`);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        });
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Received non-JSON response from server");
+        }
+
+        const data = await response.json();
+        console.log('Classes and their sets:', data);
+        return data; // Return the data here
+    } catch (error) {
+        console.error('Error fetching classes and sets:', error);
+        return null; // Return null in case of an error
+    }
+};
 
 
 

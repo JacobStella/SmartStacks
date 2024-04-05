@@ -7,6 +7,20 @@ const NavBar2 = () => {
     const navigate = useNavigate();
     const location = useLocation();
 
+    useEffect(() => {
+        const userDataString = localStorage.getItem('user_data');
+        if (!userDataString) {
+            //if user in NOT logged in
+        } else {
+            const userData = JSON.parse(userDataString);
+            if (userData && userData.id) {
+                //is user is logged in and we can access their date
+            } else {
+                //if user is logged in but we cant access their date (we should throw a console.log error)
+            }
+        }
+    }, []);
+
     const handleLoginClick = () => {
         // Store the current location before redirecting to login
         localStorage.setItem('preLoginPath', location.pathname);

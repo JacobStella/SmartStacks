@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'; // Add useState
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../NavBar.css';
 import logo from '../images/browse.png';
@@ -10,18 +10,17 @@ const NavBar2 = () => {
     const [userInitial, setUserInitial] = useState('');
 
     useEffect(() => {
+        // Directly check for 'user_data' to determine if the user is logged in
         const userDataString = localStorage.getItem('user_data');
-        const token = localStorage.getItem('token'); // You can adjust the key if your token is stored under a different name
-        const isLoggedIn = token != null;
 
-        if (isLoggedIn && userDataString) {
+        if (userDataString) {
             const userData = JSON.parse(userDataString);
-            if (userData && userData.id) {
+            // We check for userData.username because the initial is derived from the username
+            if (userData && userData.username) {
                 setUserLoggedIn(true);
-                // Assume the username is a property on userData. Adjust if necessary.
-                setUserInitial(userData.username ? userData.username.charAt(0).toUpperCase() : '');
+                setUserInitial(userData.username.charAt(0).toUpperCase());
             } else {
-                console.log('User is logged in but user data cannot be accessed.');
+                console.log('User data is present but not valid.');
             }
         }
     }, []);
@@ -44,9 +43,8 @@ const NavBar2 = () => {
                 <button type="submit">Search</button>
             </div>
 
-            {/* Conditional rendering based on login status */}
             {userLoggedIn ? (
-                <div className="profile-circle">{userInitial}</div> // Style this div as needed
+                <div className="profile-circle">{userInitial}</div>
             ) : (
                 <button onClick={handleLoginClick} className="nav-button">Login</button>
             )}

@@ -8,28 +8,19 @@ const NavBar2 = () => {
     const location = useLocation();
     const [userInitial, setUserInitial] = useState('');
 
-    // Determine if the user is logged in by checking 'user_data'
-    const checkLoggedIn = () => {
+    useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
         if (userDataString) {
             const userData = JSON.parse(userDataString);
             if (userData && userData.username) {
                 setUserInitial(userData.username.charAt(0).toUpperCase());
-                return true;
             } else {
                 console.log('User data is present but not valid.');
             }
         }
-        return false;
-    };
+    }, []);
 
-    // Call checkLoggedIn directly in the render method to determine logged in state.
-    const userLoggedIn = checkLoggedIn();
-
-    useEffect(() => {
-        // The state is already set in checkLoggedIn so no need to set it again here.
-        // This useEffect is now just for logging purposes or other side effects.
-    }, [userInitial]); // Run the effect when userInitial changes
+    const userLoggedIn = !!userInitial; // Boolean conversion: if userInitial is a non-empty string, userLoggedIn is true
 
     const handleLoginClick = () => {
         localStorage.setItem('preLoginPath', location.pathname);
@@ -49,7 +40,6 @@ const NavBar2 = () => {
                 <button type="submit">Search</button>
             </div>
 
-            {/* Render profile circle or login button based on loggedIn status */}
             {userLoggedIn ? (
                 <div className="profile-circle">{userInitial}</div>
             ) : (

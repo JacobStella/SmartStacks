@@ -6,24 +6,30 @@ import logo from '../images/browse.png';
 const NavBar2 = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const [userLoggedIn, setUserLoggedIn] = useState(false);
     const [userInitial, setUserInitial] = useState('');
 
-    useEffect(() => {
-        // Directly check for 'user_data' to determine if the user is logged in
+    // Determine if the user is logged in by checking 'user_data'
+    const checkLoggedIn = () => {
         const userDataString = localStorage.getItem('user_data');
-
         if (userDataString) {
             const userData = JSON.parse(userDataString);
-            // We check for userData.username because the initial is derived from the username
             if (userData && userData.username) {
-                setUserLoggedIn(true);
                 setUserInitial(userData.username.charAt(0).toUpperCase());
+                return true;
             } else {
                 console.log('User data is present but not valid.');
             }
         }
-    }, []);
+        return false;
+    };
+
+    // Call checkLoggedIn directly in the render method to determine logged in state.
+    const userLoggedIn = checkLoggedIn();
+
+    useEffect(() => {
+        // The state is already set in checkLoggedIn so no need to set it again here.
+        // This useEffect is now just for logging purposes or other side effects.
+    }, [userInitial]); // Run the effect when userInitial changes
 
     const handleLoginClick = () => {
         localStorage.setItem('preLoginPath', location.pathname);
@@ -43,6 +49,7 @@ const NavBar2 = () => {
                 <button type="submit">Search</button>
             </div>
 
+            {/* Render profile circle or login button based on loggedIn status */}
             {userLoggedIn ? (
                 <div className="profile-circle">{userInitial}</div>
             ) : (

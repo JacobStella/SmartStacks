@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View, Image, TouchableOpacity, Touchable } from 'react-native';
 import {NavigationContainer, useNavigation, useRoute} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './mobile/src/components/Login';
@@ -13,9 +13,11 @@ import Study from './mobile/src/components/Study';
 import Test from './mobile/src/components/Test';
 import Search from './mobile/src/components/Search';
 import Page from './mobile/src/components/Page';
+import Create from './mobile/src/components/Create';
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabBarProps } from '@react-navigation/bottom-tabs';
+/*import { TouchableOpacity } from 'react-native-gesture-handler';*/
 
 
 
@@ -28,16 +30,158 @@ const browseName = 'Browse';
 const studyGameName = 'Study';
 
 
+const customTabBarButton = ({children,  onPress}) => {
+  <TouchableOpacity
+    style = {{
+      top: -30,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }} 
+    onPress={onPress}
+  > 
+    <View style={{
+      width: 70,
+      height: 70,
+      borderRadius: 35,
+    }}>
+      {children}
+    </View>
+  </TouchableOpacity>
+};
 
 
-
-const NavBar = ({name}) => {
+const NavBar = ({name, navigation}) => {
   
  
   return (
+
+    // some garbage I tried doing to make the navBar look good, probably gonna come back 
+    // and test this out a bit more
+
+    /*<Tab.Navigator screenOptions={{
+      tabBarShowLabel: false,
+      tabBarStyle: {
+        display: "flex",
+        position: 'absolute',
+        bottom: 40,
+        marginHorizontal: 20,
+  
+        height: 60,
+        borderRadius: 10,
+  
+        shadowColor: '#000',
+        shadowOpacity: 0.06,
+        shadowOffset: {
+          width: 10,
+          height: 10
+      },
+      style: {
+        }
+      }
+    }}>
+      {
+
+      }
+      <Tab.Screen name={libraryName} component={Library} options={{
+        tabBarIcon: ({focused}) => (
+          <View style={{
+            position: 'absolute',
+            top: '50%'
+          }}>
+            <Image
+              source={require('./assets/icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+            }}/>
+          </View>
+        )
+      }}/>
+      <Tab.Screen name={searchName} component={Search} options={{
+        tabBarIcon: ({focused}) => (
+          <View style={{
+            position: 'absolute',
+            top: '50%'
+          }}>
+            <Image
+              source={require('./assets/icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+            }}/>
+          </View>
+        )
+      }}/>
+      <Tab.Screen name="Create" component={Create} options={{
+        tabBarIcon: ({focused}) => (
+          <TouchableOpacity>
+            <View style={{
+              width: 50,
+              height: 50,
+              backgroundColor: 'red',
+              borderRadius: '50%',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: 30
+            }}>
+            <Image
+              source={require('./assets/Skunk.png')}
+              resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+            }}/>
+            </View>
+          </TouchableOpacity>
+        )
+      }}/>
+      <Tab.Screen name={browseName} component={Browse} options={{
+        tabBarIcon: ({focused}) => (
+          <View style={{
+            position: 'absolute',
+            top: '50%'
+          }}>
+            <Image
+              source={require('./assets/icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+            }}/>
+          </View>
+        )
+      }}/>
+      <Tab.Screen name={studyGameName} component={StudyGame} options={{
+        tabBarIcon: ({focused}) => (
+          <View style={{
+            position: 'absolute',
+            top: '50%'
+          }}>
+            <Image
+              source={require('./assets/icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 30,
+                height: 30,
+            }}/>
+          </View>
+        )
+      }}/>
+
+    </Tab.Navigator>*/
     
       <Tab.Navigator 
       screenOptions={({route}) => ({
+        // making the bottom bar look pretty
+        tabBarHideOnKeyboard: true,
+        tabBarInactiveBackgroundColor: '#508991',
+        tabBarActiveBackgroundColor: '#004346',
+        tabBarActiveTintColor: '#09BC8A',
+        tabBarInactiveTintColor: '#004346',
+
+        
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           let rn = route.name;
@@ -58,6 +202,44 @@ const NavBar = ({name}) => {
         
         <Tab.Screen name={libraryName} component={Library}/>
         <Tab.Screen name={searchName} component={Search}/>
+        <Tab.Screen name={"Create"} component={Create} options={{
+          title: 'Create a New Stack',
+          headerTransparent: true,
+          headerStyle:{
+            backgroundColor: '#004346'
+          },
+          headerTintColor: '#508991',
+          headerBackTitle: 'Back',
+          headerBackVisible: true,
+          headerTitleAlign: 'center',
+          tabBarIcon: ({focused}) => (
+            <TouchableOpacity onPress = {() => navigation.navigate(Create)}>
+              <View style={{
+                width: 50,
+                height: 50,
+                backgroundColor: 'red',
+                shape: 'circle',
+                //borderRadius: '50%',
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 30
+              }}>
+                <Image
+                  source={require('./assets/Skunk.png')}
+                  resizeMode="contain"
+                  style={{
+                    width: 30,
+                    height: 30,
+                  }}
+                />
+              </View>
+            </TouchableOpacity>
+          ),
+          /*tabBarButton: (props) => (
+            <customTabBarButton {...props} />
+          )*/
+        }}
+        />
         <Tab.Screen name={browseName} component={Browse}/>
         <Tab.Screen name={studyGameName} component={StudyGame}/>
         

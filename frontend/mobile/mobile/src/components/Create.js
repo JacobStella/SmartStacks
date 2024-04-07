@@ -1,11 +1,20 @@
 import * as React from 'react';
 import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Keyboard, TouchableWithoutFeedback} from "react-native";
 
-const cardCreator = (
-        <View>
-            <Text>balls</Text>
-        </View>
-);
+const CardCreator = () => {
+    return(
+    <View style={styles.cardContainer}>
+        <TextInput style={styles.cardTermInput}
+        placeholder = "Term" 
+        placeholderTextColor={'#fff'}/>
+        <TextInput style={styles.cardDefinitionInput}
+        placeholder = "Definition" 
+        placeholderTextColor={'#fff'}/>
+    </View>);
+};
+
+
+// I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
     return(
@@ -15,17 +24,15 @@ const Create = ({navigation}) => {
                 <TextInput style={styles.titleInput} placeholder = "Title" placeholderTextColor={'#fff'}/>
             </View>
 
-            // I'd like to fix how Description starts in the middle of the container
-
             <View style={styles.descriptionInputContainer}>
                 <TextInput style={styles.descriptionInput}
                 placeholder = "Description" 
                 placeholderTextColor={'#fff'}
                 multiline={true}/>
             </View>
-            <View style={cardContainer}>
-                
-            </View>
+            
+            <CardCreator/>
+            
         </SafeAreaView>
     </TouchableWithoutFeedback>
     );
@@ -49,6 +56,7 @@ const styles = StyleSheet.create({
         width: '100%',
         marginTop: 90,
         alignItems: 'center',
+       // backgroundColor: '#fff'
     },
     titleInput: {
         height: 45,
@@ -84,11 +92,43 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         width: '90%',
-        alignContent: 'center',
-        backgroundColor: '#508991'
+        alignSelf: 'center',
+        justifyContent: 'center',
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: '2%',
+        backgroundColor: '#508991',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
     },
     cardTermInput: {
-        
+        borderColor: '#09BC8A',
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '40%',
+        marginTop: '1%',
+        marginBottom: '1%',
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontSize: 16,
+        color: '#fff',
+        backgroundColor: '#172A3A',
+    },
+    cardDefinitionInput: {
+        borderColor: '#09BC8A',
+        borderWidth: 1,
+        borderRadius: 5,
+        width: '40%',
+        marginLeft: '1%',
+        marginRight: '15%',
+        marginTop: '1%',
+        marginBottom: '1%',
+        paddingLeft: 10,
+        paddingRight: 10,
+        fontSize: 16,
+        color: '#fff',
+        backgroundColor: '#172A3A',
     }
 });
 

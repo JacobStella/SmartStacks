@@ -12,6 +12,7 @@ import StudyGame from './mobile/src/components/StudyGame';
 import Study from './mobile/src/components/Study';
 import Test from './mobile/src/components/Test';
 import Search from './mobile/src/components/Search';
+import Page from './mobile/src/components/Page';
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -165,6 +166,7 @@ const App = () => {
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>
+        <HamburgerMenu.Screen name = "Page" component={Page} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "MainApp" component={MainApp}/>
     </HamburgerMenu.Navigator>
     </NavigationContainer>   

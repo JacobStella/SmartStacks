@@ -55,7 +55,7 @@ const library = () => {
  };
 
  const test = () => {
-    navigation.navigate("Test");
+    navigation.navigate("Page");
  };
 
     return (

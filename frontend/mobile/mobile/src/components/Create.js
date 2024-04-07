@@ -23,7 +23,9 @@ const Create = ({navigation}) => {
                 placeholderTextColor={'#fff'}
                 multiline={true}/>
             </View>
-
+            <View style={cardContainer}>
+                
+            </View>
         </SafeAreaView>
     </TouchableWithoutFeedback>
     );

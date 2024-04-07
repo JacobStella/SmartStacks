@@ -11,14 +11,16 @@ const NavBar2 = () => {
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
         if (userDataString) {
-            const userData = JSON.parse(userDataString);
-            if (userData && userData.username) {
-                setUserInitial(userData.username.charAt(0).toUpperCase());
-            } else {
-                console.log('User data is present but not valid.');
-            }
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.firstName) { // Check if firstName is present
+            // Use the first character of firstName or lastName, whichever you prefer
+            setUserInitial(userData.firstName.charAt(0).toUpperCase());
+          } else {
+            console.log('User data is present but not valid.');
+          }
         }
-    }, []);
+      }, []);
+      
 
     const userLoggedIn = !!userInitial; // Boolean conversion: if userInitial is a non-empty string, userLoggedIn is true
 

@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import SliderHeader from './SliderHeader';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Ionicons} from '@expo/vector-icons';
+import { RotateInDownLeft } from 'react-native-reanimated';
 
 
 
@@ -24,13 +25,63 @@ const Page = ({navigation}) => {
     {
         id: "3",
         Title: "Learn German",
-        difficulty: "Hard",
+        difficulty: "Easy",
         cardNumber: "21"
     
         },
 
-    ]);
+    {
+    id: "3",
+    Title: "Learn German",
+    difficulty: "Easy",
+    cardNumber: "21"
+        
+    },
+    {
+    id: "3",
+    Title: "Learn German",
+    difficulty: "Easy",
+    cardNumber: "21"
+    },
+            {
+            id: "3",
+            Title: "Learn German",
+            difficulty: "Easy",
+            cardNumber: "21"
+            },
+            {
+            id: "3",
+            Title: "Learn German",
+            difficulty: "Easy",
+            cardNumber: "21"
+            },
+            {
+                id: "3",
+                Title: "Learn German",
+                difficulty: "Easy",
+                cardNumber: "21"
+                },
+                {
+                    id: "3",
+                    Title: "Learn German",
+                    difficulty: "Easy",
+                    cardNumber: "21"
+                    },                    
 
+    ]);
+    const [Classes, setClasses] = useState([{
+
+          
+        public: "public",
+        classId: "German",
+    },
+    {
+        public: "public",
+        classId: "Spanish",
+    },
+
+    ]);
+    const data = [...Classes, ...Stacks];
     const [isRefreshing, setIsRefreshing] = useState(false);
     const loadStack = async()=>{
         //const data = await getStacks();
@@ -40,52 +91,176 @@ const Page = ({navigation}) => {
        // setStacks(data);
         
     }
-    const renderSetRow = ({item}) => {
-
+    let currentIndex = 0;
+    const renderSetRow = ({item, index}) => {
+        //console.log(index);
+        currentIndex = index;
         return(
             
-                <TouchableOpacity style = {styles.stackRow}>
-                <View style={{flexDirection: "row" , gap: 15}}>
-                <View style={{flex: 1}}>
+                
+                <View style={styles.stackContainer}>
+                
+                    
+                
+                <View style={styles.stackBox}>
+                    
+                <View style = {styles.stackBoxInner}>
+                    <Text></Text>
+                <Ionicons name = "ellipsis-vertical" size = {20} color = "black"/>
+                </View>
+                
                 <Text style={styles.stackText}>
                     {item.Title}
+                    {item.classId}
+                    
                 </Text>
                 <Text style={styles.stackText}>
                     {item.cardNumber} Cards
                 </Text>
+                
                 </View>
-                <Ionicons name = "arrow-forward" size = {20} color = "gray"/>
+                
+                
                 </View>
-                </TouchableOpacity>
+                
+                
+                
+                
+                
+
+                
+              
+                
         );
     };
     return(
         <View style ={styles.container}>
             <SliderHeader></SliderHeader>
-            <FlatList data = {Stacks} renderItem={renderSetRow}/>
-            <Text>User Sets</Text>
+            <Text style={styles.stackTitleText}>Classes</Text>
+            <FlatList data = {data}
+              renderItem={renderSetRow}
+              keyExtractor={item => item.id} 
+              numColumns={2}
+              
+              showsVerticalScrollIndicator = {false}
+              ItemSeparatorComponent={() => {
+                    if(currentIndex == Classes.length-1){
+                            return line();
+                    }
+                 
+             }}
+            
+    
+            
+           /> 
         </View>
+        
 
 
     );
 };
 
+
+const line = () => {
+    return(
+    <>
+    <View style={styles.line}></View>
+    <Text style={styles.stackTitleText}>Stacks</Text>
+    </>
+    );
+}
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: 'yellow'
+       //justifyContent: 'center',
+     //alignItems: 'center',
+    },
+    stackContainer:{
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        margin: 5,
+        
+        
+        
+        
     },
 
-    stackRow:{
-        padding: 15,
-        backgroundColor: "#abb1cf",
-        borderWidth: 1,
-        borderColor: "black",
-        borderBottomColor: "black",
+    stackBoxContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'wrap',     
     },
+
+    stackBoxHeader: {
+        
+      
+        
+        // aspectRatio: 1,
+         flex: 1,
+         flexDirection: 'row',
+         backgroundColor: "white",
+         justifyContent: 'flex-end',
+         borderColor: 'black',
+         borderWidth: 2,
+         borderRadius: 20,
+  
+        
+         
+     }, 
+
+
+    stackBox: {
+        
+      
+        
+       // aspectRatio: 1,
+        flex: 1,
+        backgroundColor: "#abb1cf",
+        //padding : 10,
+        borderColor: 'black',
+        borderWidth: 2,
+ 
+       
+        
+    },
+    stackBoxInner: {
+        flexDirection: 'row',
+        width: '100%',
+        backgroundColor: "#abb1cf",
+        padding : 1,
+        borderColor: 'black',
+        borderWidth: 2,
+        justifyContent: 'flex-end',
+    },
+
+
     stackText:{
+        //flex: 1,
         fontSize: 25,
-        fontWeight: '900'
-    }
+        fontWeight: '900',
+        textAlign: 'center',
+        
+    },
+    stackTitleText:{
+        //flex: 1,
+        flexDirection:'row',
+        justifyContent: 'flex-end',
+        fontSize: 25,
+        fontWeight: '900',
+        //textAlign: 'center',  
+    },
+    
+    line: {
+        borderBottomColor: 'black',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        alignSelf: 'stretch',
+        marginBottom: 20,
+        marginTop: 20,
+        
+    },
 });
 
 

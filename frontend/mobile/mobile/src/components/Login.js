@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, SafeAreaView, StyleSheet, TextInput, View} from "react-native";
+import {Button, SafeAreaView, StyleSheet, TextInput, View, Image} from "react-native";
 
 
 const Login = ({navigation}) => {
@@ -55,11 +55,15 @@ const library = () => {
  };
 
  const test = () => {
-    navigation.navigate("Page");
+    navigation.navigate("Layout");
  };
 
     return (
         <View style = {styles.container}>
+            <View style={styles.imageContainer}>
+            <Image source={require('../../../assets/Skunk.png')}
+                   style = {{width: 150, height: 150}} />
+            </View>
             <TextInput style = {styles.input}
                 placeholder = "Username"
                 onChangeText = { (input) => formInput("userName", input)}/>
@@ -87,6 +91,12 @@ const styles = StyleSheet.create({
         padding: 5,
         marginBottom: 5,
         width: "50%",
+        
+    },
+    imageContainer: {
+        paddingBottom: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
         
     },
 });

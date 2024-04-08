@@ -348,7 +348,7 @@ const App = () => {
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>
-        <HamburgerMenu.Screen name = "Page" component={Page} options = {{headerShown: false}}/>
+        <HamburgerMenu.Screen name = "Layout" component={Page} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "MainApp" component={MainApp}/>
     </HamburgerMenu.Navigator>
     </NavigationContainer>   

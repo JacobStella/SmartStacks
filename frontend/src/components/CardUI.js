@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //commit test
 function CardUI() {
     const [card, setCard] = useState('');
@@ -14,7 +14,7 @@ function CardUI() {
     const [definition, setDefinition] = useState('');
     const [setId, setSetId] = useState('');
     const [classId, setClassId] = useState('');
-
+    const [searchTerm, setSearchTerm] = useState('');
   // Use className and setIds in your component
 
     const [cards, setCards] = useState([]);
@@ -35,6 +35,20 @@ function CardUI() {
     let _ud = localStorage.getItem('user_data');
     let ud = JSON.parse(_ud) || {};
     let userId = ud.id || '';
+
+    const handleSearch = async (event) => {
+        event.preventDefault(); // Prevent form submission if you're using a form
+        if (!searchTerm.trim()) {
+            setMessage('Please enter a search term.');
+            return;
+        }
+        await searchItems(userId, searchTerm); // Assuming searchItems is the search function we discussed
+    };
+
+    // Update the search term as the user types
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
     
     const addCard = async event => {
         event.preventDefault();
@@ -126,7 +140,7 @@ function CardUI() {
     
 
     
-const addSet = async event => {
+ const addSet = async event => {
     event.preventDefault();
 
     // Assume classId is available and correctly set, representing the class this set belongs to
@@ -167,7 +181,38 @@ const addSet = async event => {
     } catch (e) {
         setMessage(e.toString());
     }
-};
+ };
+ const searchItems = async (userId, searchTerm) => {
+
+    
+
+    try {
+        // Construct the search URL with query parameters for userId and searchTerm
+        const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const searchResults = await response.json();
+
+        if (response.ok) {
+            // Handle the search results
+            console.log('Search Results:', searchResults);
+            // Here, you can update the state or DOM with searchResults.classes, searchResults.sets, and searchResults.cards
+            // For example:
+            // updateSearchResults(searchResults); // A function you'd define to update your UI with the results
+        } else {
+            // Handle errors returned from the server
+            setMessage("Search API Error:" + searchResults.error);
+        }
+    } catch (e) {
+        // Handle errors in fetching from the search API
+        console.error("Search Fetch Error:", e.toString());
+        setMessage(e.toString());
+    }
+ };
+
 
     
     const fetchSetWithCards = async (setId) => {
@@ -214,21 +259,151 @@ const addSet = async event => {
         }
     };
 
+
+
+    const TestComponent = ({ userId }) => {
+      const [test, setTest] = useState(null);
+      const [userAnswers, setUserAnswers] = useState({});
+      const [score, setScore] = useState(null);
+    
+      useEffect(() => {
+        const fetchTest = async () => {
+          try {
+            const response = await fetch('/api/test', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ userId }),
+            });
+            const data = await response.json();
+            setTest(data.test);
+            // Initialize answers
+            let initialAnswers = {};
+            data.test.questions.forEach((_, index) => {
+              initialAnswers[index] = '';
+            });
+            setUserAnswers(initialAnswers);
+          } catch (error) {
+            console.error('Error fetching test', error);
+          }
+        };
+    
+        fetchTest();
+      }, [userId]);
+    
+      const handleOptionChange = (questionIndex, answer) => {
+        setUserAnswers({
+          ...userAnswers,
+          [questionIndex]: answer,
+        });
+      };
+    
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          const response = await fetch('/api/validate-test', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              testId: test.id,
+              userAnswers: Object.values(userAnswers),
+            }),
+          });
+          const data = await response.json();
+          setScore(data.score);
+    } catch (error) {
+          console.error('Error submitting answers', error);
+        }
+      };
+    
+      if (score !== null) {
+        return <div>Your score is: {score}</div>;
+      }
+    
+      return (
+        <div>
+          {test && test.questions.map((question, index) => (
+            <div key={index}>
+              <p>{question}</p>
+              {test.answers.slice(index * 4, (index + 1) * 4).map((option, optionIndex) => (
+                <label key={optionIndex}>
+                  <input
+                    type="radio"
+                    name={`question-${index}`}
+                    value={option}
+                    checked={userAnswers[index] === option}
+                    onChange={() => handleOptionChange(index, option)}
+                  />
+                  {option}
+                </label>
+              ))}
+            </div>
+          ))}
+          <button onClick={handleSubmit}>Submit Answers</button>
+        </div>
+      );
+    };
+    
+
+    
+      
+
     return (
         <div id="accessUIDiv">
             <br />
-            <input type="text" id="searchText" placeholder="Card To Search For" value={search} onChange={e => setSearch(e.target.value)} />
-            <button type="button" id="searchCardButton" className="buttons" onClick={searchCard}> Search Card </button>
+            <input 
+                type="text" 
+                id="searchText" 
+                placeholder="Card To Search For" 
+                value={searchTerm} 
+                onChange={e => setSearchTerm(e.target.value)} // Update searchTerm state on change
+            />
+            <button 
+                type="button" 
+                id="searchCardButton" 
+                className="buttons" 
+                onClick={handleSearch} // Call handleSearch on click
+            > 
+                Search Card 
+            </button>
             <br />
-            <span id="cardSearchResult">{searchResults}</span>
-            <p id="cardList">{cardList}</p>
+            <span id="cardSearchResult">{searchResults}</span> // Display search results
+            <p id="cardList">{cardList}</p> // This might need adjustment based on how you handle and display search results
             <br /><br />
-            <input type="text" id="cardText" placeholder="Card To Add" value={card} onChange={e => setCard(e.target.value)} />
-            <button type="button" id="addCardButton" className="buttons" onClick={addCard}> Add Card </button>
+            {/* Term input */}
+            <input 
+                type="text" 
+                id="termInput" 
+                placeholder="Term" 
+                value={term} 
+                onChange={e => setTerm(e.target.value)}
+            />
+            <br />
+            {/* Definition input */}
+            <input 
+                type="text" 
+                id="definitionInput" 
+                placeholder="Definition" 
+                value={definition} 
+                onChange={e => setDefinition(e.target.value)}
+            />
+            <br />
+            <button 
+                type="button" 
+                id="addCardButton" 
+                className="buttons" 
+                onClick={addCard}
+            > 
+                Add Card 
+            </button>
             <br />
             <span id="cardAddResult">{message}</span>
         </div>
     );
+    
 }
 
 export default CardUI;

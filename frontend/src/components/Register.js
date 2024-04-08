@@ -35,7 +35,7 @@ function Register() {
             if(response.ok) {
                 setMessage('User registered successfully');
                 // Consider clearing the form or redirecting the user after successful registration
-                window.location.href = "https://largeprojectgroup3-efcc1eed906f.herokuapp.com/";
+                window.location.href = "https://largeprojectgroup3-efcc1eed906f.herokuapp.com/login";
             } else {
                 setMessage('Failed to register user');
             }
@@ -46,14 +46,15 @@ function Register() {
 
     return (
         <div id="registerDiv">
+            <h1 id="title">Welcome to Smart Stacks!</h1>
             <form onSubmit={doRegister}>
                 <span id="inner-title">PLEASE REGISTER</span><br />
-                <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} /><br />
-                <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} /><br />
-                <input type="text" id="registerName" placeholder="Username" ref={(c) => registerName = c} /><br />
-                <input type="email" id="email" placeholder="Email" ref={(c) => email = c} /><br /> {/* Email input field */}
-                <input type="password" id="registerPassword" placeholder="Password" ref={(c) => registerPassword = c} /><br />
-                <input type="password" id="confirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} /><br />
+                <input type="text" id="firstName" placeholder="First Name" ref={(c) => firstName = c} />
+                <input type="text" id="lastName" placeholder="Last Name" ref={(c) => lastName = c} />
+                <input type="text" id="registerName" placeholder="Username" ref={(c) => registerName = c} />
+                <input type="email" id="email" placeholder="Email" ref={(c) => email = c} />
+                <input type="password" id="registerPassword" placeholder="Password" ref={(c) => registerPassword = c} />
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} />
                 <input type="submit" id="registerButton" className="buttons" value="Register" />
             </form>
             <span id="registerResult">{message}</span>

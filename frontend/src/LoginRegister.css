@@ -1,0 +1,282 @@
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*//////////////////////////////////////login/register Start//////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+/* Web.css */
+
+/* Styles for the username input */
+/* Web.css */
+
+/* Common styles for inputs */
+#loginName,
+#loginPassword {
+  background-color: #172a3a;
+  border: 1px solid #004346;
+  border-radius: 5px;
+  box-shadow: 0 0 2px 2px #004346;
+  color: #6d85a5;
+  width: 100%; /* Full width to fit parent */
+  max-width: 300px; /* Maximum width of the input fields */
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+/* Styles for the submit button */
+#loginButton {
+  background-color: #172a3a;
+  color: white;
+  border: none;
+  border-radius: 5px; /* Match the input fields */
+  padding: 10px 20px;
+  cursor: pointer;
+  display: block;
+  max-width: 300px; /* Maximum width of the button */
+  margin: 10px auto; /* Center the button with automatic horizontal margins */
+}
+
+#loginButton:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design: Adjusting the width of inputs on smaller screens */
+/*
+@media (max-width: 768px) {
+  #loginName,
+  #loginPassword,
+  #loginButton,
+  .login-container form {
+    width: 100%;
+    max-width: 400px; 
+  }
+}
+*/
+
+/* Centering container */
+/* This will be the parent container of your login elements */
+#loginDiv {
+  display: flex; /* Establishes a flex container */
+  flex-direction: column; /* Stacks children vertically */
+  align-items: center; /* Centers children along the cross axis (horizontal) */
+  justify-content: center; /* Centers children along the main axis (vertical) */
+  min-height: 100vh; /* Minimum height of 100% of the viewport height */
+  text-align: center; /* Centers the text inside the children elements */
+
+  /* If you have additional padding or specific positioning needs, you can add them here */
+  padding: 20px;
+}
+
+/* Ensure the <body> or root <div> takes up at least the height of the viewport */
+/* If you are using Create React App, this could be applied to the #root or .App class in App.css */
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Centering the contents inside inputs and button */
+input[type="text"],
+input[type="password"],
+input[type="submit"] {
+  margin: 10px auto; /* Adds margin on the top and bottom, and auto on the sides for horizontal centering */
+  display: block; /* Makes the input block-level to respect margin auto */
+}
+
+
+/* Style the background of the entire page */
+/* You need to add this class to the root div of your application */
+.root {
+  background-color: #d8dcff; /* Your desired background color */
+  min-height: 100vh; /* Full height of the viewport */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.root-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  background-color: #d8dcff; /* Or any other color you prefer */
+}
+
+.login-container {
+  background-color: #d8dcff;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px #0000001a;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.root-div form {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 30px auto;
+  padding: 30px;
+  width: 500px
+}
+input#loginButton.buttons{
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  height: 50.34px;
+  margin-left: 35%;
+  padding: 10px;
+  width: 30%
+}
+
+form {
+  text-align: center;
+}
+
+form span#inner-title, form a{
+  font-size: 20px;
+}
+
+form a{
+  color: #09bc8a;
+  text-decoration: underline;
+}
+
+form a:hover {
+  color: #09bc8a;
+  opacity: .8;
+  text-decoration: underline;
+}
+
+div.root-div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+input#loginButton.buttons:hover {
+  opacity: .8;
+ }
+
+ form #loginName,form #loginPassword {
+  background-color: #d8dcff;
+  box-shadow: 0 0 3px 3px #004346;
+  border-width: 2px;
+}
+
+form #loginName::placeholder,form #loginPassword::placeholder {
+  color: #172a3a;
+}
+
+form #loginName:focus,form #loginPassword:focus {
+  border-color: #017c81;
+  color: #172a3a;
+  outline: none;
+}
+
+input#loginName:-webkit-autofill,
+input#loginName:-webkit-autofill:hover, 
+input#loginName:-webkit-autofill:focus, 
+input#loginName:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
+
+input#loginPassword:-webkit-autofill,
+input#loginPassword:-webkit-autofill:hover, 
+input#loginPassword:-webkit-autofill:focus, 
+input#loginPassword:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
+
+div#root form {
+  background-color: #172a3a;
+  border: 9px solid #004346;
+  border-radius: 30px;
+  color: #d8dcff;
+  margin: 35px auto;
+  padding: 30px;
+  width: 500px
+}
+
+div#registerDiv {
+    text-align: center;
+}
+
+input#registerButton.buttons{
+  background-color: #09bc8a;
+  border-color: #004346;
+  border-radius: 10px;
+  height: 50.34px;
+  margin-left: 35%;
+  padding: 10px;
+  width: 30%
+}
+
+input#registerButton.buttons:hover {
+  opacity: .8;
+ }
+
+ div#registerDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ensure it takes up at least the full viewport height */
+  background-color: #d8dcff; /* Or any other color you prefer */
+}
+
+ div#registerDiv input {
+  background-color: #d8dcff;
+  border-radius: 10px;
+  border-width: 2px;
+  box-shadow: 0 0 3px 3px #004346;
+  height: 45px;
+  width: 80%;
+  margin-bottom:35px;
+  margin-top: 0px;
+}
+
+div#registerDiv input::placeholder {
+  color: #172a3a;
+}
+
+div#registerDiv input:focus {
+  border-color: #017c81;
+  color: #172a3a;
+  outline: none;
+}
+
+form input#firstName, form input#registerButton.buttons {
+  margin-top: 35px;
+}
+
+div#registerDiv form{
+  width: 500px;
+  height: 700px;
+}
+
+#registerDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  padding: 20px;
+}
+
+div#registerDiv input:-webkit-autofill,
+div#registerDiv input:-webkit-autofill:hover, 
+div#registerDiv input:-webkit-autofill:focus, 
+div#registerDiv input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
+    background-color: #d8dcff !important; /* Replace with your desired background color */
+}
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+/*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

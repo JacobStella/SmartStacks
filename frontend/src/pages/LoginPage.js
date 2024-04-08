@@ -1,16 +1,18 @@
-
-//comment
 import React from 'react';
-import PageTitle from '../components/PageTitle';
 import Login from '../components/Login';
-import '../Web.css';
+import NavBar2 from '../components/NavBar2';
+import LandingFooter from '../components/LandingFooter';
+import '../LoginRegister.css';
 
 const LoginPage = () => {
     return (
-        <div>
-            <PageTitle />
-            <Login />
-        </div>
+        <>
+            <NavBar2 />
+            <div className="login-container">
+                <Login />
+            </div>
+            <LandingFooter />
+        </>
     );
 };
 

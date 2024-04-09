@@ -183,7 +183,7 @@ const addFolder = async (folderName) => {
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res._id, className: res.className }]);
+                setFolders(prevFolders => [...prevFolders, { id: res.classId, className: folderName }]);
                 setMessage("Folder has been added.");
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

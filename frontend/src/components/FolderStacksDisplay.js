@@ -6,7 +6,7 @@ import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
 import '../Library.css';
 
-const FolderTemplate = ({ name, onEdit, sets }) => {
+const FolderContainer = ({ name, onEdit, sets }) => {
   const navigate = useNavigate();
 
   const handleCreateNewStack = () => {

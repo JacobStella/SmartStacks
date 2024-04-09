@@ -179,11 +179,11 @@ const addFolder = async (folderName) => {
         });
 
         const res = await response.json();
-
+        console.log(res);
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.id, className: res.className }]);
+                setFolders(prevFolders => [...prevFolders, { id: res._id, className: res.className }]);
                 setMessage("Folder has been added.");
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

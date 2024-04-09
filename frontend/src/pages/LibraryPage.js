@@ -154,7 +154,7 @@ const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
         const updatedFolders = folders.map(folder => {
-            if (folder._id === folderId) {
+            if (folder.id === folderId) {
                 return { ...folder, className: newName };
             }
             return folder;
@@ -179,11 +179,11 @@ const addFolder = async (folderName) => {
         });
 
         const res = await response.json();
-
+        console.log(res);
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.id, className: res.className }]);
+                setFolders(prevFolders => [...prevFolders, { id: res.classId, className: folderName }]);
                 setMessage("Folder has been added.");
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

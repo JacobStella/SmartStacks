@@ -76,7 +76,7 @@ function buildPath(route)
 }
 
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
@@ -159,7 +159,7 @@ const editFolderName = (folderId) => {
             console.log(folder.id);
             console.log("folderId");
             console.log(folderId);*/
-            if (folder.id === folderId) {
+            if (folder._id === folderId) {
                 return { ...folder, className: newName };
             }
             return folder;
@@ -188,7 +188,7 @@ const addFolder = async (folderName) => {
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { id: res.classId, className: folderName }]);
+                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName }]);
                 setMessage("Folder has been added.");
                 console.log('Folders after adding new folder:', folders);
             } else {

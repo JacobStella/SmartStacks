@@ -23,15 +23,18 @@ const FolderTemplate = ({ name, onEdit, sets }) => {
   };
 
   return (
-    <div className="folder-template">
-      <div className="folder-image">
-        <img src={FolderIcon} alt="Folder" onClick={onEdit} />
-      </div>
-      <div className="folder-content">
-        <span className="folder-name">{name}</span>
-        <button className="folder-edit-button" onClick={onEdit}>
-          <img src={EditIcon} alt="Edit" />
-        </button>
+    <div className="Folder-Container">
+        <div className="folder-template">
+        <div className="folder-image">
+            <img src={FolderIcon} alt="Folder" onClick={onEdit} />
+        </div>
+        <div className="folder-content">
+            <span className="folder-name">{name}</span>
+            <button className="folder-edit-button" onClick={onEdit}>
+            <img src={EditIcon} alt="Edit" />
+            </button>
+        </div>
+        </div>
         <div className="stacks-container">
           {sets && sets.length > 0 ? (
             sets.map(set => (
@@ -49,8 +52,8 @@ const FolderTemplate = ({ name, onEdit, sets }) => {
             </div>
           )}
         </div>
-      </div>
     </div>
+    
   );
 };
 
@@ -58,7 +61,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderTemplate key={folder._id} name={folder.className} onEdit={() => onEditFolder(folder._id)} sets={folder.sets} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={() => onEditFolder(folder._id)} sets={folder.sets} />
       ))}
     </section>
   );

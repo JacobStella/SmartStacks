@@ -194,7 +194,8 @@ input#registerButton.buttons{
   height: 50.34px;
   margin-left: 35%;
   padding: 10px;
-  width: 30%
+  width: 30%;
+  box-shadow: 0 0 0 0;
 }
 
 input#registerButton.buttons:hover {
@@ -211,13 +212,15 @@ input#registerButton.buttons:hover {
 
  div#registerDiv input {
   background-color: #d8dcff;
-  border-radius: 10px;
+  border-radius: 5px;
   border-width: 2px;
   box-shadow: 0 0 3px 3px #004346;
   height: 45px;
   width: 80%;
   margin-bottom:35px;
   margin-top: 0px;
+  border: 1px solid #004346;
+  padding: 10px;
 }
 
 div#registerDiv input::placeholder {

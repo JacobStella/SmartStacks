@@ -1,14 +1,14 @@
 .library-header {
     display: flex;
-    flex-direction: column; /* Keeps the content arranged vertically */
-    align-items: center; /* Centers items horizontally */
-    gap: 20px; /* Space between the header and the control elements */
-    width: 100%; /* Full width of the parent container */
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
 }
 
 .library-header > h1 {
-    text-align: center; /* Centers the header text */
-    width: 100%; /* Full width */
+    text-align: center;
+    width: 100%;
 }
 
 header.library-header {
@@ -22,16 +22,14 @@ header.library-header {
 
 .header-controls {
     display: flex;
-    flex-direction: row; /* Aligns children horizontally */
-    align-items: center; /* Centers items vertically within the container */; /* Spreads out the children to use the available space */
-    width: 100%; /* Takes up the full width */
-    gap: 10px; /* Adds space between the items */
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
 }
 
 .search-container {
     flex-basis: 50%;
-    flex-grow: 0;
-    flex-shrink: 1;
     margin-left: 30%;
     margin-right: 70px;
     display: flex;
@@ -45,13 +43,13 @@ header.library-header {
     border-radius: 5px;
     color: #d8dcff;
     cursor: pointer;
-    padding: 3px 6px
+    padding: 3px 6px;
 }
 
 .search-btn:hover {
     background-color: #014b4f;
     text-decoration: underline;
-    text-decoration-color: #d8dcff
+    text-decoration-color: #d8dcff;
 }
 
 .search-input {
@@ -66,33 +64,28 @@ header.library-header {
     height: 30px;
 }
 
-
-  .search-input::placeholder{
+.search-input::placeholder {
     color: #d8dcff;
-  }
+}
 
-  input.search-input:focus {
+input.search-input:focus {
     border-color: #09bc8a;
     color: #d8dcff;
-    outline: none
+    outline: none;
 }
-  
 
-  .new-folder-btn {
-    padding: 3px 6px; /* Adjust padding as needed */
-    font-size: 16px; /* Adjusts the button text size */
+.new-folder-btn {
+    padding: 3px 6px;
+    font-size: 16px;
     background-color: #172a3a;
     border: none;
     border-radius: 5px;
     color: #d8dcff;
     cursor: pointer;
-    flex-grow: 0; /* Do not allow the button to grow */
-    flex-shrink: 0; /* Do not allow the button to shrink */
     margin: 5px;
     height: 30px;
-}   
+}
 
-  
 .new-folder-btn:hover {
     background-color: #014b4f;
     text-decoration: underline;
@@ -106,13 +99,11 @@ div.filter-dropdown {
 
 .filter-select {
     padding: 5px;
-    font-size: 16px; /* Adjusts the dropdown text size */
+    font-size: 16px;
     background-color: #172a3a;
     border: 1px solid #004346;
     border-radius: 5px;
     color: #d8dcff;
-    flex-grow: 0; /* Do not allow the select to grow */
-    flex-shrink: 0; /* Do not allow the select to shrink */
     margin: 5px;
 }
 
@@ -132,6 +123,7 @@ div.filter-dropdown {
 div.folder-template {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background-color: #172a3a;
     border: 9px solid #004346;
     border-radius: 30px;
@@ -140,40 +132,46 @@ div.folder-template {
     padding: 30px;
     width: 80%;
 }
+
 div.folder-container {
     display: flex;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
     margin: 30px auto;
     padding: 30px;
     width: 80%;
 }
 
-button.folder-edit-button img{
+button.folder-edit-button img {
     height: 100px;
     width: 100px;
     background-color: #172a3a;
-    padding: 0;
 }
 
-button.folder-edit-button{
+button.folder-edit-button {
     height: 90px;
     width: 90px;
     background-color: #172a3a;
     border: none;
-    padding: 0;
 }
 
-div.folder-image img{
+div.folder-image img {
     height: 80px;
     width: 80px;
 }
 
 span.folder-name {
     flex-grow: 1;
-    font-size:25px;
-    font-family: Arial Rounded MT Bold,sans-serif;
+    font-family: Arial Rounded MT Bold, sans-serif;
     font-size: 20px;
     font-weight: 600;
-    padding: 10px 15px
+    padding: 10px 15px;
 }
 
+div.folder-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

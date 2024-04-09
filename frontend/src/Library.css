@@ -140,7 +140,7 @@ div.folder-template {
     padding: 30px;
     width: 80%;
 }
-div.Folder-Container {
+div.folder-container {
     display: flex;
     align-items: center;
     margin: 30px auto;

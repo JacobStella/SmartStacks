@@ -153,11 +153,14 @@ const LibraryPage = () => {
 const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
+        console.log("Hardcoded folderId for testing:");
+        folderId = folders[0].id; // Assuming there's at least one folder
+        console.log(folderId);
         const updatedFolders = folders.map(folder => {
-            console.log("folder.id");
+            /*console.log("folder.id");
             console.log(folder.id);
             console.log("folderId");
-            console.log(folderId);
+            console.log(folderId);*/
             if (folder.id === folderId) {
                 return { ...folder, className: newName };
             }

@@ -212,7 +212,7 @@ input#registerButton.buttons:hover {
 
  div#registerDiv input {
   background-color: #d8dcff;
-  border-radius: 10px;
+  border-radius: 5px;
   border-width: 2px;
   box-shadow: 0 0 3px 3px #004346;
   height: 45px;

@@ -143,17 +143,19 @@ div.folder-container {
     width: 80%;
 }
 
-button.folder-edit-button img {
-    height: 100px;
-    width: 100px;
-    background-color: #172a3a;
-}
-
 button.folder-edit-button {
-    height: 90px;
-    width: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #172a3a;
     border: none;
+    height: 90px;
+    width: 90px;
+}
+
+button.folder-edit-button img {
+    max-width: 90%;
+    max-height: 90%;
 }
 
 div.folder-image img {

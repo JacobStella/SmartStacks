@@ -22,8 +22,7 @@
 }
 
 /* Styles for the submit button */
-#loginButton {
-  background-color: #172a3a;
+#loginButton,#registerButton {
   color: white;
   border: none;
   border-radius: 5px; /* Match the input fields */
@@ -34,25 +33,6 @@
   margin: 10px auto; /* Center the button with automatic horizontal margins */
 }
 
-#loginButton:hover {
-  background-color: #0056b3;
-}
-
-/* Responsive design: Adjusting the width of inputs on smaller screens */
-/*
-@media (max-width: 768px) {
-  #loginName,
-  #loginPassword,
-  #loginButton,
-  .login-container form {
-    width: 100%;
-    max-width: 400px; 
-  }
-}
-*/
-
-/* Centering container */
-/* This will be the parent container of your login elements */
 #loginDiv {
   display: flex; /* Establishes a flex container */
   flex-direction: column; /* Stacks children vertically */

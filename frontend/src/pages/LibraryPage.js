@@ -94,6 +94,7 @@ const LibraryPage = () => {
                 getClassAndSets(userData.id).then(classes => {
                     if (classes && classes.length > 0) {
                         setFolders(classes); // Assuming the API returns an array of classes
+                        console.log("class useStste stuff")
                         console.log(classes);
                     } else {
                         console.log('No classes found for this user.');

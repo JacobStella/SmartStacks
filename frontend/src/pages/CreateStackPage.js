@@ -71,6 +71,12 @@ const CreateStackPage = () => {
     }
 }
 
+const handleRedirect = () => {
+  console.log('Redirecting to login...');
+  localStorage.setItem('preLoginPath', location.pathname);
+  navigate('/login');
+};
+
 const getUserData = () => {
   const userDataString = localStorage.getItem('user_data');
   if (!userDataString) {

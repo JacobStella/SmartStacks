@@ -1,47 +1,57 @@
-import React, { useState, useEffect } from 'react'; // Import useEffect here
-import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../CreateStack.css';
 import '../Web.css';
 
-// Updated CardPair component with arrow buttons and move functionality
-const CardPair = ({ onMoveUp, onMoveDown, index }) => (
+// Updated CardPair component to include inputs handling
+const CardPair = ({ onMoveUp, onMoveDown, index, card, updateCard }) => (
   <div className="term-definition-pair">
-    <input type="text" placeholder="Enter term" className="term-input" />
-    <input type="text" placeholder="Enter definition" className="definition-input" />
+    <input type="text" placeholder="Enter term" className="term-input" value={card.term} onChange={e => updateCard(index, 'term', e.target.value)} />
+    <input type="text" placeholder="Enter definition" className="definition-input" value={card.definition} onChange={e => updateCard(index, 'definition', e.target.value)} />
     <button onClick={() => onMoveUp(index)} className="arrow-button">↑</button>
     <button onClick={() => onMoveDown(index)} className="arrow-button">↓</button>
   </div>
 );
 
 const CreateStackPage = () => {
-  const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
+  const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, () => ({ term: '', definition: '' })));
   const [isPublic, setIsPublic] = useState(true);
   const [folders, setFolders] = useState([]);
+  const [selectedFolderId, setSelectedFolderId] = useState('');
+  const [stackTitle, setStackTitle] = useState('');
+  const [stackDescription, setStackDescription] = useState('');
+  const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Function to handle updating card values
+  const updateCard = (index, field, value) => {
+    const newCardPairs = [...cardPairs];
+    newCardPairs[index][field] = value;
+    setCardPairs(newCardPairs);
+  };
 
   // Function to move a card pair up
-  const moveCardUp = (index) => {
+  const moveCardUp = index => {
     if (index === 0) return;
     const newCardPairs = [...cardPairs];
-    [newCardPairs[index], newCardPairs[index - 1]] = [newCardPairs[index - 1], newCardPairs[index]];
+    [newCardPairs[index - 1], newCardPairs[index]] = [newCardPairs[index], newCardPairs[index - 1]];
     setCardPairs(newCardPairs);
   };
 
   // Function to move a card pair down
-  const moveCardDown = (index) => {
+  const moveCardDown = index => {
     if (index === cardPairs.length - 1) return;
     const newCardPairs = [...cardPairs];
-    [newCardPairs[index], newCardPairs[index + 1]] = [newCardPairs[index + 1], newCardPairs[index]];
+    [newCardPairs[index + 1], newCardPairs[index]] = [newCardPairs[index], newCardPairs[index + 1]];
     setCardPairs(newCardPairs);
   };
 
   // Function to add a new card pair
   const addCardPair = () => {
-    setCardPairs([...cardPairs, { id: cardPairs.length }]);
+    setCardPairs([...cardPairs, { term: '', definition: '' }]);
   };
 
   // Function to toggle the switch between public and private
@@ -60,6 +70,34 @@ const CreateStackPage = () => {
         return 'http://localhost:5000/' + route;
     }
 }
+
+  // Function to create a new set
+  const addSet = async () => {
+    const userId = JSON.parse(localStorage.getItem('user_data')).id; // Make sure you get the correct user ID
+    const newSet = {
+      userId: userId,
+      setName: stackTitle,
+      public: isPublic,
+      classId: selectedFolderId,
+      cards: cardPairs,
+    };
+
+    try {
+      const response = await fetch(buildPath('api/addset'), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSet),
+      });
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.message || "Failed to create the set.");
+
+      setMessage("Set created successfully.");
+      navigate('/library'); // Redirect to the library page or wherever appropriate
+    } catch (error) {
+      setMessage("Error: " + error.message);
+    }
+  };
 
   const getClassAndSets = async (userId) => {
     try {
@@ -112,42 +150,39 @@ const CreateStackPage = () => {
             navigate('/login');
         }
     }
-}, [navigate, location.pathname]);
+    }, [navigate, location.pathname]);
 
   return (
     <div className="page-container-landing">
       <NavBar2 />
       <div className="create-study-set-container">
         <h1>Create new stack</h1>
-        <input type="text" placeholder="Title" className="title-input" />
-
+        <input type="text" placeholder="Title" className="title-input" value={stackTitle} onChange={e => setStackTitle(e.target.value)} />
         <div className="description-switch-container">
-          <textarea placeholder="Description..." className="description-input"></textarea>
-          {/* Switch element */}
+          <textarea placeholder="Description..." className="description-input" value={stackDescription} onChange={e => setStackDescription(e.target.value)}></textarea>
           <label className="switch">
             <input type="checkbox" checked={isPublic} onChange={toggleSwitch} />
             <span className="slider round"></span>
           </label>
           <span className="switch-label">{isPublic ? 'Public' : 'Private'}</span>
         </div>
-
-        <select className="folder-input">
+        <select className="folder-input" value={selectedFolderId} onChange={e => setSelectedFolderId(e.target.value)}>
           {folders.map(folder => (<option key={folder._id} value={folder._id}>{folder.className}</option>))}
         </select>
-
         <div className="terms-container">
-          {cardPairs.map((cardPair, index) => (
+          {cardPairs.map((card, index) => (
             <CardPair
-              key={cardPair.id}
+              key={index}
               index={index}
+              card={card}
               onMoveUp={moveCardUp}
               onMoveDown={moveCardDown}
+              updateCard={updateCard}
             />
           ))}
         </div>
-
         <button onClick={addCardPair} className="add-card-button">+ Add Card</button>
-        <button className="create-button">Create</button>
+        <button onClick={addSet} className="create-button">Create</button>
       </div>
       <LandingFooter />
     </div>
@@ -155,3 +190,4 @@ const CreateStackPage = () => {
 }
 
 export default CreateStackPage;
+

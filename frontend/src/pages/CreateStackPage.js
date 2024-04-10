@@ -16,9 +16,12 @@ const CardPair = ({ onMoveUp, onMoveDown, index }) => (
 );
 
 const CreateStackPage = () => {
-  // Use an array to keep track of the card pairs
   const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
-  const [isPublic, setIsPublic] = useState(true); // State to track if the study set is public or private
+  const [isPublic, setIsPublic] = useState(true);
+  const [folders, setFolders] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+
 
   // Function to move a card pair up
   const moveCardUp = (index) => {
@@ -45,6 +48,18 @@ const CreateStackPage = () => {
   const toggleSwitch = () => {
     setIsPublic(!isPublic);
   };
+
+  function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
 
   const getClassAndSets = async (userId) => {
     try {

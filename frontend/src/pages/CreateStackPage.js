@@ -71,9 +71,35 @@ const CreateStackPage = () => {
     }
 }
 
+const getUserData = () => {
+  const userDataString = localStorage.getItem('user_data');
+  if (!userDataString) {
+      console.log('No user data found in localStorage.');
+      handleRedirect();
+      return null;
+  }
+  try {
+      const userData = JSON.parse(userDataString);
+      if (!userData || !userData.id) {
+          console.log('User data is invalid or ID is missing.');
+          handleRedirect();
+          return null;
+      }
+      return userData;
+  } catch (error) {
+      console.error('Error parsing user data from localStorage:', error);
+      handleRedirect();
+      return null;
+  }
+};
+
+const userData = getUserData();
+
   // Function to create a new set
   const addSet = async () => {
-    const userId = JSON.parse(localStorage.getItem('user_data')).id; // Make sure you get the correct user ID
+    if (!userData) return; // Early return if userData is null
+
+    const userId = userData.id;
     const newSet = {
       userId: userId,
       setName: stackTitle,

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Import useEffect here
+import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../CreateStack.css';
@@ -14,7 +15,7 @@ const CardPair = ({ onMoveUp, onMoveDown, index }) => (
   </div>
 );
 
-const LandingPage = () => {
+const CreateStackPage = () => {
   // Use an array to keep track of the card pairs
   const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
   const [isPublic, setIsPublic] = useState(true); // State to track if the study set is public or private
@@ -45,6 +46,59 @@ const LandingPage = () => {
     setIsPublic(!isPublic);
   };
 
+  const getClassAndSets = async (userId) => {
+    try {
+        const url = buildPath(`api/getClassAndSets/${userId}`);
+        console.log(`Fetching from URL: ${url}`);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'},
+        });
+
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("Received non-JSON response from server");
+        }
+
+        const data = await response.json();
+        //console.log('Classes and their sets:', data);
+        return data; // Return the data here
+    } catch (error) {
+        console.error('Error fetching classes and sets:', error);
+        return null; // Return null in case of an error
+    }
+};
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem('user_data');
+    if (!userDataString) {
+        console.log('No user data found in localStorage.');
+        localStorage.setItem('preLoginPath', location.pathname);
+        navigate('/login');
+    } else {
+        const userData = JSON.parse(userDataString);
+        if (userData && userData.id) {
+            // Fetch classes as soon as we have the user's ID
+            getClassAndSets(userData.id).then(classes => {
+                if (classes && classes.length > 0) {
+                    setFolders(classes); // Assuming the API returns an array of classes
+                    console.log("class useStste stuff")
+                    console.log(classes);
+                } else {
+                    console.log('No classes found for this user.');
+                }
+            });
+        } else {
+            console.log('User data is invalid or ID is missing.');
+            navigate('/login');
+        }
+    }
+}, [navigate, location.pathname]);
+
   return (
     <div className="page-container-landing">
       <NavBar2 />
@@ -62,7 +116,9 @@ const LandingPage = () => {
           <span className="switch-label">{isPublic ? 'Public' : 'Private'}</span>
         </div>
 
-        <input type="text" placeholder="Folder Name" className="folder-input" />
+        <select className="folder-input">
+          {folders.map(folder => (<option key={folder._id} value={folder._id}>{folder.className}</option>))}
+        </select>
 
         <div className="terms-container">
           {cardPairs.map((cardPair, index) => (
@@ -83,4 +139,4 @@ const LandingPage = () => {
   );
 }
 
-export default LandingPage;
+export default CreateStackPage;

@@ -178,3 +178,17 @@ div.folder-content {
     align-items: center;
     justify-content: space-between;
 }
+
+button.new-folder-btn {
+    white-space: nowrap; /* Prevents text from wrapping */
+    min-width: max-content; /* Ensures button is as wide as its content */
+    padding: 3px 6px;
+    font-size: 16px;
+    background-color: #172a3a;
+    border: none;
+    border-radius: 5px;
+    color: #d8dcff;
+    cursor: pointer;
+    margin: 5px;
+    height: 30px;
+}

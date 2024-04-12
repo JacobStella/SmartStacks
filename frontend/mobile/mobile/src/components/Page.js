@@ -1,13 +1,47 @@
-import{View, Text, StyleSheet, ListRenderItem, FlatList} from 'react-native'
-import React, {useState, useEffect} from 'react';
+import{View, Text, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity} from 'react-native'
+import React, {useState, useEffect, useRef} from 'react';
 import SliderHeader from './SliderHeader';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Ionicons} from '@expo/vector-icons';
 import { RotateInDownLeft } from 'react-native-reanimated';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassAndSets } from './CardUI';
+
 
 
 
 const Page = ({navigation}) => {
+
+const [getVisisble, setVisible] = useState(false);
+const [getData, setData] = useState([]);
+const [classId, setClassId] = useState('');
+const sheet = React.useRef();
+
+const fetchUserId = async () => {
+    const userId = await getJSONfield(getUserData, "id");
+    //console.log(userId);
+    //addClass(userId, "test");
+    getClassAndSets(userId);
+    getData2(userId);
+    //console.log(userId);
+};
+
+React.useEffect(() => {
+    fetchUserId();
+}, []);
+
+
+React.useEffect(()=> {
+    sheet.current.open();
+}, []);
+
+const openSheet = () => {
+    sheet.current.open();
+};
+const closeSheet = () => {
+    sheet.current.close();
+};
+
     const [Stacks, setStacks] = useState([{
         id: "1",
         Title: "Learn French",
@@ -31,38 +65,38 @@ const Page = ({navigation}) => {
         },
 
     {
-    id: "3",
+    id: "4",
     Title: "Learn German",
     difficulty: "Easy",
     cardNumber: "21"
         
     },
     {
-    id: "3",
+    id: "5",
     Title: "Learn German",
     difficulty: "Easy",
     cardNumber: "21"
     },
             {
-            id: "3",
+            id: "6",
             Title: "Learn German",
             difficulty: "Easy",
             cardNumber: "21"
             },
             {
-            id: "3",
+            id: "7",
             Title: "Learn German",
             difficulty: "Easy",
             cardNumber: "21"
             },
             {
-                id: "3",
+                id: "8",
                 Title: "Learn German",
                 difficulty: "Easy",
                 cardNumber: "21"
                 },
                 {
-                    id: "3",
+                    id: "9",
                     Title: "Learn German",
                     difficulty: "Easy",
                     cardNumber: "21"
@@ -93,21 +127,22 @@ const Page = ({navigation}) => {
     }
     let currentIndex = 0;
     const renderSetRow = ({item, index}) => {
-        //console.log(index);
+        
         currentIndex = index;
         return(
             
-                
+               // <RBSheet>
                 <View style={styles.stackContainer}>
                 
                     
-                
+                <TouchableOpacity>
                 <View style={styles.stackBox}>
                     
                 <View style = {styles.stackBoxInner}>
                     <Text></Text>
-                <Ionicons name = "ellipsis-vertical" size = {20} color = "black"/>
+                <Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {openSheet}/>
                 </View>
+                
                 
                 <Text style={styles.stackText}>
                     {item.Title}
@@ -119,9 +154,11 @@ const Page = ({navigation}) => {
                 </Text>
                 
                 </View>
+                </TouchableOpacity>
                 
                 
                 </View>
+                //</RBSheet>
                 
                 
                 
@@ -143,22 +180,64 @@ const Page = ({navigation}) => {
               numColumns={2}
               
               showsVerticalScrollIndicator = {false}
+              
               ItemSeparatorComponent={() => {
                     if(currentIndex == Classes.length-1){
                             return line();
                     }
                  
              }}
-            
-    
-            
            /> 
+           <RBSheet
+           customStyles={{container: styles.sheet}}
+           height ={380}
+           openDuration={250}
+           closeDuration={150}
+           //onClose={()=>setVisible(false)}
+          // onOpen={()=>setVisible(true)}
+           ref = {sheet}
+           >
+           <View>
+           <View style = {styles.innerSheet}>
+           <Ionicons style = {styles.icon} name = "warning" size = {50} color = "black"/>
+           <Text style = {styles.sheetTitle}>
+                Warning
+            </Text>
+            <TouchableOpacity style = {styles.sheetButton} title = "Edit" onPress = {closeSheet}></TouchableOpacity>
+            <TouchableOpacity style = {styles.sheetButton} title = "Delete" onPress = {closeSheet}></TouchableOpacity>
+            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}></TouchableOpacity>
+            </View>
+           </View>
+           
+           </RBSheet>
         </View>
         
 
 
     );
 };
+
+const getData2 = async (userId) => {
+    // console.log("test");
+    //console.log(classId);
+    
+    try {
+       // const response = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/getClassAndSets/${classId}');
+        //const res = await response.json();
+        const temp = await getUserClassesAndStacks('userId','Classes');
+        //console.log(userId);
+        //console.log(temp.classes);
+        
+        
+       
+       
+    }
+    catch(e){
+        console.log(e);
+    }
+
+};
+
 
 
 const line = () => {
@@ -261,6 +340,43 @@ const styles = StyleSheet.create({
         marginTop: 20,
         
     },
+
+    sheet:{
+        borderTopLeftRadius: 14,
+        borderTopRightRadius: 14,
+    },
+    innerSheet:{
+        padding: 24,
+        alignItems: 'stretch',
+    },
+    sheetTitle: {
+        fontSize: 16,
+        //fontWeight: '650',
+        color: 'black',
+        marginTop: 15,
+        textAlign: 'center'
+    },
+    innerSheetText: {
+        fontSize: 12,
+        color: 'black',
+        marginTop: 16,
+        marginBottom: 32,
+        textAlign: 'center',
+    },
+    sheetButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 8,
+        backgroundColor: 'fff',
+        borderColor: 'black',
+        borderWidth: 1,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
+    icon: {
+        textAlign: 'center',
+    }
 });
 
 

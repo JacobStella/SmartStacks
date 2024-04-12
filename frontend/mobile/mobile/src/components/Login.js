@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import {Button, SafeAreaView, StyleSheet, TextInput, View, Image} from "react-native";
+import {setUserData} from "./CardUI";
 
 
 const Login = ({navigation}) => {
@@ -33,11 +34,14 @@ const submit = async () => {
 
         if(!res.ok){
             const resData = await res.json();
-            console.log(resData);
+            //console.log(resData);
             throw new Error("Login failed");
         }
         else{
             console.log("Logged in successfully");
+            const loginData = await res.json();
+            //console.log(JSON.stringify(loginData));
+            setUserData(JSON.stringify(loginData));
             library();
         }
        

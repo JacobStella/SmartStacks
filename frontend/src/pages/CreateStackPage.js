@@ -138,6 +138,7 @@ const addSet = async event => {
 
   // Assume classId is available and correctly set, representing the class this set belongs to
   let setObj = { UserId: userId, SetName: stackTitle, public: isPublic, classId: selectedFolderId }; // Include classId here
+  console.log(setObj);
   let setJs = JSON.stringify(setObj);
 
   try {
@@ -150,9 +151,11 @@ const addSet = async event => {
       let setRes = await setResponse.json();
 
       if (setRes.error && setRes.error.length > 0) {
+          console.log("I shit the bed! yippe!!!!!!!!!");
           setMessage("API Error:" + setRes.error);
           return; // Stop the process if there was an error creating the set
       } else {
+          console.log("I didnt shit the bed just yet! Now what the actual FUCK is wrong with me");
           // Set has been successfully created, proceed to add cards
           const setId = setRes.setId; // Get the newly created set's ID
 
@@ -176,6 +179,8 @@ const addSet = async event => {
       setMessage(e.toString());
   }
 };
+
+
   const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);

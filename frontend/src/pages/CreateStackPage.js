@@ -103,8 +103,9 @@ const userData = getUserData();
 
   // Function to create a new set
   const addSet = async () => {
+    console.log("before userData check");
     if (!userData) return; // Early return if userData is null
-
+    console.log("after user chack");
     const userId = userData.id;
     const newSet = {
       userId: userId,

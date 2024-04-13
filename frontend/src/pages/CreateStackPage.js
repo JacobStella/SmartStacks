@@ -100,25 +100,23 @@ const getUserData = () => {
 };
 
 const userData = getUserData();
-
+ 
+/*    STUPID GPT BULLSHIT
   // Function to create a new set
   const addSet = async () => {
     console.log("before userData check");
     if (!userData) return; // Early return if userData is null
     console.log("after user chack");
     const userId = userData.id;
-    const newSet = {
-      userId: userId,
-      setName: stackTitle,
-      public: isPublic,
-      classId: selectedFolderId,
+    const newSet = { userId: userId, setName: stackTitle, public: isPublic, classId: selectedFolderId,
     };
+    let setObject = JSON.stringify(newSet);
 
     try {
       const response = await fetch(buildPath('api/addset'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newSet),
+        body: setObject,
       });
 
       const result = await response.json();
@@ -130,7 +128,51 @@ const userData = getUserData();
       setMessage("Error: " + error.message);
     }
   };
+*/
 
+    
+const addSet = async event => {
+  event.preventDefault();
+
+  // Assume classId is available and correctly set, representing the class this set belongs to
+  let setObj = { UserId: userId, SetName: SetName, public: isPublic, classId: classId }; // Include classId here
+  let setJs = JSON.stringify(setObj);
+
+  try {
+      const setResponse = await fetch(buildPath('api/addset'), {
+          method: 'POST',
+          body: setJs,
+          headers: {'Content-Type': 'application/json'}
+      });s
+
+      let setRes = await setResponse.json();
+
+      if (setRes.error && setRes.error.length > 0) {
+          setMessage("API Error:" + setRes.error);
+          return; // Stop the process if there was an error creating the set
+      } else {
+          // Set has been successfully created, proceed to add cards
+          const setId = setRes.setId; // Get the newly created set's ID
+
+          // Iterate through each card and create it with the new setId
+          for (let card of cards) {
+              let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
+              let cardJs = JSON.stringify(cardObj);
+
+              await fetch(buildPath('api/addcard'), {
+                  method: 'POST',
+                  body: cardJs,
+                  headers: {'Content-Type': 'application/json'}
+              });
+              // Consider handling response for individual card creations
+          }
+
+          setMessage('Set and cards have been added');
+      }
+  } catch (e) {
+      setMessage(e.toString());
+  }
+};
   const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);

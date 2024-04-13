@@ -192,3 +192,25 @@ button.new-folder-btn {
     margin: 5px;
     height: 30px;
 }
+
+div.stack-template {
+    background-color: #172a3a;
+    border: 9px solid #004346;
+    border-radius: 30px;
+    color: #d8dcff;
+    justify-content: space-between;
+    height: 125px;
+    align-items: center;
+    display: flex;
+    margin: 15px auto;
+    padding: 3px;
+    width: 80%;
+}
+
+button.stack-view-button {
+    background-color: #fff;
+    height: 90%;
+}
+button.stack-view-button img{
+    height: 80%;
+}

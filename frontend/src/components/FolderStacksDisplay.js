@@ -46,10 +46,10 @@ const FolderContainer = ({ name, onEdit, sets }) => {
           {sets && sets.length > 0 ? (
             sets.map(set => (
               <div key={set._id} className="stack-template">
-                <span className="stack-name">{set.SetName}</span>
                 <button className="stack-view-button" onClick={(e) => handleViewStack(set._id)}>
                   <img src={create} alt="Edit" />
                 </button>
+                <span className="stack-name">{set.SetName}</span>
               </div>
             ))
           ) : (

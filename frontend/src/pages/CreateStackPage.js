@@ -111,7 +111,6 @@ const userData = getUserData();
       setName: stackTitle,
       public: isPublic,
       classId: selectedFolderId,
-      cards: cardPairs,
     };
 
     try {

@@ -156,6 +156,7 @@ const addSet = async event => {
           return; // Stop the process if there was an error creating the set
       } else {
           console.log("I didnt shit the bed just yet! Now what the actual FUCK is wrong with me");
+          console.log(setRes);
           // Set has been successfully created, proceed to add cards
           const setId = setRes.setId; // Get the newly created set's ID
 

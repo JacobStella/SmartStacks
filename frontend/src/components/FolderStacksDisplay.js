@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
+import EditIcon from '../images/EditIcon.png';
 import create from '../images/create.png';
 import '../Library.css';
 

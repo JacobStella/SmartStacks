@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
-import EditIcon from '../images/EditIcon.png';
+import create from '../images/create.png';
 import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
@@ -41,18 +41,18 @@ const FolderContainer = ({ name, onEdit, sets }) => {
         </div>
       </div>
       {showStacks && (
-        <div className="stacks-container">
+        <div SetName="stacks-container">
           {sets && sets.length > 0 ? (
             sets.map(set => (
-              <div key={set._id} className="stack-template" onClick={() => handleViewStack(set._id)}>
-                <span className="stack-name">{set.className}</span>
-                <button className="stack-edit-button" onClick={(e) => handleEditStack(set._id, e)}>
-                  <img src={EditIcon} alt="Edit" />
+              <div key={set._id} SetName="stack-template">
+                <span SetName="stack-name">{set.SetName}</span>
+                <button SetName="stack-view-button" onClick={(e) => handleViewStack(set._id)}>
+                  <img src={create} alt="Edit" />
                 </button>
               </div>
             ))
           ) : (
-            <div className="empty-folder-message">
+            <div SetName="empty-folder-message">
               <p>This folder is empty</p>
               <button onClick={handleCreateNewStack}>Create</button>
             </div>

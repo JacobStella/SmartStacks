@@ -207,7 +207,8 @@ div.stack-template {
 }
 
 button.stack-view-button {
-    background-color: #fff;
+    background-color: #172a3a;
+    border-radius:20px;
     height: 90%;
 }
 button.stack-view-button img{

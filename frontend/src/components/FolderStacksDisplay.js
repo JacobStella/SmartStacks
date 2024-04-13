@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
-import create from '../images/create.png';
+import createLight from '../images/createLight.png';
 import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
@@ -47,7 +47,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
             sets.map(set => (
               <div key={set._id} className="stack-template">
                 <button className="stack-view-button" onClick={(e) => handleViewStack(set._id)}>
-                  <img src={create} alt="Edit" />
+                  <img src={createLight} alt="Edit" />
                 </button>
                 <span className="stack-name">{set.SetName}</span>
               </div>

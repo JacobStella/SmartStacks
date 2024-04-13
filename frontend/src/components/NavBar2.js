@@ -52,3 +52,52 @@ const NavBar2 = () => {
 };
 
 export default NavBar2;
+
+
+/*SEARCH STUFF
+
+const handleSearch = async (event) => {
+        event.preventDefault(); // Prevent form submission if you're using a form
+        if (!searchTerm.trim()) {
+            setMessage('Please enter a search term.');
+            return;
+        }
+        await searchItems(userId, searchTerm); // Assuming searchItems is the search function we discussed
+    };
+
+    // Update the search term as the user types
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+    
+     const searchItems = async (userId, searchTerm) => {
+
+    
+
+    try {
+        // Construct the search URL with query parameters for userId and searchTerm
+        const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const searchResults = await response.json();
+
+        if (response.ok) {
+            // Handle the search results
+            console.log('Search Results:', searchResults);
+            // Here, you can update the state or DOM with searchResults.classes, searchResults.sets, and searchResults.cards
+            // For example:
+            // updateSearchResults(searchResults); // A function you'd define to update your UI with the results
+        } else {
+            // Handle errors returned from the server
+            setMessage("Search API Error:" + searchResults.error);
+        }
+    } catch (e) {
+        // Handle errors in fetching from the search API
+        console.error("Search Fetch Error:", e.toString());
+        setMessage(e.toString());
+    }
+ };
+ */ 

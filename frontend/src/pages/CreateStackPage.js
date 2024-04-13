@@ -132,10 +132,12 @@ const userData = getUserData();
 
     
 const addSet = async event => {
-  event.preventDefault();
+  if (!userData) return; // Early return if userData is null
+
+    const userId = userData.id;
 
   // Assume classId is available and correctly set, representing the class this set belongs to
-  let setObj = { UserId: userId, SetName: SetName, public: isPublic, classId: classId }; // Include classId here
+  let setObj = { UserId: userId, SetName: stackTitle, public: isPublic, classId: selectedFolderId }; // Include classId here
   let setJs = JSON.stringify(setObj);
 
   try {

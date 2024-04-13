@@ -54,7 +54,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
             ))
           ) : (
             <div className="empty-folder-message">
-              <p>This folder is empty</p>
+              <p>This folder is empty</p><br/>
               <button onClick={handleCreateNewStack}>Create</button>
             </div>
           )}

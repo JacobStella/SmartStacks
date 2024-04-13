@@ -227,3 +227,9 @@ span.stack-name {
     font-weight: 600;
     padding: 10px 15px
 }
+div.empty-folder-message {
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+    height: 100%; /* or a specific height */
+  }

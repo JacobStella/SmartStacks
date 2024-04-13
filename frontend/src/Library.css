@@ -198,8 +198,7 @@ div.stack-template {
     border: 9px solid #004346;
     border-radius: 30px;
     color: #d8dcff;
-    justify-content: space-between;
-    height: 125px;
+    height: 100px;
     align-items: center;
     display: flex;
     margin: 15px auto;
@@ -213,4 +212,9 @@ button.stack-view-button {
 }
 button.stack-view-button img{
     height: 80%;
+}
+
+div.stacks-container {
+    width: 90%;
+    margin-left: 8%;
 }

@@ -145,7 +145,7 @@ const addSet = async event => {
           method: 'POST',
           body: setJs,
           headers: {'Content-Type': 'application/json'}
-      });s
+      });
 
       let setRes = await setResponse.json();
 
@@ -157,6 +157,7 @@ const addSet = async event => {
           const setId = setRes.setId; // Get the newly created set's ID
 
           // Iterate through each card and create it with the new setId
+          /*
           for (let card of cards) {
               let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
               let cardJs = JSON.stringify(cardObj);
@@ -168,7 +169,7 @@ const addSet = async event => {
               });
               // Consider handling response for individual card creations
           }
-
+          */
           setMessage('Set and cards have been added');
       }
   } catch (e) {

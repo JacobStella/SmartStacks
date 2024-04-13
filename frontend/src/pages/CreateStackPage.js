@@ -125,7 +125,7 @@ const userData = getUserData();
       if (!response.ok) throw new Error(result.message || "Failed to create the set.");
 
       setMessage("Set created successfully.");
-      navigate('/library'); // Redirect to the library page or wherever appropriate
+      //navigate('/library'); // Redirect to the library page or wherever appropriate
     } catch (error) {
       setMessage("Error: " + error.message);
     }
@@ -171,8 +171,8 @@ const userData = getUserData();
             getClassAndSets(userData.id).then(classes => {
                 if (classes && classes.length > 0) {
                     setFolders(classes); // Assuming the API returns an array of classes
-                    console.log("class useStste stuff")
-                    console.log(classes);
+                    //console.log("class useStste stuff")
+                    //console.log(classes);
                 } else {
                     console.log('No classes found for this user.');
                 }

@@ -154,11 +154,8 @@ const LibraryPage = () => {
 const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
+        //editFolderNameEndpoint(newName, folderId)  UNCOMMENT WHEN API IS IMPLEMENTED
         const updatedFolders = folders.map(folder => {
-            /*console.log("folder.id");
-            console.log(folder.id);
-            console.log("folderId");
-            console.log(folderId);*/
             if (folder._id === folderId) {
                 return { ...folder, className: newName };
             }
@@ -166,6 +163,34 @@ const editFolderName = (folderId) => {
         });
         setFolders(updatedFolders);
     }
+};
+
+//THIS WONT WORK TILL ENDPOINTS ARE UP
+const editFolderNameEndpoint = async (newName, folderId) => {
+    if (!userData) return; // Early return if userData is null
+
+    const userId = userData.id;
+    let classObj = { classId: folderId, newInfo: newName, code: 1 };
+    let classJson = JSON.stringify(classObj);
+
+    try {
+        const response = await fetch('api/updateclass', {
+            method: 'POST',
+            body: classJson,
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const res = await response.json();
+
+        console.log(res);
+            if (response.ok) {
+                console.log('updated!');
+            } else {
+                setMessage("API Error: " + (res.error || "Failed to add folder."));
+            }
+        } catch (error) {
+            setMessage("API Error: " + error.toString());
+        }
 };
 
 

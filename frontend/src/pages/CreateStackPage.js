@@ -100,35 +100,7 @@ const getUserData = () => {
 };
 
 const userData = getUserData();
- 
-/*    STUPID GPT BULLSHIT
-  // Function to create a new set
-  const addSet = async () => {
-    console.log("before userData check");
-    if (!userData) return; // Early return if userData is null
-    console.log("after user chack");
-    const userId = userData.id;
-    const newSet = { userId: userId, setName: stackTitle, public: isPublic, classId: selectedFolderId,
-    };
-    let setObject = JSON.stringify(newSet);
 
-    try {
-      const response = await fetch(buildPath('api/addset'), {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: setObject,
-      });
-
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.message || "Failed to create the set.");
-
-      setMessage("Set created successfully.");
-      //navigate('/library'); // Redirect to the library page or wherever appropriate
-    } catch (error) {
-      setMessage("Error: " + error.message);
-    }
-  };
-*/
 
     
 const addSet = async event => {
@@ -160,8 +132,8 @@ const addSet = async event => {
           const setId = setRes.setId; // Get the newly created set's ID
 
           // Iterate through each card and create it with the new setId
-          /*
-          for (let card of cards) {
+
+          for (let card of cardPairs) {
               let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
               let cardJs = JSON.stringify(cardObj);
 
@@ -172,7 +144,6 @@ const addSet = async event => {
               });
               // Consider handling response for individual card creations
           }
-          */
           setMessage('Set and cards have been added');
       }
   } catch (e) {

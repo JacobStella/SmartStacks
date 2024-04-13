@@ -209,13 +209,21 @@ div.stack-template {
 button.stack-view-button {
     background-color: #172a3a;
     border-radius:20px;
-    height: 90%;
+    height: 100%;
 }
 button.stack-view-button img{
-    height: 80%;
+    height: 100%;
 }
 
 div.stacks-container {
     width: 90%;
     margin-left: 8%;
+}
+
+span.stack-name {
+    flex-grow: 1;
+    font-family: Arial Rounded MT Bold,sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 15px
 }

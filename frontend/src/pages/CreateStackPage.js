@@ -25,7 +25,6 @@ const CreateStackPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
-  const [cardCount, setCardCount] = useState(3); //3 is the minimum ammount of card pairs
 
 
   // Function to handle updating card values
@@ -55,7 +54,6 @@ const CreateStackPage = () => {
   const addCardPair = () => 
   {
     setCardPairs([...cardPairs, { term: '', definition: '' }]);
-    setCardCount(cardCount + 1);
   };
 
   // Function to toggle the switch between public and private

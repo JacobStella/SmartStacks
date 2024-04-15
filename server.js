@@ -217,6 +217,61 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
+// Delete Class
+app.post('/api/deleteclass', async (req, res, next) => {
+	const { classId } = req.body; // Get cardId from request
+
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+		
+		// delete card
+		const result = await db.collection('Class').deleteOne({ _id: new ObjectId(classId) });
+   
+		res.status(200).json({ message: "Class deleted successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+// Update Class
+app.post('/api/updateclass', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { classId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+
+	// control code
+	switch(code){
+		case 1:
+			// update Name
+			var newName = { $set: {className:newInfo}};
+			break;
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update class control code
+		switch(code){
+			case 1:
+				// update className
+				const resultTerm = await db.collection('Class').updateOne({ "_id": new ObjectId(classId) }, newName);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+		
+		res.status(200).json({ message: "Class updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
 app.get('/api/getClassAndSets/:classId', async (req, res) => {
   const { classId } = req.params; // Get classId from the route parameters
 

@@ -102,40 +102,6 @@ const getUserData = () => {
 };
 
 const userData = getUserData();
-
-const addCard = async event => 
-    {
-        event.preventDefault();
-        
-        // Create an object with the new card details
-        let cardObj = { 
-            userId: userId, // Make sure userId is defined in your component, fetched from user data
-            term: term,
-            definition: definition,
-            setId: setId // Make sure setId is obtained from the state or props
-        };
-        let js = JSON.stringify(cardObj);
-
-        try {
-            const response = await fetch(buildPath('api/addcard'), {
-                method: 'POST',
-                body: js,
-                headers: {'Content-Type': 'application/json'}
-            });
-
-            let res = await response.json();
-
-            if (res.error) {
-                setMessage('API Error: ' + res.error);
-            } else {
-                setMessage('Card has been added');
-                setTerm(''); // Clear the input after successful addition
-                setDefinition(''); // Clear the input after successful addition
-            }
-        } catch (e) {
-            setMessage(e.toString());
-        }
-    };
     
 const addSet = async event => 
 {

@@ -25,6 +25,8 @@ const CreateStackPage = () => {
   const [message, setMessage] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
+  const [cardCount, setCardCount] = useState(3); //3 is the minimum ammount of card pairs
+
 
   // Function to handle updating card values
   const updateCard = (index, field, value) => {
@@ -50,8 +52,10 @@ const CreateStackPage = () => {
   };
 
   // Function to add a new card pair
-  const addCardPair = () => {
+  const addCardPair = () => 
+  {
     setCardPairs([...cardPairs, { term: '', definition: '' }]);
+    setCardCount(cardCount + 1);
   };
 
   // Function to toggle the switch between public and private
@@ -101,9 +105,42 @@ const getUserData = () => {
 
 const userData = getUserData();
 
+const addCard = async event => 
+    {
+        event.preventDefault();
+        
+        // Create an object with the new card details
+        let cardObj = { 
+            userId: userId, // Make sure userId is defined in your component, fetched from user data
+            term: term,
+            definition: definition,
+            setId: setId // Make sure setId is obtained from the state or props
+        };
+        let js = JSON.stringify(cardObj);
 
+        try {
+            const response = await fetch(buildPath('api/addcard'), {
+                method: 'POST',
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            let res = await response.json();
+
+            if (res.error) {
+                setMessage('API Error: ' + res.error);
+            } else {
+                setMessage('Card has been added');
+                setTerm(''); // Clear the input after successful addition
+                setDefinition(''); // Clear the input after successful addition
+            }
+        } catch (e) {
+            setMessage(e.toString());
+        }
+    };
     
-const addSet = async event => {
+const addSet = async event => 
+{
   if (!userData) return; // Early return if userData is null
 
     const userId = userData.id;
@@ -144,6 +181,7 @@ const addSet = async event => {
               });
               // Consider handling response for individual card creations
           }
+          navigate('/library');
           setMessage('Set and cards have been added');
       }
   } catch (e) {

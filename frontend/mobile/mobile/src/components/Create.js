@@ -1,48 +1,63 @@
-import * as React from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Keyboard, TouchableWithoutFeedback} from "react-native";
+import React, {useState, useEffect} from 'react';
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 
-const CardCreator = () => {
-    return(
-    <View style={styles.cardContainer}>
-        <TextInput style={styles.cardTermInput}
-        placeholder = "Term" 
-        placeholderTextColor={'#fff'}/>
-        <TextInput style={styles.cardDefinitionInput}
-        placeholder = "Definition" 
-        placeholderTextColor={'#fff'}/>
-    </View>);
-};
 
 
 // I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
+    const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
+    
+    const CardCreator = ({ index }) => {
+        return(
+            <View style={styles.cardContainer}>
+                <TextInput style={styles.cardTermInput}
+                placeholder = "Term" 
+                placeholderTextColor={'#fff'}
+                />
+                <TextInput style={styles.cardDefinitionInput}
+                placeholder = "Definition"
+                placeholderTextColor={'#fff'}
+                multiline={true}/>
+            </View>
+        );
+    };
+
+    const addCardPair = () => {
+        setCardPairs([...cardPairs, { id: cardPairs.length }]);
+    };
+
     return(
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
+        <ScrollView>
             <View style={styles.titleInputContainer}>
                 <TextInput style={styles.titleInput} placeholder = "Title" placeholderTextColor={'#fff'}/>
             </View>
 
             <View style={styles.descriptionInputContainer}>
                 <TextInput style={styles.descriptionInput}
-                placeholder = "Description" 
+                placeholder = "Description"
                 placeholderTextColor={'#fff'}
                 multiline={true}/>
             </View>
             
-            <CardCreator/>
+            {cardPairs.map((cardPair, index) =>(
+                <CardCreator
+                    key={cardPairs.id}
+                    index={index}
+                />
+            ))}
+
+            <TouchableOpacity style={styles.addButton} onPress={addCardPair}>
+                <Text style={styles.buttonText}>+ Add Card</Text>
+            </TouchableOpacity>
             
+        </ScrollView>
         </SafeAreaView>
     </TouchableWithoutFeedback>
     );
 }
-
-const DismissKeyboard = (
-    <TouchableWithoutFeedback 
-    onPress={() => Keyboard.dismiss()}>
-    </TouchableWithoutFeedback>
-);
 
 const styles = StyleSheet.create({
     container: {
@@ -94,7 +109,7 @@ const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         justifyContent: 'center',
-        height: 50,
+        height: 55,
         borderWidth: 1,
         borderRadius: 5,
         marginBottom: '2%',
@@ -129,7 +144,25 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: '#fff',
         backgroundColor: '#172A3A',
-    }
+    },
+    addButton: {
+        width: '90%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: '2%',
+        backgroundColor: '#508991',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
+        color: '#fff',
+    },
+    buttonText: {
+        fontSize: 20,
+        color: '#fff',
+    },
 });
 
 export default Create;

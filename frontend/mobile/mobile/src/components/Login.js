@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, SafeAreaView, StyleSheet, TextInput, View, Image} from "react-native";
+import {Button, SafeAreaView, StyleSheet, TextInput, View, Image, Keyboard, TouchableWithoutFeedback} from "react-native";
 import {setUserData} from "./CardUI";
 
 
@@ -63,23 +63,25 @@ const library = () => {
  };
 
     return (
-        <View style = {styles.container}>
-            <View style={styles.imageContainer}>
-            <Image source={require('../../../assets/Skunk.png')}
-                   style = {{width: 150, height: 150}} />
-            </View>
-            <TextInput style = {styles.input}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style = {styles.container}>
+                <View style={styles.imageContainer}>
+                    <Image source={require('../../../assets/Skunk.png')}
+                    style = {{width: 150, height: 150}} />
+                </View>
+                <TextInput style = {styles.input}
                 placeholder = "Username"
                 onChangeText = { (input) => formInput("userName", input)}/>
 
-            <TextInput style = {styles.input}
-            placeholder = "Password"
-            onChangeText = { (input) => formInput("password", input)}/>
+                <TextInput style = {styles.input}
+                placeholder = "Password"
+                onChangeText = { (input) => formInput("password", input)}/>
 
-        <Button title = "Submit" onPress = {submit} />
-        <Button title = "Register" onPress = {register} />
-        <Button title = "test" onPress = {test} />
-        </View>
+                <Button title = "Submit" onPress = {submit} />
+                <Button title = "Register" onPress = {register} />
+                <Button title = "test" onPress = {test} />
+            </View>
+        </TouchableWithoutFeedback>
     );
 };
 

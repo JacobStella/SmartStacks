@@ -75,6 +75,7 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Card Ops
 // Add card
 app.post('/api/addcard', async (req, res) => {
   // incoming: userId, term, definition, setId
@@ -134,7 +135,68 @@ app.post('/api/deletecard', async (req, res, next) => {
 	}
 });
 
-// LETS GET EXPERIMENTAL
+// Update Card
+app.post('/api/updatecard', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { cardId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+	
+	switch(code){
+		case 1:
+			// update Term
+			var newTerm = { $set: {Term:newInfo}};
+			break;
+		case 2:
+			// update def
+			var newDef = { $set: {Definition:newInfo}};
+			break;
+		case 3:
+			// update difficulty
+			var newDiff = { $set: {Difficulty:newInfo}};
+		case 4:
+			// update Set
+			var newSet = { $set: {SetId:newInfo}};
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update card
+		switch(code){
+			case 1:
+				// update Term
+				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
+				break;
+			case 2:
+				// update Def
+				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
+				break;
+			case 3:
+				const resultDiff = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDiff);
+				break;
+			case 4:
+				const resultSet = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newSet);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+		
+
+		res.status(200).json({ message: "Card updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+
+// Class ops
+// Add Class
 app.post('/api/addclass', async (req, res, next) => {
   const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
 

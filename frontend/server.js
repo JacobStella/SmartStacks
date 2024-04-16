@@ -1,12 +1,10 @@
 const express = require('express');
-const cors = require('cors');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
-
-
 
 async function connectToMongo() {
   try {
@@ -26,8 +24,6 @@ const app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
-
-app.use(cors({ origin: '*' }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -79,7 +75,6 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
-// Card Ops
 // Add card
 app.post('/api/addcard', async (req, res) => {
   // incoming: userId, term, definition, setId
@@ -132,75 +127,14 @@ app.post('/api/deletecard', async (req, res, next) => {
 		if(!result){
 			res.status(400).json({ message: "Generic Error" });
 		}
-
+    
 		res.status(200).json({ message: "Card deleted successfully"})
 	} catch(e) {
 		res.status(500).json({ error: e.toString() });
 	}
 });
 
-// Update Card
-app.post('/api/updatecard', async (req, res) => {
-	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { cardId, newInfo, code } = req.body; 
-	// const newTerm = { $set: {Term:Term}};
-	
-	switch(code){
-		case 1:
-			// update Term
-			var newTerm = { $set: {Term:newInfo}};
-			break;
-		case 2:
-			// update def
-			var newDef = { $set: {Definition:newInfo}};
-			break;
-		case 3:
-			// update difficulty
-			var newDiff = { $set: {Difficulty:newInfo}};
-		case 4:
-			// update Set
-			var newSet = { $set: {SetId:newInfo}};
-		default:
-			res.status(500).json({ error: "Control Code not found (assignment)" });
-	}
-	
-
-  	var error = '';
-	
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject");
-
-		// update card
-		switch(code){
-			case 1:
-				// update Term
-				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
-				break;
-			case 2:
-				// update Def
-				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
-				break;
-			case 3:
-				const resultDiff = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDiff);
-				break;
-			case 4:
-				const resultSet = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newSet);
-				break;
-			default:
-				res.status(500).json({ error: "Control Code not found (update func)" });
-		}
-		
-
-		res.status(200).json({ message: "Card updated successfully"});
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
-
-
-// Class ops
-// Add Class
+// LETS GET EXPERIMENTAL
 app.post('/api/addclass', async (req, res, next) => {
   const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
 
@@ -221,90 +155,28 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-
-// Delete Class
-app.post('/api/deleteclass', async (req, res, next) => {
-	const { classId } = req.body; // Get cardId from request
-
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject");
-		
-		// delete card
-		const result = await db.collection('Class').deleteOne({ _id: new ObjectId(classId) });
-   
-		res.status(200).json({ message: "Class deleted successfully"});
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
-
-// Update Class
-app.post('/api/updateclass', async (req, res) => {
-	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { classId, newInfo, code } = req.body; 
-	// const newTerm = { $set: {Term:Term}};
-
-	// control code
-	switch(code){
-		case 1:
-			// update Name
-			var newName = { $set: {className:newInfo}};
-			break;
-		default:
-			res.status(500).json({ error: "Control Code not found (assignment)" });
-	}
-	
-  	var error = '';
-	
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject");
-
-		// update class control code
-		switch(code){
-			case 1:
-				// update className
-				const resultTerm = await db.collection('Class').updateOne({ "_id": new ObjectId(classId) }, newName);
-				break;
-			default:
-				res.status(500).json({ error: "Control Code not found (update func)" });
-		}
-		
-		res.status(200).json({ message: "Class updated successfully"});
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
-
 app.get('/api/getClassAndSets/:classId', async (req, res) => {
   const { classId } = req.params; // Get classId from the route parameters
 
   try {
-    const db = client.db("Group3LargeProject");
-    // Assuming classes are related to users by a userId field in the Class collection
-    const classes = await db.collection('Class').find({ userId: userId }).toArray();
+      const db = client.db("Group3LargeProject");
+      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
+      if (!classDoc) {
+          res.status(404).json({ error: "Class not found" });
+          return;
+      }
 
-    if (!classes.length) {
-      res.status(404).json({ error: "No classes found for this user" });
-      return;
-    }
-
-    // For each class, find the associated sets
-    const classesWithSets = await Promise.all(classes.map(async (classDoc) => {
-      const sets = await db.collection('Sets').find({ classId: classDoc._id.toString() }).toArray();
-      return {
-        ...classDoc,
-        sets: sets
+      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
+      const result = {
+          ...classDoc,
+          sets: sets
       };
-    }));
 
-    res.status(200).json(classesWithSets);
-  } catch (e) {
-    res.status(500).json({ error: e.toString() });
+      res.status(200).json(result);
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
   }
 });
-
 
 app.get('/api/search', async (req, res) => {
   // Destructure with default empty strings to prevent undefined errors
@@ -312,7 +184,7 @@ app.get('/api/search', async (req, res) => {
 
   try {
     const db = client.db("Group3LargeProject");
-
+    
     // Ensure we have a valid userId and searchTerm before proceeding
     if (!userId || !searchTerm) {
       return res.status(400).json({ error: "userId and searchTerm are required." });
@@ -435,29 +307,29 @@ app.post('/api/validate-test', async (req, res) => {
     // incoming: testId, userAnswers
     // outgoing: score, error
     const { testId, userAnswers } = req.body;
-
+  
     if (!testId || !userAnswers) {
       return res.status(400).json({ error: 'testId and userAnswers are required' });
     }
-
+  
     try {
       const db = client.db("Group3LargeProject");
       const test = await db
         .collection('Test')
         .findOne({ id: testId });
-
+  
       if (!test) {
         return res.status(400).json({ error: 'Test not found' });
       }
-
+  
       let score = 0;
-
+  
       test.answers.forEach((answer, index) => {
         if (answer === userAnswers[index]) {
           score++;
         }
       });
-
+  
       res.status(200).json({ score: score, error: '' });
     } catch (error) {
       console.log(error);
@@ -472,14 +344,13 @@ app.post('/api/validate-test', async (req, res) => {
 
 
 
-// Set Ops
-// Add Set
+
 app.post('/api/addset', async (req, res) => {
   const { UserId, SetName, public, classId } = req.body;
 
   try {
       const db = client.db("Group3LargeProject");
-
+      
       // Insert the new set document into the 'Sets' collection
       const setResult = await db.collection('Sets').insertOne({
           UserId: UserId,
@@ -487,7 +358,7 @@ app.post('/api/addset', async (req, res) => {
           public: public,
           classId: classId, // Linking set to class via classId
       });
-
+      
       if (setResult.acknowledged) {
           res.status(200).json({ message: "New set added successfully", setId: setResult.insertedId });
       } else {
@@ -498,79 +369,6 @@ app.post('/api/addset', async (req, res) => {
   }
 });
 
-// Delete Set
-app.post('/api/deleteset', async (req, res, next) => {
-	const { setId } = req.body; // Get setId from request
-
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject");
-		
-		// delete set
-		const result = await db.collection('Sets').deleteOne({ _id: new ObjectId(setId) });
-   		
-		if(result){
-			res.status(200).json({ message: "Set deleted successfully"});
-		}
-		
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
-
-// Update Set
-app.post('/api/updateset', async (req, res) => {
-	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
-	const { setId, newInfo, code } = req.body; 
-	// const newTerm = { $set: {Term:Term}};
-
-	// control code
-	switch(code){
-		case 1:
-			// update Name
-			var newName = { $set: {SetName:newInfo}};
-			break;
-		case 2:
-			// update public value
-			var newPub = { $set: {public:newInfo}};
-			break;
-		case 3:
-			// update description
-			var newDesc = { $set: {Description:newInfo}};
-			break;
-		default:
-			res.status(500).json({ error: "Control Code not found (assignment)" });
-	}
-	
-  	var error = '';
-	
-	// Running command
-	try {
-		const db = client.db("Group3LargeProject");
-
-		// update class control code
-		switch(code){
-			case 1:
-				// update SetName
-				const resultTerm = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newName);
-				break;
-			case 2:
-				// update set public value
-				const resultVal = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newPub);
-				break;
-			case 3:
-				// update description
-				const resultDesc = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newDesc);
-				break;
-			default:
-				res.status(500).json({ error: "Control Code not found (update func)" });
-		}
-
-		res.status(200).json({ message: "Set updated successfully"});
-	} catch(e) {
-		res.status(500).json({ error: e.toString() });
-	}
-});
 
 const { ObjectId } = require('mongodb');
 
@@ -614,7 +412,7 @@ app.get('/api/getset/:setId', async (req, res) => {
   // incoming: userId, className
 	// userId is stored as a string (to be changed later?)
   // outgoing: error
-
+	
   const {classId, className } = req.body;
 
   const newClass = { $set: {className:className}};
@@ -661,7 +459,7 @@ app.post('/api/login', async (req, res, next) => {
 });
 
 
-app.post('/api/searchcards', async (req, res, next) =>
+app.post('/api/searchcards', async (req, res, next) => 
 {
   // incoming: userId, search
   // outgoing: results[], error
@@ -671,17 +469,17 @@ app.post('/api/searchcards', async (req, res, next) =>
   const { userId, search } = req.body;
 
   var _search = search.trim();
-
+  
   const db = client.db("Group3LargeProject");
   const results = await db.collection('Cards').find({"Card":{$regex:_search+'.*'}}).toArray();
 
-
+  
   var _ret = [];
   for( var i=0; i<results.length; i++ )
   {
     _ret.push( results[i].Card );
   }
-
+  
   var ret = {results:_ret, error:error};
   res.status(200).json(ret);
 });

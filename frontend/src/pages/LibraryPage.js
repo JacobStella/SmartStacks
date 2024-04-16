@@ -154,7 +154,7 @@ const LibraryPage = () => {
 const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
-        //editFolderNameEndpoint(newName, folderId)  UNCOMMENT WHEN API IS IMPLEMENTED
+        editFolderNameEndpoint(newName, folderId)  
         const updatedFolders = folders.map(folder => {
             if (folder._id === folderId) {
                 return { ...folder, className: newName };

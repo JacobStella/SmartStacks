@@ -1,14 +1,30 @@
-import React from 'react';
-import { useNavigate, useLocation, Link } from 'react-router-dom'; // Ensure Link is imported
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../NavBar.css';
-import logo from '../images/browse.png'; // Make sure the path is correct
+import logo from '../images/browse.png';
 
 const NavBar2 = () => {
     const navigate = useNavigate();
     const location = useLocation();
+    const [userInitial, setUserInitial] = useState('');
+
+    useEffect(() => {
+        const userDataString = localStorage.getItem('user_data');
+        if (userDataString) {
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.firstName) { // Check if firstName is present
+            // Use the first character of firstName or lastName, whichever you prefer
+            setUserInitial(userData.firstName.charAt(0).toUpperCase());
+          } else {
+            console.log('User data is present but not valid.');
+          }
+        }
+      }, []);
+      
+
+    const userLoggedIn = !!userInitial; // Boolean conversion: if userInitial is a non-empty string, userLoggedIn is true
 
     const handleLoginClick = () => {
-        // Store the current location before redirecting to login
         localStorage.setItem('preLoginPath', location.pathname);
         navigate('/login');
     };
@@ -26,10 +42,62 @@ const NavBar2 = () => {
                 <button type="submit">Search</button>
             </div>
 
-            {/* Replaced Link with button and added navigation logic */}
-            <button onClick={handleLoginClick} className="nav-button">Login</button>
+            {userLoggedIn ? (
+                <div className="profile-circle">{userInitial}</div>
+            ) : (
+                <button onClick={handleLoginClick} className="nav-button">Login</button>
+            )}
         </nav>
     );
 };
 
 export default NavBar2;
+
+
+/*SEARCH STUFF
+
+const handleSearch = async (event) => {
+        event.preventDefault(); // Prevent form submission if you're using a form
+        if (!searchTerm.trim()) {
+            setMessage('Please enter a search term.');
+            return;
+        }
+        await searchItems(userId, searchTerm); // Assuming searchItems is the search function we discussed
+    };
+
+    // Update the search term as the user types
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+    
+     const searchItems = async (userId, searchTerm) => {
+
+    
+
+    try {
+        // Construct the search URL with query parameters for userId and searchTerm
+        const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        const searchResults = await response.json();
+
+        if (response.ok) {
+            // Handle the search results
+            console.log('Search Results:', searchResults);
+            // Here, you can update the state or DOM with searchResults.classes, searchResults.sets, and searchResults.cards
+            // For example:
+            // updateSearchResults(searchResults); // A function you'd define to update your UI with the results
+        } else {
+            // Handle errors returned from the server
+            setMessage("Search API Error:" + searchResults.error);
+        }
+    } catch (e) {
+        // Handle errors in fetching from the search API
+        console.error("Search Fetch Error:", e.toString());
+        setMessage(e.toString());
+    }
+ };
+ */ 

@@ -19,7 +19,7 @@ function CardUI() {
 
     const [cards, setCards] = useState([]);
 
-    const app_name = 'largeprojectgroup3'
+    const app_name = 'largeprojectgroup3-efcc1eed906f'
     function buildPath(route)
     {
     if (process.env.NODE_ENV === 'production')
@@ -117,25 +117,30 @@ function CardUI() {
         }
     };
     
-    const getClassAndSets = async (classId) => {
+    const getClassAndSets = async (userId) => {
         try {
-            const url = buildPath(`api/getClassAndSets/${classId}`);
+            const url = buildPath(`api/getClassAndSets/${userId}`);
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
-                headers: {'Content-Type': 'application/json'}
+                headers: {'Content-Type': 'application/json'},
+                // Removed mode: 'no-cors' to allow reading the response. Adjust the server's CORS policy as necessary.
             });
     
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                console.error('Error fetching classes and sets:', response.statusText);
+                return;
             }
     
-            const classAndSets = await response.json();
-            console.log('Class and its sets:', classAndSets);
-            // Here you can further handle the response, like updating the UI accordingly
+            // Assuming the response is not opaque now, we can try to read it
+            const data = await response.json();
+            console.log('Classes and sets received:', data);
+            return data; // You can return the data here if needed
         } catch (error) {
-            console.error('Error fetching class and sets:', error);
+            console.error('Error fetching classes and sets:', error);
         }
     };
+    
+    
     
     
 

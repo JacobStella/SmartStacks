@@ -6,6 +6,19 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import '../ViewStack.css';
 import '../Web.css';
 
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 const ViewStackPage = () => {
   const [cards, setCards] = useState([
     { front: 'Front 1', back: 'Back 1' },
@@ -15,7 +28,7 @@ const ViewStackPage = () => {
   ]);
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
 

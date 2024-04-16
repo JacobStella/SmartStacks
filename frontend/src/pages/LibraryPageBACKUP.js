@@ -53,7 +53,7 @@ const getClassAndSets = async (userId) => {
         }
 
         const data = await response.json();
-        //console.log('Classes and their sets:', data);
+        console.log('Classes and their sets:', data);
         return data; // Return the data here
     } catch (error) {
         console.error('Error fetching classes and sets:', error);
@@ -76,7 +76,7 @@ function buildPath(route)
 }
 
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([{ id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
@@ -94,8 +94,6 @@ const LibraryPage = () => {
                 getClassAndSets(userData.id).then(classes => {
                     if (classes && classes.length > 0) {
                         setFolders(classes); // Assuming the API returns an array of classes
-                        console.log("class useStste stuff")
-                        console.log(classes);
                     } else {
                         console.log('No classes found for this user.');
                     }
@@ -154,10 +152,9 @@ const LibraryPage = () => {
 const editFolderName = (folderId) => {
     const newName = prompt('Enter new folder name:');
     if (newName) {
-        //editFolderNameEndpoint(newName, folderId)  UNCOMMENT WHEN API IS IMPLEMENTED
         const updatedFolders = folders.map(folder => {
-            if (folder._id === folderId) {
-                return { ...folder, className: newName };
+            if (folder.id === folderId) {
+                return { ...folder, name: newName };
             }
             return folder;
         });
@@ -165,65 +162,33 @@ const editFolderName = (folderId) => {
     }
 };
 
-//THIS WONT WORK TILL ENDPOINTS ARE UP
-const editFolderNameEndpoint = async (newName, folderId) => {
-    if (!userData) return; // Early return if userData is null
 
-    const userId = userData.id;
-    let classObj = { classId: folderId, newInfo: newName, code: 1 };
-    let classJson = JSON.stringify(classObj);
+    const addFolder = async (folderName) => {
+        if (!userData) return; // Early return if userData is null
 
-    try {
-        const response = await fetch('api/updateclass', {
-            method: 'POST',
-            body: classJson,
-            headers: {'Content-Type': 'application/json'}
-        });
+        const userId = userData.id;
+        let classObj = { userId: userId, className: folderName };
+        let classJson = JSON.stringify(classObj);
 
-        const res = await response.json();
+        try {
+            const response = await fetch('api/addclass', { // Ensure this endpoint is correct
+                method: 'POST',
+                body: classJson,
+                headers: {'Content-Type': 'application/json'}
+            });
 
-        console.log(res);
-            if (response.ok) {
-                console.log('updated!');
-            } else {
-                setMessage("API Error: " + (res.error || "Failed to add folder."));
-            }
-        } catch (error) {
-            setMessage("API Error: " + error.toString());
-        }
-};
-
-
-const addFolder = async (folderName) => {
-    if (!userData) return; // Early return if userData is null
-
-    const userId = userData.id;
-    let classObj = { userId: userId, className: folderName };
-    let classJson = JSON.stringify(classObj);
-
-    try {
-        const response = await fetch('api/addclass', {
-            method: 'POST',
-            body: classJson,
-            headers: {'Content-Type': 'application/json'}
-        });
-
-        const res = await response.json();
-        console.log(res);
-
+            const res = await response.json();
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName }]);
+                setFolders(prevFolders => [...prevFolders, { id: res.id, name: res.name }]);
                 setMessage("Folder has been added.");
-                console.log('Folders after adding new folder:', folders);
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));
             }
         } catch (error) {
             setMessage("API Error: " + error.toString());
         }
-};
-
+    };
 
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');

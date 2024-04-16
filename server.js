@@ -1,10 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+
+
 
 async function connectToMongo() {
   try {
@@ -24,6 +26,8 @@ const app = express();
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(cors({ origin: '*' }));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -217,6 +221,7 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
+
 // Delete Class
 app.post('/api/deleteclass', async (req, res, next) => {
 	const { classId } = req.body; // Get cardId from request
@@ -272,28 +277,34 @@ app.post('/api/updateclass', async (req, res) => {
 	}
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
-  const { classId } = req.params; // Get classId from the route parameters
+app.get('/api/getClassAndSets/:userId', async (req, res) => {
+  const { userId } = req.params;
 
   try {
-      const db = client.db("Group3LargeProject");
-      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
-      if (!classDoc) {
-          res.status(404).json({ error: "Class not found" });
-          return;
-      }
+    const db = client.db("Group3LargeProject");
+    // Assuming classes are related to users by a userId field in the Class collection
+    const classes = await db.collection('Class').find({ userId: userId }).toArray();
 
-      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
-      const result = {
-          ...classDoc,
-          sets: sets
+    if (!classes.length) {
+      res.status(404).json({ error: "No classes found for this user" });
+      return;
+    }
+
+    // For each class, find the associated sets
+    const classesWithSets = await Promise.all(classes.map(async (classDoc) => {
+      const sets = await db.collection('Sets').find({ classId: classDoc._id.toString() }).toArray();
+      return {
+        ...classDoc,
+        sets: sets
       };
+    }));
 
-      res.status(200).json(result);
-  } catch(e) {
-      res.status(500).json({ error: e.toString() });
+    res.status(200).json(classesWithSets);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
   }
 });
+
 
 app.get('/api/search', async (req, res) => {
   // Destructure with default empty strings to prevent undefined errors

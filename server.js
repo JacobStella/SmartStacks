@@ -277,8 +277,8 @@ app.post('/api/updateclass', async (req, res) => {
 	}
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
-  const { classId } = req.params; // Get classId from the route parameters
+app.get('/api/getClassAndSets/:userId', async (req, res) => {
+  const { userId } = req.params;
 
   try {
     const db = client.db("Group3LargeProject");

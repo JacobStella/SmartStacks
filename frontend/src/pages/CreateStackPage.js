@@ -107,7 +107,7 @@ const addSet = async event =>
 {
   if (!userData) return; // Early return if userData is null
 
-    const userId = userData.id;
+  const userId = userData.id;
 
   // Assume classId is available and correctly set, representing the class this set belongs to
   let setObj = { UserId: userId, SetName: stackTitle, public: isPublic, classId: selectedFolderId }; // Include classId here
@@ -135,6 +135,8 @@ const addSet = async event =>
           // Iterate through each card and create it with the new setId
 
           for (let card of cardPairs) {
+            console.log("userId" , userId);
+            console.log("setId" , setId);
               let cardObj = { ...card, UserId: userId, SetId: setId }; // Assuming SetId should remain for card association
               let cardJs = JSON.stringify(cardObj);
 

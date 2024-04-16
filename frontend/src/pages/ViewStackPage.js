@@ -23,6 +23,48 @@ const ViewStackPage = () => {
     setCurrentIndex((prevIndex) => (prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex));
   };
 
+  const fetchSetWithCards = async (setId) => {
+    try {
+        // Use buildPath to construct the URL
+        const url = buildPath(`api/getset/${setId}`);
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data; // This includes the set and its associated cards
+    } catch (error) {
+        console.error("There was an error fetching the set:", error);
+        return null;
+    }
+};
+
+useEffect(() => {
+  const userDataString = localStorage.getItem('user_data');
+  if (!userDataString) {
+      console.log('No user data found in localStorage.');
+      localStorage.setItem('preLoginPath', location.pathname);
+      navigate('/login');
+  } else {
+      const userData = JSON.parse(userDataString);
+      if (userData && userData.id) {
+          // Fetch classes as soon as we have the user's ID
+          fetchSetWithCards(userData.id).then(classes => {
+              if (classes && classes.length > 0) {
+                  setCards(classes); // Assuming the API returns an array of classes
+                  console.log("class useStste stuff")
+                  console.log(classes);
+              } else {
+                  console.log('No classes found for this user.');
+              }
+          });
+      } else {
+          console.log('User data is invalid or ID is missing.');
+          navigate('/login');
+      }
+  }
+}, [navigate, location.pathname]);
+
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen().catch((e) => {

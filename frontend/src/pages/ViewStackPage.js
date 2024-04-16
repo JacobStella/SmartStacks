@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
 import PlayButton from '../components/PlayButton'; 
 import FlipCard from '../components/FlipCard'
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../ViewStack.css';
 import '../Web.css';
 
@@ -12,6 +13,9 @@ const ViewStackPage = () => {
     { front: 'Front 3', back: 'Back 3' },
     // ... more cards
   ]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
 

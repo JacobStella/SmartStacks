@@ -66,7 +66,7 @@ useEffect(() => {
       const userData = JSON.parse(userDataString);
       if (userData && userData.id) {
           // Fetch classes as soon as we have the user's ID
-          TempSetId = "660b146233c00e69d9c3b782"; //THIS IS FOR TESTING ONLY
+          var TempSetId = "660b146233c00e69d9c3b782"; //THIS IS FOR TESTING ONLY
           console.log(TempSetId);
           fetchSetWithCards(TempSetId).then(classes => {
               if (classes && classes.length > 0) {

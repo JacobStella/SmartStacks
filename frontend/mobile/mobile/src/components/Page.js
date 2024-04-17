@@ -5,25 +5,50 @@ import SliderHeader from './SliderHeader';
 import {Ionicons} from '@expo/vector-icons';
 import { RotateInDownLeft } from 'react-native-reanimated';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassAndSets } from './CardUI';
-
-
+import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassAndSets, getClass, getClassFromData, setClass, addStack, addCard, fetchSetWithCards} from './CardUI';
+import Login from './Login';
 
 
 const Page = ({navigation}) => {
+    
+const [allClassesAndStacks, setAllClassesAndStacks] = useState([]);
+const [allClasses, setAllClasses] = useState([]);
+const [allStacks, setAllStacks] = useState([]);
+
+const [Classes, setClasses] = useState([]);
+const [Stacks, setStacks] = useState([]);
+const [Cards, setCards] = useState([]);
+
+
+const [ClassOnly, setClassOnly] = useState(true);
+const [CardOnly, setCardOnly] = useState(false);
+ 
+const [itemData, setItemData] = useState();
 
 const [getVisisble, setVisible] = useState(false);
-const [getData, setData] = useState([]);
+const [BackArrowVisible, BackArrowSetVisible] = useState(false);
+const [EmptyHeader, setEmptyHeader] = useState(true);
 const [classId, setClassId] = useState('');
 const sheet = React.useRef();
+const scrollRef = useRef();
+
 
 const fetchUserId = async () => {
     const userId = await getJSONfield(getUserData, "id");
-    //console.log(userId);
-    //addClass(userId, "test");
-    getClassAndSets(userId);
-    getData2(userId);
-    //console.log(userId);
+
+    
+    const classAndSets = await getClassAndSets(userId);
+    setAllClassesAndStacks(classAndSets);
+    let totalClasses = classAndSets.map(field => ({Title: field.className, IsClass: true, Cards: field.Card, Id: field._id}));
+    setClasses(totalClasses);
+    setAllClasses(totalClasses);
+    let outerSets = classAndSets.map(field => (field.sets));
+    let nestedSets = outerSets.flat();
+    let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id}));
+    setAllStacks(finalSets);
+    setStacks(finalSets);
+    
+
 };
 
 React.useEffect(() => {
@@ -42,80 +67,108 @@ const closeSheet = () => {
     sheet.current.close();
 };
 
-    const [Stacks, setStacks] = useState([{
-        id: "1",
-        Title: "Learn French",
-        difficulty: "Easy",
-        cardNumber: "10"
-        
-    },
-    {
-    id: "2",
-    Title: "Learn Spanish",
-    difficulty: "Easy",
-    cardNumber: "33"
 
-    },
-    {
-        id: "3",
-        Title: "Learn German",
-        difficulty: "Easy",
-        cardNumber: "21"
+
+const ScrollToTop = () => {
+    scrollRef.current?.scrollToOffset({
+        y:0, animated: true
+    });
+};
+
+const LoginNav = async (item) => {
+    if(item.IsClass){
+        setClassOnly(true);
+        setClasses([]);
+        setStacks([]);
+        StackFilter(item.Title);
+        setItemData(item);
+    }
+    else{
+        setClassOnly(false);
+        setCardOnly(true);
+        setClasses([]);
+        setStacks([]);
+        let filteredCards = await CardFilter(item.Id);
+        setCards(filteredCards);
+        console.log(filteredCards);
+        setItemData(item);
+    }
+    BackArrowSetVisible(true);
+    setEmptyHeader(false);
+    ScrollToTop();
+ };
+
+ const ViewAll = () => {
+    setEmptyHeader(true);
+    BackArrowSetVisible(false);
+    setClassOnly(true);
+    setClasses(allClasses);
+    setStacks(allStacks);
+    setCards([]);
+ };
+
+const CardFilter = async (setId) => {
     
-        },
+    try{
+    let temp = await fetchSetWithCards(setId);
+    
+    const filteredCards = temp.cards.map(field => ({Title: field.Term, Definition: field.Definition}));
+    return filteredCards;
+    }catch(error){
+        console.log(error);
+    }
 
-    {
-    id: "4",
-    Title: "Learn German",
-    difficulty: "Easy",
-    cardNumber: "21"
-        
-    },
-    {
-    id: "5",
-    Title: "Learn German",
-    difficulty: "Easy",
-    cardNumber: "21"
-    },
-            {
-            id: "6",
-            Title: "Learn German",
-            difficulty: "Easy",
-            cardNumber: "21"
-            },
-            {
-            id: "7",
-            Title: "Learn German",
-            difficulty: "Easy",
-            cardNumber: "21"
-            },
-            {
-                id: "8",
-                Title: "Learn German",
-                difficulty: "Easy",
-                cardNumber: "21"
-                },
-                {
-                    id: "9",
-                    Title: "Learn German",
-                    difficulty: "Easy",
-                    cardNumber: "21"
-                    },                    
+};
 
-    ]);
-    const [Classes, setClasses] = useState([{
+const StackFilter = (className) => {
+    
+    const classCur = getClassFromData(allClassesAndStacks,className);
+    const filteredSets = classCur.sets;
+    console.log(filteredSets);
+    const filteredSets2 = filteredSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id}));
+    setStacks(filteredSets2);
 
-          
-        public: "public",
-        classId: "German",
-    },
-    {
-        public: "public",
-        classId: "Spanish",
-    },
+};
 
-    ]);
-    const data = [...Classes, ...Stacks];
+const StackHeader = () => {
+    item = itemData;
+   
+    if(item == undefined || EmptyHeader){
+        return(
+           
+           
+            <View style = {styles.header}>
+                <Text style={styles.headerText}></Text>
+            </View>
+        );
+    }
+    else{
+        if(item.IsClass){
+        return(
+           
+           
+                <View style = {styles.header}>
+                    <Text style={styles.headerText}>Class: {item.Title}</Text> 
+                    {BackArrowVisible && 
+                    <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "black"/></TouchableOpacity>}
+                    </View>
+            );
+        }
+        else{
+            return(
+           
+            
+                <View style = {styles.header}>
+                    <Text style={styles.headerText}>Stack: {item.Title}</Text>
+                    {BackArrowVisible && 
+                    <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "black"/></TouchableOpacity>}
+                </View>
+            );
+        }
+    }
+};
+
+    const data = [...Classes, ...Stacks, ...Cards];
     const [isRefreshing, setIsRefreshing] = useState(false);
     const loadStack = async()=>{
         //const data = await getStacks();
@@ -126,16 +179,22 @@ const closeSheet = () => {
         
     }
     let currentIndex = 0;
-    const renderSetRow = ({item, index}) => {
+   
+    const renderSetRow = ({item, index, navigation}) => {
         
         currentIndex = index;
         return(
             
-               // <RBSheet>
                 <View style={styles.stackContainer}>
                 
+                {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && <Text style = {styles.stackTitleText}>Classes</Text>}
+                {currentIndex == 0 && ClassOnly == true && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
+                {currentIndex == 0 && ClassOnly == false && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
+                {currentIndex == 1 && ClassOnly == false && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
+                {currentIndex == 1 && ClassOnly == true && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
+                
                     
-                <TouchableOpacity>
+                <TouchableOpacity onPress = {() => LoginNav(item)}>
                 <View style={styles.stackBox}>
                     
                 <View style = {styles.stackBoxInner}>
@@ -152,31 +211,26 @@ const closeSheet = () => {
                 <Text style={styles.stackText}>
                     {item.cardNumber} Cards
                 </Text>
-                
+
                 </View>
                 </TouchableOpacity>
                 
-                
-                </View>
-                //</RBSheet>
-                
-                
-                
-                
-                
 
-                
-              
+                </View>
                 
         );
     };
     return(
         <View style ={styles.container}>
-            <SliderHeader></SliderHeader>
-            <Text style={styles.stackTitleText}>Classes</Text>
-            <FlatList data = {data}
+            <StackHeader data = {itemData}></StackHeader>
+
+            <FlatList
+              ref={scrollRef} 
+              data = {data}
               renderItem={renderSetRow}
-              keyExtractor={item => item.id} 
+              keyExtractor={(item, index) => {
+                return index;
+              }} 
               numColumns={2}
               
               showsVerticalScrollIndicator = {false}
@@ -193,8 +247,6 @@ const closeSheet = () => {
            height ={380}
            openDuration={250}
            closeDuration={150}
-           //onClose={()=>setVisible(false)}
-          // onOpen={()=>setVisible(true)}
            ref = {sheet}
            >
            <View>
@@ -203,9 +255,9 @@ const closeSheet = () => {
            <Text style = {styles.sheetTitle}>
                 Warning
             </Text>
-            <TouchableOpacity style = {styles.sheetButton} title = "Edit" onPress = {closeSheet}></TouchableOpacity>
-            <TouchableOpacity style = {styles.sheetButton} title = "Delete" onPress = {closeSheet}></TouchableOpacity>
-            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}></TouchableOpacity>
+            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}><Text>Close</Text></TouchableOpacity>
+            <TouchableOpacity style = {styles.sheetButton} title = "Edit" onPress = {closeSheet}><Text>Edit</Text></TouchableOpacity>
+            <TouchableOpacity style = {styles.sheetButton} title = "Delete" onPress = {closeSheet}><Text>Delete</Text></TouchableOpacity>
             </View>
            </View>
            
@@ -215,29 +267,9 @@ const closeSheet = () => {
 
 
     );
-};
 
-const getData2 = async (userId) => {
-    // console.log("test");
-    //console.log(classId);
-    
-    try {
-       // const response = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/getClassAndSets/${classId}');
-        //const res = await response.json();
-        const temp = await getUserClassesAndStacks('userId','Classes');
-        //console.log(userId);
-        //console.log(temp.classes);
-        
-        
-       
-       
-    }
-    catch(e){
-        console.log(e);
-    }
 
 };
-
 
 
 const line = () => {
@@ -253,18 +285,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: 'yellow'
-       //justifyContent: 'center',
-     //alignItems: 'center',
     },
     stackContainer:{
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         margin: 5,
-        
-        
-        
-        
     },
 
     stackBoxContainer: {
@@ -274,37 +300,22 @@ const styles = StyleSheet.create({
     },
 
     stackBoxHeader: {
-        
-      
-        
-        // aspectRatio: 1,
          flex: 1,
          flexDirection: 'row',
          backgroundColor: "white",
          justifyContent: 'flex-end',
          borderColor: 'black',
          borderWidth: 2,
-         borderRadius: 20,
-  
-        
-         
+         borderRadius: 20,  
      }, 
 
-
     stackBox: {
-        
-      
-        
-       // aspectRatio: 1,
         flex: 1,
         backgroundColor: "#abb1cf",
-        //padding : 10,
         borderColor: 'black',
         borderWidth: 2,
- 
-       
-        
     },
+
     stackBoxInner: {
         flexDirection: 'row',
         width: '100%',
@@ -315,21 +326,25 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
     },
 
-
     stackText:{
-        //flex: 1,
         fontSize: 25,
         fontWeight: '900',
         textAlign: 'center',
-        
     },
     stackTitleText:{
-        //flex: 1,
-        flexDirection:'row',
+        fontSize: 25,
+        fontWeight: '900',
+    },
+    stackTitleTextFiller:{
+        color: 'transparent',
+        fontSize: 25,
+        fontWeight: '900',
+    },
+
+    stackTitleTextReset:{
         justifyContent: 'flex-end',
         fontSize: 25,
         fontWeight: '900',
-        //textAlign: 'center',  
     },
     
     line: {
@@ -338,24 +353,25 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         marginBottom: 20,
         marginTop: 20,
-        
     },
 
     sheet:{
         borderTopLeftRadius: 14,
         borderTopRightRadius: 14,
     },
+
     innerSheet:{
         padding: 24,
         alignItems: 'stretch',
     },
+
     sheetTitle: {
         fontSize: 16,
-        //fontWeight: '650',
         color: 'black',
         marginTop: 15,
         textAlign: 'center'
     },
+
     innerSheetText: {
         fontSize: 12,
         color: 'black',
@@ -363,6 +379,7 @@ const styles = StyleSheet.create({
         marginBottom: 32,
         textAlign: 'center',
     },
+
     sheetButton: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -374,9 +391,28 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 20,
     },
+
     icon: {
         textAlign: 'center',
-    }
+    },
+
+    header: {
+        width: '100%',
+        height: '15%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'gray',
+        borderRadius: 20,
+        flexDirection: "row",
+        
+    },
+    
+    headerIcon: {
+        position: 'absolute',
+        right: '85%',
+        backgroundColor: "red",
+    },
+
 });
 
 

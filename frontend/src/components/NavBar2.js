@@ -7,6 +7,7 @@ const NavBar2 = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [userInitial, setUserInitial] = useState('');
+    const [message, setMessage] = useState("");
     var searchInput;
     var userId;
 
@@ -26,6 +27,19 @@ const NavBar2 = () => {
           }
         }
       }, []);
+
+      function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 
       const handleSearch = async (event) => {
         event.preventDefault(); // Prevent form submission if you're using a form

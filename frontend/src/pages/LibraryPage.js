@@ -80,6 +80,7 @@ const LibraryPage = () => {
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
+    var folderSearch;
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -232,11 +233,45 @@ const addFolder = async (folderName) => {
         }
     };
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    const handleFolderSearch = async (event) => {
+        event.preventDefault();
+        const userId = userData.id;
+        await searchFolderItems(userId, searchFolderInput);
+    };
+    
+    const searchFolderItems = async (userId, searchTerm) => {
+        try {
+            const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            });
+            const searchResults = await response.json();
+    
+            if (response.ok) {
+                console.log('Search Results:', searchResults);
+            } else {
+                setMessage("Search API Error:" + searchResults.error);
+            }
+        } catch (e) {
+            console.error("Search Fetch Error:", e.toString());
+            setMessage(e.toString());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    //I probably have to pass variables / functions into the Library header file
     return (
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader createNewFolder={createNewFolder} />
+                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch}/>
                 <div className="folder-stacks-display-container">
                     <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} />
                 </div>
@@ -247,3 +282,9 @@ const addFolder = async (folderName) => {
 };
 
 export default LibraryPage;
+
+
+
+
+
+

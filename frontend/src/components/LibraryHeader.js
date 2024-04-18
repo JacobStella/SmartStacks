@@ -22,8 +22,8 @@ const LibraryHeader = ({ createNewFolder }) => {
                 <button className="new-folder-btn" onClick={createNewFolder}>Create New Folder</button>
                 {/* Search bar and button */}
                 <div className="search-container">
-                    <input type="text" placeholder="Search your library..." className="search-input"/>
-                    <button type="submit" className="search-btn">Search</button>
+                    <input type="text" placeholder="Search your library..." className="search-input" value={folderSearch} onChange={(e) => setSearchInput(e.target.value)} ref={searchInputRef}/>
+                    <button type="submit" className="search-btn" onClick={handleFolderSearch}>Search</button>
                 </div>
             </div>
         </header>

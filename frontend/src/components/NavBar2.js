@@ -56,7 +56,8 @@ const NavBar2 = () => {
             method: 'GET',
             headers: {'Content-Type': 'application/json'}
         });
-
+        console.log("userId", userId);
+        console.log("searchTerm", searchTerm);
         const searchResults = await response.json();
 
         if (response.ok) {

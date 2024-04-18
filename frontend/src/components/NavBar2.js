@@ -11,6 +11,8 @@ const NavBar2 = () => {
     const [searchInput, setSearchInput] = useState('');
     const [message, setMessage] = useState("");
     const searchInputRef = useRef(null);
+    const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
+    const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -39,6 +41,7 @@ const NavBar2 = () => {
     };
 
     const searchItems = async (userId, searchTerm) => {
+        setShowDropdown(false); // Hide dropdown before fetching new results
         try {
             const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
             const response = await fetch(url, {
@@ -49,6 +52,11 @@ const NavBar2 = () => {
 
             if (response.ok) {
                 console.log('Search Results:', searchResults);
+                setSearchResults({
+                    sets: searchResults.sets || [],
+                    classes: searchResults.classes || [],
+                });
+                setShowDropdown(true); // Show dropdown with results
             } else {
                 setMessage("Search API Error:" + searchResults.error);
             }
@@ -56,6 +64,11 @@ const NavBar2 = () => {
             console.error("Search Fetch Error:", e.toString());
             setMessage(e.toString());
         }
+    };
+
+    const handleItemClick = (type, item) => {
+        navigate(`/${type}/${item._id}`); // Update with actual path structure
+        setShowDropdown(false); // Hide dropdown after navigation
     };
 
     const userLoggedIn = !!userInitial;
@@ -73,9 +86,25 @@ const NavBar2 = () => {
             <Link to="/library" className="nav-button">Library</Link>
             <Link to="/create" className="nav-button">Create</Link>
 
-            <div className="search-bar"> 
-                <input type="text" placeholder="Search..." value={searchInput} onChange={(e) => setSearchInput(e.target.value)} ref={searchInputRef} /> 
-                <button type="submit" onClick={handleSearch}>Search</button> 
+            <div className="search-bar">
+                <input
+                    type="text"
+                    placeholder="Search..."
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    ref={searchInputRef}
+                />
+                <button type="submit" onClick={handleSearch}>Search</button>
+                {showDropdown && (
+                    <div className="search-dropdown">
+                        {searchResults.classes.slice(0, 5).map((item) => (
+                            <div key={item._id} onClick={() => handleItemClick('classes', item)}>{item.className}</div>
+                        ))}
+                        {searchResults.sets.slice(0, 5).map((item) => (
+                            <div key={item._id} onClick={() => handleItemClick('sets', item)}>{item.setName}</div>
+                        ))}
+                    </div>
+                )}
             </div>
 
             {userLoggedIn ? (

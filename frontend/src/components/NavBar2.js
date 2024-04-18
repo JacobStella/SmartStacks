@@ -7,6 +7,10 @@ const NavBar2 = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [userInitial, setUserInitial] = useState('');
+    var searchInput;
+    var userId;
+
+
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -15,65 +19,22 @@ const NavBar2 = () => {
           if (userData && userData.firstName) { // Check if firstName is present
             // Use the first character of firstName or lastName, whichever you prefer
             setUserInitial(userData.firstName.charAt(0).toUpperCase());
+            userId = userData.id;
+
           } else {
             console.log('User data is present but not valid.');
           }
         }
       }, []);
-      
 
-    const userLoggedIn = !!userInitial; // Boolean conversion: if userInitial is a non-empty string, userLoggedIn is true
-
-    const handleLoginClick = () => {
-        localStorage.setItem('preLoginPath', location.pathname);
-        navigate('/login');
-    };
-
-    return (
-        <nav className="navbar">
-            <img src={logo} alt="Company Logo" className="navbar-logo" />
-            
-            <Link to="/" className="nav-button">Home</Link>
-            <Link to="/library" className="nav-button">Library</Link>
-            <Link to="/create" className="nav-button">Create</Link>
-
-            <div className="search-bar">
-                <input type="text" placeholder="Search..." />
-                <button type="submit">Search</button>
-            </div>
-
-            {userLoggedIn ? (
-                <div className="profile-circle">{userInitial}</div>
-            ) : (
-                <button onClick={handleLoginClick} className="nav-button">Login</button>
-            )}
-        </nav>
-    );
-};
-
-export default NavBar2;
-
-
-/*SEARCH STUFF
-
-const handleSearch = async (event) => {
+      const handleSearch = async (event) => {
         event.preventDefault(); // Prevent form submission if you're using a form
-        if (!searchTerm.trim()) {
-            setMessage('Please enter a search term.');
-            return;
-        }
-        await searchItems(userId, searchTerm); // Assuming searchItems is the search function we discussed
+        
+        await searchItems(userId, searchInput); // Assuming searchItems is the search function we discussed
     };
 
-    // Update the search term as the user types
-    const handleInputChange = (event) => {
-        setSearchTerm(event.target.value);
-    };
     
      const searchItems = async (userId, searchTerm) => {
-
-    
-
     try {
         // Construct the search URL with query parameters for userId and searchTerm
         const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
@@ -100,4 +61,55 @@ const handleSearch = async (event) => {
         setMessage(e.toString());
     }
  };
- */ 
+      
+
+    const userLoggedIn = !!userInitial; // Boolean conversion: if userInitial is a non-empty string, userLoggedIn is true
+
+    const handleLoginClick = () => {
+        localStorage.setItem('preLoginPath', location.pathname);
+        navigate('/login');
+    };
+
+    return (
+        <nav className="navbar">
+            <img src={logo} alt="Company Logo" className="navbar-logo" />
+            
+            <Link to="/" className="nav-button">Home</Link>
+            <Link to="/library" className="nav-button">Library</Link>
+            <Link to="/create" className="nav-button">Create</Link>
+
+            <div className="search-bar"> 
+                <input type="text" placeholder="Search..." ref={(c) => searchInput = c} /> 
+                <button type="submit" onClick={handleSearch}>Search</button> 
+            </div>
+
+
+            {userLoggedIn ? (
+                <div className="profile-circle">{userInitial}</div>
+            ) : (
+                <button onClick={handleLoginClick} className="nav-button">Login</button>
+            )}
+        </nav>
+    );
+};
+
+export default NavBar2;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////SEARCH STUFF/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+  
+
+ /*
+    // Update the search term as the user types
+    //NEVER CALLED MAY NEED TO UNFUCK
+    const handleInputChange = (event) => {
+        setSearchTerm(event.target.value);
+    };
+    */
+   
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////SEARCH STUFF/////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////

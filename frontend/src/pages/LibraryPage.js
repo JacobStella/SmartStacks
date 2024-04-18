@@ -78,6 +78,8 @@ function buildPath(route)
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
+    const [searchFolderInput, setSearchFolderInput] = useState('');
+    const searchInputRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
     var folderSearch;
@@ -271,9 +273,9 @@ const addFolder = async (folderName) => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch}/>
+                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} />
                 <div className="folder-stacks-display-container">
-                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} />
+                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} setSearchFolderInput={setSearchInput} searchFolderInputRef={searchInputRef}/>
                 </div>
                 {message && <p>{message}</p>}
             </div>

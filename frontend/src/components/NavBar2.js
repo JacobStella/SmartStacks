@@ -97,11 +97,19 @@ const NavBar2 = () => {
                 <button type="submit" onClick={handleSearch}>Search</button>
                 {showDropdown && (
                     <div className="search-dropdown">
-                        {searchResults.classes.slice(0, 5).map((item) => (
-                            <div key={item._id} onClick={() => handleItemClick('classes', item)}>{item.className}</div>
+                        {searchResults.classes.slice(0, 5).map((item, index) => (
+                            item.className ? ( 
+                                <div key={item._id} onClick={() => handleItemClick('classes', item)}>
+                                {item.className}
+                                </div>
+                            ) : null
                         ))}
-                        {searchResults.sets.slice(0, 5).map((item) => (
-                            <div key={item._id} onClick={() => handleItemClick('sets', item)}>{item.setName}</div>
+                        {searchResults.sets.slice(0, 5).map((item, index) => (
+                            item.setName ? ( 
+                                <div key={item._id} onClick={() => handleItemClick('sets', item)}>
+                                {item.setName}
+                                </div>
+                            ) : null
                         ))}
                     </div>
                 )}

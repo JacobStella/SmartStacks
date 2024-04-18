@@ -288,3 +288,5 @@ export default LibraryPage;
 
 
 
+//I have to figure out how to pass variables/functions to other files. 
+//It seems to work somewhere in the file. First thing to do tmre

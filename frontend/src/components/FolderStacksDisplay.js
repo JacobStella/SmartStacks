@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
+import PlayIcon from '../images/play.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
@@ -16,6 +17,10 @@ const FolderContainer = ({ name, onEdit, sets }) => {
   const handleViewStack = (setId) => {
     navigate(`/view/${setId}`);
   };
+
+  const handleGamePage = () => {
+    navigate(`/game/${setId}`);
+  }
 
   const handleEditStack = (setId, e) => {
     e.stopPropagation(); // Prevent the dropdown from toggling when editing
@@ -49,7 +54,12 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 <button className="stack-view-button" onClick={(e) => handleViewStack(set._id)}>
                   <img src={createLight} alt="Edit" />
                 </button>
-                <span className="stack-name">{set.SetName}</span>
+                <div className="stack-content">
+                  <span className="stack-name">{set.SetName}</span>
+                  <button className="" onClick={(e) => handleGamePage(set._id)}>
+                    <img src={PlayIcon} alt="game" />
+                  </button>
+                </div>
               </div>
             ))
           ) : (

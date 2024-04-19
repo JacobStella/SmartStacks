@@ -96,13 +96,14 @@ app.post('/api/send-verif', (req, res) => {
 	const {userId, email } = req.body;
 	const token = crypto.randomBytes(32).toString('hex');
 
-	// Save token to userId
-	const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, {$set: {Token:token}});
-	// make sure above line succeeded
-	if (!result){
-		res.status(400).json({message: "Token could not be saved to User"});
+	try{
+		// Save token to userId
+		const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, {$set: {Token:token}});
+		// make sure above line succeeded
+		if (!result){
+			res.status(400).json({message: "Token could not be saved to User"});
+		}
 	}
-
 	// the email
 	const mailOptions = {
 		from: "daimondsailer@gmail.com",

@@ -154,10 +154,9 @@ const LibraryPage = () => {
     };
 */
 
-const editFolderName = (folderId) => {
-    const newName = prompt('Enter new folder name:');
-    if (newName) {
-        editFolderNameEndpoint(newName, folderId)  
+const editFolderName = (newName,folderId) => {
+    if (newName && newName.trim() !== '') {
+        editFolderNameEndpoint(newName, folderId); 
         const updatedFolders = folders.map(folder => {
             if (folder._id === folderId) {
                 return { ...folder, className: newName };

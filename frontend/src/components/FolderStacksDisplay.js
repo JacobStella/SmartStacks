@@ -48,14 +48,16 @@ const FolderContainer = ({ name, onEdit, sets }) => {
   };
 
   const handleEditComplete = () => {
-    if (editedName !== name) {
-      onEdit(editedName); // Call the onEdit prop with the new name
+    if (editedName.trim() !== '' && editedName !== name) {
+        onEdit(editedName); // Now just pass the new name
     }
     setIsEditing(false);
-  };
+};
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
+      e.preventDefault(); 
       handleEditComplete();
     }
   };
@@ -123,7 +125,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={() => onEditFolder(folder._id)} sets={folder.sets} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => editFolderName(newName, folder._id)} sets={folder.sets} />
       ))}
     </section>
   );

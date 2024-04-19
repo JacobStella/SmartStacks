@@ -83,6 +83,36 @@ function CardUI() {
         }
     };
 
+    const publicSearch = async event => {
+        event.preventDefault();
+        let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
+        let js = JSON.stringify(obj);
+
+        try {
+            const response = await fetch(buildPath('api/public-search'), { // Assuming 'api/search' is your endpoint
+                method: 'POST', // If your backend is expecting a GET request for searches, this needs adjustment
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            let res = await response.json();
+
+            if (res.error) {
+                alert(res.error);
+                setResults(res.error);
+            } else {
+                // Assuming the response structure you want is an array of card details
+                // Adjust how you handle and display these results accordingly
+                let resultText = res.cards?.map(card => ${card.Term}: ${card.Definition}).join(', ') || '';
+                setResults('Card(s) have been retrieved');
+                setCardList(resultText);
+            }
+        } catch (e) {
+            alert(e.toString());
+            setResults(e.toString());
+        }
+    };
+
     const addClass = async event => {
         event.preventDefault();
     

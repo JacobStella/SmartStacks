@@ -603,6 +603,52 @@ app.get('/api/getset/:setId', async (req, res) => {
 });
 
 
+app.get('/api/public-search', async (req, res) => {
+  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+
+  try {
+    const db = client.db("Group3LargeProject");
+
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Create a case-insensitive regex from searchTerm
+
+    // Define a variable to determine if a searchTerm is provided
+    const isSearchTermProvided = searchTerm.trim() !== '';
+
+    // Fetch classes without filtering by userId, and conditionally filter by searchTerm if provided
+    const classes = isSearchTermProvided ? await db.collection('Class').find({
+      className: { $regex: searchRegex }
+    }).toArray() : await db.collection('Class').find({}).toArray();
+
+    // Fetch sets without filtering by userId, and conditionally filter by searchTerm if provided
+    const sets = isSearchTermProvided ? await db.collection('Sets').find({
+      SetName: { $regex: searchRegex }
+    }).toArray() : await db.collection('Sets').find({}).toArray();
+
+    // Fetch cards without filtering by userId, and conditionally filter by searchTerm if provided
+    const cardsQuery = isSearchTermProvided ? {
+      $or: [
+        { Term: { $regex: searchRegex } },
+        { Definition: { $regex: searchRegex } }
+      ]
+    } : {};
+
+    const cards = await db.collection('Cards').find(cardsQuery).toArray();
+
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
+
+    res.json(results);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
+  }
+});
+
+
 
 
 

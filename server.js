@@ -133,9 +133,9 @@ app.post('/api/verify', async (req, res) => {
 		const result = await db.collection('Users').findOne({ Token: {$eq:checkToken}});
 
 		// if a matching token is found, verify the user
-		if(result.acknowledged){
+		if(result){
 			const verif = await db.collection('Users').updateOne({Token:checkToken}, {$set: {Verified:true}});
-			if (!verif.acknowledged) {
+			if (!verif) {
 				res.status(400).json({message: "Verification failed"})
 			}
 		}

@@ -18,7 +18,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     navigate(`/view/${setId}`);
   };
 
-  const handleGamePage = () => {
+  const handleGamePage = (setId) => {
     navigate(`/game/${setId}`);
   }
 

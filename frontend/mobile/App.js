@@ -12,8 +12,9 @@ import StudyGame from './mobile/src/components/StudyGame';
 import Study from './mobile/src/components/Study';
 import Test from './mobile/src/components/Test';
 import Search from './mobile/src/components/Search';
-import Page from './mobile/src/components/Page';
+import Page from './mobile/src/components/Library';
 import Create from './mobile/src/components/Create';
+import ViewCard from './mobile/src/components/ViewCard';
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
 import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -27,7 +28,8 @@ const Tab = createBottomTabNavigator();
 const libraryName = 'Library';
 const searchName = 'Search';
 const browseName = 'Browse';
-const studyGameName = 'Study';
+const studyName = 'Study';
+const viewCardName = 'ViewCard'
 
 
 const customTabBarButton = ({children,  onPress}) => {
@@ -135,7 +137,7 @@ const NavBar = ({name, navigation}) => {
             }}/>
             </View>
           </TouchableOpacity>
-        )
+      
       }}/>
       <Tab.Screen name={browseName} component={Browse} options={{
         tabBarIcon: ({focused}) => (
@@ -180,6 +182,7 @@ const NavBar = ({name, navigation}) => {
         tabBarActiveBackgroundColor: '#004346',
         tabBarActiveTintColor: '#09BC8A',
         tabBarInactiveTintColor: '#004346',
+        
 
         
         tabBarIcon: ({focused, color, size}) => {
@@ -192,16 +195,23 @@ const NavBar = ({name, navigation}) => {
             iconName = focused ? 'search' : 'search-outline'
           } else if (rn == browseName){
             iconName = focused ? 'search' : 'search-outline'
-          } else if (rn == studyGameName){
+          } else if (rn == studyName){
             iconName = focused ? 'list' : 'list-outline'
+          } 
+           else if (rn == viewCardName){
+          iconName = focused ? 'list' : 'list-outline'
           } 
 
           return <Ionicons name={iconName} size={size} color={color}/>
         },
       })}>
         
-        <Tab.Screen name={libraryName} component={Library}/>
-        <Tab.Screen name={searchName} component={Search}/>
+        <Tab.Screen name={libraryName} component={Library} options = {{
+          headerShown:false,
+        }}/>
+        <Tab.Screen name={searchName} component={Search}options = {{
+          headerShown:false,
+        }}/>
         <Tab.Screen name={"Create"} component={Create} options={{
           title: 'Create a New Stack',
           headerTransparent: true,
@@ -235,13 +245,14 @@ const NavBar = ({name, navigation}) => {
               </View>
             </TouchableOpacity>
           ),
-          /*tabBarButton: (props) => (
-            <customTabBarButton {...props} />
-          )*/
         }}
         />
-        <Tab.Screen name={browseName} component={Browse}/>
-        <Tab.Screen name={studyGameName} component={StudyGame}/>
+        <Tab.Screen name={browseName} component={Browse}options = {{
+          headerShown:false,
+        }}/>
+        <Tab.Screen name={studyName} component={Study}options = {{
+          headerShown:false,
+        }}/>
         
 
       </Tab.Navigator>
@@ -265,7 +276,7 @@ const customDrawerContent = ({navigation}) => {
       )}
       onPress={() => navigation.toggleDrawer()} />
       <DrawerItem
-        label={"Library"}
+        label={"SmartStacks"}
         icon={({ focused, size }) => (
           <Ionicons
             name="library-outline"
@@ -305,7 +316,7 @@ const customDrawerContent = ({navigation}) => {
   )
 }
 
-const MainApp = () => {
+const SmartStacks = () => {
 
 return (
     
@@ -319,11 +330,14 @@ return (
         name="Library"
         component={NavBar} />  
       <Stack.Screen
-        name="MainApp"
-        component={MainApp} />
+        name="SmartStacks"
+        component={SmartStacks} />
       <Stack.Screen
         name="Test"
         component={Test} />
+        <Stack.Screen
+        name="ViewCard"
+        component={ViewCard} />
       <Stack.Screen
         name="About"
         component={About} />
@@ -349,7 +363,7 @@ const App = () => {
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Layout" component={Page} options = {{headerShown: false}}/>
-        <HamburgerMenu.Screen name = "MainApp" component={MainApp}/>
+        <HamburgerMenu.Screen name = "SmartStacks" component={SmartStacks}/>
     </HamburgerMenu.Navigator>
     </NavigationContainer>   
   );

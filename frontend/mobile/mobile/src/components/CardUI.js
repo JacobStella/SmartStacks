@@ -209,3 +209,26 @@ export const fetchSetWithCards = async (setId) => {
             console.log("The set couldn't be fetched.");
     }
 };
+
+export const setOnLibrary = async (data) => {
+    try{
+        await AsyncStorage.setItem('libraryState', JSON.stringify(data));
+       
+    }
+    catch(e){
+        console.log("Couldn't store the library state", e);
+    }
+
+    };
+
+export const getOnLibrary = async () => {
+    try{
+        const libraryState = await AsyncStorage.getItem('libraryState');
+        return JSON.parse(libraryState);
+    }
+    catch(e){
+        console.log("Couldn't get the library state", e);
+        return null;
+    }
+
+};

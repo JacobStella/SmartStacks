@@ -55,7 +55,7 @@ const register = () => {
 };
 
 const library = () => {
-    navigation.navigate("MainApp");
+    navigation.navigate("SmartStacks");
  };
 
  const test = () => {

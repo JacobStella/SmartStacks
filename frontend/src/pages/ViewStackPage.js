@@ -63,12 +63,14 @@ useEffect(() => {
       localStorage.setItem('preLoginPath', location.pathname);
       navigate('/login');
   } else {
+      const setId = localStorage.getItem('setId');
+      if(!setId){
+        console.log('no setId found in local storage');
+      }else{
       const userData = JSON.parse(userDataString);
       if (userData && userData.id) {
           // Fetch classes as soon as we have the user's ID
-          var TempSetId = "660b146233c00e69d9c3b782"; //THIS IS FOR TESTING ONLY
-          console.log(TempSetId);
-          fetchSetWithCards(TempSetId).then(classes => {
+          fetchSetWithCards(setId).then(classes => {
               if (classes && classes.length > 0) {
                   setCards(classes); // Assuming the API returns an array of classes
                   console.log("class useStste stuff")
@@ -81,6 +83,7 @@ useEffect(() => {
           console.log('User data is invalid or ID is missing.');
           navigate('/login');
       }
+    }
   }
 }, [navigate, location.pathname]);
 
@@ -136,3 +139,7 @@ useEffect(() => {
 }
 
 export default ViewStackPage;
+
+
+
+

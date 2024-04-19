@@ -125,6 +125,7 @@ app.post('/api/send-verif', async (req, res) => {
 app.post('/api/verify/:token', async (req, res) => {
 	const {token} = req.params;
 	if(token == null){
+		res.send("no token"); // TESTING
 		res.status(500).json({ message: "Token not recieved" });
 	}
 	
@@ -138,7 +139,11 @@ app.post('/api/verify/:token', async (req, res) => {
 	} catch(e) {
 		error = e.toString();
 		res.status(500).json({error : error});
+		res.send(error); // TESTING
 	}
+	// TESTING
+	res.send("Email verified, redirecting soon");
+	
   	res.status(200).json({ message: "Verification Succeeded" });
 });
 

@@ -103,10 +103,11 @@ function CardUI() {
             } else {
                 // Assuming the response structure you want is an array of card details
                 // Adjust how you handle and display these results accordingly
-                let resultText = res.cards?.map(card => ${card.Term}: ${card.Definition}).join(', ') || '';
+                let resultText = res.cards?.map(card => `${card.Term}: ${card.Definition}`).join(', ') || '';
                 setResults('Card(s) have been retrieved');
                 setCardList(resultText);
             }
+            
         } catch (e) {
             alert(e.toString());
             setResults(e.toString());

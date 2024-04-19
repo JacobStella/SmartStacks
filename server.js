@@ -124,7 +124,8 @@ app.post('/api/send-verif', async (req, res) => {
 // checking verification
 app.post('/api/verify', async (req, res) => {
 	app.use(bodyParser.urlencoded({ extended: false }));
-	const checkToken = req.body.token;
+	const tokenBody = req.body;
+	const checkToken = tokenBody.token;
 	if(checkToken == null){
 		res.status(500).json({ message: "Token not recieved" });
 	}

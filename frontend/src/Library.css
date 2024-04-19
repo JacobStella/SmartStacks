@@ -234,3 +234,26 @@ div.empty-folder-message {
     align-items: center; /* Align horizontally */
     height: 100%; /* Adjust as needed */
 }
+
+div.stack-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.stack-content button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #172a3a;
+    border: none;
+    height: 80px;
+    width: 80px;
+    padding: 0px 0px;
+}
+
+div.stack-content img {
+    max-width: 90%;
+    max-height: 90%;
+}

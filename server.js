@@ -108,7 +108,7 @@ app.post('/api/send-verif', async (req, res) => {
 		from: "daimondsailer@gmail.com",
 		to: email,
 		subject: "Verify your email",
-		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify?token=${token}`,
+		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify and verify using token ${token}`,
 	};
 
 	// sending the email

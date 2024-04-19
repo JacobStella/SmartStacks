@@ -127,7 +127,7 @@ app.post('/api/verify', async (req, res) => {
 	const checkToken = req.body.token;
 	try{
 		const db = client.db("Group3LargeProject");
-		const result = await db.collection('Users').findOne({ $eq: {Token: checkToken}});
+		const result = await db.collection('Users').findOne({ Token: {$eq:checkToken}});
 
 		// if a matching token is found, verify the user
 		if(result.acknowledged){
@@ -138,9 +138,9 @@ app.post('/api/verify', async (req, res) => {
 		}
 	} catch(e) {
 		error = e.toString();
+		res.status(500).json({error : error);
 	}
-	var ret = { error: error, message: "Verification Succeeded" };
-  	res.status(200).json(ret);
+  	res.status(200).json({ message: "Verification Succeeded" });
 	app.use(bodyParser.json());
 });
 

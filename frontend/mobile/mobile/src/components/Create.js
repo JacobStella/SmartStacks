@@ -1,13 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
+import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 
 
+const submit = async () => {
+    
+}
 
 // I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
     const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
-    
+    const [isPublic, setIsPublic] = useState(false);
+    const toggleSwitch = () => setIsPublic(previousState => !previousState);
+
     const CardCreator = ({ index }) => {
         return(
             <View style={styles.cardContainer}>
@@ -40,6 +45,15 @@ const Create = ({navigation}) => {
                 placeholder = "Description"
                 placeholderTextColor={'#fff'}
                 multiline={true}/>
+                <View style={{marginTop: '3%', alignItems: 'center'}}>
+                <Switch trackColor={{false: '#767577', true: '#09BC8A'}}
+                thumbColor={isPublic ? '#f4f3f4' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={toggleSwitch}
+                value={isPublic}
+                style={{transform:[{scaleX: 1.5}, {scaleY: 1.5}], marginBottom: '15%' }}/>
+                    {isPublic ? <Text style={{color: '#D8DCFF'}}>Public</Text> : <Text style={{color: '#D8DCFF'}}>Private</Text>}
+                </View>
             </View>
             
             {cardPairs.map((cardPair, index) =>(
@@ -51,6 +65,10 @@ const Create = ({navigation}) => {
 
             <TouchableOpacity style={styles.addButton} onPress={addCardPair}>
                 <Text style={styles.buttonText}>+ Add Card</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity style={styles.submitButton} onPress={submit}>
+                <Text style={{fontSize: 28, color: '#fff'}}>Create</Text>
             </TouchableOpacity>
             
         </ScrollView>
@@ -89,11 +107,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#508991',
     },
     descriptionInputContainer: {
-        width: '75%',
+        width: '100%',
         paddingLeft: 20,
         alignContent: 'flex-start',
+        flexDirection: 'row',
+        flexWrap: 'wrap',
     },
     descriptionInput: {
+        width: '75%',
         height: 100,
         borderColor: '#09BC8A',
         borderWidth: 1,
@@ -101,6 +122,7 @@ const styles = StyleSheet.create({
         paddingLeft: 10,
         paddingRight: 10,
         marginBottom: 20,
+        marginRight: '7%',
         fontSize: 20,
         color: '#fff',
         backgroundColor: '#508991',
@@ -161,6 +183,20 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 20,
+        color: '#fff',
+    },
+    submitButton: {
+        width: '40%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 65,
+        borderWidth: 2,
+        borderRadius: 5,
+        marginTop: '10%',
+        backgroundColor: '#09BC8A',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
         color: '#fff',
     },
 });

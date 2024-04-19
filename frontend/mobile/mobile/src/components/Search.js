@@ -1,13 +1,13 @@
 import * as React from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import { TextInput } from 'react-native-gesture-handler';
 
 function Search ({navigation}) {
   return (
-    <View style={styles.container}>
-      <Text onPress={() => navigation.navigate('Home')}
-      style={{fontSize: 28}}>This will be the Search page</Text>
-    </View>
+    <SafeAreaView style={{flex: 1, marginHorizontal: '5%'}}>
+      <TextInput placeholder='Search' clearButtonMode='always' />
+    </SafeAreaView>
   );
 }
 

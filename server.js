@@ -131,16 +131,10 @@ app.post('/api/verify', async (req, res) => {
 	try{
 		const db = client.db("Group3LargeProject");
 		const result = await db.collection('Users').findOne({ Token: {$eq:token}});
-		// if a matching token is found, verify the user
-		if(!result){
-			res.status(400).json({message: "Verification failed at result", token:token});	
-		}
 		
-		// updating verified
+		// if a matching token is found, verify the user
 		const verif = await db.collection('Users').updateOne({Token:token}, {$set: {Verified:true}});
-		if (!verif) {
-			res.status(400).json({message: "Verification failed at verif", token:token});
-		}
+		
 	} catch(e) {
 		error = e.toString();
 		res.status(500).json({error : error});

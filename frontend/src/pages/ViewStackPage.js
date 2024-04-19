@@ -49,6 +49,7 @@ const ViewStackPage = () => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log("Data returned by API:", data);
         return data; // This includes the set and its associated cards
     } catch (error) {
         console.error("There was an error fetching the set:", error);

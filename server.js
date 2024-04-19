@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 });
 
 // for email
-app.use(bodyParser.urlencoded({ extended: false }));
+//app.use(bodyParser.urlencoded({ extended: false }));
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
 	auth: {

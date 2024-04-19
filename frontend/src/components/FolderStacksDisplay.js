@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
-import PlayIcon from '../images/play.png';
+import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
@@ -57,7 +57,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 <div className="stack-content">
                   <span className="stack-name">{set.SetName}</span>
                   <button className="" onClick={(e) => handleGamePage(set._id)}>
-                    <img src={PlayIcon} alt="game" />
+                    <img src={PlayLightIcon} alt="game" />
                   </button>
                 </div>
               </div>

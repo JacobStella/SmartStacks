@@ -56,7 +56,6 @@ const CreateStackPage = () => {
     setCardPairs([...cardPairs, { term: '', definition: '' }]);
   };
 
-  // Function to toggle the switch between public and private
   const toggleSwitch = () => {
     setIsPublic(!isPublic);
   };

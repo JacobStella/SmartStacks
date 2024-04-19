@@ -108,7 +108,7 @@ app.post('/api/send-verif', async (req, res) => {
 		from: "daimondsailer@gmail.com",
 		to: email,
 		subject: "Verify your email",
-		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify and verify using token ${token}`,
+		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify?token=${token}`,
 	};
 
 	// sending the email
@@ -153,6 +153,28 @@ app.post('/api/sendforgot', async (req, res) => {
 		subject: "Forgot your password",
 		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
 	};
+
+	// sending the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error){
+			res.status(500).json({message: "Error sending forgot password email"});
+		} else {
+			res.status(200).json({message: "Forgot password email sent"});
+		}
+	});
+});
+
+app.post('/api/forgot', async (req, res) => {
+	const {userId, newPass} = req.body;
+
+	try{
+		const db = client.db("Group3LargeProject");
+		const result = await db.collection('Users').updateOne({userId:userId}, {$set: {Password:newPass}});
+	} catch(e){
+		error = e.toString();
+		res.status(500).json({error : error});
+	}
+	res.status(200).json({message: "Password Reset"});
 });
 
 // Card Ops

@@ -6,7 +6,10 @@ const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
-
+// email setup
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+const emailPass = process.env.EMAIL_PASS;
 
 async function connectToMongo() {
   try {
@@ -42,7 +45,14 @@ app.use((req, res, next) => {
     next();
 });
 
-
+// for email
+const transporter = nodemailer.createTransport({
+	service: "Gmail",
+	auth: {
+		user: "daimondsailer@gmail.com",
+		pass: emailPass,
+	},
+});
 
 app.post('/api/register', async (req, res) => {
   const { email, firstName, lastName, username, password } = req.body;
@@ -77,6 +87,102 @@ app.post('/api/register', async (req, res) => {
       console.error(error);
       res.status(500).json({ error: error.toString() });
   }
+});
+
+// Email Ops
+// Sending Verification
+app.post('/api/send-verif', async (req, res) => {
+	const {userId, email } = req.body;
+	const token = crypto.randomBytes(32).toString('hex');
+
+	// Save token to userId
+	const db = client.db("Group3LargeProject");
+	const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, { $set: {Token:token}});
+	// make sure above line succeeded
+	if (!result){
+		res.status(400).json({message: "Token could not be saved to User"});
+	}
+
+	// the email
+	const mailOptions = {
+		from: "daimondsailer@gmail.com",
+		to: email,
+		subject: "Verify your email",
+		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify/${token}`,
+	};
+
+	// sending the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error){
+			res.status(500).json({message: "Error sending verification email"});
+		} else {
+			res.status(200).json({message: "Verification email sent", token:token});
+		}
+	});
+});
+
+// checking verification
+app.get('/api/verify/:token', async (req, res) => {
+	const {token} = req.params;
+	if(token == null){
+		res.send("no token"); // TESTING
+		res.status(500).json({ message: "Token not recieved" });
+	}
+	
+	try{
+		const db = client.db("Group3LargeProject");
+		const result = await db.collection('Users').findOne({ Token: {$eq:token}});
+		
+		// if a matching token is found, verify the user
+		const verif = await db.collection('Users').updateOne({Token:token}, {$set: {Verified:true}});
+		
+	} catch(e) {
+		error = e.toString();
+		res.status(500).json({error : error});
+		res.send(error); // TESTING
+	}
+	// TESTING
+	res.send("Email verified, redirecting soon");
+	
+  	res.status(200).json({ message: "Verification Succeeded" });
+});
+
+// send forgot password email
+app.post('/api/sendforgot', async (req, res) => {
+	const {email, userId} = req.body;
+	
+	// the email
+	const mailOptions = {
+		from: "daimondsailer@gmail.com",
+		to: email,
+		subject: "Forgot your password",
+		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
+	};
+
+	// sending the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error){
+			res.status(500).json({message: "Error sending forgot password email"});
+		} else {
+			res.status(200).json({message: "Forgot password email sent"});
+		}
+	});
+});
+
+app.post('/api/forgot', async (req, res) => {
+	const {userId, newPass} = req.body;
+	
+	try{
+		const db = client.db("Group3LargeProject");
+		const result = await db.collection('Users').updateOne({"_id": new ObjectId(userId)}, {$set: {Password:newPass}});
+		if(!result){
+			res.status(500).json({message: "Could not change pass"});
+		}
+	} catch(e){
+		error = e.toString();
+		res.status(500).json({error : error});
+	}
+	res.status(200).json({message: "Password Reset"});
 });
 
 // Card Ops

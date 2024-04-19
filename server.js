@@ -99,7 +99,7 @@ app.post('/api/send-verif', async (req, res) => {
 	const db = client.db("Group3LargeProject");
 	const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, { $set: {Token:token}});
 	// make sure above line succeeded
-	if (!result.acknowledged){
+	if (!result){
 		res.status(400).json({message: "Token could not be saved to User"});
 	}
 
@@ -171,10 +171,13 @@ app.post('/api/sendforgot', async (req, res) => {
 
 app.post('/api/forgot', async (req, res) => {
 	const {userId, newPass} = req.body;
-
+	
 	try{
 		const db = client.db("Group3LargeProject");
 		const result = await db.collection('Users').updateOne({userId:userId}, {$set: {Password:newPass}});
+		if(!result){
+			res.status(500).json({message: "Could not change pass"});
+		}
 	} catch(e){
 		error = e.toString();
 		res.status(500).json({error : error});

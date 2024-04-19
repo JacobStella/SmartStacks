@@ -138,7 +138,7 @@ app.post('/api/verify', async (req, res) => {
 		}
 	} catch(e) {
 		error = e.toString();
-		res.status(500).json({error : error);
+		res.status(500).json({error : error});
 	}
   	res.status(200).json({ message: "Verification Succeeded" });
 	app.use(bodyParser.json());

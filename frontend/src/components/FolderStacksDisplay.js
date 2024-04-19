@@ -7,9 +7,7 @@ import createLight from '../images/createLight.png';
 import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
-  const [editing, setEditing] = useState(false);
   const [showStacks, setShowStacks] = useState(false);
-  const [folderName, setFolderName] = useState(name); // Store the edited folder name
   const navigate = useNavigate();
 
   const handleCreateNewStack = () => {
@@ -22,44 +20,28 @@ const FolderContainer = ({ name, onEdit, sets }) => {
 
   const handleGamePage = (setId) => {
     navigate(`/game/${setId}`);
+  }
+
+  const handleEditStack = (setId, e) => {
+    e.stopPropagation(); // Prevent the dropdown from toggling when editing
+    // Logic to handle stack editing
   };
 
-  const toggleEditing = () => {
-    setEditing(!editing);
-  };
-
-  const handleInputChange = (e) => {
-    setFolderName(e.target.value);
-  };
-
-  const handleEditSubmit = () => {
-    // Call onEdit with the updated folder name
-    onEdit(folderName);
-    // Exit editing mode
-    setEditing(false);
+  const toggleStacks = () => {
+    setShowStacks(!showStacks);
   };
 
   return (
     <div className="folder-container">
       <div className="folder-template">
-        <div className="folder-image" onClick={toggleEditing}>
+        <div className="folder-image" onClick={toggleStacks}>
           <button className="folder-icon-button">
             <img src={FolderIcon} alt="Folder" />
           </button>
         </div>
         <div className="folder-content">
-          {editing ? (
-            <input
-              type="text"
-              value={folderName}
-              onChange={handleInputChange}
-              onBlur={handleEditSubmit}
-              autoFocus // Automatically focus on the input field
-            />
-          ) : (
-            <span className="folder-name">{name}</span>
-          )}
-          <button className="folder-edit-button" onClick={() => setEditing(true)}> 
+          <span className="folder-name">{name}</span>
+          <button className="folder-edit-button" onClick={onEdit}>
             <img src={EditIcon} alt="Edit" />
           </button>
         </div>
@@ -91,7 +73,6 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     </div>
   );
 };
-
 
 
 const FolderStacksDisplay = ({ folders, onEditFolder }) => {

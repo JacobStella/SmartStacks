@@ -122,7 +122,7 @@ app.post('/api/send-verif', (req, res) => {
 });
 
 // checking verification
-app.post('/api/verify', (req, res) => {
+/*app.post('/api/verify', (req, res) => {
 	const checkToken = req.body.token;
 
 	try{
@@ -154,7 +154,7 @@ app.post('/api/sendforgot', (req, res) => {
 		subject: "Forgot your password",
 		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
 	};
-});
+}); */
 
 // Card Ops
 // Add card

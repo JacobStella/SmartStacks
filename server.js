@@ -116,7 +116,7 @@ app.post('/api/send-verif', async (req, res) => {
 		if (error){
 			res.status(500).json({message: "Error sending verification email"});
 		} else {
-			res.status(200).json({message: "Verification email sent"});
+			res.status(200).json({message: "Verification email sent", token:token});
 		}
 	});
 });

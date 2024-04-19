@@ -8,6 +8,7 @@ import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
   const [editing, setEditing] = useState(false);
+  const [showStacks, setShowStacks] = useState(false);
   const [folderName, setFolderName] = useState(name); // Store the edited folder name
   const navigate = useNavigate();
 

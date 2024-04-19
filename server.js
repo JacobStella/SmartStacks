@@ -46,7 +46,6 @@ app.use((req, res, next) => {
 });
 
 // for email
-//app.use(bodyParser.urlencoded({ extended: false }));
 const transporter = nodemailer.createTransport({
 	service: "Gmail",
 	auth: {
@@ -123,17 +122,17 @@ app.post('/api/send-verif', async (req, res) => {
 });
 
 // checking verification
-/*app.post('/api/verify', (req, res) => {
+app.post('/api/verify', async (req, res) => {
+	app.use(bodyParser.urlencoded({ extended: false }));
 	const checkToken = req.body.token;
-
 	try{
 		const db = client.db("Group3LargeProject");
 		const result = await db.collection('Users').findOne({ $eq: {Token: checkToken}});
 
 		// if a matching token is found, verify the user
-		if(result){
+		if(result.acknowledged){
 			const verif = await db.collection('Users').updateOne({Token:checkToken}, {$set: {Verified:true}});
-			if (!verif) {
+			if (!verif.acknowledged) {
 				res.status(400).json({message: "Verification failed"})
 			}
 		}
@@ -142,10 +141,11 @@ app.post('/api/send-verif', async (req, res) => {
 	}
 	var ret = { error: error, message: "Verification Succeeded" };
   	res.status(200).json(ret);
+	app.use(bodyParser.json());
 });
 
 // send forgot password email
-app.post('/api/sendforgot', (req, res) => {
+app.post('/api/sendforgot', async (req, res) => {
 	const {email, userId} = req.body;
 	
 	// the email
@@ -155,7 +155,7 @@ app.post('/api/sendforgot', (req, res) => {
 		subject: "Forgot your password",
 		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
 	};
-}); */
+});
 
 // Card Ops
 // Add card

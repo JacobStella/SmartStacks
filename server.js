@@ -136,7 +136,7 @@ app.post('/api/verify', async (req, res) => {
 		if(result){
 			const verif = await db.collection('Users').updateOne({Token:checkToken}, {$set: {Verified:true}});
 			if (!verif) {
-				res.status(400).json({message: "Verification failed"})
+				res.status(400).json({message: "Verification failed", token:checkToken});
 			}
 		}
 	} catch(e) {

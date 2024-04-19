@@ -49,6 +49,7 @@ const ViewStackPage = () => {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        console.log("Data returned by API:", data);
         return data; // This includes the set and its associated cards
     } catch (error) {
         console.error("There was an error fetching the set:", error);
@@ -63,26 +64,31 @@ useEffect(() => {
       localStorage.setItem('preLoginPath', location.pathname);
       navigate('/login');
   } else {
-      const userData = JSON.parse(userDataString);
-      if (userData && userData.id) {
-          // Fetch classes as soon as we have the user's ID
-          var TempSetId = "660b146233c00e69d9c3b782"; //THIS IS FOR TESTING ONLY
-          console.log(TempSetId);
-          fetchSetWithCards(TempSetId).then(classes => {
-              if (classes && classes.length > 0) {
-                  setCards(classes); // Assuming the API returns an array of classes
-                  console.log("class useStste stuff")
-                  console.log(classes);
-              } else {
-                  console.log('No classes found for this user.');
-              }
-          });
+      const setId = localStorage.getItem('setId');
+      if (!setId) {
+          console.log('No setId found in local storage');
       } else {
-          console.log('User data is invalid or ID is missing.');
-          navigate('/login');
+        console.log("here is the setId", setId);
+          const userData = JSON.parse(userDataString);
+          if (userData && userData.id) {
+              // Fetch classes as soon as we have the user's ID
+              fetchSetWithCards(setId).then(classes => {
+                  if (classes && classes.length > 0) {
+                      setCards(classes); // Assuming the API returns an array of classes
+                      console.log("fetched set correctly!")
+                      console.log(classes);
+                  } else {
+                      console.log('No classes found for this user.');
+                  }
+              });
+          } else {
+              console.log('User data is invalid or ID is missing.');
+              navigate('/login');
+          }
       }
   }
 }, [navigate, location.pathname]);
+
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -136,3 +142,7 @@ useEffect(() => {
 }
 
 export default ViewStackPage;
+
+
+
+

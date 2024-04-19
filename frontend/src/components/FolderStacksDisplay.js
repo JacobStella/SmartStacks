@@ -18,12 +18,14 @@ const FolderContainer = ({ name, onEdit, sets }) => {
   };
 
   const handleViewStack = (setId) => {
-    navigate(`/view/${setId}`);
+    localStorage.setItem("setId", setId);
+    navigate('/view');
   };
 
   const handleGamePage = (setId) => {
-    navigate(`/game/${setId}`);
-  }
+    localStorage.setItem("setId", setId);
+    navigate('/game');
+  };
 
   const handleEditStack = (setId, e) => {
     e.stopPropagation(); // Prevent the dropdown from toggling when editing

@@ -5,34 +5,6 @@ import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
-/*             OLD GETCLASSANDSETS
-const getClassAndSets = async (userId) => {
-    try {
-        const url = buildPath(`api/getClassAndSets/${userId}`);
-        console.log(`Fetching from URL: ${url}`); // This will log the full URL being requested
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        });
-
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        // Before attempting to parse JSON, check if the response is actually JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("Received non-JSON response from server");
-        }
-d
-        const classAndSets = await response.json();
-        console.log('Classes and their sets:', classAndSets);
-    } catch (error) {
-        console.error('Error fetching classes and sets:', error);
-    }
-};
-;
-*/
 
 const getClassAndSets = async (userId) => {
     try {
@@ -139,20 +111,6 @@ const LibraryPage = () => {
     };
 
     const userData = getUserData(); // Attempt to retrieve user data at component mount
-/*
-    const editFolderName = (folderId) => {
-        const newName = prompt('Enter new folder name:');
-        if (newName) {
-            const updatedFolders = folders.map(folder => {
-                if (folder.id === folderId) {
-                    return { ...folder, name: newName };
-                }
-                return folder;
-            });
-            setFolders(updatedFolders);
-        }
-    };
-*/
 
 const editFolderName = (newName,folderId) => {
     if (newName && newName.trim() !== '') {
@@ -284,10 +242,6 @@ const addFolder = async (folderName) => {
 
 export default LibraryPage;
 
+/*JACOB NOTES
 
-
-
-
-
-//I have to figure out how to pass variables/functions to other files. 
-//It seems to work somewhere in the file. First thing to do tmre
+    So we are going to store the stacks id so we can pull the whole thing up on the view stack page */

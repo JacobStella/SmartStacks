@@ -127,7 +127,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => editFolderName(newName, folder._id)} sets={folder.sets} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} sets={folder.sets} />
       ))}
     </section>
   );

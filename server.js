@@ -125,6 +125,10 @@ app.post('/api/send-verif', async (req, res) => {
 app.post('/api/verify', async (req, res) => {
 	app.use(bodyParser.urlencoded({ extended: false }));
 	const checkToken = req.body.token;
+	if(checktoken == null){
+		res.status(500).json({ message: "Token not recieved" });
+	}
+	
 	try{
 		const db = client.db("Group3LargeProject");
 		const result = await db.collection('Users').findOne({ Token: {$eq:checkToken}});

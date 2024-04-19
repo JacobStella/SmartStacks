@@ -59,7 +59,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
           ) : (
             <span className="folder-name">{name}</span>
           )}
-          <button className="folder-edit-button" onClick={onEdit}>
+          <button className="folder-edit-button" onClick={() => setEditing(true)}> 
             <img src={EditIcon} alt="Edit" />
           </button>
         </div>
@@ -91,6 +91,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     </div>
   );
 };
+
 
 
 const FolderStacksDisplay = ({ folders, onEditFolder }) => {

@@ -123,8 +123,7 @@ app.post('/api/send-verif', async (req, res) => {
 
 // checking verification
 app.post('/api/verify', async (req, res) => {
-	app.use(bodyParser.urlencoded({ extended: false }));
-	const checkToken = req.query.token;
+	const checkToken = req.body;
 	if(checkToken == null){
 		res.status(500).json({ message: "Token not recieved" });
 	}
@@ -145,7 +144,6 @@ app.post('/api/verify', async (req, res) => {
 		res.status(500).json({error : error});
 	}
   	res.status(200).json({ message: "Verification Succeeded" });
-	app.use(bodyParser.json());
 });
 
 // send forgot password email

@@ -97,6 +97,7 @@ app.post('/api/send-verif', async (req, res) => {
 	const token = crypto.randomBytes(32).toString('hex');
 
 	// Save token to userId
+	 const db = client.db("Group3LargeProject");
 	const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, {$set: {Token:token}});
 	// make sure above line succeeded
 	if (!result){

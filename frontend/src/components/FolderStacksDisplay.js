@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
@@ -7,6 +7,9 @@ import createLight from '../images/createLight.png';
 import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(name);
+  const editInputRef = useRef(null);
   const [showStacks, setShowStacks] = useState(false);
   const navigate = useNavigate();
 
@@ -31,6 +34,34 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     setShowStacks(!showStacks);
   };
 
+  // Automatically focus and select the input text when editing starts
+  useEffect(() => {
+    if (isEditing && editInputRef.current) {
+      editInputRef.current.focus();
+      editInputRef.current.select();
+    }
+  }, [isEditing]);
+
+  const handleEditStart = (e) => {
+    e.stopPropagation(); // Prevent any parent handlers from being executed
+    setIsEditing(true);
+  };
+
+  const handleEditComplete = () => {
+    if (editedName !== name) {
+      onEdit(editedName); // Call the onEdit prop with the new name
+    }
+    setIsEditing(false);
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleEditComplete();
+    }
+  };
+
+  // ... other functions remain unchanged
+
   return (
     <div className="folder-container">
       <div className="folder-template">
@@ -40,10 +71,23 @@ const FolderContainer = ({ name, onEdit, sets }) => {
           </button>
         </div>
         <div className="folder-content">
-          <span className="folder-name">{name}</span>
-          <button className="folder-edit-button" onClick={onEdit}>
-            <img src={EditIcon} alt="Edit" />
-          </button>
+          {isEditing ? (
+            <input
+              ref={editInputRef}
+              className="folder-name-edit"
+              value={editedName}
+              onChange={(e) => setEditedName(e.target.value)}
+              onBlur={handleEditComplete}
+              onKeyPress={handleKeyPress}
+            />
+          ) : (
+            <>
+              <span className="folder-name">{name}</span>
+              <button className="folder-edit-button" onClick={handleEditStart}>
+                <img src={EditIcon} alt="Edit" />
+              </button>
+            </>
+          )}
         </div>
       </div>
       {showStacks && (

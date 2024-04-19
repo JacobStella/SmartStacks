@@ -92,7 +92,7 @@ app.post('/api/register', async (req, res) => {
 
 // Email Ops
 // Sending Verification
-app.post('/api/send-verif', (req, res) => {
+app.post('/api/send-verif', async (req, res) => {
 	const {userId, email } = req.body;
 	const token = crypto.randomBytes(32).toString('hex');
 

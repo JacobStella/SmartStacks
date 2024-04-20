@@ -237,14 +237,7 @@ const addFolder = async (folderName) => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader 
-                    createNewFolder={createNewFolder} 
-                    handleFolderSearch={handleFolderSearch} 
-                    searchResults={searchResults} // Pass search results to LibraryHeader
-                    handleSearchItemClick={handleSearchItemClick} // Function to handle search item click
-                    setSearchFolderInput={setSearchFolderInput} 
-                    searchFolderInputRef={searchFolderInputRef}
-                />
+                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} setSearchFolderInput={setSearchFolderInput} searchFolderInputRef={searchFolderInputRef}/>
                 <div className="folder-stacks-display-container">
                     <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
                 </div>
@@ -253,7 +246,6 @@ const addFolder = async (folderName) => {
         </div>
     );
 };
-
 export default LibraryPage;
 
 /*JACOB NOTES

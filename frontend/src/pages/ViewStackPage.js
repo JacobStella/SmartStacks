@@ -20,12 +20,7 @@ function buildPath(route)
 }
 
 const ViewStackPage = () => {
-  const [cards, setCards] = useState([
-    { front: 'Front 1', back: 'Back 1' },
-    { front: 'Front 2', back: 'Back 2' },
-    { front: 'Front 3', back: 'Back 3' },
-    // ... more cards
-  ]);
+  const [cards, setCards] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -42,50 +37,49 @@ const ViewStackPage = () => {
 
   const fetchSetWithCards = async (setId) => {
     try {
-        // Use buildPath to construct the URL
-        const url = buildPath(`api/getset/${setId}`);
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        console.log("Data returned by API:", data);
-        return data; // This includes the set and its associated cards
+      const url = buildPath(`api/getset/${setId}`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log("Data returned by API:", data);
+      return data.cards; // Assuming the API returns an array of cards
     } catch (error) {
-        console.error("There was an error fetching the set:", error);
-        return null;
+      console.error("There was an error fetching the set:", error);
+      return [];
     }
-};
+  };
 
 useEffect(() => {
   const userDataString = localStorage.getItem('user_data');
   if (!userDataString) {
-      console.log('No user data found in localStorage.');
-      localStorage.setItem('preLoginPath', location.pathname);
-      navigate('/login');
+    console.log('No user data found in localStorage.');
+    localStorage.setItem('preLoginPath', location.pathname);
+    navigate('/login');
   } else {
-      const setId = localStorage.getItem('setId');
-      if (!setId) {
-          console.log('No setId found in local storage');
-      } else {
-        console.log("here is the setId", setId);
-          const userData = JSON.parse(userDataString);
-          if (userData && userData.id) {
-              // Fetch classes as soon as we have the user's ID
-              fetchSetWithCards(setId).then(classes => {
-                  if (classes && classes.length > 0) {
-                      setCards(classes); // Assuming the API returns an array of classes
-                      console.log("fetched set correctly!")
-                      console.log(classes);
-                  } else {
-                      console.log('No classes found for this user.');
-                  }
-              });
+    const setId = localStorage.getItem('setId');
+    if (!setId) {
+      console.log('No setId found in local storage');
+    } else {
+      const userData = JSON.parse(userDataString);
+      if (userData && userData.id) {
+        fetchSetWithCards(setId).then(cardsData => {
+          if (cardsData && cardsData.length > 0) {
+            setCards(cardsData);
+            console.log("fetched cards correctly!");
+            console.log(cardsData);
           } else {
-              console.log('User data is invalid or ID is missing.');
-              navigate('/login');
+            console.log('No cards found for this set.');
           }
+        }).catch(error => {
+          console.error('Error fetching cards:', error);
+        });
+      } else {
+        console.log('User data is invalid or ID is missing.');
+        navigate('/login');
       }
+    }
   }
 }, [navigate, location.pathname]);
 

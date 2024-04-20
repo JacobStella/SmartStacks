@@ -27,10 +27,11 @@ function buildPath(route)
 
 const ViewStackPage = () => {
   const [cards, setCards] = useState([]);
+  const [stackName, setStackName] = useState("Stack Title"); // Default value as "Stack Title"
+  const [stackDesc, setStackDesc] = useState(""); // Default value as an empty string
   const navigate = useNavigate();
   const location = useLocation();
-  var stackName;
-  var stackDesc;
+  
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
@@ -75,8 +76,8 @@ const ViewStackPage = () => {
           fetchSetWithCards(setId).then(data => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
-              stackName = data.setName;
-              stackDesc = data.description
+              setStackName(data.setName);
+              setStackDesc(data.description);
               console.log("fetched cards correctly!");
               console.log(data.cards);
             } else {

@@ -4,8 +4,6 @@ import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
-
-
 const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);
@@ -14,16 +12,13 @@ const getClassAndSets = async (userId) => {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         });
-
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
             throw new Error("Received non-JSON response from server");
         }
-
         const data = await response.json();
         //console.log('Classes and their sets:', data);
         return data; // Return the data here
@@ -32,9 +27,6 @@ const getClassAndSets = async (userId) => {
         return null; // Return null in case of an error
     }
 };
-
-
-
 function buildPath(route)
 {
     if (process.env.NODE_ENV === 'production')
@@ -46,15 +38,15 @@ function buildPath(route)
         return 'http://localhost:5000/' + route;
     }
 }
-
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
-    const [searchResults, setSearchResults] = useState({ classes: [], sets: [] }); // For storing search results
     const searchFolderInputRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
+    var folderSearch;
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -81,13 +73,11 @@ const LibraryPage = () => {
             }
         }
     }, [navigate, location.pathname]);// Dependence on navigate and location.pathname
-
     const handleRedirect = () => {
         console.log('Redirecting to login...');
         localStorage.setItem('preLoginPath', location.pathname);
         navigate('/login');
     };
-
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
         if (!userDataString) {
@@ -109,9 +99,7 @@ const LibraryPage = () => {
             return null;
         }
     };
-
     const userData = getUserData(); // Attempt to retrieve user data at component mount
-
 const editFolderName = (newName,folderId) => {
     if (newName && newName.trim() !== '') {
         editFolderNameEndpoint(newName, folderId); 
@@ -124,24 +112,19 @@ const editFolderName = (newName,folderId) => {
         setFolders(updatedFolders);
     }
 };
-
 //THIS WONT WORK TILL ENDPOINTS ARE UP
 const editFolderNameEndpoint = async (newName, folderId) => {
     if (!userData) return; // Early return if userData is null
-
     const userId = userData.id;
     let classObj = { classId: folderId, newInfo: newName, code: 1 };
     let classJson = JSON.stringify(classObj);
-
     try {
         const response = await fetch('api/updateclass', {
             method: 'POST',
             body: classJson,
             headers: {'Content-Type': 'application/json'}
         });
-
         const res = await response.json();
-
         console.log(res);
             if (response.ok) {
                 console.log('updated!');
@@ -152,26 +135,20 @@ const editFolderNameEndpoint = async (newName, folderId) => {
             setMessage("API Error: " + error.toString());
         }
 };
-
-
 const addFolder = async (folderName) => {
     if (!userData) return; // Early return if userData is null
     console.log("folders", folders);
     const userId = userData.id;
     let classObj = { userId: userId, className: folderName };
     let classJson = JSON.stringify(classObj);
-
     try {
         const response = await fetch('api/addclass', {
             method: 'POST',
             body: classJson,
             headers: {'Content-Type': 'application/json'}
         });
-
         const res = await response.json();
         console.log(res);
-
-
             if (response.ok) {
                 setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
                 setMessage("Folder has been added.");
@@ -183,7 +160,6 @@ const addFolder = async (folderName) => {
             setMessage("API Error: " + error.toString());
         }
 };
-
     /*
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');
@@ -197,7 +173,6 @@ const addFolder = async (folderName) => {
         addFolder(' ');
         // Optionally, set a flag indicating that creation is in progress
     };
-
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
@@ -214,41 +189,28 @@ const addFolder = async (folderName) => {
                 method: 'GET',
                 headers: {'Content-Type': 'application/json'}
             });
-            if (!response.ok) {
-                throw new Error("Search API Error: " + response.statusText);
-            }
             const searchResults = await response.json();
-            console.log('Search Results:', searchResults);
-            setSearchResults(searchResults); // Update the state with the new search results
-        } catch (error) {
-            console.error("Search Fetch Error:", error.toString());
-            setMessage(error.toString());
-        }
-    };
 
-    const handleSearchItemClick = (type, item) => {
-        // Handle navigation or any action when a search item is clicked
-        // Example navigation, update this as per your app's routing
-        navigate(`/${type}/${item._id}`);
+            if (response.ok) {
+                console.log('Search Results:', searchResults);
+            } else {
+                setMessage("Search API Error:" + searchResults.error);
+            }
+        } catch (e) {
+            console.error("Search Fetch Error:", e.toString());
+            setMessage(e.toString());
+        }
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-
     //I probably have to pass variables / functions into the Library header file
     return (
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader 
-                    createNewFolder={createNewFolder} 
-                    handleFolderSearch={searchFolderItems} // Updated to directly use searchFolderItems
-                    setSearchFolderInput={setSearchFolderInput} 
-                    searchFolderInputRef={searchFolderInputRef}
-                    searchResults={searchResults} // Pass the search results to LibraryHeader
-                    handleSearchItemClick={handleSearchItemClick} // Pass the function to handle item clicks
-                />
+                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} setSearchFolderInput={setSearchFolderInput} searchFolderInputRef={searchFolderInputRef}/>
                 <div className="folder-stacks-display-container">
                     <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
                 </div>
@@ -257,9 +219,4 @@ const addFolder = async (folderName) => {
         </div>
     );
 };
-
 export default LibraryPage;
-
-/*JACOB NOTES
-
-    So we are going to store the stacks id so we can pull the whole thing up on the view stack page */

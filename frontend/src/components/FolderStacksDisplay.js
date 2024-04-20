@@ -6,7 +6,7 @@ import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({ name, onEdit, sets, isEditing: initialIsEditing }) => {
+const FolderContainer = ({ name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
   const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);
@@ -51,12 +51,21 @@ const FolderContainer = ({ name, onEdit, sets, isEditing: initialIsEditing }) =>
   };
 
   const handleEditComplete = () => {
-    if (editedName.trim() !== '' && editedName !== name) {
-        onEdit(editedName); // Now just pass the new name
+    if (editedName.trim() !== '') {
+      if (name === '') {
+        // This was a new folder, so we need to add it to the database
+        onAdd(editedName).then(newFolder => {
+          // The newFolder should have the id and name returned from the server
+          onEdit(newFolder.className, newFolder._id); 
+        });
+      } else if (editedName !== name) {
+        // This was an existing folder, and the name has changed
+        onEdit(editedName, folder._id); // Now just pass the new name
+      }
+      console.log('Exiting edit mode');
+      setTimeout(() => setIsEditing(false), 0);
     }
-    console.log('Exiting edit mode');
-    setTimeout(() => setIsEditing(false), 0);
-};
+  };
 
 const handleButtonClick = (e) => {
   e.preventDefault();
@@ -147,7 +156,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} sets={folder.sets} isEditing={folder.isEditing} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
       ))}
     </section>
   );

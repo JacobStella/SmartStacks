@@ -1,38 +1,10 @@
-import React, { useState, useEffect } from 'react'; // Import useEffect here
+import React, { useState, useEffect, useRef } from 'react'; // Import useEffect here
 import NavBar2 from '../components/NavBar2';
 import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
-/*             OLD GETCLASSANDSETS
-const getClassAndSets = async (userId) => {
-    try {
-        const url = buildPath(`api/getClassAndSets/${userId}`);
-        console.log(`Fetching from URL: ${url}`); // This will log the full URL being requested
-        const response = await fetch(url, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'},
-        });
-
-        if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
-        }
-
-        // Before attempting to parse JSON, check if the response is actually JSON
-        const contentType = response.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("Received non-JSON response from server");
-        }
-d
-        const classAndSets = await response.json();
-        console.log('Classes and their sets:', classAndSets);
-    } catch (error) {
-        console.error('Error fetching classes and sets:', error);
-    }
-};
-;
-*/
 
 const getClassAndSets = async (userId) => {
     try {
@@ -78,8 +50,12 @@ function buildPath(route)
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
+    const [searchFolderInput, setSearchFolderInput] = useState('');
+    const searchFolderInputRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
+    var folderSearch;
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -136,25 +112,10 @@ const LibraryPage = () => {
     };
 
     const userData = getUserData(); // Attempt to retrieve user data at component mount
-/*
-    const editFolderName = (folderId) => {
-        const newName = prompt('Enter new folder name:');
-        if (newName) {
-            const updatedFolders = folders.map(folder => {
-                if (folder.id === folderId) {
-                    return { ...folder, name: newName };
-                }
-                return folder;
-            });
-            setFolders(updatedFolders);
-        }
-    };
-*/
 
-const editFolderName = (folderId) => {
-    const newName = prompt('Enter new folder name:');
-    if (newName) {
-        //editFolderNameEndpoint(newName, folderId)  UNCOMMENT WHEN API IS IMPLEMENTED
+const editFolderName = (newName,folderId) => {
+    if (newName && newName.trim() !== '') {
+        editFolderNameEndpoint(newName, folderId); 
         const updatedFolders = folders.map(folder => {
             if (folder._id === folderId) {
                 return { ...folder, className: newName };
@@ -196,7 +157,7 @@ const editFolderNameEndpoint = async (newName, folderId) => {
 
 const addFolder = async (folderName) => {
     if (!userData) return; // Early return if userData is null
-
+    console.log("folders", folders);
     const userId = userData.id;
     let classObj = { userId: userId, className: folderName };
     let classJson = JSON.stringify(classObj);
@@ -213,7 +174,7 @@ const addFolder = async (folderName) => {
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName }]);
+                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
                 setMessage("Folder has been added.");
                 console.log('Folders after adding new folder:', folders);
             } else {
@@ -224,21 +185,61 @@ const addFolder = async (folderName) => {
         }
 };
 
-
+    /*
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');
         if (folderName) {
             addFolder(folderName);
         }
     };
+    */
+    const createNewFolder = () => {
+        // Call addFolder with an empty string as the folder name
+        addFolder(' ');
+        // Optionally, set a flag indicating that creation is in progress
+    };
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+    const handleFolderSearch = async (event) => {
+        event.preventDefault();
+        const userId = userData.id;
+        await searchFolderItems(userId, searchFolderInput);
+    };
+    
+    const searchFolderItems = async (userId, searchTerm) => {
+        try {
+            const url = buildPath(`api/search?userId=${userId}&searchTerm=${encodeURIComponent(searchTerm)}`);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: {'Content-Type': 'application/json'}
+            });
+            const searchResults = await response.json();
+    
+            if (response.ok) {
+                console.log('Search Results:', searchResults);
+            } else {
+                setMessage("Search API Error:" + searchResults.error);
+            }
+        } catch (e) {
+            console.error("Search Fetch Error:", e.toString());
+            setMessage(e.toString());
+        }
+    };
+
+    ///////////////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////
+
+    //I probably have to pass variables / functions into the Library header file
     return (
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader createNewFolder={createNewFolder} />
+                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} setSearchFolderInput={setSearchFolderInput} searchFolderInputRef={searchFolderInputRef}/>
                 <div className="folder-stacks-display-container">
-                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} />
+                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
                 </div>
                 {message && <p>{message}</p>}
             </div>
@@ -247,3 +248,7 @@ const addFolder = async (folderName) => {
 };
 
 export default LibraryPage;
+
+/*JACOB NOTES
+
+    So we are going to store the stacks id so we can pull the whole thing up on the view stack page */

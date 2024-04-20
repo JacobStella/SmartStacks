@@ -81,6 +81,7 @@ app.post('/api/addcard', async (req, res) => {
   // outgoing: error, id (of new card)
 
   const { userId, term, definition, setId } = req.body;
+  console.log('Received a request to /api/addcard:', req.body);
   var error = '';
   var id = null;
 

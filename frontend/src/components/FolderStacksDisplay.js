@@ -1,11 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
 import EditIcon from '../images/EditIcon.png';
+import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({ name, onEdit, sets }) => {
+const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
+  const [isEditing, setIsEditing] = useState(initialIsEditing || false);
+  const [editedName, setEditedName] = useState(name);
+  const editInputRef = useRef(null);
   const [showStacks, setShowStacks] = useState(false);
   const navigate = useNavigate();
 
@@ -14,7 +18,13 @@ const FolderContainer = ({ name, onEdit, sets }) => {
   };
 
   const handleViewStack = (setId) => {
-    navigate(`/view/${setId}`);
+    localStorage.setItem("setId", setId);
+    navigate('/view');
+  };
+
+  const handleGamePage = (setId) => {
+    localStorage.setItem("setId", setId);
+    navigate('/game');
   };
 
   const handleEditStack = (setId, e) => {
@@ -26,6 +36,54 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     setShowStacks(!showStacks);
   };
 
+  // Automatically focus and select the input text when editing starts
+  useEffect(() => {
+    if (isEditing && editInputRef.current) {
+      editInputRef.current.focus();
+      editInputRef.current.select();
+      setIsEditing(true);
+    }
+  }, [isEditing]);
+
+  const handleEditStart = (e) => {
+    e.stopPropagation(); // Prevent any parent handlers from being executed
+    setIsEditing(true);
+  };
+
+  const handleEditComplete = () => {
+    if(name == null){
+      onAdd(editedName);
+    }
+    else if (editedName.trim() !== '' && editedName !== name) {
+        onEdit(editedName); // Now just pass the new name
+    }
+    console.log('Exiting edit mode');
+    setTimeout(() => setIsEditing(false), 0);
+  };
+
+const handleButtonClick = (e) => {
+  e.preventDefault();
+  if (isEditing) {
+    handleEditComplete();
+  } else {
+    handleEditStart(e);
+  }
+};
+
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault(); 
+      handleEditComplete();
+    }
+  };
+
+  const handleBlur = () => {
+    setTimeout(handleEditComplete, 0);
+  };
+
+  // ... other functions remain unchanged
+
   return (
     <div className="folder-container">
       <div className="folder-template">
@@ -35,9 +93,27 @@ const FolderContainer = ({ name, onEdit, sets }) => {
           </button>
         </div>
         <div className="folder-content">
-          <span className="folder-name">{name}</span>
-          <button className="folder-edit-button" onClick={onEdit}>
-            <img src={EditIcon} alt="Edit" />
+          {isEditing ? (
+            <>
+              <input
+                ref={editInputRef}
+                className="folder-name-edit"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                onBlur={handleBlur}
+                onKeyPress={handleKeyPress}
+              />
+            </>
+          ) : (
+            <>
+              <span className="folder-name">{name}</span>
+            </>
+          )}
+          <button 
+            className="folder-edit-button" 
+            onClick={handleButtonClick}
+          >
+            <img src={EditIcon} alt={isEditing ? "Complete" : "Edit"} />
           </button>
         </div>
       </div>
@@ -49,7 +125,12 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 <button className="stack-view-button" onClick={(e) => handleViewStack(set._id)}>
                   <img src={createLight} alt="Edit" />
                 </button>
-                <span className="stack-name">{set.SetName}</span>
+                <div className="stack-content">
+                  <span className="stack-name">{set.SetName}</span>
+                  <button className="" onClick={(e) => handleGamePage(set._id)}>
+                    <img src={PlayLightIcon} alt="game" />
+                  </button>
+                </div>
               </div>
             ))
           ) : (
@@ -65,11 +146,12 @@ const FolderContainer = ({ name, onEdit, sets }) => {
 };
 
 
-const FolderStacksDisplay = ({ folders, onEditFolder }) => {
+const FolderStacksDisplay = ({ folders, onEditFolder, onAddFolder }) => {
+  console.log("folders", folders);
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={() => onEditFolder(folder._id)} sets={folder.sets} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
       ))}
     </section>
   );

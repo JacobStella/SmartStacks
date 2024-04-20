@@ -234,3 +234,47 @@ div.empty-folder-message {
     align-items: center; /* Align horizontally */
     height: 100%; /* Adjust as needed */
 }
+
+div.stack-content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.stack-content button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #172a3a;
+    border: none;
+    height: 80px;
+    width: 80px;
+    padding: 0px 0px;
+}
+
+div.stack-content img {
+    max-width: 90%;
+    max-height: 90%;
+}
+
+.folder-name-edit {
+    border: none; /* Removes the border */
+    outline: none; /* Removes the outline that might appear on focus */
+    background: transparent; /* Makes the background transparent */
+    box-shadow: none; /* Removes any box shadows */
+    padding: 0; /* Removes padding if any */
+    margin: 0; /* Removes margin if any */
+      flex-grow: 1;
+      font-family: Arial Rounded MT Bold,sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: #d8dcff;
+  }
+  
+  .folder-name-edit:hover, .folder-name-edit:focus {
+    /* Styles when the field is hovered over or focused to show it's editable */
+  
+    border: 1px dashed #d8dcff; /* Dashed border */
+    padding: 10px 15px; /* Some padding */
+  }

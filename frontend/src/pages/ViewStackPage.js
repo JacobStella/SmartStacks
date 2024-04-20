@@ -1,17 +1,37 @@
-import React, { useState } from 'react';
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//     cards state stores all of the cards for the stack
+//     stackName stores the name of the stack 
+//     stackDesc NOT WORKING, this will store the desc of the stack
+
+import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
 import PlayButton from '../components/PlayButton'; 
 import FlipCard from '../components/FlipCard'
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../ViewStack.css';
 import '../Web.css';
 
+
+function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 const ViewStackPage = () => {
-  const [cards, setCards] = useState([
-    { front: 'Front 1', back: 'Back 1' },
-    { front: 'Front 2', back: 'Back 2' },
-    { front: 'Front 3', back: 'Back 3' },
-    // ... more cards
-  ]);
+  const [cards, setCards] = useState([]);
+  const navigate = useNavigate();
+  const location = useLocation();
+  var stackName;
+  var stackDesc;
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
 
@@ -22,6 +42,57 @@ const ViewStackPage = () => {
   const goToNextCard = () => {
     setCurrentIndex((prevIndex) => (prevIndex < cards.length - 1 ? prevIndex + 1 : prevIndex));
   };
+
+  const fetchSetWithCards = async (setId) => {
+    try {
+      const url = buildPath(`api/getset/${setId}`);
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      console.log("Data returned by API:", data);
+      return data; // Return the entire data object including cards
+    } catch (error) {
+      console.error("There was an error fetching the set:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const userDataString = localStorage.getItem('user_data');
+    if (!userDataString) {
+      console.log('No user data found in localStorage.');
+      localStorage.setItem('preLoginPath', location.pathname);
+      navigate('/login');
+    } else {
+      const setId = localStorage.getItem('setId');
+      if (!setId) {
+        console.log('No setId found in local storage');
+      } else {
+        const userData = JSON.parse(userDataString);
+        if (userData && userData.id) {
+          fetchSetWithCards(setId).then(data => {
+            if (data && data.cards && data.cards.length > 0) {
+              setCards(data.cards);
+              stackName = data.setName;
+              stackDesc = data.description
+              console.log("fetched cards correctly!");
+              console.log(data.cards);
+            } else {
+              console.log('No cards found for this set.');
+            }
+          }).catch(error => {
+            console.error('Error fetching cards:', error);
+          });
+        } else {
+          console.log('User data is invalid or ID is missing.');
+          navigate('/login');
+        }
+      }
+    }
+  }, [navigate, location.pathname, setCards]);
+
 
   const toggleFullScreen = () => {
     if (!document.fullscreenElement) {
@@ -75,3 +146,7 @@ const ViewStackPage = () => {
 }
 
 export default ViewStackPage;
+
+
+
+

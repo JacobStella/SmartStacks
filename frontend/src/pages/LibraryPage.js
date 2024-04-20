@@ -157,7 +157,7 @@ const editFolderNameEndpoint = async (newName, folderId) => {
 
 const addFolder = async (folderName) => {
     if (!userData) return; // Early return if userData is null
-
+    console.log("folders", folders);
     const userId = userData.id;
     let classObj = { userId: userId, className: folderName };
     let classJson = JSON.stringify(classObj);

@@ -44,45 +44,44 @@ const ViewStackPage = () => {
       }
       const data = await response.json();
       console.log("Data returned by API:", data);
-      return data.cards; // Assuming the API returns an array of cards
+      return data; // Return the entire data object including cards
     } catch (error) {
       console.error("There was an error fetching the set:", error);
-      return [];
+      return null;
     }
   };
 
-useEffect(() => {
-  const userDataString = localStorage.getItem('user_data');
-  if (!userDataString) {
-    console.log('No user data found in localStorage.');
-    localStorage.setItem('preLoginPath', location.pathname);
-    navigate('/login');
-  } else {
-    const setId = localStorage.getItem('setId');
-    if (!setId) {
-      console.log('No setId found in local storage');
+  useEffect(() => {
+    const userDataString = localStorage.getItem('user_data');
+    if (!userDataString) {
+      console.log('No user data found in localStorage.');
+      localStorage.setItem('preLoginPath', location.pathname);
+      navigate('/login');
     } else {
-      const userData = JSON.parse(userDataString);
-      if (userData && userData.id) {
-        fetchSetWithCards(setId).then(cardsData => {
-          if (cardsData && cardsData.length > 0) {
-            setCards(cardsData);
-            console.log("fetched cards correctly!");
-            console.log(cardsData);
-            console.log("cards array", cards)
-          } else {
-            console.log('No cards found for this set.');
-          }
-        }).catch(error => {
-          console.error('Error fetching cards:', error);
-        });
+      const setId = localStorage.getItem('setId');
+      if (!setId) {
+        console.log('No setId found in local storage');
       } else {
-        console.log('User data is invalid or ID is missing.');
-        navigate('/login');
+        const userData = JSON.parse(userDataString);
+        if (userData && userData.id) {
+          fetchSetWithCards(setId).then(data => {
+            if (data && data.cards && data.cards.length > 0) {
+              setCards(data.cards);
+              console.log("fetched cards correctly!");
+              console.log(cards);
+            } else {
+              console.log('No cards found for this set.');
+            }
+          }).catch(error => {
+            console.error('Error fetching cards:', error);
+          });
+        } else {
+          console.log('User data is invalid or ID is missing.');
+          navigate('/login');
+        }
       }
     }
-  }
-}, [navigate, location.pathname]);
+  }, [navigate, location.pathname, setCards]);
 
 
   const toggleFullScreen = () => {

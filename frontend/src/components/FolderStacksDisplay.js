@@ -6,7 +6,7 @@ import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({ name, onEdit, sets }) => {
+const FolderContainer = ({ name, onEdit, sets, isEditing: initialIsEditing }) => {
   const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);

@@ -111,7 +111,7 @@ const addSet = async event => {
   const setObj = {
     UserId: userId,
     SetName: stackTitle,
-    Description: description, // Assuming description is available
+    Description: stackDescription, // Assuming description is available
     public: isPublic,
     classId: selectedFolderId
   }; // Include classId here

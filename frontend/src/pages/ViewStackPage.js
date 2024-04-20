@@ -76,7 +76,7 @@ const ViewStackPage = () => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
               stackName = data.setName;
-              //PUT DESCRIPTION SET HERE IF WE EVER GET THAT SHIT WORKING stackDesc = data.set...
+              stackDesc = data.description
               console.log("fetched cards correctly!");
               console.log(data.cards);
             } else {

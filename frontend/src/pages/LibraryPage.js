@@ -72,7 +72,6 @@ const LibraryPage = () => {
                         setFolders(classes); // Assuming the API returns an array of classes
                         console.log("class useStste stuff")
                         console.log(classes);
-                        console.log("folders", folders);
                     } else {
                         console.log('No classes found for this user.');
                     }
@@ -158,7 +157,7 @@ const editFolderNameEndpoint = async (newName, folderId) => {
 
 const addFolder = async (folderName) => {
     if (!userData) return; // Early return if userData is null
-
+    console.log("folders", folders);
     const userId = userData.id;
     let classObj = { userId: userId, className: folderName };
     let classJson = JSON.stringify(classObj);

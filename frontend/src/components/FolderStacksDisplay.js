@@ -53,7 +53,17 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     if (editedName.trim() !== '' && editedName !== name) {
         onEdit(editedName); // Now just pass the new name
     }
-    setIsEditing(false);
+    console.log('Exiting edit mode');
+    setTimeout(() => setIsEditing(false), 0);
+};
+
+const handleButtonClick = (e) => {
+  e.preventDefault();
+  if (isEditing) {
+    handleEditComplete();
+  } else {
+    handleEditStart(e);
+  }
 };
 
 
@@ -62,6 +72,10 @@ const FolderContainer = ({ name, onEdit, sets }) => {
       e.preventDefault(); 
       handleEditComplete();
     }
+  };
+
+  const handleBlur = () => {
+    setTimeout(handleEditComplete, 0);
   };
 
   // ... other functions remain unchanged
@@ -82,23 +96,21 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 className="folder-name-edit"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                onBlur={handleEditComplete}
+                onBlur={handleBlur}
                 onKeyPress={handleKeyPress}
               />
-
-              <button className="folder-edit-button" onClick={handleEditComplete}>
-                <img src={EditIcon} alt="Edit" />
-              </button>
-
             </>
           ) : (
             <>
               <span className="folder-name">{name}</span>
-              <button className="folder-edit-button" onClick={handleEditStart}>
-                <img src={EditIcon} alt="Edit" />
-              </button>
             </>
           )}
+          <button 
+            className="folder-edit-button" 
+            onClick={handleButtonClick}
+          >
+            <img src={EditIcon} alt={isEditing ? "Complete" : "Edit"} />
+          </button>
         </div>
       </div>
       {showStacks && (

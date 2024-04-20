@@ -84,14 +84,16 @@ const LoginNav = async (item) => {
         setItemData(item);
     }
     else{
-        navigation.navigate('ViewCard');
+        let filteredCards = await CardFilter(item.Id);
+        setCards(filteredCards);
+        //console.log(Cards);
+        navigation.navigate('ViewCard', {cards: filteredCards});
         // return <ViewCard></ViewCard>;
         // setClassOnly(false);
         // setCardOnly(true);
         // setClasses([]);
         // setStacks([]);
-        // let filteredCards = await CardFilter(item.Id);
-        // setCards(filteredCards);
+        
         // //console.log(filteredCards);
         // setItemData(item);
     }
@@ -114,7 +116,7 @@ const CardFilter = async (setId) => {
     try{
     let temp = await fetchSetWithCards(setId);
     
-    const filteredCards = temp.cards.map(field => ({Title: field.Term, Definition: field.Definition}));
+    const filteredCards = temp.cards.map((field, index) => ({Title: field.Term, Definition: field.Definition, Index: index}));
     return filteredCards;
     }catch(error){
         console.log(error);

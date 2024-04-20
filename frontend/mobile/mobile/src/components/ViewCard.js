@@ -1,22 +1,25 @@
 import * as React from 'react';
 import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, useState, FlatList} from "react-native";
 import OnBoardingItem from './OnboardingItem';
+import {Cards} from './Library';
 
-const cards = [
-    { id: 0, name: "Card1"},
-    { id: 1, name: "Card2"},
-    { id: 2, name: "Card3"},
-    { id: 3, name: "Card4"},
-  ];
-
-const ViewCard = ({navigation}) => {
-
+// const cards = [
+//     { id: 0, name: "Card1"},
+//     { id: 1, name: "Card2"},
+//     { id: 2, name: "Card3"},
+//     { id: 3, name: "Card4"},
+//   ];
+//const cards = Cards;
+//console.log(getCards);
+const ViewCard = ({navigation, route}) => {
+    const {cards} = route.params;
+    const numCards = cards.length;
     return(
         <SafeAreaView style={styles.container}>
             <View>
                 <FlatList 
                     data={cards} 
-                    renderItem={({ item }) => <OnboardingItem item={item } />} 
+                    renderItem={({item}) => <OnboardingItem item={item} numCards = {numCards}/>} 
                     horizontal
                     showsHorizontalScrollIndicator
                     pagingEnabled

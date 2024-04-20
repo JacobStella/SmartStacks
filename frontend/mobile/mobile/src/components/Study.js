@@ -65,11 +65,14 @@ const ScrollToTop = () => {
 };
 
 const LoggedInNav = async (item) => {
-//Item contains the set data. Use it to display cards in ViewCard.
-  //console.log(item);
-  navigation.navigate('ViewCard');
-  ScrollToTop();
- };
+  //Item contains the set data. Use it to display cards in ViewCard.
+    //console.log(item);
+    let filteredCards = await CardFilter(item.Id);
+          setCards(filteredCards);
+          //console.log(Cards);
+          navigation.navigate('ViewCard', {cards: filteredCards});
+    ScrollToTop();
+   };
 
  const PlayGame = async (item) => {
   //Item contains the set data. Use it to display cards in ViewCard.
@@ -85,7 +88,7 @@ const CardFilter = async (setId) => {
     try{
     let temp = await fetchSetWithCards(setId);
     
-    const filteredCards = temp.cards.map(field => ({Title: field.Term, Definition: field.Definition}));
+    const filteredCards = temp.cards.map((field,index) => ({Title: field.Term, Definition: field.Definition, Index: index}));
     return filteredCards;
     }catch(error){
         console.log(error);

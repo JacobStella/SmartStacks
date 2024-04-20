@@ -3,6 +3,7 @@ import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Key
 import Animated, {Easing, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming, runOnJS, useDerivedValue,} from 'react-native-reanimated';
 import {TapGestureHandler, State} from 'react-native-gesture-handler';
 
+
 const products = [
     { id: 0, name: "Card1"},
     { id: 1, name: "Card2"},
@@ -10,11 +11,9 @@ const products = [
     { id: 3, name: "Card4"},
   ];
 
-export default OnboardingItem = ({item}) => {
+export default OnboardingItem = ({item, numCards}) => {
     const [isFlipped, setIsFlipped] = useState(false);
-
     const rotation = useSharedValue(0);
-
     const toggleFlip = () => {
         rotation.value = withTiming(
             isFlipped ? 0 : 180,
@@ -71,12 +70,22 @@ export default OnboardingItem = ({item}) => {
         <View>
             <Pressable onPress={() => (spin.value = spin.value ? 0 : 1)}>
                 <Animated.View style={[styles.front, rStyle]}>
-                    <Text>{item.id}</Text>
+                    <Text>{item.Definition}</Text>
                 </Animated.View>
                 <Animated.View style={[styles.back, bStyle]}>
-                    <Text>{item.name}</Text>
+                    <Text>{item.Definition}</Text>
+                    
+                    {/* <Text style = {styles.index}>{item.Index}</Text> */}
+                    {/* <Text style = {styles.indexSlash}>/</Text> */}
                 </Animated.View>
             </Pressable>
+            <View style = {styles.indexContainer}>
+                      <Text style = {styles.index}>{item.Index}</Text>
+                      <Text style = {styles.index}>/</Text>
+                      <Text style = {styles.index}>{numCards-1}</Text>
+
+
+                    </View>
         </View>
     </SafeAreaView>
   );
@@ -122,5 +131,20 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         zIndex: 10,
+      },
+      indexContainer: {
+        flexDirection: 'row',
+        //borderColor: 'black',
+        //borderWidth: 1,
+        
+        justifyContent: 'center',
+      },
+      index: {
+        //top: '53%',
+        fontSize: 20,
+      },
+      indexSlash: {
+        //top: '43%',
+        //left: '5%',
       },
 });

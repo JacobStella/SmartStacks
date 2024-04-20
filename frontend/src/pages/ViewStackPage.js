@@ -1,3 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+//     cards state stores all of the cards for the stack
+//     stackName stores the name of the stack 
+//     stackDesc NOT WORKING, this will store the desc of the stack
+
 import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
 import PlayButton from '../components/PlayButton'; 
@@ -23,6 +29,8 @@ const ViewStackPage = () => {
   const [cards, setCards] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  var stackName;
+  var stackDesc;
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
@@ -67,8 +75,10 @@ const ViewStackPage = () => {
           fetchSetWithCards(setId).then(data => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
+              stackName = data.setName;
+              //PUT DESCRIPTION SET HERE IF WE EVER GET THAT SHIT WORKING stackDesc = data.set...
               console.log("fetched cards correctly!");
-              console.log(cards);
+              console.log(data.cards);
             } else {
               console.log('No cards found for this set.');
             }

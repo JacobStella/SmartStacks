@@ -50,12 +50,11 @@ function buildPath(route)
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
-    const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
+    const [searchResults, setSearchResults] = useState({ classes: [], sets: [] }); // For storing search results
     const searchFolderInputRef = useRef(null);
     const navigate = useNavigate();
     const location = useLocation();
-    var folderSearch;
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -215,17 +214,22 @@ const addFolder = async (folderName) => {
                 method: 'GET',
                 headers: {'Content-Type': 'application/json'}
             });
-            const searchResults = await response.json();
-    
-            if (response.ok) {
-                console.log('Search Results:', searchResults);
-            } else {
-                setMessage("Search API Error:" + searchResults.error);
+            if (!response.ok) {
+                throw new Error("Search API Error: " + response.statusText);
             }
-        } catch (e) {
-            console.error("Search Fetch Error:", e.toString());
-            setMessage(e.toString());
+            const searchResults = await response.json();
+            console.log('Search Results:', searchResults);
+            setSearchResults(searchResults); // Update the state with the new search results
+        } catch (error) {
+            console.error("Search Fetch Error:", error.toString());
+            setMessage(error.toString());
         }
+    };
+
+    const handleSearchItemClick = (type, item) => {
+        // Handle navigation or any action when a search item is clicked
+        // Example navigation, update this as per your app's routing
+        navigate(`/${type}/${item._id}`);
     };
 
     ///////////////////////////////////////////////////////////////////////////////////////
@@ -237,7 +241,14 @@ const addFolder = async (folderName) => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} setSearchFolderInput={setSearchFolderInput} searchFolderInputRef={searchFolderInputRef}/>
+                <LibraryHeader 
+                    createNewFolder={createNewFolder} 
+                    handleFolderSearch={searchFolderItems} // Updated to directly use searchFolderItems
+                    setSearchFolderInput={setSearchFolderInput} 
+                    searchFolderInputRef={searchFolderInputRef}
+                    searchResults={searchResults} // Pass the search results to LibraryHeader
+                    handleSearchItemClick={handleSearchItemClick} // Pass the function to handle item clicks
+                />
                 <div className="folder-stacks-display-container">
                     <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
                 </div>
@@ -246,6 +257,7 @@ const addFolder = async (folderName) => {
         </div>
     );
 };
+
 export default LibraryPage;
 
 /*JACOB NOTES

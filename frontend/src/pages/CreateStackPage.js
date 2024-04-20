@@ -102,53 +102,58 @@ const getUserData = () => {
 
 const userData = getUserData();
     
-const addSet = async event => 
-{
+const addSet = async event => {
   if (!userData) return; // Early return if userData is null
 
   const userId = userData.id;
 
   // Assume classId is available and correctly set, representing the class this set belongs to
-  let setObj = { UserId: userId, SetName: stackTitle, public: isPublic, classId: selectedFolderId }; // Include classId here
+  const setObj = {
+    UserId: userId,
+    SetName: stackTitle,
+    Description: description, // Assuming description is available
+    public: isPublic,
+    classId: selectedFolderId
+  }; // Include classId here
   console.log(setObj);
-  let setJs = JSON.stringify(setObj);
+  const setJs = JSON.stringify(setObj);
 
   try {
-      const setResponse = await fetch(buildPath('api/addset'), {
+    const setResponse = await fetch(buildPath('api/addset'), {
+      method: 'POST',
+      body: setJs,
+      headers: {'Content-Type': 'application/json'}
+    });
+
+    const setRes = await setResponse.json();
+
+    if (setRes.error && setRes.error.length > 0) {
+      setMessage("API Error:" + setRes.error);
+      return; // Stop the process if there was an error creating the set
+    } else {
+      // Set has been successfully created, proceed to add cards
+      const setId = setRes.setId; // Get the newly created set's ID
+
+      // Iterate through each card and create it with the new setId
+      for (let card of cardPairs) {
+        const cardObj = { ...card, UserId: userId, SetId: setId };
+        const cardJs = JSON.stringify(cardObj);
+
+        await fetch(buildPath('api/addcard'), {
           method: 'POST',
-          body: setJs,
+          body: cardJs,
           headers: {'Content-Type': 'application/json'}
-      });
-
-      let setRes = await setResponse.json();
-
-      if (setRes.error && setRes.error.length > 0) {
-          setMessage("API Error:" + setRes.error);
-          return; // Stop the process if there was an error creating the set
-      } else {
-          // Set has been successfully created, proceed to add cards
-          const setId = setRes.setId; // Get the newly created set's ID
-
-          // Iterate through each card and create it with the new setId
-
-          for (let card of cardPairs) {
-              let cardObj = { ...card, userId: userId, setId: setId };
-              let cardJs = JSON.stringify(cardObj);
-
-              await fetch(buildPath('api/addcard'), {
-                  method: 'POST',
-                  body: cardJs,
-                  headers: {'Content-Type': 'application/json'}
-              });
-              // Consider handling response for individual card creations
-          }
-          navigate('/library');
-          setMessage('Set and cards have been added');
+        });
+        // Consider handling response for individual card creations
       }
+      navigate('/library');
+      setMessage('Set and cards have been added');
+    }
   } catch (e) {
-      setMessage(e.toString());
+    setMessage(e.toString());
   }
 };
+
 
 
   const getClassAndSets = async (userId) => {

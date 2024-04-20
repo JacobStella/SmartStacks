@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 
 
-const submit = async () => {
+const handleCreate = async () => {
     
 }
 

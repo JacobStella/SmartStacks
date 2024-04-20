@@ -57,12 +57,25 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     setTimeout(() => setIsEditing(false), 0);
 };
 
+const handleButtonClick = (e) => {
+  e.preventDefault();
+  if (isEditing) {
+    handleEditComplete();
+  } else {
+    handleEditStart(e);
+  }
+};
+
 
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       e.preventDefault(); 
       handleEditComplete();
     }
+  };
+
+  const handleBlur = () => {
+    setTimeout(handleEditComplete, 0);
   };
 
   // ... other functions remain unchanged
@@ -83,7 +96,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 className="folder-name-edit"
                 value={editedName}
                 onChange={(e) => setEditedName(e.target.value)}
-                onBlur={handleEditComplete}
+                onBlur={handleBlur}
                 onKeyPress={handleKeyPress}
               />
             </>
@@ -94,7 +107,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
           )}
           <button 
             className="folder-edit-button" 
-            onClick={isEditing ? handleEditComplete : handleEditStart}
+            onClick={handleButtonClick}
           >
             <img src={EditIcon} alt={isEditing ? "Complete" : "Edit"} />
           </button>

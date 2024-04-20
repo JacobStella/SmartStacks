@@ -174,7 +174,7 @@ const addFolder = async (folderName) => {
 
 
             if (response.ok) {
-                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName }]);
+                setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
                 setMessage("Folder has been added.");
                 console.log('Folders after adding new folder:', folders);
             } else {
@@ -194,10 +194,10 @@ const addFolder = async (folderName) => {
     };
     */
     const createNewFolder = () => {
-        const newFolder = { _id: 'new', className: '', isEditing: true }; // Add an `isEditing` property
-        setFolders(prevFolders => [newFolder, ...prevFolders]);
-        setIsCreating(true);
-      };
+        // Call addFolder with an empty string as the folder name
+        addFolder(' ');
+        // Optionally, set a flag indicating that creation is in progress
+    };
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////

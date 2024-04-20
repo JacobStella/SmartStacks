@@ -69,6 +69,7 @@ useEffect(() => {
             setCards(cardsData);
             console.log("fetched cards correctly!");
             console.log(cardsData);
+            console.log("cards array", cards)
           } else {
             console.log('No cards found for this set.');
           }

@@ -126,27 +126,30 @@ const ViewStackPage = () => {
     <div className="view-stack-page">
         {!isFullScreen && <NavBar2 />}
         {!isFullScreen && <PlayButton />}
-      <h1 className="stack-title">Stack Title</h1>
-      {cards.length > 0 && (
-        <FlipCard
-          front={cards[currentIndex].front}
-          back={cards[currentIndex].back}
-        />
-      )}
-      <div className="navigation-buttons">
-        <button onClick={goToPreviousCard}>&lt; Prev</button>
-        <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
-        <button onClick={goToNextCard}>Next &gt;</button>
-      </div>
-      <div>
-        <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
-      </div>
+        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>} {/* This is where you will show the description */}
+        <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
+        {cards.length > 0 && (
+            <FlipCard
+                front={cards[currentIndex].term} // Assuming 'term' is the property for the term
+                back={cards[currentIndex].definition} // Assuming 'definition' is the property for the definition
+            />
+        )}
+        <div className="navigation-buttons">
+            <button onClick={goToPreviousCard}>&lt; Prev</button>
+            <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
+            <button onClick={goToNextCard}>Next &gt;</button>
+        </div>
+        {cards.length > 0 && (
+            <div className="card-info">
+                <p><b>Term:</b> {cards[currentIndex].term}</p>
+                <p><b>Definition:</b> {cards[currentIndex].definition}</p>
+            </div>
+        )}
+        <div>
+            <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
+        </div>
     </div>
   );
 }
 
 export default ViewStackPage;
-
-
-
-

@@ -123,20 +123,16 @@ const addSet = async event =>
       let setRes = await setResponse.json();
 
       if (setRes.error && setRes.error.length > 0) {
-          console.log("I shit the bed! yippe!!!!!!!!!");
           setMessage("API Error:" + setRes.error);
           return; // Stop the process if there was an error creating the set
       } else {
-          console.log("I didnt shit the bed just yet! Now what the actual FUCK is wrong with me");
           // Set has been successfully created, proceed to add cards
           const setId = setRes.setId; // Get the newly created set's ID
 
           // Iterate through each card and create it with the new setId
 
           for (let card of cardPairs) {
-            console.log("userId" , userId);
-            console.log("setId" , setId);
-              let cardObj = { ...card, userId: userId, setId: setId }; // Assuming SetId should remain for card association
+              let cardObj = { ...card, userId: userId, setId: setId };
               let cardJs = JSON.stringify(cardObj);
 
               await fetch(buildPath('api/addcard'), {

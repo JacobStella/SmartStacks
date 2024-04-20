@@ -86,20 +86,18 @@ const FolderContainer = ({ name, onEdit, sets }) => {
                 onBlur={handleEditComplete}
                 onKeyPress={handleKeyPress}
               />
-
-              <button className="folder-edit-button" onClick={handleEditComplete}>
-                <img src={EditIcon} alt="Edit" />
-              </button>
-
             </>
           ) : (
             <>
               <span className="folder-name">{name}</span>
-              <button className="folder-edit-button" onClick={handleEditStart}>
-                <img src={EditIcon} alt="Edit" />
-              </button>
             </>
           )}
+          <button 
+            className="folder-edit-button" 
+            onClick={isEditing ? handleEditComplete : handleEditStart}
+          >
+            <img src={EditIcon} alt={isEditing ? "Complete" : "Edit"} />
+          </button>
         </div>
       </div>
       {showStacks && (

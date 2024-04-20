@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //     cards state stores all of the cards for the stack
 //     stackName stores the name of the stack 
-//     stackDesc NOT WORKING, this will store the desc of the stack
+//     stackDesc this will store the desc of the stack
 
 import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
@@ -79,7 +79,7 @@ const ViewStackPage = () => {
               setStackName(data.setName);
               setStackDesc(data.description);
               console.log("fetched cards correctly!");
-              console.log(data.cards);
+              console.log(data);
             } else {
               console.log('No cards found for this set.');
             }

@@ -76,14 +76,21 @@ const FolderContainer = ({ name, onEdit, sets }) => {
         </div>
         <div className="folder-content">
           {isEditing ? (
-            <input
-              ref={editInputRef}
-              className="folder-name-edit"
-              value={editedName}
-              onChange={(e) => setEditedName(e.target.value)}
-              onBlur={handleEditComplete}
-              onKeyPress={handleKeyPress}
-            />
+            <>
+              <input
+                ref={editInputRef}
+                className="folder-name-edit"
+                value={editedName}
+                onChange={(e) => setEditedName(e.target.value)}
+                onBlur={handleEditComplete}
+                onKeyPress={handleKeyPress}
+              />
+
+              <button className="folder-edit-button" onClick={handleEditComplete}>
+                <img src={EditIcon} alt="Edit" />
+              </button>
+
+            </>
           ) : (
             <>
               <span className="folder-name">{name}</span>

@@ -239,7 +239,7 @@ const addFolder = async (folderName) => {
             <div className="content-container-library">
                 <LibraryHeader createNewFolder={createNewFolder} handleFolderSearch={handleFolderSearch} folderSearch={folderSearch} setSearchFolderInput={setSearchFolderInput} searchFolderInputRef={searchFolderInputRef}/>
                 <div className="folder-stacks-display-container">
-                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} />
+                    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
                 </div>
                 {message && <p>{message}</p>}
             </div>

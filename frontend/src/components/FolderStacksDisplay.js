@@ -6,7 +6,7 @@ import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({ name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
+const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
   const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);
@@ -51,20 +51,11 @@ const FolderContainer = ({ name, onEdit, onAdd, sets, isEditing: initialIsEditin
   };
 
   const handleEditComplete = () => {
-    if (editedName.trim() !== '') {
-      if (name === '') {
-        // This was a new folder, so we need to add it to the database
-        onAdd(editedName).then(newFolder => {
-          // The newFolder should have the id and name returned from the server
-          onEdit(newFolder.className, newFolder._id); 
-        });
-      } else if (editedName !== name) {
-        // This was an existing folder, and the name has changed
-        onEdit(editedName, folder._id); // Now just pass the new name
-      }
-      console.log('Exiting edit mode');
-      setTimeout(() => setIsEditing(false), 0);
+    if (editedName.trim() !== '' && editedName !== name) {
+        onEdit(editedName); // Now just pass the new name
     }
+    console.log('Exiting edit mode');
+    setTimeout(() => setIsEditing(false), 0);
   };
 
 const handleButtonClick = (e) => {

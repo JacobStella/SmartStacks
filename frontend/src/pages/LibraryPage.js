@@ -50,6 +50,7 @@ function buildPath(route)
 const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
+    const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
     const searchFolderInputRef = useRef(null);
     const navigate = useNavigate();
@@ -184,13 +185,19 @@ const addFolder = async (folderName) => {
         }
 };
 
-
+    /*
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');
         if (folderName) {
             addFolder(folderName);
         }
     };
+    */
+    const createNewFolder = () => {
+        const newFolder = { _id: 'new', className: '', isEditing: true }; // Add an `isEditing` property
+        setFolders(prevFolders => [newFolder, ...prevFolders]);
+        setIsCreating(true);
+      };
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////

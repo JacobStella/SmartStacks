@@ -7,7 +7,7 @@ import createLight from '../images/createLight.png';
 import '../Library.css';
 
 const FolderContainer = ({ name, onEdit, sets }) => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);
   const [showStacks, setShowStacks] = useState(false);
@@ -41,6 +41,7 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     if (isEditing && editInputRef.current) {
       editInputRef.current.focus();
       editInputRef.current.select();
+      setIsEditing(true);
     }
   }, [isEditing]);
 
@@ -146,7 +147,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} sets={folder.sets} />
+        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} sets={folder.sets} isEditing={folder.isEditing} />
       ))}
     </section>
   );

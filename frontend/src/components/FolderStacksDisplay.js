@@ -143,7 +143,7 @@ const handleButtonClick = (e) => {
 };
 
 
-const FolderStacksDisplay = ({ folders, onEditFolder }) => {
+const FolderStacksDisplay = ({ folders, onEditFolder, onAddFolder }) => {
   console.log("folders", folders);
   return (
     <section className="folders-and-stacks">

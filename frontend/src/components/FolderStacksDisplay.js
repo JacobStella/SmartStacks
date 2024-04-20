@@ -53,7 +53,8 @@ const FolderContainer = ({ name, onEdit, sets }) => {
     if (editedName.trim() !== '' && editedName !== name) {
         onEdit(editedName); // Now just pass the new name
     }
-    setIsEditing(false);
+    console.log('Exiting edit mode');
+    setTimeout(() => setIsEditing(false), 0);
 };
 
 

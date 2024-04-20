@@ -67,7 +67,7 @@ const Create = ({navigation}) => {
                 <Text style={styles.buttonText}>+ Add Card</Text>
             </TouchableOpacity>
             
-            <TouchableOpacity style={styles.submitButton} onPress={submit}>
+            <TouchableOpacity style={styles.submitButton} onPress={handleCreate}>
                 <Text style={{fontSize: 28, color: '#fff'}}>Create</Text>
             </TouchableOpacity>
             

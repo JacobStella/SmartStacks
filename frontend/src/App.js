@@ -13,6 +13,7 @@ import RegisterPage from './pages/RegisterPage';
 import StudyPage from './pages/StudyPage';
 import UserSettingsPage from './pages/UserSettingsPage';
 import ViewStackPage from './pages/ViewStackPage';
+import BrowsePage from './pages/BrowsePage';
 
 
 function App() {

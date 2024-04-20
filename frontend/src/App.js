@@ -30,6 +30,7 @@ function App() {
         <Route path="/study" element={<StudyPage />} />
         <Route path="/settings" element={<UserSettingsPage />} />
         <Route path="/view" element={<ViewStackPage />} />
+        <Route path="/browse" element={<BrowsePage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -51,7 +51,7 @@ const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing
   };
 
   const handleEditComplete = () => {
-    if(name == ' '){
+    if(name == null){
       onAdd(editedName);
     }
     else if (editedName.trim() !== '' && editedName !== name) {

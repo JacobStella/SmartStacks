@@ -81,7 +81,7 @@ const ViewStackPage = () => {
         }
       }
     }
-  }, [navigate, location.pathname]);
+  }, [navigate, location.pathname, setCards]);
 
 
   const toggleFullScreen = () => {

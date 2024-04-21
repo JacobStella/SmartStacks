@@ -32,7 +32,7 @@ const BrowseHeader = ({ }) => {
 
         try {
             const response = await fetch(buildPath('api/public-search'), { // Assuming 'api/search' is your endpoint
-                method: 'POST', // If your backend is expecting a GET request for searches, this needs adjustment
+                method: 'GET', // If your backend is expecting a GET request for searches, this needs adjustment
                 body: js,
                 headers: {'Content-Type': 'application/json'}
             });

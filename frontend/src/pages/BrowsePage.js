@@ -20,6 +20,7 @@ function buildPath(route)
 
 const BrowsePage = () => {
     const [publicStacks, setPublicStacks] = useState([]);
+    const [searchInput, setSearchInput] = useState('');
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
@@ -59,7 +60,7 @@ const BrowsePage = () => {
                 const publicSets = res.sets.filter(set => set.public === true);
                 updatePublicStacks(publicSets);
                 console.log("publicSets", publicSets);
-                setSearchResults(res); // Assuming you still want to keep the original search results
+                //setSearchResults(res); // Assuming you still want to keep the original search results
             }
         } catch (e) {
             alert(e.toString());

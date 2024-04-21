@@ -20,6 +20,7 @@ const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("in the useEffect my guy AAAAAAAAAAAAAAAAAAAA");
         const fetchUserDetails = async () => {
             setLoading(true);
             try {

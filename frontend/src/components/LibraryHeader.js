@@ -71,13 +71,17 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
     };
 
     const handleItemClick = (type, item) => {
+        console.log('Clicked item:', item);
         const itemId = type === 'classes' ? item.className : item.setName;
+        console.log('Item ID:', itemId);
         const itemElement = document.getElementById(itemId);
+        console.log('Item Element:', itemElement);
         if (itemElement) {
-            itemElement.scrollIntoView({ behavior: 'smooth' }); // Scroll to the item
+            itemElement.scrollIntoView({ behavior: 'smooth' });
         }
-        setShowDropdown(false); // Hide dropdown after navigation
+        setShowDropdown(false);
     };
+    
     
 
     /*

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'; // Import useEffect here
 import NavBar2 from '../components/NavBar2';
-import LibraryHeader from '../components/LibraryHeader';
+import BrowseHeader from '../components/BrowseHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
@@ -46,7 +46,7 @@ const BrowsePage = () => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <LibraryHeader />
+                <BrowseHeader />
                 {message && <p>{message}</p>}
             </div>
         </div>

@@ -21,11 +21,12 @@ function buildPath(route) {
 
 const StackContainer = ({ stack }) => {
     const [userDetails, setUserDetails] = useState({ FirstName: '', LastName: '', Username: '' });
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserDetails = async () => {
-            console.log("in fetchUserDetails");
+            console.log("in fetchUserDatails");
             try {
                 const url = buildPath(`api/users/name/${stack.userId}`); // Use buildPath to construct the URL
                 const response = await fetch(url);
@@ -33,7 +34,7 @@ const StackContainer = ({ stack }) => {
                     throw new Error('User not found');
                 }
                 const data = await response.json();
-                console.log("data", data);
+                console.log("returned data", data);
                 setUserDetails({
                     FirstName: data.FirstName,
                     LastName: data.LastName,
@@ -45,7 +46,7 @@ const StackContainer = ({ stack }) => {
         };
 
         if (stack.userId) {
-            console.log(stack.userId);
+            console.log("userId", stack.userId);
             fetchUserDetails();
         }
     }, [stack.userId]);
@@ -54,6 +55,10 @@ const StackContainer = ({ stack }) => {
         localStorage.setItem("setId", stack._id);
         navigate('/view');
     };
+
+    if (loading) {
+        return <p>Loading user information...</p>;
+    }
 
     if (error) {
         return <p>Error loading user information: {error}</p>;

@@ -10,8 +10,14 @@ import createLight from '../images/createLight.png';
 import '../Library.css';
 
 
-
-
+// Function to build the path depending on the environment
+function buildPath(route) {
+    if (process.env.NODE_ENV === 'production') {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    } else {
+        return 'http://localhost:5000/' + route;
+    }
+}
 
 const StackContainer = ({ stack }) => {
     const [userDetails, setUserDetails] = useState({ FirstName: '', LastName: '', Username: '' });
@@ -20,20 +26,15 @@ const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("in the useEffect my guy AAAAAAAAAAAAAAAAAAAA");
         const fetchUserDetails = async () => {
-            console.log("in the endpoint my guy AAAAAAAAAAAAAAAAAAAA");
             setLoading(true);
             try {
-                // Replace `YOUR_API_URL` with the actual base URL of your API
-                // Replace `stack.userId` with the actual property that contains the user ID
-                const response = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/${stack.userId}`);
+                const url = buildPath(`api/users/name/${stack.userId}`); // Use buildPath to construct the URL
+                const response = await fetch(url);
                 if (!response.ok) {
                     throw new Error('User not found');
                 }
-                console.log("PRE USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
                 const data = await response.json();
-                console.log("POST USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
                 setUserDetails({
                     FirstName: data.FirstName,
                     LastName: data.LastName,
@@ -49,7 +50,7 @@ const StackContainer = ({ stack }) => {
         if (stack.userId) {
             fetchUserDetails();
         }
-    }, [stack.userId]); // Ensure you have a userId property in your stack object
+    }, [stack.userId]);
 
     const handleViewStack = () => {
         localStorage.setItem("setId", stack._id);
@@ -77,6 +78,8 @@ const StackContainer = ({ stack }) => {
         </div>
     );
 };
+
+
 
 
 

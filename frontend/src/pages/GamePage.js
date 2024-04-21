@@ -56,10 +56,17 @@ const GamePage = () => {
         }
     };
     const handleCardClick = (card) => {
-        if (selectedCards.length < 2) {
-          setSelectedCards(prevSelected => [...prevSelected, card]);
-        }
-      };
+      // Check if the card has already been selected
+      if (selectedCards.includes(card)) {
+        // Early return if the card is already selected
+        return;
+      }
+    
+      if (selectedCards.length < 2) {
+        setSelectedCards(prevSelected => [...prevSelected, card]);
+      }
+    };
+    
 
       useEffect(() => {
         let timeoutId = null;

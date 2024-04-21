@@ -167,9 +167,9 @@ const GamePage = () => {
 
       const renderPopup = () => {
         if (isCorrectMatch) {
-          return <div classname="correct-match-message">Correct Match!</div>;
+          return <div className="correct-match-message">Correct Match!</div>;
         } else if (isCorrectMatch === false) {
-          return <div classname="incorrect-match-message">Incorrect Match!</div>;
+          return <div className="incorrect-match-message">Incorrect Match!</div>;
         }
         return null;
       };
@@ -182,11 +182,11 @@ const GamePage = () => {
           {renderCardGrid()}
           {renderPopup()}
           {gameCompleted && (
-            <div classname="game-completed-message">
+            <div className="game-completed-message">
               You have completed the study game!
             </div>
           )}
-          <div classname="return-button-container">
+          <div className="return-button-container">
             <button className="return-button" onClick={() => navigate('/view')}>
               Return to View Stack Page
             </button> {/* Add this button for returning */}

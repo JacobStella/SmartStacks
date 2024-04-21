@@ -71,12 +71,20 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
     };
 
     const handleItemClick = (type, item) => {
-        const itemElement = document.getElementById(item._id); // Assuming item has an id property
+        const itemId = type === 'classes' ? item.className : item.setName;
+        console.log('Attempting to find item with ID:', itemId); // Debug log
+        const itemElement = document.getElementById(itemId);
         if (itemElement) {
-            itemElement.scrollIntoView({ behavior: 'smooth' }); // Scroll to the item
+            console.log('Element found, scrolling into view:', itemElement); // Debug log
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', itemId); // Debug log
         }
-        setShowDropdown(false); // Hide dropdown after navigation
+        setShowDropdown(false);
     };
+    
+    
+    
 
     /*
     const handleItemClick = (type, item) => {

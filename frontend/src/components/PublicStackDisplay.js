@@ -44,6 +44,7 @@ const StackContainer = ({ stack }) => {
 
     useEffect(() => {
         if (stack.userId) {
+            console.log("in the stupid StackContainer use effectr");
             fetchUserDetails();
         }
     }, [stack.userId]); // Adding stack.userId as a dependency

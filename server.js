@@ -712,7 +712,7 @@ app.get('/api/getset/:setId', async (req, res) => {
 
 
 app.post('/api/public-search', async (req, res) => {
-  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+  const { searchTerm = '' } = req.body; // Only extract searchTerm from query
 
   try {
     const db = client.db("Group3LargeProject");

@@ -25,26 +25,33 @@ const BrowseHeader = ({ }) => {
         await fetchPublicSearch(searchInput);
     };
 
-    const fetchPublicSearch = async (searchTerm) => {
+
+      const fetchPublicSearch = async (searchTerm) => {
+        let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
+        let js = JSON.stringify(obj);
+
         try {
-          const url = buildPath(`/api/public-search?searchTerm=${encodeURIComponent(searchTerm)}`);
-          const response = await fetch(url);
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          const data = await response.json();
-          console.log("PUBLICSEARCHDATA", data);
-          setSearchResults({
-            sets: searchResults.sets || [],
-            classes: searchResults.classes || [],
-        });
-        setShowDropdown(true);
-          return data;
-        } catch (error) {
-          console.error('Error fetching public search:', error);
-          return null;
+            const response = await fetch(buildPath('api/public-search'), { // Assuming 'api/search' is your endpoint
+                method: 'POST', // If your backend is expecting a GET request for searches, this needs adjustment
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            let res = await response.json();
+
+            if (res.error) {
+                alert(res.error);
+                setResults(res.error);
+            } else {
+                // Assuming the response structure you want is an array of card details
+                // Adjust how you handle and display these results accordingly
+                console.log("here are the search results", res);
+            }
+        } catch (e) {
+            alert(e.toString());
+            setResults(e.toString());
         }
-      };
+    };
 
 
     const handleItemClick = (type, item) => {

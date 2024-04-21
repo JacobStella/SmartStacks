@@ -37,6 +37,10 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
         }
     }
 
+    const handleSearch = async (event) => {
+        event.preventDefault();
+        await searchItems(userId, searchInput);
+    };
 
     const searchItems = async (userId, searchTerm) => {
         setShowDropdown(false); // Hide dropdown before fetching new results
@@ -64,10 +68,6 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
         }
     };
 
-    const handleSearch = async (event) => {
-        event.preventDefault();
-        await searchItems(userId, searchTerm);
-    };
 
     const handleItemClick = (type, item) => {
         navigate(`/${type}/${item._id}`); // Update with actual path structure

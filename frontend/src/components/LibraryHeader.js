@@ -66,7 +66,7 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
 
     const handleSearch = async (event) => {
         event.preventDefault();
-        await searchItems(userId, searchInput);
+        await searchItems(userId, searchTerm);
     };
 
     const handleItemClick = (type, item) => {

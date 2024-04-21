@@ -74,9 +74,9 @@ const GamePage = () => {
 
                             // After setting cards, prepare them for display
                             const selectedCards = data.cards.slice(0, 6);
-                            const cardSides = selectedCards.flatMap(card => [card.term, card.definition]);
+                            const cardSides = selectedCards.flatMap(card => [card.Term, card.Definition]);
                             const shuffledSides = shuffleArray(cardSides);
-                            setDisplayCards(shuffledSides);
+                            setDisplayCards(shuffledSides.map(side => ({ Term: side, Definition: side })));
                         } else {
                             console.log('No cards found for this set.');
                         }
@@ -95,13 +95,15 @@ const GamePage = () => {
     const renderCardGrid = () => {
         // Creating a 3x4 grid display
         return (
-            <div className="card-grid">
-                {displayCards.map((text, index) => (
-                    <div key={index} className="card">{text}</div>
-                ))}
-            </div>
+          <div className="card-grid">
+            {displayCards.map((card, index) => (
+              <div key={index} className="card">
+                {card.Term ? card.Term : card.Definition}
+              </div>
+            ))}
+          </div>
         );
-    };
+      };
 
     return (
         <div className="game-page">

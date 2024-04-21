@@ -47,7 +47,8 @@ const StackContainer = ({ stack }) => {
             console.log("in the stupid StackContainer use effectr");
             fetchUserDetails();
         }
-    }, [stack.userId]); // Adding stack.userId as a dependency
+        console.log("in the stupid StackContainer use effectr IF BOMBED");
+    }, []); // Adding stack.userId as a dependency
 
     const handleViewStack = () => {
         localStorage.setItem("setId", stack._id);

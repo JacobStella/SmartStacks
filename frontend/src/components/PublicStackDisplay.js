@@ -24,33 +24,29 @@ const StackContainer = ({ stack }) => {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
 
+    const fetchUserDetails = async () => {
+        try {
+            const url = buildPath(`api/users/name/${stack.userId}`);
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('User not found');
+            }
+            const data = await response.json();
+            setUserDetails({
+                FirstName: data.FirstName,
+                LastName: data.LastName,
+                Username: data.Username
+            });
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
     useEffect(() => {
         if (stack.userId) {
-            console.log("is this even hitting???");
-            console.log("userId", stack.userId);
             fetchUserDetails();
         }
-        const fetchUserDetails = async () => {
-            console.log("in fetchUserDatails");
-            try {
-                const url = buildPath(`api/users/name/${stack.userId}`); // Use buildPath to construct the URL
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('User not found');
-                }
-                const data = await response.json();
-                console.log("returned data", data);
-                setUserDetails({
-                    FirstName: data.FirstName,
-                    LastName: data.LastName,
-                    Username: data.Username
-                });
-            } catch (error) {
-                setError(error.message);
-            } 
-        };
-
-    }, []);
+    }, [stack.userId]); // Adding stack.userId as a dependency
 
     const handleViewStack = () => {
         localStorage.setItem("setId", stack._id);
@@ -74,6 +70,7 @@ const StackContainer = ({ stack }) => {
         </div>
     );
 };
+
 
 
 

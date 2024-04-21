@@ -77,7 +77,7 @@ const BrowseHeader = ({ }) => {
                 // Filter sets with public status true and update state
                 const publicSets = res.sets.filter(set => set.public === true);
                 setPublicStacks(publicSets);
-                console.log("publicSets", PublicStacks);
+                console.log("publicSets", publicStacks);
                 setSearchResults(res); // Assuming you still want to keep the original search results
             }
         } catch (e) {

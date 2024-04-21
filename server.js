@@ -122,6 +122,37 @@ app.post('/api/send-verif', async (req, res) => {
 });
 
 // checking verification
+
+app.get('/api/verify/:token', async (req, res) => {
+  const { token } = req.params;
+
+  if (!token) {
+      res.status(400).json({ message: "Token not received" });
+      return;
+  }
+
+  try {
+      const db = client.db("Group3LargeProject");
+      const result = await db.collection('Users').findOne({ Token: token });
+
+      if (!result) {
+          res.status(404).json({ message: "User not found with the provided token" });
+          return;
+      }
+
+      // Update user's record to mark them as verified
+      const verif = await db.collection('Users').updateOne({ Token: token }, { $set: { Verified: true } });
+      console.log(verif);
+
+      // Send a response indicating successful verification
+      res.status(200).json({ message: "Email verified, redirecting soon" });
+  } catch (error) {
+      console.error('Error verifying email:', error.message);
+      res.status(500).json({ error: error.message });
+  }
+});
+
+/*ONE ONE
 app.get('/api/verify/:token', async (req, res) => {
 	const {token} = req.params;
 	if(token == null){
@@ -146,6 +177,7 @@ app.get('/api/verify/:token', async (req, res) => {
 	
   	res.status(200).json({ message: "Verification Succeeded" });
 });
+*/
 
 // send forgot password email
 app.post('/api/sendforgot', async (req, res) => {

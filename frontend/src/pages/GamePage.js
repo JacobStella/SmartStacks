@@ -69,22 +69,31 @@ const GamePage = () => {
 
       useEffect(() => {
         let timeoutId = null;
-    
+      
         if (selectedCards.length === 2) {
           const [firstCard, secondCard] = selectedCards;
           if (firstCard._id === secondCard._id) {
             // It's a match
             setMatchedCards((prev) => new Set(prev.add(firstCard._id)));
-            timeoutId = setTimeout(() => setSelectedCards([]), 1000);
+            setIsCorrectMatch(true);
+            timeoutId = setTimeout(() => {
+              setSelectedCards([]);
+              setIsCorrectMatch(null); // Reset after showing popup
+            }, 3000);
           } else {
             // Not a match
-            timeoutId = setTimeout(() => setSelectedCards([]), 1000);
+            setIsCorrectMatch(false);
+            timeoutId = setTimeout(() => {
+              setSelectedCards([]);
+              setIsCorrectMatch(null); // Reset after showing popup
+            }, 3000);
           }
         }
-    
+      
         // Cleanup function to clear the timeout if the component unmounts
         return () => clearTimeout(timeoutId);
       }, [selectedCards]);
+      
 
       useEffect(() => {
         const userDataString = localStorage.getItem('user_data');

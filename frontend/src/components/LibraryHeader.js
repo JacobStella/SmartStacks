@@ -71,7 +71,8 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
     };
 
     const handleItemClick = (type, item) => {
-        const itemElement = document.getElementById(item._id); // Assuming item has an id property
+        console.log(item.className);
+        const itemElement = document.getElementById(item.className); // Assuming item has an id property
         if (itemElement) {
             itemElement.scrollIntoView({ behavior: 'smooth' }); // Scroll to the item
         }

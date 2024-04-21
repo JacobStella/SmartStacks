@@ -22,6 +22,7 @@ const StackContainer = ({ stack }) => {
     useEffect(() => {
         console.log("in the useEffect my guy AAAAAAAAAAAAAAAAAAAA");
         const fetchUserDetails = async () => {
+            console.log("in the endpoint my guy AAAAAAAAAAAAAAAAAAAA");
             setLoading(true);
             try {
                 // Replace `YOUR_API_URL` with the actual base URL of your API
@@ -30,8 +31,9 @@ const StackContainer = ({ stack }) => {
                 if (!response.ok) {
                     throw new Error('User not found');
                 }
+                console.log("PRE USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
                 const data = await response.json();
-                console.log("USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
+                console.log("POST USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
                 setUserDetails({
                     FirstName: data.FirstName,
                     LastName: data.LastName,

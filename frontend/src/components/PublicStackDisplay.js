@@ -56,10 +56,6 @@ const StackContainer = ({ stack }) => {
         navigate('/view');
     };
 
-    if (loading) {
-        return <p>Loading user information...</p>;
-    }
-
     if (error) {
         return <p>Error loading user information: {error}</p>;
     }

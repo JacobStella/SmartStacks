@@ -10,6 +10,7 @@ const BrowseHeader = ({ }) => {
     const searchInputRef = useRef(null);
 
     useEffect(() => {
+        handleSearch("");
     }, []);
 
     function buildPath(route) {

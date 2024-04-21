@@ -1,19 +1,35 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
+import { Dropdown } from 'react-native-element-dropdown';
 
 
 const handleCreate = async () => {
     
 }
 
+const data = [
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' },
+];
+
 // I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
     const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
-    const [isPublic, setIsPublic] = useState(false);
+    const [isPublic, setIsPublic] = useState(true);
     const toggleSwitch = () => setIsPublic(previousState => !previousState);
 
-    const CardCreator = ({ index }) => {
+    const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+
+    const CardCreator = ({ index, card, updateCard}) => {
         return(
             <View style={styles.cardContainer}>
                 <TextInput style={styles.cardTermInput}
@@ -31,6 +47,42 @@ const Create = ({navigation}) => {
     const addCardPair = () => {
         setCardPairs([...cardPairs, { id: cardPairs.length }]);
     };
+
+    const updateCard = (index, field, value) => {
+        const newCardPairs = [...cardPairs];
+        newCardPairs[index][field] = value;
+        setCardPairs(newCardPairs);
+      };
+
+    /*const getUserData = () => {
+        const userDataString = localStorage.getItem('user_data');
+        if (!userDataString) {
+            console.log('No user data found in localStorage.');
+            return null;
+        }
+        try {
+            const userData = JSON.parse(userDataString);
+            if (!userData || !userData.id) {
+                console.log('User data is invalid or ID is missing.');
+                return null;
+            }
+            return userData;
+        } catch (error) {
+            console.error('Error parsing user data from localStorage:', error);
+            return null;
+        }
+    };*/
+
+    const renderLabel = () => {
+        if (value || isFocus) {
+          return (
+            <Text style={[styles.label, isFocus && { color: 'blue' }]}>
+              Select Class
+            </Text>
+          );
+        }
+        return null;
+      };
 
     return(
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -54,6 +106,30 @@ const Create = ({navigation}) => {
                 style={{transform:[{scaleX: 1.5}, {scaleY: 1.5}], marginBottom: '15%' }}/>
                     {isPublic ? <Text style={{color: '#D8DCFF'}}>Public</Text> : <Text style={{color: '#D8DCFF'}}>Private</Text>}
                 </View>
+            </View>
+
+            <View style={{padding: 16}}>
+                {renderLabel()}
+                <Dropdown
+                    style={[styles.dropdown, isFocus && {borderColor: 'black'}]}
+                    placeholderStyle={styles.placeholderStyle}
+                    selectedTextStyle={styles.selectedTextStyle}
+                    inputSearchStyle={styles.inputSearchStyle}
+                    iconStyle={styles.icon}
+                    data={data}
+                    search
+                    maxHeight={300}
+                    labelField="label"
+                    valueField="value"
+                    placeholder={!isFocus ? 'Select Item' : '...'}
+                    searchPlaceholder="Search..."
+                    value={value}
+                    onFocus={() => setIsFocus(true)}
+                    onBlur={() => setIsFocus(false)}
+                    onChange={item => {
+                        setValue(item.value);
+                        setIsFocus(false);
+                    }}/>
             </View>
             
             {cardPairs.map((cardPair, index) =>(
@@ -138,6 +214,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#508991',
         flexDirection: 'row',
         alignContent: 'flex-start',
+        borderColor: '#09BC8A',
     },
     cardTermInput: {
         borderColor: '#09BC8A',
@@ -199,6 +276,40 @@ const styles = StyleSheet.create({
         alignContent: 'flex-start',
         color: '#fff',
     },
+    dropdown: {
+        height: 55,
+        backgroundColor: '#508991',
+        borderColor: '#09BC8A',
+        width: '97%',
+        alignSelf: 'center',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingHorizontal: 8,
+      },
+      label: {
+        position: 'absolute',
+        backgroundColor: '#D8DCFF',
+        left: 22,
+        top: 8,
+        zIndex: 999,
+        paddingHorizontal: 8,
+        fontSize: 14,
+      },
+      placeholderStyle: {
+        fontSize: 16,
+      },
+      selectedTextStyle: {
+        color: '#fff',
+        fontSize: 18,
+      },
+      iconStyle: {
+        width: 20,
+        height: 20,
+      },
+      inputSearchStyle: {
+        height: 40,
+        fontSize: 16,
+      },
 });
 
 export default Create;

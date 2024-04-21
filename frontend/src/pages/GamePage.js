@@ -60,12 +60,6 @@ const GamePage = () => {
           setSelectedCards(prevSelected => [...prevSelected, card]);
         }
       };
-    
-      useEffect(() => {
-        if (gameCompleted) {
-          navigate('/view');
-        }
-      }, [gameCompleted, navigate]);
 
       useEffect(() => {
         let timeoutId = null;
@@ -145,12 +139,6 @@ const GamePage = () => {
       }, [matchedCards, cards]);
       
       // This effect handles navigation when the game is completed
-      useEffect(() => {
-        if (gameCompleted) {
-          // Navigate to the '/view' page
-          navigate('/view');
-        }
-      }, [gameCompleted, navigate]);
     // Render function for displaying cards
     const renderCardGrid = () => {
         // Creating a 3x4 grid display
@@ -181,7 +169,8 @@ const GamePage = () => {
 
       return (
         <div className="game-page">
-          <h1>{stackName}</h1>
+          <h1>Matching Game</h1> {/* Add this line for the title */}
+          <h2>{stackName}</h2>
           <p>{stackDesc}</p>
           {renderCardGrid()}
           {renderPopup()}
@@ -191,8 +180,15 @@ const GamePage = () => {
               <a href="/view">Return to view stack page</a>
             </div>
           )}
+          <button
+            className="return-button"
+            onClick={() => navigate('/view')}
+          >
+            Return to View Stack Page
+          </button> {/* Add this button for returning */}
         </div>
       );
+      
     };
     
     export default GamePage;

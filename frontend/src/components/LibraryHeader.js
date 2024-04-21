@@ -2,7 +2,7 @@ import '../Library.css';
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 
-const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setSearchFolderInput, searchFolderInputRef, searchResults }) => {
+const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setSearchFolderInput, searchFolderInputRef }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [userInitial, setUserInitial] = useState('');
     const [userId, setUserId] = useState('');

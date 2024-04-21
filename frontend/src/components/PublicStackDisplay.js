@@ -1,3 +1,6 @@
+/////////////////////////////////////////////
+//stack.Description is the description lol
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
@@ -10,37 +13,69 @@ import '../Library.css';
 
 
 
-
-
-
-
-
-
-
-
-
 const StackContainer = ({ stack }) => {
+    const [userDetails, setUserDetails] = useState({ FirstName: '', LastName: '', Username: '' });
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
-  
+
+    useEffect(() => {
+        const fetchUserDetails = async () => {
+            setLoading(true);
+            try {
+                // Replace `YOUR_API_URL` with the actual base URL of your API
+                // Replace `stack.userId` with the actual property that contains the user ID
+                const response = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/${stack.userId}`);
+                if (!response.ok) {
+                    throw new Error('User not found');
+                }
+                const data = await response.json();
+                setUserDetails({
+                    FirstName: data.FirstName,
+                    LastName: data.LastName,
+                    Username: data.Username
+                });
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        if (stack.userId) {
+            fetchUserDetails();
+        }
+    }, [stack.userId]); // Ensure you have a userId property in your stack object
+
     const handleViewStack = () => {
-      localStorage.setItem("setId", stack._id);
-      navigate('/view');
+        localStorage.setItem("setId", stack._id);
+        navigate('/view');
     };
-  
-    // Other interaction handlers can be defined here, similar to handleViewStack
-    
+
+    if (loading) {
+        return <p>Loading user information...</p>;
+    }
+
+    if (error) {
+        return <p>Error loading user information: {error}</p>;
+    }
+
     return (
-      <div className="stack-template">
-        <div className="stack-content">
-          <span className="stack-name">{stack.SetName}</span>
-          <button onClick={handleViewStack}>
-            <img src={PlayLightIcon} alt="View" />
-          </button>
-          {/* Add other buttons and interactions here */}
+        <div className="stack-template">
+            <div className="stack-content">
+                <span className="stack-name">{stack.SetName}</span>
+                <p>Created by: {userDetails.FirstName} {userDetails.LastName} ({userDetails.Username})</p>
+                <button onClick={handleViewStack}>
+                    <img src={PlayLightIcon} alt="View" />
+                </button>
+                {/* Add other buttons and interactions here */}
+            </div>
         </div>
-      </div>
     );
-  };
+};
+
+
+
   
 
   
@@ -49,7 +84,7 @@ const PublicStacksDisplay = ({ publicStacks }) => {
     useEffect(() => {
         console.log("im in this bitch");
     }, []);
-    console.log("in stack display");
+    console.log("in stack display",publicStacks);
     return (
       <section className="stacks-display">
         {publicStacks.map(stack => (

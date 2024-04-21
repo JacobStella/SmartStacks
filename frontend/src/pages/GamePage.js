@@ -133,7 +133,7 @@ const GamePage = () => {
       }, [navigate, location.pathname]);
 
       useEffect(() => {
-        if (cards.length > 0 && matchedCards.size === cards.length / 2) { // each card is counted twice: Term & Definition
+        if (cards.length > 0 && matchedCards.size === cards.length) { // each card is counted twice: Term & Definition
           setGameCompleted(true);
         }
       }, [matchedCards, cards]);

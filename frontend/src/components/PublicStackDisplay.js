@@ -25,6 +25,7 @@ const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log("in useEffect");
         const fetchUserDetails = async () => {
             console.log("in fetchUserDatails");
             try {

@@ -52,7 +52,7 @@ const BrowsePage = () => {
             <div className="content-container-library">
                 <BrowseHeader updatePublicStacks={updatePublicStacks}/>
                 <div className="folder-stacks-display-container">
-                    <PublicStacksDisplay publicStacks={publicStacks}  />
+                    <PublicStackDisplay publicStacks={publicStacks}  />
                 </div>
                 {message && <p>{message}</p>}
             </div>

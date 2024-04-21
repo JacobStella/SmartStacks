@@ -25,7 +25,11 @@ const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("in useEffect");
+        if (stack.userId) {
+            console.log("is this even hitting???");
+            console.log("userId", stack.userId);
+            fetchUserDetails();
+        }
         const fetchUserDetails = async () => {
             console.log("in fetchUserDatails");
             try {
@@ -46,10 +50,6 @@ const StackContainer = ({ stack }) => {
             } 
         };
 
-        if (stack.userId) {
-            console.log("userId", stack.userId);
-            fetchUserDetails();
-        }
     }, [stack.userId]);
 
     const handleViewStack = () => {

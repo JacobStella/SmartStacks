@@ -30,10 +30,45 @@ const BrowsePage = () => {
     var folderSearch;
 
     useEffect(() => {
+        handleSearch(" ");
     }, []);
 
     const updatePublicStacks = (newStacks) => {
         setPublicStacks(newStacks);
+    };
+
+    const fetchPublicSearch = async (searchTerm) => {
+        console.log("searchTerm:", searchTerm);
+        let obj = { searchTerm: searchTerm };
+        let js = JSON.stringify(obj);
+
+        try {
+            const response = await fetch(buildPath('api/public-search'), {
+                method: 'POST',
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            let res = await response.json();
+
+            if (res.error) {
+                alert(res.error);
+            } else {
+                console.log("Search results", res);
+                // Filter sets with public status true and update state
+                const publicSets = res.sets.filter(set => set.public === true);
+                updatePublicStacks(publicSets);
+                console.log("publicSets", publicSets);
+                setSearchResults(res); // Assuming you still want to keep the original search results
+            }
+        } catch (e) {
+            alert(e.toString());
+        }
+    };
+
+    const handleSearch = async (event) => {
+        console.log("searchInput", searchInput);
+        await fetchPublicSearch(searchInput);
     };
 
 
@@ -50,7 +85,7 @@ const BrowsePage = () => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <BrowseHeader updatePublicStacks={updatePublicStacks}/>
+                <BrowseHeader />
                 <div className="folder-stacks-display-container">
                     <PublicStackDisplay publicStacks={publicStacks}  />
                 </div>
@@ -65,5 +100,5 @@ export default BrowsePage;
 
 
 /*
-
+updatePublicStacks={updatePublicStacks}
 */

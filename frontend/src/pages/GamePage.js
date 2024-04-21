@@ -26,6 +26,9 @@ const GamePage = () => {
     const [stackDesc, setStackDesc] = useState("");
     const navigate = useNavigate();
     const location = useLocation();
+    const [selectedCards, setSelectedCards] = useState([]);
+    const [matchedCards, setMatchedCards] = useState(new Set());
+
 
     function buildPath(route) {
         if (process.env.NODE_ENV === 'production') {
@@ -50,46 +53,73 @@ const GamePage = () => {
             return null;
         }
     };
+    const handleCardClick = (card) => {
+        if (selectedCards.length < 2) {
+          setSelectedCards(prevSelected => [...prevSelected, card]);
+        }
+      };
 
-    useEffect(() => {
+      useEffect(() => {
+        let timeoutId = null;
+    
+        if (selectedCards.length === 2) {
+          const [firstCard, secondCard] = selectedCards;
+          if (firstCard._id === secondCard._id) {
+            // It's a match
+            setMatchedCards((prev) => new Set(prev.add(firstCard._id)));
+            timeoutId = setTimeout(() => setSelectedCards([]), 1000);
+          } else {
+            // Not a match
+            timeoutId = setTimeout(() => setSelectedCards([]), 1000);
+          }
+        }
+    
+        // Cleanup function to clear the timeout if the component unmounts
+        return () => clearTimeout(timeoutId);
+      }, [selectedCards]);
+
+      useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
         if (!userDataString) {
-            console.log('No user data found in localStorage.');
-            localStorage.setItem('preLoginPath', location.pathname);
-            navigate('/login');
+          console.log('No user data found in localStorage.');
+          localStorage.setItem('preLoginPath', location.pathname);
+          navigate('/login');
         } else {
-            const setId = localStorage.getItem('setId');
-            if (!setId) {
-                console.log('No setId found in local storage');
-            } else {
-                const userData = JSON.parse(userDataString);
-                if (userData && userData.id) {
-                    fetchSetWithCards(setId).then(data => {
-                        if (data && data.cards && data.cards.length > 0) {
-                            setCards(data.cards);
-                            setStackName(data.setName);
-                            setStackDesc(data.description);
-                            console.log("fetched cards correctly!");
-                            console.log(data);
-
-                            // After setting cards, prepare them for display
-                            const selectedCards = data.cards.slice(0, 6);
-                            const cardSides = selectedCards.flatMap(card => [card.Term, card.Definition]);
-                            const shuffledSides = shuffleArray(cardSides);
-                            setDisplayCards(shuffledSides.map(side => ({ Term: side, Definition: side })));
-                        } else {
-                            console.log('No cards found for this set.');
-                        }
-                    }).catch(error => {
-                        console.error('Error fetching cards:', error);
-                    });
+          const setId = localStorage.getItem('setId');
+          if (!setId) {
+            console.log('No setId found in local storage');
+          } else {
+            const userData = JSON.parse(userDataString);
+            if (userData && userData.id) {
+              fetchSetWithCards(setId).then(data => {
+                if (data && data.cards && data.cards.length > 0) {
+                    setCards(data.cards);
+                    setStackName(data.setName);
+                  setStackDesc(data.description);
+                  console.log("fetched cards correctly!");
+                  console.log(data);
+    
+                  // After setting cards, prepare them for display
+                  const selectedCards = data.cards.slice(0, 6);
+                  const cardSides = selectedCards.flatMap(card => [
+                    { ...card, side: 'Term' },
+                    { ...card, side: 'Definition' }
+                  ]);
+                  const shuffledSides = shuffleArray(cardSides);
+                  setDisplayCards(shuffledSides);
                 } else {
-                    console.log('User data is invalid or ID is missing.');
-                    navigate('/login');
+                  console.log('No cards found for this set.');
                 }
+              }).catch(error => {
+                console.error('Error fetching cards:', error);
+              });
+            } else {
+              console.log('User data is invalid or ID is missing.');
+              navigate('/login');
             }
+          }
         }
-    }, [navigate, location.pathname, setCards]);
+      }, [navigate, location.pathname]);
 
     // Render function for displaying cards
     const renderCardGrid = () => {
@@ -97,9 +127,14 @@ const GamePage = () => {
         return (
           <div className="card-grid">
             {displayCards.map((card, index) => (
-              <div key={index} className="card">
-                {card.Term ? card.Term : card.Definition}
-              </div>
+              <button
+                key={index}
+                className={`card ${matchedCards.has(card._id) ? 'matched' : ''} ${selectedCards.includes(card) ? 'selected' : ''}`}
+                onClick={() => handleCardClick(card)}
+                disabled={matchedCards.has(card._id)}
+              >
+                {card.side === 'Term' ? card.Term : card.Definition}
+              </button>
             ))}
           </div>
         );

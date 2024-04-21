@@ -41,7 +41,6 @@ const BrowseHeader = ({ }) => {
 
             if (res.error) {
                 alert(res.error);
-                setResults(res.error);
             } else {
                 // Assuming the response structure you want is an array of card details
                 // Adjust how you handle and display these results accordingly
@@ -49,7 +48,6 @@ const BrowseHeader = ({ }) => {
             }
         } catch (e) {
             alert(e.toString());
-            setResults(e.toString());
         }
     };
 

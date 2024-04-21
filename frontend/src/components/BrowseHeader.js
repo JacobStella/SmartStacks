@@ -5,6 +5,7 @@ import { useNavigate} from 'react-router-dom';
 const BrowseHeader = ({ }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchInput, setSearchInput] = useState('');
+    const [publicStacks, setPublicStacks] = useState([]);
     const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
     const navigate = useNavigate(); // <-- Defined with useNavigate hook
     const searchInputRef = useRef(null);
@@ -27,6 +28,7 @@ const BrowseHeader = ({ }) => {
     };
 
 
+    /* WORKING PUBSEARCH, REMOVED TO TRY TO STORE ONLY PUBLIC STACKS 
       const fetchPublicSearch = async (searchTerm) => {
         console.log("searchTerm:", searchTerm);
         let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
@@ -47,6 +49,36 @@ const BrowseHeader = ({ }) => {
                 // Assuming the response structure you want is an array of card details
                 // Adjust how you handle and display these results accordingly
                 console.log("here are the search results", res);
+            }
+        } catch (e) {
+            alert(e.toString());
+        }
+    };
+    */
+
+    const fetchPublicSearch = async (searchTerm) => {
+        console.log("searchTerm:", searchTerm);
+        let obj = { searchTerm: searchTerm };
+        let js = JSON.stringify(obj);
+
+        try {
+            const response = await fetch(buildPath('api/public-search'), {
+                method: 'POST',
+                body: js,
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            let res = await response.json();
+
+            if (res.error) {
+                alert(res.error);
+            } else {
+                console.log("Search results", res);
+                // Filter sets with public status true and update state
+                const publicSets = res.sets.filter(set => set.public === true);
+                setPublicStacks(publicSets);
+                console.log("publicSets", PublicStacks);
+                setSearchResults(res); // Assuming you still want to keep the original search results
             }
         } catch (e) {
             alert(e.toString());

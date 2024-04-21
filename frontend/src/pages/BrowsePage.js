@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'; // Import useEffect here
 import NavBar2 from '../components/NavBar2';
 import BrowseHeader from '../components/BrowseHeader';
-import FolderStacksDisplay from '../components/FolderStacksDisplay';
+import PublicStacksDisplay from '../components/PublicStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
 
@@ -47,6 +47,7 @@ const BrowsePage = () => {
             <NavBar2 />
             <div className="content-container-library">
                 <BrowseHeader />
+                
                 {message && <p>{message}</p>}
             </div>
         </div>
@@ -59,6 +60,6 @@ export default BrowsePage;
 
 /*
 <div className="folder-stacks-display-container">
-    <FolderStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
-</div>
+                    <PublicStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
+                </div>
 */

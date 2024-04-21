@@ -147,7 +147,7 @@ const handleButtonClick = (e) => {
 
 
 const FolderStacksDisplay = ({ folders, onEditFolder, onAddFolder }) => {
-  console.log("folders");
+  console.log("folders", folders);
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (

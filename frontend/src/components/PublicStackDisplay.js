@@ -49,7 +49,7 @@ const PublicStacksDisplay = ({ publicStacks }) => {
     useEffect(() => {
         console.log("im in this bitch");
     }, []);
-    console.log("in stack display",publicStacks);
+    console.log("in stack display");
     return (
       <section className="stacks-display">
         {publicStacks.map(stack => (

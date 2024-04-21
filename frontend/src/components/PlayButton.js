@@ -1,12 +1,17 @@
 import React from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import '../Web.css';
 
-const handlePlayStack = (setId) => {
+function PlayButton() {
+    const setId = localStorage.getItem('setId');
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handlePlayStack = (setId) => {
     localStorage.setItem("setId", setId);
     navigate('/game');
   };
 
-function PlayButton() {
 
     return (
         <div className="play-section">

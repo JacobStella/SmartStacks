@@ -2,6 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import '../Game.css';
 
+const GamePage = () => {
+    const [cards, setCards] = useState([]);
+    const [stackName, setStackName] = useState("Stack Title"); // Default value as "Stack Title"
+    const [stackDesc, setStackDesc] = useState(""); // Default value as an empty string
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    function buildPath(route)
+{
+    if (process.env.NODE_ENV === 'production')
+    {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    }
+    else
+    {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
 const fetchSetWithCards = async (setId) => {
     try {
       const url = buildPath(`api/getset/${setId}`);
@@ -51,3 +70,6 @@ const fetchSetWithCards = async (setId) => {
       }
     }
   }, [navigate, location.pathname, setCards]);
+}
+
+  export default GamePage;

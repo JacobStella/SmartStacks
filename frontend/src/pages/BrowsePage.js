@@ -19,6 +19,7 @@ function buildPath(route)
 }
 
 const BrowsePage = () => {
+    const [publicStacks, setPublicStacks] = useState([]);
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
@@ -31,6 +32,9 @@ const BrowsePage = () => {
     useEffect(() => {
     }, []);
 
+    const updatePublicStacks = (newStacks) => {
+        setPublicStacks(newStacks);
+    };
 
 
 
@@ -46,8 +50,10 @@ const BrowsePage = () => {
         <div className="page-container-library">
             <NavBar2 />
             <div className="content-container-library">
-                <BrowseHeader />
-                
+                <BrowseHeader updatePublicStacks={updatePublicStacks}/>
+                <div className="folder-stacks-display-container">
+                    <PublicStackDisplay publicStacks={publicStacks}  />
+                </div>
                 {message && <p>{message}</p>}
             </div>
         </div>
@@ -59,7 +65,5 @@ export default BrowsePage;
 
 
 /*
-<div className="folder-stacks-display-container">
-                    <PublicStacksDisplay folders={folders} onEditFolder={editFolderName} onAddFolder={addFolder} />
-                </div>
+
 */

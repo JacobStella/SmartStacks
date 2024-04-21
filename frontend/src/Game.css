@@ -11,3 +11,51 @@
     text-align: center;
   }
   
+  button.card.matched{
+    text-align:center;
+    align-items: center;
+    background-color: #07461d;
+    border: 9px solid #06bb4f;
+    border-radius: 30px;
+    color: #ffffff;
+    padding: 10px;
+}
+
+button.card{
+    text-align:center;
+    align-items: center;
+    background-color: #172a3a;
+    border: 9px solid #004346;
+    border-radius: 30px;
+    color: #d8dcff;
+    padding: 10px;
+}
+button.card.selected{
+    text-align:center;
+    align-items: center;
+    background-color: #3a566e;
+    border: 9px solid #358286;
+    border-radius: 30px;
+    color: #d8dcff;
+    padding: 10px;
+}
+
+div.game-page h1{
+    text-align: center;
+    font-weight: 400;
+    font-size: 45px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+}
+
+div.game-page {
+  display: flex;          /* Establishes a flex container */
+  flex-direction: column; /* Stacks flex items from top to bottom */
+  align-items: center;    /* Centers flex items on the cross axis (horizontal) */
+  justify-content: center;/* Centers flex items on the main axis (vertical) */
+}
+
+button.return-button {
+  margin-top: 20px; /* Adds some space above the return button */
+  /* other styles... */
+}

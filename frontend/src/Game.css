@@ -55,11 +55,6 @@ div.game-page {
   justify-content: center;/* Centers flex items on the main axis (vertical) */
 }
 
-div.card-grid{
-    width: 90%;
-    height: 600px;
-}
-
 .card {
   display: flex;          /* Use flexbox for layout */
   align-items: center;    /* Vertically center the content */
@@ -76,4 +71,30 @@ button.return-button{
     width: 245px;
     border-radius:10px;
     border: 5px solid #004346;
+}
+
+div.card-grid{
+    width: 90%;
+    min-height: 600px; /* Instead of a fixed height, use min-height to ensure it's at least 600px tall */
+}
+
+/* Your existing styles... */
+
+.button-container {
+    width: 100%; /* Set width to full container width */
+    display: flex; /* Use flexbox for layout */
+    justify-content: center; /* Center the button horizontally */
+}
+
+.correct-match-message, .incorrect-match-message {
+    margin-top: 25px;
+    font-size: 25px;
+    font-weight: 300;
+}
+
+.correct-match-message {
+    color: #06bb4f
+}
+.incorrect-match-message {
+    color: #ff0000
 }

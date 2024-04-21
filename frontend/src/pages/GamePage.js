@@ -179,8 +179,12 @@ const GamePage = () => {
           <h1>Matching Game</h1> {/* Add this line for the title */}
           <h2>{stackName}</h2>
           <p>{stackDesc}</p>
-          {renderCardGrid()}
-          {renderPopup()}
+          <div className="card-grid-container">
+            {renderCardGrid()}
+          </div>
+          <div className="pop-up-container">
+            {renderPopup()}
+          </div>
           {gameCompleted && (
             <div className="game-completed-message">
               You have completed the study game!

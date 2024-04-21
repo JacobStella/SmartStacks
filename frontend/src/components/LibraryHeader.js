@@ -70,11 +70,20 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
         }
     };
 
+    const handleItemClick = (type, item) => {
+        const itemElement = document.getElementById(item._id); // Assuming item has an id property
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' }); // Scroll to the item
+        }
+        setShowDropdown(false); // Hide dropdown after navigation
+    };
 
+    /*
     const handleItemClick = (type, item) => {
         navigate(`/${type}/${item._id}`); // Update with actual path structure
         setShowDropdown(false); // Hide dropdown after navigation
     };
+    */
 
     return (
         <header className="library-header">

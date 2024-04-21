@@ -142,7 +142,6 @@ app.get('/api/verify/:token', async (req, res) => {
 
       // Update user's record to mark them as verified
       const verif = await db.collection('Users').updateOne({ Token: token }, { $set: { Verified: true } });
-      console.log(verif);
 
       // Send a response indicating successful verification
       res.status(200).json({ message: "Email verified, redirecting soon" });

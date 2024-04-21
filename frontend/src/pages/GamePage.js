@@ -130,11 +130,18 @@ const GamePage = () => {
       }, [navigate, location.pathname]);
 
       useEffect(() => {
-        if (matchedCards.size === cards.length) {
+        if (cards.length > 0 && matchedCards.size === cards.length / 2) { // each card is counted twice: Term & Definition
           setGameCompleted(true);
         }
-      }, [selectedCards, cards.length, matchedCards.size]);
-
+      }, [matchedCards, cards]);
+      
+      // This effect handles navigation when the game is completed
+      useEffect(() => {
+        if (gameCompleted) {
+          // Navigate to the '/view' page
+          navigate('/view');
+        }
+      }, [gameCompleted, navigate]);
     // Render function for displaying cards
     const renderCardGrid = () => {
         // Creating a 3x4 grid display

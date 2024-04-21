@@ -157,6 +157,7 @@
   padding: 0px 170px 20px 95px;
   z-index: 1000;
   overflow-y: auto; /* for scrolling if there are many items */
+  color: #172a3a;
 }
 
 .search-dropdown-navbar div {

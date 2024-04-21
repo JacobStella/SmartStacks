@@ -22,11 +22,13 @@ const BrowseHeader = ({ }) => {
 
     const handleSearch = async (event) => {
         event.preventDefault();
+        console.log("searchInput", searchInput);
         await fetchPublicSearch(searchInput);
     };
 
 
       const fetchPublicSearch = async (searchTerm) => {
+        console.log("searchTerm:", searchTerm);
         let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
         let js = JSON.stringify(obj);
 

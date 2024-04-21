@@ -4,6 +4,7 @@ import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
+
 const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);

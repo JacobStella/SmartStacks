@@ -4,8 +4,6 @@ import LibraryHeader from '../components/LibraryHeader';
 import FolderStacksDisplay from '../components/FolderStacksDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
 import '../Library.css';
-
-
 const getClassAndSets = async (userId) => {
     try {
         const url = buildPath(`api/getClassAndSets/${userId}`);
@@ -14,16 +12,13 @@ const getClassAndSets = async (userId) => {
             method: 'GET',
             headers: {'Content-Type': 'application/json'},
         });
-
         if (!response.ok) {
             throw new Error(`Network response was not ok: ${response.statusText}`);
         }
-
         const contentType = response.headers.get("content-type");
         if (!contentType || !contentType.includes("application/json")) {
             throw new Error("Received non-JSON response from server");
         }
-
         const data = await response.json();
         //console.log('Classes and their sets:', data);
         return data; // Return the data here
@@ -32,9 +27,6 @@ const getClassAndSets = async (userId) => {
         return null; // Return null in case of an error
     }
 };
-
-
-
 function buildPath(route)
 {
     if (process.env.NODE_ENV === 'production')
@@ -46,8 +38,7 @@ function buildPath(route)
         return 'http://localhost:5000/' + route;
     }
 }
-
-const BrowsePage = () => {
+const LibraryPage = () => {
     const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
@@ -82,13 +73,11 @@ const BrowsePage = () => {
             }
         }
     }, [navigate, location.pathname]);// Dependence on navigate and location.pathname
-
     const handleRedirect = () => {
         console.log('Redirecting to login...');
         localStorage.setItem('preLoginPath', location.pathname);
         navigate('/login');
     };
-
     const getUserData = () => {
         const userDataString = localStorage.getItem('user_data');
         if (!userDataString) {
@@ -110,9 +99,7 @@ const BrowsePage = () => {
             return null;
         }
     };
-
     const userData = getUserData(); // Attempt to retrieve user data at component mount
-
 const editFolderName = (newName,folderId) => {
     if (newName && newName.trim() !== '') {
         editFolderNameEndpoint(newName, folderId); 
@@ -125,24 +112,19 @@ const editFolderName = (newName,folderId) => {
         setFolders(updatedFolders);
     }
 };
-
 //THIS WONT WORK TILL ENDPOINTS ARE UP
 const editFolderNameEndpoint = async (newName, folderId) => {
     if (!userData) return; // Early return if userData is null
-
     const userId = userData.id;
     let classObj = { classId: folderId, newInfo: newName, code: 1 };
     let classJson = JSON.stringify(classObj);
-
     try {
         const response = await fetch('api/updateclass', {
             method: 'POST',
             body: classJson,
             headers: {'Content-Type': 'application/json'}
         });
-
         const res = await response.json();
-
         console.log(res);
             if (response.ok) {
                 console.log('updated!');
@@ -153,26 +135,20 @@ const editFolderNameEndpoint = async (newName, folderId) => {
             setMessage("API Error: " + error.toString());
         }
 };
-
-
 const addFolder = async (folderName) => {
     if (!userData) return; // Early return if userData is null
     console.log("folders", folders);
     const userId = userData.id;
     let classObj = { userId: userId, className: folderName };
     let classJson = JSON.stringify(classObj);
-
     try {
         const response = await fetch('api/addclass', {
             method: 'POST',
             body: classJson,
             headers: {'Content-Type': 'application/json'}
         });
-
         const res = await response.json();
         console.log(res);
-
-
             if (response.ok) {
                 setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
                 setMessage("Folder has been added.");
@@ -184,7 +160,6 @@ const addFolder = async (folderName) => {
             setMessage("API Error: " + error.toString());
         }
 };
-
     /*
     const createNewFolder = () => {
         const folderName = prompt('Enter folder name:');
@@ -198,7 +173,6 @@ const addFolder = async (folderName) => {
         addFolder(' ');
         // Optionally, set a flag indicating that creation is in progress
     };
-
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
@@ -216,7 +190,7 @@ const addFolder = async (folderName) => {
                 headers: {'Content-Type': 'application/json'}
             });
             const searchResults = await response.json();
-    
+
             if (response.ok) {
                 console.log('Search Results:', searchResults);
             } else {
@@ -231,7 +205,6 @@ const addFolder = async (folderName) => {
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////
-
     //I probably have to pass variables / functions into the Library header file
     return (
         <div className="page-container-library">
@@ -246,9 +219,4 @@ const addFolder = async (folderName) => {
         </div>
     );
 };
-
-export default BrowsePage;
-
-/*JACOB NOTES
-
-    So we are going to store the stacks id so we can pull the whole thing up on the view stack page */
+export default LibraryPage;

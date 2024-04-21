@@ -459,6 +459,7 @@ app.post('/api/login', async (req, res, next) => {
   }
 });
 
+/*
 app.get('/api/public-search', async (req, res) => {
   const { searchTerm = '' } = req.query; // Only extract searchTerm from query
 
@@ -503,7 +504,57 @@ app.get('/api/public-search', async (req, res) => {
     res.status(500).json({ error: e.toString() });
   }
 });
+*/
 
+app.get('/api/public-search', async (req, res) => {
+  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+
+  try {
+    const db = client.db("Group3LargeProject");
+
+    // Check if the search term is an empty string
+    const isEmptySearchTerm = searchTerm.trim() === '';
+
+    // Fetch data based on the search term condition
+    let classes, sets, cards;
+    if (isEmptySearchTerm) {
+      // Fetch all classes, sets, and cards
+      classes = await db.collection('Class').find({}).toArray();
+      sets = await db.collection('Sets').find({}).toArray();
+      cards = await db.collection('Cards').find({}).toArray();
+    } else {
+      // Fetch data based on the search term
+      const searchRegex = new RegExp(searchTerm.trim(), 'i');
+
+      // Fetch classes with filtering by className
+      classes = await db.collection('Class').find({ className: { $regex: searchRegex } }).toArray();
+
+      // Fetch sets with filtering by SetName
+      sets = await db.collection('Sets').find({ SetName: { $regex: searchRegex } }).toArray();
+
+      // Fetch cards with filtering by Term or Definition
+      const cardsQuery = {
+        $or: [
+          { Term: { $regex: searchRegex } },
+          { Definition: { $regex: searchRegex } }
+        ]
+      };
+      cards = await db.collection('Cards').find(cardsQuery).toArray();
+    }
+
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
+
+    res.json(results);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
+  }
+});
 
 
 

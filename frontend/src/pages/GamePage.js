@@ -60,12 +60,6 @@ const GamePage = () => {
           setSelectedCards(prevSelected => [...prevSelected, card]);
         }
       };
-
-      useEffect(() => {
-        if (matchedCards.size === cards.length) {
-          setGameCompleted(true);
-        }
-      }, [selectedCards, cards.length, matchedCards.size]);
     
       useEffect(() => {
         if (gameCompleted) {
@@ -134,6 +128,12 @@ const GamePage = () => {
           }
         }
       }, [navigate, location.pathname]);
+
+      useEffect(() => {
+        if (matchedCards.size === cards.length) {
+          setGameCompleted(true);
+        }
+      }, [selectedCards, cards.length, matchedCards.size]);
 
     // Render function for displaying cards
     const renderCardGrid = () => {

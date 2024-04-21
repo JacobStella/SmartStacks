@@ -96,7 +96,7 @@ const NavBar2 = () => {
                 />
                 <button type="submit" onClick={handleSearch}>Search</button>
                 {showDropdown && (
-                    <div className="search-dropdown">
+                    <div className="search-dropdown-navbar">
                         {searchResults.classes.slice(0, 5).map((item, index) => (
                             item.className ? ( 
                                 <div key={item._id} onClick={() => handleItemClick('classes', item)}>

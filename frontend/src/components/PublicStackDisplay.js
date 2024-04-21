@@ -26,7 +26,7 @@ const StackContainer = ({ stack }) => {
 
     const fetchUserDetails = async () => {
         try {
-            const url = buildPath(`api/users/name/${stack.userId}`);
+            const url = buildPath(`api/users/name/${stack.UserId}`);
             const response = await fetch(url);
             if (!response.ok) {
                 throw new Error('User not found');
@@ -43,11 +43,11 @@ const StackContainer = ({ stack }) => {
     };
 
     useEffect(() => {
-        if (stack.userId) {
-            console.log("in the stupid StackContainer use effectr");
+        if (stack.UserId) {
+            console.log("in the stupid StackContainer use effectr", stack.UserId);
             fetchUserDetails();
         }
-    }, [stack.userId]); // Adding stack.userId as a dependency
+    }, []); // Adding stack.userId as a dependency
 
     const handleViewStack = () => {
         localStorage.setItem("setId", stack._id);

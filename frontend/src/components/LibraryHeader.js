@@ -10,6 +10,8 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
     const [message, setMessage] = useState("");
     const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
     const navigate = useNavigate(); // <-- Defined with useNavigate hook
+    const searchInputRef = useRef(null);
+
 
 
     const toggleDropdown = () => {

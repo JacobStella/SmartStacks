@@ -710,6 +710,24 @@ app.get('/api/getset/:setId', async (req, res) => {
   }
 });
 
+app.get('/api/users/name/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId).select('FirstName LastName Username'); // Selecting specific fields
+
+    if (user) {
+      res.json({
+        FirstName: user.FirstName,
+        LastName: user.LastName,
+        Username: user.Username // Returning the username as well
+      });
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 app.post('/api/public-search', async (req, res) => {
   const { searchTerm = '' } = req.body; // Only extract searchTerm from query

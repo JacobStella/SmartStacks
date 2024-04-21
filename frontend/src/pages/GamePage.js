@@ -167,9 +167,9 @@ const GamePage = () => {
 
       const renderPopup = () => {
         if (isCorrectMatch) {
-          return <div>Correct Match!</div>;
+          return <div classname="correct-match-message">Correct Match!</div>;
         } else if (isCorrectMatch === false) {
-          return <div>Incorrect Match!</div>;
+          return <div classname="incorrect-match-message">Incorrect Match!</div>;
         }
         return null;
       };
@@ -182,7 +182,7 @@ const GamePage = () => {
           {renderCardGrid()}
           {renderPopup()}
           {gameCompleted && (
-            <div>
+            <div classname="game-completed-message">
               You have completed the study game!
             </div>
           )}

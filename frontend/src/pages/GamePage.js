@@ -28,6 +28,8 @@ const GamePage = () => {
     const location = useLocation();
     const [selectedCards, setSelectedCards] = useState([]);
     const [matchedCards, setMatchedCards] = useState(new Set());
+    const [isCorrectMatch, setIsCorrectMatch] = useState(null);
+    const [gameCompleted, setGameCompleted] = useState(false);
 
 
     function buildPath(route) {
@@ -58,6 +60,18 @@ const GamePage = () => {
           setSelectedCards(prevSelected => [...prevSelected, card]);
         }
       };
+
+      useEffect(() => {
+        if (matchedCards.size === cards.length) {
+          setGameCompleted(true);
+        }
+      }, [selectedCards, cards.length, matchedCards.size]);
+    
+      useEffect(() => {
+        if (gameCompleted) {
+          navigate('/view');
+        }
+      }, [gameCompleted, navigate]);
 
       useEffect(() => {
         let timeoutId = null;
@@ -140,13 +154,29 @@ const GamePage = () => {
         );
       };
 
-    return (
-        <div className="game-page">
-            <h1>{stackName}</h1>
-            <p>{stackDesc}</p>
-            {renderCardGrid()}
-        </div>
-    );
-};
+      const renderPopup = () => {
+        if (isCorrectMatch) {
+          return <div>Correct Match!</div>;
+        } else if (isCorrectMatch === false) {
+          return <div>Incorrect Match!</div>;
+        }
+        return null;
+      };
 
-export default GamePage;
+      return (
+        <div className="game-page">
+          <h1>{stackName}</h1>
+          <p>{stackDesc}</p>
+          {renderCardGrid()}
+          {renderPopup()}
+          {gameCompleted && (
+            <div>
+              You have completed the study game!
+              <a href="/view">Return to view stack page</a>
+            </div>
+          )}
+        </div>
+      );
+    };
+    
+    export default GamePage;

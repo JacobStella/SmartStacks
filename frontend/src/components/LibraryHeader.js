@@ -71,16 +71,18 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
     };
 
     const handleItemClick = (type, item) => {
-        console.log('Clicked item:', item);
         const itemId = type === 'classes' ? item.className : item.setName;
-        console.log('Item ID:', itemId);
+        console.log('Attempting to find item with ID:', itemId); // Debug log
         const itemElement = document.getElementById(itemId);
-        console.log('Item Element:', itemElement);
         if (itemElement) {
+            console.log('Element found, scrolling into view:', itemElement); // Debug log
             itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', itemId); // Debug log
         }
         setShowDropdown(false);
     };
+    
     
     
 

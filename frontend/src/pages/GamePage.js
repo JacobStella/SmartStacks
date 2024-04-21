@@ -186,12 +186,11 @@ const GamePage = () => {
               You have completed the study game!
             </div>
           )}
-          <button
-            className="return-button"
-            onClick={() => navigate('/view')}
-          >
-            Return to View Stack Page
-          </button> {/* Add this button for returning */}
+          <div classname="return-button-container">
+            <button className="return-button" onClick={() => navigate('/view')}>
+              Return to View Stack Page
+            </button> {/* Add this button for returning */}
+          </div>
         </div>
       );
       

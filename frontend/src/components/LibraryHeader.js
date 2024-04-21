@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
 import '../Library.css';
+import React, { useEffect, useState, useRef } from 'react';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 
 const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setSearchFolderInput, searchFolderInputRef, searchResults }) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [userInitial, setUserInitial] = useState('');
+    const [userId, setUserId] = useState('');
+    const [searchInput, setSearchInput] = useState('');
+    const [message, setMessage] = useState("");
+    const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
+    const navigate = useNavigate(); // <-- Defined with useNavigate hook
+
 
     const toggleDropdown = () => {
         setShowDropdown(!showDropdown);

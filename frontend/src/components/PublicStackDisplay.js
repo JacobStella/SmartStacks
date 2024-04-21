@@ -30,6 +30,7 @@ const StackContainer = ({ stack }) => {
                     throw new Error('User not found');
                 }
                 const data = await response.json();
+                console.log("USER DATA RAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", data);
                 setUserDetails({
                     FirstName: data.FirstName,
                     LastName: data.LastName,

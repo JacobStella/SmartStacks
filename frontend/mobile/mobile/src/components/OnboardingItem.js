@@ -80,9 +80,9 @@ export default OnboardingItem = ({item, numCards}) => {
                 </Animated.View>
             </Pressable>
             <View style = {styles.indexContainer}>
-                      <Text style = {styles.index}>{item.Index}</Text>
+                      <Text style = {styles.index}>{item.Index+1}</Text>
                       <Text style = {styles.index}>/</Text>
-                      <Text style = {styles.index}>{numCards-1}</Text>
+                      <Text style = {styles.index}>{numCards}</Text>
 
 
                     </View>

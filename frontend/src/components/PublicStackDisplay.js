@@ -45,7 +45,7 @@ const StackContainer = ({ stack }) => {
 
   
 const PublicStacksDisplay = ({ publicStacks }) => {
-    console.log(publicStacks);
+    console.log("in stack display",publicStacks);
     return (
       <section className="stacks-display">
         {publicStacks.map(stack => (

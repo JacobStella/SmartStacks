@@ -45,6 +45,10 @@ const StackContainer = ({ stack }) => {
 
   
 const PublicStacksDisplay = ({ publicStacks }) => {
+
+    useEffect(() => {
+        console.log("im in this bitch");
+    }, []);
     console.log("in stack display",publicStacks);
     return (
       <section className="stacks-display">

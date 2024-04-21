@@ -50,7 +50,7 @@ const StackContainer = ({ stack }) => {
             } 
         };
 
-    }, [stack.userId]);
+    }, []);
 
     const handleViewStack = () => {
         localStorage.setItem("setId", stack._id);

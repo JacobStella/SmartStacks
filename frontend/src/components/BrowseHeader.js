@@ -22,7 +22,6 @@ const BrowseHeader = ({ }) => {
     }
 
     const handleSearch = async (event) => {
-        event.preventDefault();
         console.log("searchInput", searchInput);
         await fetchPublicSearch(searchInput);
     };

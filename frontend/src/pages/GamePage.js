@@ -184,7 +184,6 @@ const GamePage = () => {
           {gameCompleted && (
             <div>
               You have completed the study game!
-              <a href="/view">Return to view stack page</a>
             </div>
           )}
           <button

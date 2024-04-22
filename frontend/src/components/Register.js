@@ -7,6 +7,7 @@ function Register() {
     var firstName;
     var lastName;
     var email; // Added for email input
+    var userId;
     const [message, setMessage] = useState('');
 
     const doRegister = async event => {
@@ -34,6 +35,8 @@ function Register() {
             
             if(response.status == 201) {
                 const res = await response.json();
+                userId = response.userId;
+                console.log(userId);
                 console.log("the response is", res);
                 // Registration successful, send verification email
                 const verificationResponse = await fetch('/api/send-verif', {
@@ -42,7 +45,7 @@ function Register() {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        userId: response.userId, // You may need to modify this based on your backend response
+                        userId: userId, // You may need to modify this based on your backend response
                         email: email.value,
                     }),
                 });

@@ -33,6 +33,7 @@ function Register() {
             });
 
             if(response.ok) {
+                console.log("the response is", response);
                 // Registration successful, send verification email
                 const verificationResponse = await fetch('/api/send-verif', {
                     method: 'POST',

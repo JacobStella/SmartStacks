@@ -73,7 +73,7 @@ app.post('/api/register', async (req, res) => {
       //const hashedPassword = await bcrypt.hash(password, salt);
 
       // Insert new user
-      await usersCollection.insertOne({
+      const result = await usersCollection.insertOne({
           Email: email,
           FirstName: firstName,
           LastName: lastName,
@@ -82,7 +82,7 @@ app.post('/api/register', async (req, res) => {
           Verified: verified,
       });
 
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(201).json({ message: 'User registered successfully', userId: result.insertedId });
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.toString() });

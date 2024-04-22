@@ -35,7 +35,7 @@ function Register() {
             
             if(response.status == 201) {
                 const res = await response.json();
-                userId = response.userId;
+                userId = res.userId;
                 console.log(userId);
                 console.log("the response is", res);
                 // Registration successful, send verification email

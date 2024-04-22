@@ -81,8 +81,9 @@ app.post('/api/register', async (req, res) => {
           Password: password,
           Verified: verified,
       });
+	var id = result.insertedId;
 
-      res.status(201).json({ message: 'User registered successfully', userId: result.insertedId });
+      res.status(201).json({ message: 'User registered successfully', userId: id });
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.toString() });

@@ -2,44 +2,66 @@ import { useIsFocused } from '@react-navigation/native';
 import React, {useState, useEffect} from 'react';
 import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
-
+import { getClassesAsync } from './CardUI';
 
 const handleCreate = async () => {
     
 }
 
-const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-];
+const fetchClasses = async () => {
+    const classes = await getClassesAsync();
+  
+};
+
+//Classes array
+// const data = [
+//     { label: 'Item 1', value: '1' },
+//     { label: 'Item 2', value: '2' },
+//     { label: 'Item 3', value: '3' },
+//     { label: 'Item 4', value: '4' },
+//     { label: 'Item 5', value: '5' },
+//     { label: 'Item 6', value: '6' },
+//     { label: 'Item 7', value: '7' },
+//     { label: 'Item 8', value: '8' },
+// ];
 
 // I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
+
     const [cardPairs, setCardPairs] = useState(Array.from({ length: 3 }, (_, index) => ({ id: index })));
     const [isPublic, setIsPublic] = useState(true);
     const toggleSwitch = () => setIsPublic(previousState => !previousState);
 
     const [value, setValue] = useState(null);
+    const [getCurrentClass, setCurrentClass] = useState([]);
     const [isFocus, setIsFocus] = useState(false);
 
+    const [getClasses, setClasses] = useState([]);
+
+    const fetchClasses = async () => {
+        const classes = await getClassesAsync();
+        setClasses(classes);
+        //console.log(classes);
+
+    };
+    fetchClasses();
+    data = getClasses;
+    //console.log(getClasses);
     const CardCreator = ({ index, card, updateCard}) => {
         return(
             <View style={styles.cardContainer}>
                 <TextInput style={styles.cardTermInput}
                 placeholder = "Term" 
                 placeholderTextColor={'#fff'}
+                onChangeText={(text) => updateCard(index, 'Term', text)}
                 />
                 <TextInput style={styles.cardDefinitionInput}
                 placeholder = "Definition"
                 placeholderTextColor={'#fff'}
-                multiline={true}/>
+                multiline={true}
+                onChangeText={(text) => updateCard(index, 'Definiton', text)}
+                />
             </View>
         );
     };
@@ -52,6 +74,7 @@ const Create = ({navigation}) => {
         const newCardPairs = [...cardPairs];
         newCardPairs[index][field] = value;
         setCardPairs(newCardPairs);
+        //console.log(cardPairs);
       };
 
     /*const getUserData = () => {
@@ -73,6 +96,7 @@ const Create = ({navigation}) => {
         }
     };*/
 
+    //Renders dropdown
     const renderLabel = () => {
         if (value || isFocus) {
           return (
@@ -116,10 +140,11 @@ const Create = ({navigation}) => {
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.icon}
+                    //Classes array
                     data={data}
                     search
                     maxHeight={300}
-                    labelField="label"
+                    labelField="Title"
                     valueField="value"
                     placeholder={!isFocus ? 'Select Item' : '...'}
                     searchPlaceholder="Search..."
@@ -128,17 +153,20 @@ const Create = ({navigation}) => {
                     onBlur={() => setIsFocus(false)}
                     onChange={item => {
                         setValue(item.value);
+                        setCurrentClass(item);
+                        console.log(getCurrentClass);
                         setIsFocus(false);
                     }}/>
             </View>
             
             {cardPairs.map((cardPair, index) =>(
+                //Term def fields
                 <CardCreator
                     key={cardPairs.id}
                     index={index}
                 />
             ))}
-
+            
             <TouchableOpacity style={styles.addButton} onPress={addCardPair}>
                 <Text style={styles.buttonText}>+ Add Card</Text>
             </TouchableOpacity>

@@ -9,6 +9,7 @@ import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassA
 import Login from './Login';
 import ViewCard from './ViewCard';
 import {onLibrary} from '../../.././App';
+import { setClassesAsync } from './CardUI';
 
 
 const Library = ({navigation}) => {
@@ -44,6 +45,7 @@ const fetchUserId = async () => {
     setAllClassesAndStacks(classAndSets);
     let totalClasses = classAndSets.map(field => ({Title: field.className, IsClass: true, Cards: field.Card, Id: field._id}));
     setClasses(totalClasses);
+    setClassesAsync(totalClasses);
     setAllClasses(totalClasses);
     let outerSets = classAndSets.map(field => (field.sets));
     let nestedSets = outerSets.flat();

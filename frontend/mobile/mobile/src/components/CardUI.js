@@ -231,4 +231,33 @@ export const getOnLibrary = async () => {
         return null;
     }
 
+
+    
 };
+
+export const setClassesAsync = async (data) => {
+    try{
+        await AsyncStorage.setItem('Classes', JSON.stringify(data));
+       
+    }
+    catch(e){
+        console.log("Couldn't store the library state", e);
+    }
+
+};
+
+export const getClassesAsync = async () => {
+    try{
+        const classes = await AsyncStorage.getItem('Classes');
+        return JSON.parse(classes);
+    }
+    catch(e){
+        console.log("Couldn't get the current classes", e);
+        return null;
+    }
+
+
+    
+};
+
+

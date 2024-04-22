@@ -31,8 +31,9 @@ function Register() {
                     password: registerPassword.value,
                 }),
             });
-            const res = await response.json;
-            if(response.ok) {
+            
+            if(response.status == 201) {
+                const res = await response.json();
                 console.log("the response is", res);
                 // Registration successful, send verification email
                 const verificationResponse = await fetch('/api/send-verif', {

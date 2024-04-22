@@ -170,11 +170,13 @@ a:hover{
   align-items: center;
 }
 div.get-started-section {
-  max-width: 400px;
+  max-width: 450px;
     margin-top:60px;
 }
-div.get-started-section p{
-    margin-top: 60px;
+div.get-started-section p {
+  margin-top: 30px;
+  font-weight: 600;
+  font-size: 17px;
 }
 
 /* Add a media query for responsive adjustments */

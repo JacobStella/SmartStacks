@@ -66,6 +66,19 @@ const LibraryPage = () => {
                         setFolders(classes); // Assuming the API returns an array of classes
                         console.log("class useStste stuff")
                         console.log(classes);
+                        var navFolderSearch = localStorage.getItem('folderSearch');
+        console.log("Library Folder info", navFolderSearch);
+        if (!navFolderSearch) {
+            console.log("no folder sent from navBar");
+        } else {
+            localStorage.removeItem('folderSearch');
+            const itemElement = document.getElementById(navFolderSearch);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', navFolderSearch);
+        }
+        }
                     } else {
                         console.log('No classes found for this user.');
                     }
@@ -204,22 +217,6 @@ const addFolder = async (folderName) => {
             setMessage(e.toString());
         }
     };
-
-    useEffect(() => {
-        var navFolderSearch = localStorage.getItem('folderSearch');
-        console.log("Library Folder info", navFolderSearch);
-        if (!navFolderSearch) {
-            console.log("no folder sent from navBar");
-        } else {
-            localStorage.removeItem('folderSearch');
-            const itemElement = document.getElementById(navFolderSearch);
-        if (itemElement) {
-            itemElement.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            console.log('Element not found for ID:', navFolderSearch);
-        }
-        }
-    })
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////

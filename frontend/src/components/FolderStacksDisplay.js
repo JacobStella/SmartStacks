@@ -6,7 +6,7 @@ import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
+const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing, _id }) => {
   const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);
@@ -152,7 +152,7 @@ const FolderStacksDisplay = ({ folders, onEditFolder, onAddFolder }) => {
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
+        <FolderContainer key={folder._id} _id={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
       ))}
     </section>
   );

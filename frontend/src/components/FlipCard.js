@@ -1,5 +1,4 @@
 import React from 'react';
-import DifficultySlider from './DifficultySlider'; // Assuming DifficultySlider is in the same directory
 import '../ViewStack.css';
 import '../Web.css';
 

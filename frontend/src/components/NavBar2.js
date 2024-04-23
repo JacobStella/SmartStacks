@@ -70,6 +70,7 @@ const NavBar2 = () => {
         // Assuming item._id is the unique folder ID passed here
         const itemId = `folder-${item._id}`;
         localStorage.setItem('folderSearch', itemId); 
+        console.log("itemId in navbar", itemId);
         navigate('/library');
         /*
         const itemElement = document.getElementById(itemId);

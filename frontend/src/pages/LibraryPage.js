@@ -51,6 +51,7 @@ const LibraryPage = () => {
 
     useEffect(() => {
         var navFolderSearch = localStorage.getItem('folderSearch');
+        console.log("Library Folder info", navFolderSearch);
         if (!navFolderSearch) {
             console.log("no folder sent from navBar");
         } else {

@@ -70,7 +70,7 @@ function Register() {
     };
 
     return (
-        <div id="registerDiv">
+        <div id="registerDiv" style={{ position: 'relative' }}> {/* Set position relative */}
             <h1 id="title">Welcome to Smart Stacks!</h1>
             <form onSubmit={doRegister}>
                 <span id="inner-title">PLEASE REGISTER</span><br />
@@ -87,7 +87,7 @@ function Register() {
             <span id="registerResult">{message}</span>
             {/* Render the pop-up textbox based on the state */}
             {showPopup && (
-                <div className="popup">
+                <div className="popup" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
                     <span className="popuptext" id="myPopup">Popup Textbox</span>
                 </div>
             )}

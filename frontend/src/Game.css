@@ -16,7 +16,7 @@
     text-align:center;
     align-items: center;
     background-color: #07461d;
-    border: 9px solid #06bb4f;
+    border: 9px solid green;
     border-radius: 30px;
     color: #ffffff;
     padding: 10px;
@@ -94,7 +94,7 @@ div.card-grid{
 }
 
 .correct-match-message {
-    color: #06bb4f
+    color: green
 }
 .incorrect-match-message {
     color: #ff0000
@@ -112,6 +112,6 @@ div.card-grid{
     margin-top: 25px;
     font-size: 25px;
     font-weight: 300;
-    color: #06bb4f
+    color: green
 }
 

@@ -1,15 +1,18 @@
 import '../Library.css';
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate} from 'react-router-dom';
-const BrowseHeader = ({ /*updatePublicStacks*/}) => {
+import { useNavigate } from 'react-router-dom';
+
+const BrowseHeader = () => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
-    const navigate = useNavigate(); // <-- Defined with useNavigate hook
+    const navigate = useNavigate();
     const searchInputRef = useRef(null);
+
     useEffect(() => {
-        handleSearch(" ");
+        handleSearch(" ");  // Trigger an initial empty search to populate data (if necessary)
     }, []);
+
     function buildPath(route) {
         if (process.env.NODE_ENV === 'production') {
             return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
@@ -17,14 +20,18 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
             return 'http://localhost:5000/' + route;
         }
     }
+
     const handleSearch = async (event) => {
+        if (event) event.preventDefault();  // Prevent form submission if event is provided
         console.log("searchInput", searchInput);
         await fetchPublicSearch(searchInput);
     };
+
     const fetchPublicSearch = async (searchTerm) => {
         console.log("searchTerm:", searchTerm);
         let obj = { searchTerm: searchTerm };
         let js = JSON.stringify(obj);
+
         try {
             const response = await fetch(buildPath('api/public-search'), {
                 method: 'POST',
@@ -38,11 +45,10 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
                 alert(res.error);
             } else {
                 console.log("Search results", res);
-                // Filter sets with public status true and update state
                 const publicSets = res.sets.filter(set => set.public === true);
-                //updatePublicStacks(publicSets);
                 console.log("publicSets", publicSets);
-                setSearchResults(res); // Assuming you still want to keep the original search results
+                setSearchResults({ sets: publicSets, classes: res.classes });
+                setShowDropdown(true);  // Ensure the dropdown is shown when results are available
             }
         } catch (e) {
             alert(e.toString());
@@ -50,9 +56,10 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
     };
 
     const handleItemClick = (type, item) => {
-        navigate(`/${type}/${item._id}`); // Update with actual path structure
-        setShowDropdown(false); // Hide dropdown after navigation
+        navigate(`/${type}/${item._id}`);  // Navigate to the selected item's page
+        setShowDropdown(false);  // Hide the dropdown after navigation
     };
+
     return (
         <header className="library-header">
             <h1>Your Library</h1>
@@ -93,4 +100,5 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
         </header>
     );
 };
+
 export default BrowseHeader;

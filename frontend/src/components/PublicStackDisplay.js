@@ -1,6 +1,89 @@
-/////////////////////////////////////////////
+//////////////////////////////////////////////
 //stack.Description is the description lol
 
+
+
+
+
+
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import PlayLightIcon from '../images/playLight.png';
+import '../Library.css';
+
+const StackContainer = ({ stack }) => {
+    const navigate = useNavigate();
+
+    const handleViewStack = () => {
+        localStorage.setItem("setId", stack._id);
+        navigate('/view');
+    };
+
+    return (
+        <div className="stack-template">
+            <div className="stack-content">
+                <span className="stack-name">{stack.SetName}</span>
+                <button onClick={handleViewStack}>
+                    <img src={PlayLightIcon} alt="View" />
+                </button>
+                {/* Add other buttons and interactions here */}
+            </div>
+        </div>
+    );
+};
+
+const PublicStacksDisplay = ({ publicStacks }) => {
+    return (
+      <section className="stacks-display">
+        {publicStacks.map(stack => (
+          <StackContainer key={stack._id} stack={stack} />
+        ))}
+      </section>
+    );
+  };
+  
+export default PublicStacksDisplay;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
@@ -66,7 +149,6 @@ const StackContainer = ({ stack }) => {
                 <button onClick={handleViewStack}>
                     <img src={PlayLightIcon} alt="View" />
                 </button>
-                {/* Add other buttons and interactions here */}
             </div>
         </div>
     );
@@ -101,7 +183,7 @@ const PublicStacksDisplay = ({ publicStacks }) => {
 
 
 
-
+*/
 
 
 

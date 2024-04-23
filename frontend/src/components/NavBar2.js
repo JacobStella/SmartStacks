@@ -90,6 +90,11 @@ const NavBar2 = () => {
         navigate('/login');
     };
 
+    const handleLogout = () => {
+        localStorage.clear();  // Clear all local storage (adjust if needed)
+        navigate('/');  // Redirect to login page
+    };
+
     return (
         <nav className="navbar">
             <img src={logo} alt="Company Logo" className="navbar-logo" />
@@ -128,7 +133,7 @@ const NavBar2 = () => {
             </div>
 
             {userLoggedIn ? (
-                <div className="profile-circle">{userInitial}</div>
+                <button className="profile-circle" onClick={handleLogout}>{userInitial}</button>
             ) : (
                 <button onClick={handleLoginClick} className="nav-button">Login</button>
             )}

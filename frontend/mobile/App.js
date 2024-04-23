@@ -183,8 +183,6 @@ const NavBar = ({name, navigation}) => {
         tabBarActiveTintColor: '#09BC8A',
         tabBarInactiveTintColor: '#004346',
         
-
-        
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           let rn = route.name;
@@ -229,17 +227,17 @@ const NavBar = ({name, navigation}) => {
                 height: 50,
                 backgroundColor: 'red',
                 shape: 'circle',
-                //borderRadius: '50%',
+                borderRadius: 100,
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: 30
+                marginBottom: 20
               }}>
                 <Image
                   source={require('./assets/Skunk.png')}
                   resizeMode="contain"
                   style={{
-                    width: 30,
-                    height: 30,
+                    width: 50,
+                    height: 50,
                   }}
                 />
               </View>
@@ -253,7 +251,6 @@ const NavBar = ({name, navigation}) => {
         <Tab.Screen name={studyName} component={Study}options = {{
           headerShown:false,
         }}/>
-        
 
       </Tab.Navigator>
       

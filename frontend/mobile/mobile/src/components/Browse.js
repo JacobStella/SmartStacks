@@ -207,21 +207,20 @@ const StackHeader = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'yellow'
+        backgroundColor: '#D8DCFF',
     },
     stackContainer:{
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         margin: 5,
+        backgroundColor: '#D8DCFF',
     },
-
     stackBoxContainer: {
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',     
     },
-
     stackBoxHeader: {
          flex: 1,
          flexDirection: 'row',
@@ -230,47 +229,23 @@ const styles = StyleSheet.create({
          borderColor: 'black',
          borderWidth: 2,
          borderRadius: 20,  
-     }, 
-
+     },
     stackBox: {
         flex: 1,
-        backgroundColor: "#abb1cf",
+        backgroundColor: "#508991",
         borderColor: 'black',
-        borderWidth: 2,
+        borderWidth: 5,
+        borderRadius: 3,
     },
-
     stackBoxInner: {
         flexDirection: 'row',
         width: '100%',
-        backgroundColor: "#abb1cf",
+        backgroundColor: "#004346",
         padding : 1,
         borderColor: 'black',
         borderWidth: 2,
         justifyContent: 'flex-end',
     },
-
-    stackBoxInnerLeft: {
-      position: 'absolute',
-      right: '90%',
-  },
-
-  stackBoxInnerRight: {
-    //justifyContent: 'flex-end',
-    
-    
-    //justifyContent: 'flex-end',
-},
-stackBoxButton: {
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderRadius: 8,
-  backgroundColor: 'fff',
-  borderColor: 'black',
-  borderWidth: 1,
-  paddingHorizontal: 10,
-},
-
     stackText:{
         fontSize: 25,
         fontWeight: '900',
@@ -285,30 +260,32 @@ stackBoxButton: {
         fontSize: 25,
         fontWeight: '900',
     },
-
     stackTitleTextReset:{
         justifyContent: 'flex-end',
         fontSize: 25,
         fontWeight: '900',
     },
-  
+    line: {
+        borderBottomColor: 'black',
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        alignSelf: 'stretch',
+        marginBottom: 20,
+        marginTop: 20,
+    },
     sheet:{
         borderTopLeftRadius: 14,
         borderTopRightRadius: 14,
     },
-
     innerSheet:{
         padding: 24,
         alignItems: 'stretch',
     },
-
     sheetTitle: {
         fontSize: 16,
         color: 'black',
         marginTop: 15,
         textAlign: 'center'
     },
-
     innerSheetText: {
         fontSize: 12,
         color: 'black',
@@ -316,7 +293,6 @@ stackBoxButton: {
         marginBottom: 32,
         textAlign: 'center',
     },
-
     sheetButton: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -328,28 +304,28 @@ stackBoxButton: {
         paddingVertical: 10,
         paddingHorizontal: 20,
     },
-
     icon: {
         textAlign: 'center',
     },
-
     header: {
         width: '100%',
-        height: '15%',
+        height: '10%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'gray',
-        borderRadius: 20,
+        backgroundColor: '#D8DCFF',
         flexDirection: "row",
-        
     },
-    
     headerIcon: {
         position: 'absolute',
-        right: '85%',
-        backgroundColor: "red",
+        right: '90%',
+        backgroundColor: "#172A3A",
+        borderRadius: 20,
     },
-
+    headerText: {
+        fontSize: 28,
+        color: '#172A3A',
+        fontWeight: 'bold',
+    }
 });
 
 

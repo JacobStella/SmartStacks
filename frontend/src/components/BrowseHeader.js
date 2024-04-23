@@ -47,7 +47,7 @@ const BrowseHeader = () => {
                 console.log("Search results", res);
                 const publicSets = res.sets.filter(set => set.public === true);
                 console.log("publicSets", publicSets);
-                setSearchResults({ sets: publicSets, classes: res.classes });
+                setSearchResults({ sets: publicSets, classes: [] });  // Clearing classes from state
                 setShowDropdown(true);  // Ensure the dropdown is shown when results are available
             }
         } catch (e) {
@@ -79,13 +79,6 @@ const BrowseHeader = () => {
                     <button type="submit" className="search-btn" onClick={handleSearch}>Search</button>
                     {showDropdown && (
                     <div className="search-dropdown">
-                        {searchResults.classes.slice(0, 5).map((item, index) => (
-                            item.className ? ( 
-                                <div key={item._id} onClick={() => handleItemClick('classes', item)}>
-                                {item.className}
-                                </div>
-                            ) : null
-                        ))}
                         {searchResults.sets.slice(0, 5).map((item, index) => (
                             item.setName ? ( 
                                 <div key={item._id} onClick={() => handleItemClick('sets', item)}>

@@ -179,14 +179,19 @@ app.get('/api/verify/:token', async (req, res) => {
 
 // send forgot password email
 app.post('/api/sendforgot', async (req, res) => {
-	const {email, userId} = req.body;
+	const {email} = req.body;
+
+	// find userId
+	const db = client.db("Group3LargeProject");
+	const result = await db.collection('Users').findOne({Email : {$eq: email}});
+	const userId = result._id;
 	
 	// the email
 	const mailOptions = {
 		from: "daimondsailer@gmail.com",
 		to: email,
 		subject: "Forgot your password",
-		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
+		text: `Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/forgor/${userId}`,
 	};
 
 	// sending the email

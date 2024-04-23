@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Login from '../components/Login';
+import VerifyLogin from '../components/VerifyLogin';
 import NavBar2 from '../components/NavBar2';
 import LandingFooter from '../components/LandingFooter';
 import '../LoginRegister.css';
@@ -27,7 +27,7 @@ const VerifyPage = () => {
         <>
             <NavBar2 />
             <div className="login-container">
-                <Login />
+                <VerifyLogin />
             </div>
             <LandingFooter />
         </>

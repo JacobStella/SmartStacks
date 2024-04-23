@@ -80,14 +80,14 @@ const GamePage = () => {
             timeoutId = setTimeout(() => {
               setSelectedCards([]);
               setIsCorrectMatch(null); // Reset after showing popup
-            }, 1500);
+            }, 1000);
           } else {
             // Not a match
             setIsCorrectMatch(false);
             timeoutId = setTimeout(() => {
               setSelectedCards([]);
               setIsCorrectMatch(null); // Reset after showing popup
-            }, 1500);
+            }, 1000);
           }
         }
       

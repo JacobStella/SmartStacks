@@ -80,7 +80,7 @@ function VerifyLogin()
 
             <>
                 <form onSubmit={doLogin}>
-                    <span id="inner-title">PLEASE LOG IN</span><br />
+                    <span id="inner-title">Email Verified! Please Log In.</span><br />
                     <input type="text" id="loginName" placeholder="Username" ref={(c) => loginName = c} /><br />
                     <input type="password" id="loginPassword" placeholder="Password" ref={(c) => loginPassword = c} />
                     <a href="https://largeprojectgroup3-efcc1eed906f.herokuapp.com/forgor">Forgot Password?</a>

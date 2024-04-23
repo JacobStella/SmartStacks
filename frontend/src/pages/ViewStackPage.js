@@ -131,8 +131,8 @@ const ViewStackPage = () => {
         <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
         {cards.length > 0 && (
             <FlipCard
-                front={cards[currentIndex].term} // Assuming 'term' is the property for the term
-                back={cards[currentIndex].definition} // Assuming 'definition' is the property for the definition
+                front={cards[currentIndex].Term} // Assuming 'term' is the property for the term
+                back={cards[currentIndex].Definition} // Assuming 'definition' is the property for the definition
             />
         )}
         <div className="navigation-buttons">

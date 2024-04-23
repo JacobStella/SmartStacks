@@ -5,6 +5,7 @@ require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+const salt = process.env.SALT;
 
 // email setup
 const nodemailer = require('nodemailer');
@@ -69,8 +70,7 @@ app.post('/api/register', async (req, res) => {
       }
 
       // Hash password
-      //const salt = await bcrypt.genSalt(10);
-      //const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = crypto.pbkdf2Sync(password, salt, 10, 64, 'sha512').toString('hex');
 
       // Insert new user
       const result = await usersCollection.insertOne({
@@ -78,7 +78,7 @@ app.post('/api/register', async (req, res) => {
           FirstName: firstName,
           LastName: lastName,
           Username: username,
-          Password: password,
+          Password: hashedPassword,
           Verified: verified,
       });
 	var id = result.insertedId;
@@ -209,7 +209,10 @@ app.post('/api/forgot', async (req, res) => {
 	
 	try{
 		const db = client.db("Group3LargeProject");
-		
+
+		// Hash password
+      		const hashedPassword = crypto.pbkdf2Sync(newPass, salt, 10, 64, 'sha512').toString('hex');
+		const result = await db.collection('Users').updateOne({"_id": new ObjectId(userId)}, {$set: {Password:hashedPassword}});
 		if(!result){
 			res.status(500).json({message: "Could not change pass"});
 		}
@@ -876,8 +879,10 @@ app.post('/api/login', async (req, res, next) => {
   const { login, password } = req.body;
 
   const db = client.db("Group3LargeProject");
-  // Adjusted to match directly with plaintext password for demonstration purposes
-  const user = await db.collection('Users').findOne({ Username: login, Password: password });
+	// Password Hashing to check
+	const checkhash = crypto.pbkdf2Sync(password, salt, 10, 64, `sha512`).toString(`hex`);
+  
+  const user = await db.collection('Users').findOne({ Username: login, Password: checkhash });
 
   if (user) {
       var id = user._id; // Using MongoDB's default '_id' field, adjust if using a custom 'UserID'

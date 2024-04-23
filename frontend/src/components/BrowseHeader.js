@@ -86,7 +86,7 @@ const BrowseHeader = () => {
                     <div className="search-dropdown">
                         {searchResults.sets.slice(0, 5).map((item, index) => (
                             item.SetName ? ( 
-                                <div key={item._id} onClick={(e) => handleViewStack(set._id)}>
+                                <div key={item._id} onClick={(e) => handleViewStack(item._id)}>
                                 {item.SetName}
                                 </div>
                             ) : null

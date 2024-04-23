@@ -221,7 +221,7 @@ const addFolder = async (folderName) => {
                 } else {
                     console.log('Element not found for ID:', navFolderSearch);
                 }
-            }, 500); // You can adjust the timeout duration as necessary
+            }, 250); // You can adjust the timeout duration as necessary
         } else {
             console.log("No folder search ID sent from navBar");
         }

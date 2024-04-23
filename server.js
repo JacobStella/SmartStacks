@@ -124,7 +124,7 @@ app.post('/api/send-verif', async (req, res) => {
 
 // checking verification
 
-app.get('/verify/:token', async (req, res) => {
+app.get('/api/verify/:token', async (req, res) => {
   const { token } = req.params;
 
   if (!token) {

@@ -4,6 +4,75 @@
 //     stackName stores the name of the stack 
 //     stackDesc this will store the desc of the stack
 
+import React, { useState } from 'react';
+import FlipCard from '../components/FlipCard'; // Make sure to import FlipCard
+import '../ViewStack.css';
+import '../Web.css';
+
+const ViewStackPage = () => {
+  const [cards, setCards] = useState([]); // Array of cards
+  const [currentIndex, setCurrentIndex] = useState(0); // Index of the current card
+  const [flippedIndexes, setFlippedIndexes] = useState(new Set()); // Tracks which cards are flipped
+  const [showSliders, setShowSliders] = useState(new Set()); // Tracks which cards show the difficulty slider
+
+  // Handler to flip a card
+  const flipCard = (index) => {
+    setFlippedIndexes(prev => {
+      const newFlipped = new Set(prev);
+      if (newFlipped.has(index)) {
+        newFlipped.delete(index);
+      } else {
+        newFlipped.add(index);
+      }
+      return newFlipped;
+    });
+  };
+
+  // Handler to toggle the visibility of the difficulty slider
+  const toggleSlider = (index) => {
+    setShowSliders(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+
+  // Handler to process difficulty changes
+  const handleDifficultyChange = (event, index) => {
+    console.log(`Card ${index} difficulty set to`, event.target.value);
+    // Implement additional logic if needed, e.g., updating the card's state or saving to a database
+  };
+
+  // Render the cards using FlipCard component
+  const cardElements = cards.map((card, index) => (
+    <FlipCard
+      key={index}
+      front={card.term}
+      back={card.definition}
+      isFlipped={flippedIndexes.has(index)}
+      onClick={() => flipCard(index)}
+      onDifficultyChange={(event) => handleDifficultyChange(event, index)}
+      showSlider={showSliders.has(index)}
+      toggleSlider={() => toggleSlider(index)}
+    />
+  ));
+
+  return (
+    <div className="view-stack-page">
+      {/* Render card elements */}
+      {cardElements.length > 0 ? cardElements : <p>No cards available.</p>}
+    </div>
+  );
+};
+
+export default ViewStackPage;
+
+/*
+
 import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
 import PlayButton from '../components/PlayButton'; 
@@ -29,6 +98,9 @@ const ViewStackPage = () => {
   const [cards, setCards] = useState([]);
   const [stackName, setStackName] = useState("Stack Title"); // Default value as "Stack Title"
   const [stackDesc, setStackDesc] = useState(""); // Default value as an empty string
+  const [flippedIndexes, setFlippedIndexes] = useState(new Set()); // Tracks flipped cards
+  const [showSliders, setShowSliders] = useState(new Set()); // Tracks visibility of the difficulty slider for each card
+
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -123,11 +195,43 @@ const ViewStackPage = () => {
     };
   }, []);
 
+  ////////////////////////////////YAP
+  const flipCard = (index) => {
+    setFlippedIndexes(prev => {
+      const newFlipped = new Set(prev);
+      if (newFlipped.has(index)) {
+        newFlipped.delete(index);
+      } else {
+        newFlipped.add(index);
+      }
+      return newFlipped;
+    });
+  };
+  
+  const toggleSlider = (index) => {
+    setShowSliders(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(index)) {
+        newSet.delete(index);
+      } else {
+        newSet.add(index);
+      }
+      return newSet;
+    });
+  };
+  
+  const handleDifficultyChange = (event, index) => {
+    console.log("Difficulty for card", index, "set to", event.target.value);
+    // Implement additional logic here if you need to react to the difficulty change
+  };
+
+  /////////////////////////////////////////END YAP
+
   return (
     <div className="view-stack-page">
         {!isFullScreen && <NavBar2 />}
         {!isFullScreen && <PlayButton />}
-        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>} {/* This is where you will show the description */}
+        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>} 
         <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
         {cards.length > 0 && (
             <FlipCard
@@ -141,11 +245,20 @@ const ViewStackPage = () => {
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
         {cards.length > 0 && (
-            <div className="card-info">
-                <p><b>Term:</b> {cards[currentIndex].term}</p>
-                <p><b>Definition:</b> {cards[currentIndex].definition}</p>
-            </div>
-        )}
+  <FlipCard
+    front={cards[currentIndex].term}
+    back={cards[currentIndex].definition}
+    isFlipped={flippedIndexes.has(currentIndex)}
+    onClick={() => flipCard(currentIndex)}
+    onDifficultyChange={(event) => handleDifficultyChange(event, currentIndex)}
+    showSlider={showSliders.has(currentIndex)}
+    toggleSlider={(e) => {
+      e.stopPropagation(); // Prevent card flip when clicking the slider button
+      toggleSlider(currentIndex);
+    }}
+  />
+)}
+
         <div>
             <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
         </div>
@@ -154,3 +267,5 @@ const ViewStackPage = () => {
 }
 
 export default ViewStackPage;
+
+*/

@@ -273,6 +273,22 @@ div#registerDiv input:-webkit-autofill:active {
     -webkit-text-fill-color: #172a3a !important; /* Replace with your desired text color */
     background-color: #d8dcff !important; /* Replace with your desired background color */
 }
+
+div.popup{
+  background-color:#d8dcff;
+  border: 7px solid #004346;
+  border-radius:10px;
+  height: 30%;
+  width: 50%;
+  text-align:center;
+  justify-content:center;
+  align-content:center;
+}
+
+span#myPopup.popuptext {
+  color: #172a3a;
+  font-size: 30px;
+}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

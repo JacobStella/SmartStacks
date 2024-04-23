@@ -88,7 +88,7 @@ function Register() {
             {/* Render the pop-up textbox based on the state */}
             {showPopup && (
                 <div className="popup" style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1 }}>
-                    <span className="popuptext" id="myPopup">Popup Textbox</span>
+                    <span className="popuptext" id="myPopup">Check your email for account verification.</span>
                 </div>
             )}
         </div>

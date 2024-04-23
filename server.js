@@ -182,7 +182,7 @@ app.post('/api/sendforgot', async (req, res) => {
 	const {email} = req.body;
 
 	// find userId
-	const db = client.db("Group3LargeProject);
+	const db = client.db("Group3LargeProject");
 	const result = await db.collection('Users').findOne({Email : {$eq: email}});
 	const userId = result._id;
 	

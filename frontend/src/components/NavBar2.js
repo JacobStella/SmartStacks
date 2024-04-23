@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../NavBar.css';
-import logo from '../images/browse.png';
+import logo from '../images/SmartStacksLogo.png';
 
 const NavBar2 = () => {
     const navigate = useNavigate();

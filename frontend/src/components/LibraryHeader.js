@@ -70,6 +70,7 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
         }
     };
 
+    /*
     const handleItemClick = (type, item) => {
         const itemId = type === 'classes' ? item.className : item.setName;
         console.log('Attempting to find item with ID:', itemId); // Debug log
@@ -82,7 +83,19 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
         }
         setShowDropdown(false);
     };
-    
+    */
+
+    const handleItemClick = (type, item) => {
+        // Assuming item._id is the unique folder ID passed here
+        const itemId = `folder-${item._id}`; // This needs to match exactly the ID set in the FolderContainer
+        const itemElement = document.getElementById(itemId);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', itemId);
+        }
+        setShowDropdown(false);
+    };
     
     
 

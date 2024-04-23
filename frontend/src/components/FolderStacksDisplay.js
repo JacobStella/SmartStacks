@@ -85,7 +85,8 @@ const handleButtonClick = (e) => {
   // ... other functions remain unchanged
 
   return (
-    <div className="folder-container">
+
+    <div className="folder-container" id={`folder-${_id}`}>
       <div className="folder-template">
         <div className="folder-image" onClick={toggleStacks}>
           <button className="folder-icon-button">

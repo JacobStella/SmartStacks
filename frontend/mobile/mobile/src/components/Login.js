@@ -35,14 +35,10 @@ const submit = async () => {
         if(!res.ok){
             const resData = await res.json();
             //console.log(resData);
-            //console.log(resData);
             throw new Error("Login failed");
         }
         else{
             console.log("Logged in successfully");
-            const loginData = await res.json();
-            //console.log(JSON.stringify(loginData));
-            setUserData(JSON.stringify(loginData));
             const loginData = await res.json();
             //console.log(JSON.stringify(loginData));
             setUserData(JSON.stringify(loginData));

@@ -56,7 +56,6 @@ function Register() {
                 <input type="password" id="registerPassword" placeholder="Password" ref={(c) => registerPassword = c} />
                 <input type="password" id="confirmPassword" placeholder="Confirm Password" ref={(c) => confirmPassword = c} />
                 <input type="submit" id="registerButton" className="buttons" value="Register" />
-                <a href="/login" className="back-to-login">&lt; Back to Login</a>
             </form>
             <span id="registerResult">{message}</span>
         </div>

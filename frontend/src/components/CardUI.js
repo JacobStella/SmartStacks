@@ -19,7 +19,7 @@ function CardUI() {
 
     const [cards, setCards] = useState([]);
 
-    const app_name = 'largeprojectgroup3-efcc1eed906f'
+    const app_name = 'largeprojectgroup3'
     function buildPath(route)
     {
     if (process.env.NODE_ENV === 'production')
@@ -83,37 +83,6 @@ function CardUI() {
         }
     };
 
-    const publicSearch = async event => {
-        event.preventDefault();
-        let obj = { searchTerm: searchTerm }; // Modified to use searchTerm only
-        let js = JSON.stringify(obj);
-
-        try {
-            const response = await fetch(buildPath('api/public-search'), { // Assuming 'api/search' is your endpoint
-                method: 'POST', // If your backend is expecting a GET request for searches, this needs adjustment
-                body: js,
-                headers: {'Content-Type': 'application/json'}
-            });
-
-            let res = await response.json();
-
-            if (res.error) {
-                alert(res.error);
-                setResults(res.error);
-            } else {
-                // Assuming the response structure you want is an array of card details
-                // Adjust how you handle and display these results accordingly
-                let resultText = res.cards?.map(card => `${card.Term}: ${card.Definition}`).join(', ') || '';
-                setResults('Card(s) have been retrieved');
-                setCardList(resultText);
-            }
-            
-        } catch (e) {
-            alert(e.toString());
-            setResults(e.toString());
-        }
-    };
-
     const addClass = async event => {
         event.preventDefault();
     
@@ -148,30 +117,25 @@ function CardUI() {
         }
     };
     
-    const getClassAndSets = async (userId) => {
+    const getClassAndSets = async (classId) => {
         try {
-            const url = buildPath(`api/getClassAndSets/${userId}`);
+            const url = buildPath(`api/getClassAndSets/${classId}`);
             const response = await fetch(url, {
                 method: 'GET', // Method is optional here since GET is the default value
-                headers: {'Content-Type': 'application/json'},
-                // Removed mode: 'no-cors' to allow reading the response. Adjust the server's CORS policy as necessary.
+                headers: {'Content-Type': 'application/json'}
             });
     
             if (!response.ok) {
-                console.error('Error fetching classes and sets:', response.statusText);
-                return;
+                throw new Error('Network response was not ok');
             }
     
-            // Assuming the response is not opaque now, we can try to read it
-            const data = await response.json();
-            console.log('Classes and sets received:', data);
-            return data; // You can return the data here if needed
+            const classAndSets = await response.json();
+            console.log('Class and its sets:', classAndSets);
+            // Here you can further handle the response, like updating the UI accordingly
         } catch (error) {
-            console.error('Error fetching classes and sets:', error);
+            console.error('Error fetching class and sets:', error);
         }
     };
-    
-    
     
     
 

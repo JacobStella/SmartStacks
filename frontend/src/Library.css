@@ -1,14 +1,14 @@
 .library-header {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
+    flex-direction: column; /* Keeps the content arranged vertically */
+    align-items: center; /* Centers items horizontally */
+    gap: 20px; /* Space between the header and the control elements */
+    width: 100%; /* Full width of the parent container */
 }
 
 .library-header > h1 {
-    text-align: center;
-    width: 100%;
+    text-align: center; /* Centers the header text */
+    width: 100%; /* Full width */
 }
 
 header.library-header {
@@ -22,14 +22,16 @@ header.library-header {
 
 .header-controls {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    gap: 10px;
+    flex-direction: row; /* Aligns children horizontally */
+    align-items: center; /* Centers items vertically within the container */; /* Spreads out the children to use the available space */
+    width: 100%; /* Takes up the full width */
+    gap: 10px; /* Adds space between the items */
 }
 
 .search-container {
     flex-basis: 50%;
+    flex-grow: 0;
+    flex-shrink: 1;
     margin-left: 30%;
     margin-right: 70px;
     display: flex;
@@ -43,13 +45,13 @@ header.library-header {
     border-radius: 5px;
     color: #d8dcff;
     cursor: pointer;
-    padding: 3px 6px;
+    padding: 3px 6px
 }
 
 .search-btn:hover {
     background-color: #014b4f;
     text-decoration: underline;
-    text-decoration-color: #d8dcff;
+    text-decoration-color: #d8dcff
 }
 
 .search-input {
@@ -64,28 +66,33 @@ header.library-header {
     height: 30px;
 }
 
-.search-input::placeholder {
-    color: #d8dcff;
-}
 
-input.search-input:focus {
+  .search-input::placeholder{
+    color: #d8dcff;
+  }
+
+  input.search-input:focus {
     border-color: #09bc8a;
     color: #d8dcff;
-    outline: none;
+    outline: none
 }
+  
 
-.new-folder-btn {
-    padding: 3px 6px;
-    font-size: 16px;
+  .new-folder-btn {
+    padding: 3px 6px; /* Adjust padding as needed */
+    font-size: 16px; /* Adjusts the button text size */
     background-color: #172a3a;
     border: none;
     border-radius: 5px;
     color: #d8dcff;
     cursor: pointer;
+    flex-grow: 0; /* Do not allow the button to grow */
+    flex-shrink: 0; /* Do not allow the button to shrink */
     margin: 5px;
     height: 30px;
-}
+}   
 
+  
 .new-folder-btn:hover {
     background-color: #014b4f;
     text-decoration: underline;
@@ -99,11 +106,13 @@ div.filter-dropdown {
 
 .filter-select {
     padding: 5px;
-    font-size: 16px;
+    font-size: 16px; /* Adjusts the dropdown text size */
     background-color: #172a3a;
     border: 1px solid #004346;
     border-radius: 5px;
     color: #d8dcff;
+    flex-grow: 0; /* Do not allow the select to grow */
+    flex-shrink: 0; /* Do not allow the select to shrink */
     margin: 5px;
 }
 
@@ -123,158 +132,41 @@ div.filter-dropdown {
 div.folder-template {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     background-color: #172a3a;
     border: 9px solid #004346;
     border-radius: 30px;
     color: #d8dcff;
-    margin: 15px auto;
-    padding: 3px;
+    margin: 30px auto;
+    padding: 30px;
     width: 80%;
 }
 
-div.folder-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 15px auto;
-    padding: 3px;
-    width: 80%;
-}
-
-button.folder-edit-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+button.folder-edit-button img{
+    height: 100px;
+    width: 100px;
     background-color: #172a3a;
-    border: none;
+    padding: 0;
+}
+
+button.folder-edit-button{
     height: 90px;
     width: 90px;
-    padding: 0px 0px;
+    background-color: #172a3a;
+    border: none;
+    padding: 0;
 }
 
-button.folder-edit-button img {
-    max-width: 90%;
-    max-height: 90%;
-}
-
-div.folder-image img {
+div.folder-image img{
     height: 80px;
     width: 80px;
 }
 
 span.folder-name {
     flex-grow: 1;
-    font-family: Arial Rounded MT Bold, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    padding: 10px 15px;
-}
-
-div.folder-content {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-button.new-folder-btn {
-    white-space: nowrap; /* Prevents text from wrapping */
-    min-width: max-content; /* Ensures button is as wide as its content */
-    padding: 3px 6px;
-    font-size: 16px;
-    background-color: #172a3a;
-    border: none;
-    border-radius: 5px;
-    color: #d8dcff;
-    cursor: pointer;
-    margin: 5px;
-    height: 30px;
-}
-
-div.stack-template {
-    background-color: #172a3a;
-    border: 9px solid #004346;
-    border-radius: 30px;
-    color: #d8dcff;
-    height: 100px;
-    align-items: center;
-    display: flex;
-    margin: 15px auto;
-    padding: 3px;
-    width: 80%;
-}
-
-button.stack-view-button {
-    background-color: #172a3a;
-    border-radius:20px;
-    height: 100%;
-}
-button.stack-view-button img{
-    height: 100%;
-}
-
-div.stacks-container {
-    width: 90%;
-    margin-left: 8%;
-}
-
-span.stack-name {
-    flex-grow: 1;
+    font-size:25px;
     font-family: Arial Rounded MT Bold,sans-serif;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 600;
     padding: 10px 15px
 }
-div.empty-folder-message {
-    display: flex;
-    flex-direction: column; /* Stack flex items vertically */
-    justify-content: center; /* Align vertically */
-    align-items: center; /* Align horizontally */
-    height: 100%; /* Adjust as needed */
-}
 
-div.stack-content {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-div.stack-content button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #172a3a;
-    border: none;
-    height: 80px;
-    width: 80px;
-    padding: 0px 0px;
-}
-
-div.stack-content img {
-    max-width: 90%;
-    max-height: 90%;
-}
-
-.folder-name-edit {
-    border: none; /* Removes the border */
-    outline: none; /* Removes the outline that might appear on focus */
-    background: transparent; /* Makes the background transparent */
-    box-shadow: none; /* Removes any box shadows */
-    padding: 0; /* Removes padding if any */
-    margin: 0; /* Removes margin if any */
-      flex-grow: 1;
-      font-family: Arial Rounded MT Bold,sans-serif;
-      font-size: 20px;
-      font-weight: 600;
-      color: #d8dcff;
-  }
-  
-  .folder-name-edit:hover, .folder-name-edit:focus {
-    /* Styles when the field is hovered over or focused to show it's editable */
-  
-    border: 1px dashed #d8dcff; /* Dashed border */
-    padding: 10px 15px; /* Some padding */
-  }

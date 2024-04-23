@@ -206,12 +206,3 @@ input:checked + .slider:before {
   justify-content: space-between;
   align-items: center;
 }
-
-textarea.description-input::-webkit-scrollbar-thumb:hover {
-  cursor: pointer;
-}
-
-textarea.description-input {
-  scrollbar-width: thin; /* "auto" or "thin" */
-  scrollbar-color: #09bc8a #508991;
-}

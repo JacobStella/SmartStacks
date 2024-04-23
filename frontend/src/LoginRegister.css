@@ -22,7 +22,8 @@
 }
 
 /* Styles for the submit button */
-#loginButton,#registerButton {
+#loginButton {
+  background-color: #172a3a;
   color: white;
   border: none;
   border-radius: 5px; /* Match the input fields */
@@ -33,6 +34,25 @@
   margin: 10px auto; /* Center the button with automatic horizontal margins */
 }
 
+#loginButton:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive design: Adjusting the width of inputs on smaller screens */
+/*
+@media (max-width: 768px) {
+  #loginName,
+  #loginPassword,
+  #loginButton,
+  .login-container form {
+    width: 100%;
+    max-width: 400px; 
+  }
+}
+*/
+
+/* Centering container */
+/* This will be the parent container of your login elements */
 #loginDiv {
   display: flex; /* Establishes a flex container */
   flex-direction: column; /* Stacks children vertically */
@@ -194,8 +214,7 @@ input#registerButton.buttons{
   height: 50.34px;
   margin-left: 35%;
   padding: 10px;
-  width: 30%;
-  box-shadow: 0 0 0 0;
+  width: 30%
 }
 
 input#registerButton.buttons:hover {
@@ -212,15 +231,13 @@ input#registerButton.buttons:hover {
 
  div#registerDiv input {
   background-color: #d8dcff;
-  border-radius: 5px;
+  border-radius: 10px;
   border-width: 2px;
   box-shadow: 0 0 3px 3px #004346;
   height: 45px;
   width: 80%;
   margin-bottom:35px;
   margin-top: 0px;
-  border: 1px solid #004346;
-  padding: 10px;
 }
 
 div#registerDiv input::placeholder {
@@ -239,20 +256,7 @@ form input#firstName, form input#registerButton.buttons {
 
 div#registerDiv form{
   width: 500px;
-  height: 730px;
-}
-
-.back-to-login {
-  color: #09bc8a;
-  text-decoration: underline;
-  font-size: 20px;
-  display: block; /* to make the link take its own line */
-  margin: 20px 0; /* give some space above and below the link */
-  cursor: pointer; /* change the cursor to indicate it's clickable */
-}
-
-.back-to-login:hover {
-  opacity: 0.8;
+  height: 700px;
 }
 
 #registerDiv {

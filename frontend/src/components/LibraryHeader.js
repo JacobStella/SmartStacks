@@ -2,7 +2,7 @@ import React from 'react';
 import '../Library.css';
 
 // Add the prop createNewFolder in the function parameter list
-const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setSearchFolderInput, searchFolderInputRef }) => {
+const LibraryHeader = ({ createNewFolder }) => {
     return (
         <header className="library-header">
             <h1>Your Library</h1>
@@ -22,8 +22,8 @@ const LibraryHeader = ({ createNewFolder, handleFolderSearch, folderSearch, setS
                 <button className="new-folder-btn" onClick={createNewFolder}>Create New Folder</button>
                 {/* Search bar and button */}
                 <div className="search-container">
-                    <input type="text" placeholder="Search your library..." className="search-input" value={folderSearch} onChange={(e) => setSearchFolderInput(e.target.value)} ref={searchFolderInputRef}/>
-                    <button type="submit" className="search-btn" onClick={handleFolderSearch}>Search</button>
+                    <input type="text" placeholder="Search your library..." className="search-input"/>
+                    <button type="submit" className="search-btn">Search</button>
                 </div>
             </div>
         </header>

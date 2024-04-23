@@ -155,9 +155,9 @@ app.get('/verify/:token', async (req, res) => {
 /*ONE ONE
 app.get('/api/verify/:token', async (req, res) => {
 	const {token} = req.params;
-	if(token == null){
-		res.send("no token"); // TESTING
-		res.status(500).json({ message: "Token not recieved" });
+	if(!token){
+		res.status(400).json({ message: "Token not recieved" });
+  		return;
 	}
 	
 	try{
@@ -172,8 +172,6 @@ app.get('/api/verify/:token', async (req, res) => {
 		res.status(500).json({error : error});
 		res.send(error); // TESTING
 	}
-	// TESTING
-	res.send("Email verified, redirecting soon");
 	
   	res.status(200).json({ message: "Verification Succeeded" });
 });
@@ -233,7 +231,8 @@ app.post('/api/addcard', async (req, res) => {
       Term: term,
       Definition: definition,
       UserId: userId,
-      SetId: setId // Store the setId in each card
+      SetId: setId, // Store the setId in each card
+	Difficulty: 2 
     };
     
     // insertOne is an async operation, using await to ensure the operation completes before proceeding

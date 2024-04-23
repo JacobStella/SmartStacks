@@ -77,7 +77,7 @@ const NavBar2 = () => {
     const handleLogout = () => {
         localStorage.removeItem('user_data'); // Remove only the user data
         setUserInitial(''); // Reset user initial
-        navigate('/login');  // Redirect to login page
+        navigate('/');  // Redirect to login page
     };
 
     const userLoggedIn = !!userInitial;

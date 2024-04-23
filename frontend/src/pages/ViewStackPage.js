@@ -142,8 +142,8 @@ const ViewStackPage = () => {
         </div>
         {cards.length > 0 && (
             <div className="card-info">
-                <p><b>Term:</b> {cards[currentIndex].term}</p>
-                <p><b>Definition:</b> {cards[currentIndex].definition}</p>
+                <p><b>Term:</b> {cards[currentIndex].Term}</p>
+                <p><b>Definition:</b> {cards[currentIndex].Definition}</p>
             </div>
         )}
         <div>

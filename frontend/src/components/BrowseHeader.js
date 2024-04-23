@@ -9,6 +9,11 @@ const BrowseHeader = () => {
     const navigate = useNavigate();
     const searchInputRef = useRef(null);
 
+    const handleViewStack = (setId) => {
+        localStorage.setItem("setId", setId);
+        navigate('/view');
+      };
+
     useEffect(() => {
         handleSearch(" ");  // Trigger an initial empty search to populate data (if necessary)
     }, []);
@@ -81,7 +86,7 @@ const BrowseHeader = () => {
                     <div className="search-dropdown">
                         {searchResults.sets.slice(0, 5).map((item, index) => (
                             item.SetName ? ( 
-                                <div key={item._id} onClick={() => handleItemClick('sets', item)}>
+                                <div key={item._id} onClick={(e) => handleViewStack(set._id)}>
                                 {item.SetName}
                                 </div>
                             ) : null

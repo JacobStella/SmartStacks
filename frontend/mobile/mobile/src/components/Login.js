@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, SafeAreaView, StyleSheet, TextInput, View, Image, Keyboard, TouchableWithoutFeedback} from "react-native";
+import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {setUserData} from "./CardUI";
 
 
@@ -59,7 +59,7 @@ const library = () => {
  };
 
  const test = () => {
-    navigation.navigate("Layout");
+    navigation.navigate("SmartStacks");
  };
 
     return (
@@ -77,9 +77,14 @@ const library = () => {
                 placeholder = "Password"
                 onChangeText = { (input) => formInput("password", input)}/>
 
-                <Button title = "Submit" onPress = {submit} />
-                <Button title = "Register" onPress = {register} />
-                <Button title = "test" onPress = {test} />
+                <TouchableOpacity style={styles.buttons} onPress={submit}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.buttons} onPress={register}>
+                    <Text style={styles.buttonText}>Register</Text>
+                </TouchableOpacity>
+                <View style={styles.spacing}/>
+                <Button title ="Testing" onPress = {test} />
             </View>
         </TouchableWithoutFeedback>
     );
@@ -87,23 +92,44 @@ const library = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: "50%",
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: '#D8DCFF',
     },
     input: {
         borderWidth: 2,
         borderColor: "black",
         padding: 5,
-        marginBottom: 5,
+        marginBottom: 15,
         width: "50%",
-        
+        fontSize: 16,
     },
     imageContainer: {
         paddingBottom: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        
+    },
+    spacing: {
+        marginBottom: 10,
+    },
+    buttons: {
+        width: '30%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 40,
+        borderWidth: 1,
+        borderRadius: 5,
+        marginTop: '3%',
+        backgroundColor: '#09BC8A',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
+        color: '#fff',
+    },
+    buttonText: {
+        fontSize: 20,
+        color: '#fff',
     },
 });
 

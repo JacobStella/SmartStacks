@@ -127,12 +127,12 @@ const ViewStackPage = () => {
     <div className="view-stack-page">
         {!isFullScreen && <NavBar2 />}
         {!isFullScreen && <PlayButton />}
-        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>} {/* This is where you will show the description */}
+        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
         <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
         {cards.length > 0 && (
             <FlipCard
-                front={cards[currentIndex].Term} // Assuming 'term' is the property for the term
-                back={cards[currentIndex].Definition} // Assuming 'definition' is the property for the definition
+                front={cards[currentIndex].Term}
+                back={cards[currentIndex].Definition}
             />
         )}
         <div className="navigation-buttons">
@@ -140,17 +140,20 @@ const ViewStackPage = () => {
             <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
-        {cards.length > 0 && (
-            <div className="card-info">
-                <p><b>Term:</b> {cards[currentIndex].Term}</p>
-                <p><b>Definition:</b> {cards[currentIndex].Definition}</p>
-            </div>
-        )}
+        <div className="all-cards-info">
+            {cards.map((card, index) => (
+                <div key={index} className="card-info">
+                    <p><b>Term:</b> {card.Term}</p>
+                    <p><b>Definition:</b> {card.Definition}</p>
+                </div>
+            ))}
+        </div>
         <div>
             <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
         </div>
     </div>
-  );
+);
+
 }
 
 export default ViewStackPage;

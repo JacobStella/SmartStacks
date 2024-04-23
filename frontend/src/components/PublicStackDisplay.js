@@ -1,11 +1,5 @@
 //////////////////////////////////////////////
 //stack.Description is the description lol
-
-
-
-
-
-
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PlayLightIcon from '../images/playLight.png';

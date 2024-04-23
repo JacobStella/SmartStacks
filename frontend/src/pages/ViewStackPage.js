@@ -76,8 +76,8 @@ const ViewStackPage = () => {
           fetchSetWithCards(setId).then(data => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
-              setStackName(data.setName);
-              setStackDesc(data.description);
+              setStackName(data.SetName);
+              setStackDesc(data.Description);
               console.log("fetched cards correctly!");
               console.log(data);
             } else {

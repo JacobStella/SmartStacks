@@ -66,19 +66,6 @@ const LibraryPage = () => {
                         setFolders(classes); // Assuming the API returns an array of classes
                         console.log("class useStste stuff")
                         console.log(classes);
-                        var navFolderSearch = localStorage.getItem('folderSearch');
-        console.log("Library Folder info", navFolderSearch);
-        if (!navFolderSearch) {
-            console.log("no folder sent from navBar");
-        } else {
-            localStorage.removeItem('folderSearch');
-            const itemElement = document.getElementById(navFolderSearch);
-        if (itemElement) {
-            itemElement.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            console.log('Element not found for ID:', navFolderSearch);
-        }
-        }
                     } else {
                         console.log('No classes found for this user.');
                     }
@@ -217,6 +204,29 @@ const addFolder = async (folderName) => {
             setMessage(e.toString());
         }
     };
+
+    useEffect(() => {
+        // This ensures that the effect runs after the folders are updated in the state,
+        // which should correlate with them being updated in the DOM.
+        const navFolderSearch = localStorage.getItem('folderSearch');
+        console.log("Library Folder info", navFolderSearch);
+    
+        if (navFolderSearch) {
+            localStorage.removeItem('folderSearch');
+            // Use a timeout to give the browser a moment to ensure the DOM is updated
+            setTimeout(() => {
+                const itemElement = document.getElementById(navFolderSearch);
+                if (itemElement) {
+                    itemElement.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    console.log('Element not found for ID:', navFolderSearch);
+                }
+            }, 0); // You can adjust the timeout duration as necessary
+        } else {
+            console.log("No folder search ID sent from navBar");
+        }
+    }, [folders]); // Dependency on 'folders' to ensure effect runs after they are updated in the state
+    
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////

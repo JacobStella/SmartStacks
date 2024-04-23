@@ -14,6 +14,7 @@ import StudyPage from './pages/StudyPage';
 import UserSettingsPage from './pages/UserSettingsPage';
 import ViewStackPage from './pages/ViewStackPage';
 import BrowsePage from './pages/BrowsePage';
+import VerifyPage from './pages/VerifyPage';
 
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
         <Route path="/settings" element={<UserSettingsPage />} />
         <Route path="/view" element={<ViewStackPage />} />
         <Route path="/browse" element={<BrowsePage />} />
+        <Route path="/verify/:token" element={<VerifyPage />} />
       </Routes>
     </BrowserRouter>
   );

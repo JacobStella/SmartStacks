@@ -67,8 +67,19 @@ const NavBar2 = () => {
     };
 
     const handleItemClick = (type, item) => {
-        navigate(`/${type}/${item._id}`); // Update with actual path structure
-        setShowDropdown(false); // Hide dropdown after navigation
+        // Assuming item._id is the unique folder ID passed here
+        const itemId = `folder-${item._id}`;
+        localStorage.setItem('folderSearch', itemId); 
+        navigate('/library');
+        /*
+        const itemElement = document.getElementById(itemId);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', itemId);
+        }
+        */
+        setShowDropdown(false);
     };
 
     const userLoggedIn = !!userInitial;

@@ -50,6 +50,21 @@ const LibraryPage = () => {
     var folderSearch;
 
     useEffect(() => {
+        var navFolderSearch = localStorage.getItem('folderSearch');
+        if (!navFolderSearch) {
+            console.log("no folder sent from navBar");
+        } else {
+            localStorage.removeItem('folderSearch');
+            const itemElement = document.getElementById(navFolderSearch);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', navFolderSearch);
+        }
+        }
+    })
+
+    useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
         if (!userDataString) {
             console.log('No user data found in localStorage.');

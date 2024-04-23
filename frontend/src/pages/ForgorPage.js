@@ -8,19 +8,21 @@ const ForgorPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Sending a POST request using the Fetch API
     fetch('/api/sendforgot', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email: email })
     })
     .then(response => {
       if (!response.ok) {
-        // If the server response was not OK, throw an error
-        throw new Error('Network response was not OK');
+        // If the server response was not OK, we get the error message from the response and throw it
+        return response.json().then(errorData => {
+          throw new Error(errorData.message || 'Network response was not OK');
+        });
       }
       return response.json();
     })
@@ -29,15 +31,10 @@ const ForgorPage = () => {
       setError('');  // Clear any previous errors if email is sent successfully
     })
     .catch(error => {
-      if (error.message === 'Network response was not OK') {
-        response.json().then(errorData => {
-          setError(errorData.message);  // Set error message from server's response
-        });
-      } else {
-        setError('Failed to send reset email. Please try again later.');  // Set generic error message for other failures
-      }
+      setError(error.message || 'Failed to send reset email. Please try again later.');  // Set generic error message for other failures
     });
   };
+  
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);

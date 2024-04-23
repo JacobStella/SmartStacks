@@ -49,21 +49,7 @@ const LibraryPage = () => {
     const location = useLocation();
     var folderSearch;
 
-    useEffect(() => {
-        var navFolderSearch = localStorage.getItem('folderSearch');
-        console.log("Library Folder info", navFolderSearch);
-        if (!navFolderSearch) {
-            console.log("no folder sent from navBar");
-        } else {
-            localStorage.removeItem('folderSearch');
-            const itemElement = document.getElementById(navFolderSearch);
-        if (itemElement) {
-            itemElement.scrollIntoView({ behavior: 'smooth' });
-        } else {
-            console.log('Element not found for ID:', navFolderSearch);
-        }
-        }
-    })
+
 
     useEffect(() => {
         const userDataString = localStorage.getItem('user_data');
@@ -218,6 +204,22 @@ const addFolder = async (folderName) => {
             setMessage(e.toString());
         }
     };
+
+    useEffect(() => {
+        var navFolderSearch = localStorage.getItem('folderSearch');
+        console.log("Library Folder info", navFolderSearch);
+        if (!navFolderSearch) {
+            console.log("no folder sent from navBar");
+        } else {
+            localStorage.removeItem('folderSearch');
+            const itemElement = document.getElementById(navFolderSearch);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', navFolderSearch);
+        }
+        }
+    })
 
     ///////////////////////////////////////////////////////////////////////////////////////
     /////////////////////////////////FOLDER SEARCH////////////////////////////////////////

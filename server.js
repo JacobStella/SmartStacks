@@ -209,7 +209,7 @@ app.post('/api/forgot', async (req, res) => {
 	
 	try{
 		const db = client.db("Group3LargeProject");
-		const result = await db.collection('Users').updateOne({"_id": new ObjectId(userId)}, {$set: {Password:newPass}});
+		
 		if(!result){
 			res.status(500).json({message: "Could not change pass"});
 		}

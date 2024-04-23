@@ -136,7 +136,7 @@ const addSet = async event => {
 
       // Iterate through each card and create it with the new setId
       for (let card of cardPairs) {
-        const cardObj = { ...card, UserId: userId, SetId: setId };
+        const cardObj = { ...card, userId: userId, setId: setId };
         const cardJs = JSON.stringify(cardObj);
 
         await fetch(buildPath('api/addcard'), {

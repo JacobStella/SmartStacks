@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import '../NavBar.css';
-import logo from '../images/browse.png';
+import logo from '../images/SmartStacksLogo.png';
 
 const NavBar2 = () => {
     const navigate = useNavigate();
@@ -67,8 +67,20 @@ const NavBar2 = () => {
     };
 
     const handleItemClick = (type, item) => {
-        navigate(`/${type}/${item._id}`); // Update with actual path structure
-        setShowDropdown(false); // Hide dropdown after navigation
+        // Assuming item._id is the unique folder ID passed here
+        const itemId = `folder-${item._id}`;
+        localStorage.setItem('folderSearch', itemId); 
+        console.log("itemId in navbar", itemId);
+        navigate('/library');
+        /*
+        const itemElement = document.getElementById(itemId);
+        if (itemElement) {
+            itemElement.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.log('Element not found for ID:', itemId);
+        }
+        */
+        setShowDropdown(false);
     };
 
     const userLoggedIn = !!userInitial;
@@ -96,7 +108,7 @@ const NavBar2 = () => {
                 />
                 <button type="submit" onClick={handleSearch}>Search</button>
                 {showDropdown && (
-                    <div className="search-dropdown">
+                    <div className="search-dropdown-navbar">
                         {searchResults.classes.slice(0, 5).map((item, index) => (
                             item.className ? ( 
                                 <div key={item._id} onClick={() => handleItemClick('classes', item)}>

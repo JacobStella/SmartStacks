@@ -2,7 +2,7 @@
 //////////////////////////////////////////////////////////////////////////////////////////////////////
 //     cards state stores all of the cards for the stack
 //     stackName stores the name of the stack 
-//     stackDesc NOT WORKING, this will store the desc of the stack
+//     stackDesc this will store the desc of the stack
 
 import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
@@ -27,10 +27,11 @@ function buildPath(route)
 
 const ViewStackPage = () => {
   const [cards, setCards] = useState([]);
+  const [stackName, setStackName] = useState("Stack Title"); // Default value as "Stack Title"
+  const [stackDesc, setStackDesc] = useState(""); // Default value as an empty string
   const navigate = useNavigate();
   const location = useLocation();
-  var stackName;
-  var stackDesc;
+  
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false); // New state to track full-screen mode
@@ -75,10 +76,10 @@ const ViewStackPage = () => {
           fetchSetWithCards(setId).then(data => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
-              stackName = data.setName;
-              stackDesc = data.description
+              setStackName(data.setName);
+              setStackDesc(data.description);
               console.log("fetched cards correctly!");
-              console.log(data.cards);
+              console.log(data);
             } else {
               console.log('No cards found for this set.');
             }
@@ -126,27 +127,30 @@ const ViewStackPage = () => {
     <div className="view-stack-page">
         {!isFullScreen && <NavBar2 />}
         {!isFullScreen && <PlayButton />}
-      <h1 className="stack-title">Stack Title</h1>
-      {cards.length > 0 && (
-        <FlipCard
-          front={cards[currentIndex].front}
-          back={cards[currentIndex].back}
-        />
-      )}
-      <div className="navigation-buttons">
-        <button onClick={goToPreviousCard}>&lt; Prev</button>
-        <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
-        <button onClick={goToNextCard}>Next &gt;</button>
-      </div>
-      <div>
-        <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
-      </div>
+        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>} {/* This is where you will show the description */}
+        <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
+        {cards.length > 0 && (
+            <FlipCard
+                front={cards[currentIndex].term} // Assuming 'term' is the property for the term
+                back={cards[currentIndex].definition} // Assuming 'definition' is the property for the definition
+            />
+        )}
+        <div className="navigation-buttons">
+            <button onClick={goToPreviousCard}>&lt; Prev</button>
+            <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
+            <button onClick={goToNextCard}>Next &gt;</button>
+        </div>
+        {cards.length > 0 && (
+            <div className="card-info">
+                <p><b>Term:</b> {cards[currentIndex].term}</p>
+                <p><b>Definition:</b> {cards[currentIndex].definition}</p>
+            </div>
+        )}
+        <div>
+            <button onClick={toggleFullScreen} className="full-screen-button">Full Screen</button>
+        </div>
     </div>
   );
 }
 
 export default ViewStackPage;
-
-
-
-

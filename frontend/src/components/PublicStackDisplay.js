@@ -1,3 +1,6 @@
+/////////////////////////////////////////////
+//stack.Description is the description lol
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
@@ -6,7 +9,123 @@ import PlayLightIcon from '../images/playLight.png';
 import createLight from '../images/createLight.png';
 import '../Library.css';
 
-const FolderContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing, _id }) => {
+
+// Function to build the path depending on the environment
+function buildPath(route) {
+    if (process.env.NODE_ENV === 'production') {
+        return 'https://' + 'largeprojectgroup3-efcc1eed906f' + '.herokuapp.com/' + route;
+    } else {
+        return 'http://localhost:5000/' + route;
+    }
+}
+
+const StackContainer = ({ stack }) => {
+    const [userDetails, setUserDetails] = useState({ FirstName: '', LastName: '', Username: '' });
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
+
+    const fetchUserDetails = async () => {
+        try {
+            const url = buildPath(`api/users/name/${stack.UserId}`);
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error('User not found');
+            }
+            const data = await response.json();
+            setUserDetails({
+                FirstName: data.FirstName,
+                LastName: data.LastName,
+                Username: data.Username
+            });
+        } catch (error) {
+            setError(error.message);
+        }
+    };
+
+    useEffect(() => {
+        if (stack.UserId) {
+            console.log("in the stupid StackContainer use effectr", stack.UserId);
+            fetchUserDetails();
+        }
+    }, []); // Adding stack.userId as a dependency
+
+    const handleViewStack = () => {
+        localStorage.setItem("setId", stack._id);
+        navigate('/view');
+    };
+
+    if (error) {
+        return <p>Error loading user information: {error}</p>;
+    }
+
+    return (
+        <div className="stack-template">
+            <div className="stack-content">
+                <span className="stack-name">{stack.SetName}</span>
+                <p>Created by: {userDetails.FirstName} {userDetails.LastName} ({userDetails.Username})</p>
+                <button onClick={handleViewStack}>
+                    <img src={PlayLightIcon} alt="View" />
+                </button>
+                {/* Add other buttons and interactions here */}
+            </div>
+        </div>
+    );
+};
+
+
+
+
+
+
+  
+
+  
+const PublicStacksDisplay = ({ publicStacks }) => {
+
+    useEffect(() => {
+        console.log("im in this bitch");
+    }, []);
+    console.log("in stack display",publicStacks);
+    return (
+      <section className="stacks-display">
+        {publicStacks.map(stack => (
+          <StackContainer key={stack._id} stack={stack} />
+        ))}
+      </section>
+    );
+  };
+  
+  export default PublicStacksDisplay;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+const StackContainer = ({name, onEdit, onAdd, sets, isEditing: initialIsEditing }) => {
   const [isEditing, setIsEditing] = useState(initialIsEditing || false);
   const [editedName, setEditedName] = useState(name);
   const editInputRef = useRef(null);
@@ -85,8 +204,7 @@ const handleButtonClick = (e) => {
   // ... other functions remain unchanged
 
   return (
-
-    <div className="folder-container" id={`folder-${_id}`}>
+    <div className="folder-container">
       <div className="folder-template">
         <div className="folder-image" onClick={toggleStacks}>
           <button className="folder-icon-button">
@@ -147,15 +265,16 @@ const handleButtonClick = (e) => {
 };
 
 
-const FolderStacksDisplay = ({ folders, onEditFolder, onAddFolder }) => {
+const PublicStacksDisplay = ({ publicStacks }) => {
   console.log("folders", folders);
   return (
     <section className="folders-and-stacks">
       {folders.map(folder => (
-        <FolderContainer key={folder._id} _id={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
+        <StackContainer key={folder._id} name={folder.className} onEdit={(newName) => onEditFolder(newName, folder._id)} onAdd={onAddFolder}  sets={folder.sets} isEditing={folder.isEditing} />
       ))}
     </section>
   );
 };
 
-export default FolderStacksDisplay;
+export default PublicStacksDisplay;
+*/

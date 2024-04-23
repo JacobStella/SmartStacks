@@ -148,7 +148,7 @@
   position: relative; /* This is to position the dropdown absolutely within the search bar */
 }
 
-.search-dropdown {
+.search-dropdown-navbar {
   position: absolute;
   top: 110%; /* right below the search bar */
   left: 0; /* aligned with the left edge of the search bar */
@@ -157,9 +157,10 @@
   padding: 0px 170px 20px 95px;
   z-index: 1000;
   overflow-y: auto; /* for scrolling if there are many items */
+  color: #172a3a;
 }
 
-.search-dropdown div {
+.search-dropdown-navbar div {
   padding: 10px 20px;
   cursor: pointer;
   border-bottom: 1px solid #172a3a;
@@ -167,21 +168,21 @@
   transition: background-color 0.2s; /* smooth transition for hover effect */
 }
 
-.search-dropdown div:hover {
+.search-dropdown-navbar div:hover {
   background-color: #7bafb7;
 }
 
 /* If you have any additional padding or elements inside your search bar,
 you might want to adjust the width or starting position */
-.search-bar input[type="text"] {
+.search-dropdown-navbar input[type="text"] {
   /* Adjust padding to match dropdown if needed */
   padding: 10px;
 }
-.search-dropdown div:first-child {
+.search-dropdown-navbar div:first-child {
   border-top: 1px solid #172a3a; /* Removes the border from the last item */
 }
 
-.search-dropdown div:last-child {
+.search-dropdown-navbar div:last-child {
   
   border-radius: 0px 0px 10px 10px;
 }

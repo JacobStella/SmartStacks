@@ -73,7 +73,7 @@ app.post('/api/register', async (req, res) => {
       const hashedPassword = crypto.pbkdf2Sync(password, salt, 10, 64, 'sha512').toString('hex');
 
       // Insert new user
-      await usersCollection.insertOne({
+      const result = await usersCollection.insertOne({
           Email: email,
           FirstName: firstName,
           LastName: lastName,
@@ -81,8 +81,9 @@ app.post('/api/register', async (req, res) => {
           Password: hashedPassword,
           Verified: verified,
       });
+	var id = result.insertedId;
 
-      res.status(201).json({ message: 'User registered successfully' });
+      res.status(201).json({ message: 'User registered successfully', userId: id });
   } catch (error) {
       console.error(error);
       res.status(500).json({ error: error.toString() });
@@ -108,7 +109,7 @@ app.post('/api/send-verif', async (req, res) => {
 		from: "daimondsailer@gmail.com",
 		to: email,
 		subject: "Verify your email",
-		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify/${token}`,
+		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/verify/${token}`,
 	};
 
 	// sending the email
@@ -122,11 +123,41 @@ app.post('/api/send-verif', async (req, res) => {
 });
 
 // checking verification
+
+app.get('/api/verify/:token', async (req, res) => {
+  const { token } = req.params;
+
+  if (!token) {
+      res.status(400).json({ message: "Token not received" });
+      return;
+  }
+
+  try {
+      const db = client.db("Group3LargeProject");
+      const result = await db.collection('Users').findOne({ Token: token });
+
+      if (!result) {
+          res.status(404).json({ message: "User not found with the provided token" });
+          return;
+      }
+
+      // Update user's record to mark them as verified
+      const verif = await db.collection('Users').updateOne({ Token: token }, { $set: { Verified: true } });
+
+      // Send a response indicating successful verification
+      res.status(200).json({ message: "Email verified, redirecting soon" });
+  } catch (error) {
+      console.error('Error verifying email:', error.message);
+      res.status(500).json({ error: error.message });
+  }
+});
+
+/*ONE ONE
 app.get('/api/verify/:token', async (req, res) => {
 	const {token} = req.params;
-	if(token == null){
-		res.send("no token"); // TESTING
-		res.status(500).json({ message: "Token not recieved" });
+	if(!token){
+		res.status(400).json({ message: "Token not recieved" });
+  		return;
 	}
 	
 	try{
@@ -141,22 +172,26 @@ app.get('/api/verify/:token', async (req, res) => {
 		res.status(500).json({error : error});
 		res.send(error); // TESTING
 	}
-	// TESTING
-	res.send("Email verified, redirecting soon");
 	
   	res.status(200).json({ message: "Verification Succeeded" });
 });
+*/
 
 // send forgot password email
 app.post('/api/sendforgot', async (req, res) => {
-	const {email, userId} = req.body;
+	const {email} = req.body;
+
+	// find userId
+	const db = client.db("Group3LargeProject");
+	const result = await db.collection('Users').findOne({Email : {$eq: email}});
+	const userId = result._id;
 	
 	// the email
 	const mailOptions = {
 		from: "daimondsailer@gmail.com",
 		to: email,
 		subject: "Forgot your password",
-		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
+		text: `Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/forgor/${userId}`,
 	};
 
 	// sending the email
@@ -174,6 +209,7 @@ app.post('/api/forgot', async (req, res) => {
 	
 	try{
 		const db = client.db("Group3LargeProject");
+
 		// Hash password
       		const hashedPassword = crypto.pbkdf2Sync(newPass, salt, 10, 64, 'sha512').toString('hex');
 		const result = await db.collection('Users').updateOne({"_id": new ObjectId(userId)}, {$set: {Password:hashedPassword}});
@@ -203,7 +239,8 @@ app.post('/api/addcard', async (req, res) => {
       Term: term,
       Definition: definition,
       UserId: userId,
-      SetId: setId // Store the setId in each card
+      SetId: setId, // Store the setId in each card
+	Difficulty: 2 
     };
     
     // insertOne is an async operation, using await to ensure the operation completes before proceeding
@@ -712,9 +749,27 @@ app.get('/api/getset/:setId', async (req, res) => {
   }
 });
 
+app.get('/api/users/name/:id', async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId).select('FirstName LastName Username'); // Selecting specific fields
 
-app.get('/api/public-search', async (req, res) => {
-  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+    if (user) {
+      res.json({
+        FirstName: user.FirstName,
+        LastName: user.LastName,
+        Username: user.Username // Returning the username as well
+      });
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.post('/api/public-search', async (req, res) => {
+  const { searchTerm = '' } = req.body; // Only extract searchTerm from query
 
   try {
     const db = client.db("Group3LargeProject");

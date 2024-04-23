@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import '../LoginRegister.css';
+
 function Register() {
     var registerName;
     var registerPassword;

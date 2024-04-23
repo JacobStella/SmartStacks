@@ -1,17 +1,16 @@
 import '../Library.css';
 import React, { useEffect, useState, useRef } from 'react';
-import { useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const BrowseHeader = ({ /*updatePublicStacks*/}) => {
+const BrowseHeader = () => {
     const [showDropdown, setShowDropdown] = useState(false);
-    const [message, setMessage] = useState("");
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
-    const navigate = useNavigate(); // <-- Defined with useNavigate hook
+    const navigate = useNavigate();
     const searchInputRef = useRef(null);
 
     useEffect(() => {
-        handleSearch(" ");
+        handleSearch(" ");  // Trigger an initial empty search to populate data (if necessary)
     }, []);
 
     function buildPath(route) {
@@ -23,6 +22,7 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
     }
 
     const handleSearch = async (event) => {
+        if (event) event.preventDefault();  // Prevent form submission if event is provided
         console.log("searchInput", searchInput);
         await fetchPublicSearch(searchInput);
     };
@@ -41,25 +41,23 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
 
             let res = await response.json();
 
-            if (response.ok) {
-                console.log('Search Results:', searchResults);
-                setSearchResults({
-                    sets: searchResults.sets || []
-                });
-                setShowDropdown(true); // Show dropdown with results
+            if (res.error) {
+                alert(res.error);
             } else {
-                setMessage("Search API Error:" + searchResults.error);
+                console.log("Search results", res);
+                const publicSets = res.sets.filter(set => set.public === true);
+                console.log("publicSets", publicSets);
+                setSearchResults({ sets: publicSets, classes: res.classes });
+                setShowDropdown(true);  // Ensure the dropdown is shown when results are available
             }
         } catch (e) {
-            console.error("Search Fetch Error:", e.toString());
-            setMessage(e.toString());
+            alert(e.toString());
         }
     };
 
-
     const handleItemClick = (type, item) => {
-        navigate(`/${type}/${item._id}`); // Update with actual path structure
-        setShowDropdown(false); // Hide dropdown after navigation
+        navigate(`/${type}/${item._id}`);  // Navigate to the selected item's page
+        setShowDropdown(false);  // Hide the dropdown after navigation
     };
 
     return (
@@ -81,6 +79,13 @@ const BrowseHeader = ({ /*updatePublicStacks*/}) => {
                     <button type="submit" className="search-btn" onClick={handleSearch}>Search</button>
                     {showDropdown && (
                     <div className="search-dropdown">
+                        {searchResults.classes.slice(0, 5).map((item, index) => (
+                            item.className ? ( 
+                                <div key={item._id} onClick={() => handleItemClick('classes', item)}>
+                                {item.className}
+                                </div>
+                            ) : null
+                        ))}
                         {searchResults.sets.slice(0, 5).map((item, index) => (
                             item.setName ? ( 
                                 <div key={item._id} onClick={() => handleItemClick('sets', item)}>

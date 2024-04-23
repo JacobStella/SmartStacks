@@ -15,6 +15,7 @@ import UserSettingsPage from './pages/UserSettingsPage';
 import ViewStackPage from './pages/ViewStackPage';
 import BrowsePage from './pages/BrowsePage';
 import VerifyPage from './pages/VerifyPage';
+import ResetPasswordPage from './pages/ResetPasswordPage';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/view" element={<ViewStackPage />} />
         <Route path="/browse" element={<BrowsePage />} />
         <Route path="/verify/:token" element={<VerifyPage />} />
+        <Route path="/forgor/:userId" element={<ResetPasswordPage />} />
       </Routes>
     </BrowserRouter>
   );

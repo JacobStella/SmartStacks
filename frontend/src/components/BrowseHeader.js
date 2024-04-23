@@ -4,6 +4,7 @@ import { useNavigate} from 'react-router-dom';
 
 const BrowseHeader = ({ /*updatePublicStacks*/}) => {
     const [showDropdown, setShowDropdown] = useState(false);
+    const [message, setMessage] = useState("");
     const [searchInput, setSearchInput] = useState('');
     const [searchResults, setSearchResults] = useState({ sets: [], classes: [] });
     const navigate = useNavigate(); // <-- Defined with useNavigate hook

@@ -4,74 +4,8 @@
 //     stackName stores the name of the stack 
 //     stackDesc this will store the desc of the stack
 
-import React, { useState } from 'react';
-import FlipCard from '../components/FlipCard'; // Make sure to import FlipCard
-import '../ViewStack.css';
-import '../Web.css';
 
-const ViewStackPage = () => {
-  const [cards, setCards] = useState([]); // Array of cards
-  const [currentIndex, setCurrentIndex] = useState(0); // Index of the current card
-  const [flippedIndexes, setFlippedIndexes] = useState(new Set()); // Tracks which cards are flipped
-  const [showSliders, setShowSliders] = useState(new Set()); // Tracks which cards show the difficulty slider
 
-  // Handler to flip a card
-  const flipCard = (index) => {
-    setFlippedIndexes(prev => {
-      const newFlipped = new Set(prev);
-      if (newFlipped.has(index)) {
-        newFlipped.delete(index);
-      } else {
-        newFlipped.add(index);
-      }
-      return newFlipped;
-    });
-  };
-
-  // Handler to toggle the visibility of the difficulty slider
-  const toggleSlider = (index) => {
-    setShowSliders(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(index)) {
-        newSet.delete(index);
-      } else {
-        newSet.add(index);
-      }
-      return newSet;
-    });
-  };
-
-  // Handler to process difficulty changes
-  const handleDifficultyChange = (event, index) => {
-    console.log(`Card ${index} difficulty set to`, event.target.value);
-    // Implement additional logic if needed, e.g., updating the card's state or saving to a database
-  };
-
-  // Render the cards using FlipCard component
-  const cardElements = cards.map((card, index) => (
-    <FlipCard
-      key={index}
-      front={card.term}
-      back={card.definition}
-      isFlipped={flippedIndexes.has(index)}
-      onClick={() => flipCard(index)}
-      onDifficultyChange={(event) => handleDifficultyChange(event, index)}
-      showSlider={showSliders.has(index)}
-      toggleSlider={() => toggleSlider(index)}
-    />
-  ));
-
-  return (
-    <div className="view-stack-page">
-      {/* Render card elements */}
-      {cardElements.length > 0 ? cardElements : <p>No cards available.</p>}
-    </div>
-  );
-};
-
-export default ViewStackPage;
-
-/*
 
 import React, { useState, useEffect } from 'react';
 import NavBar2 from '../components/NavBar2';
@@ -268,4 +202,3 @@ const ViewStackPage = () => {
 
 export default ViewStackPage;
 
-*/

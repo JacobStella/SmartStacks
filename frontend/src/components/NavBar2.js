@@ -117,7 +117,7 @@ const NavBar2 = () => {
                         {searchResults.sets.slice(0, 5).map((item, index) => (
                             item.setName ? ( 
                                 <div key={item._id} onClick={() => handleItemClick('sets', item)}>
-                                    {item.setName}
+                                    {item.setName}{/*this should be 'SetName' but we dont want to use sets in the navbar search*/}
                                 </div>
                             ) : null
                         ))}

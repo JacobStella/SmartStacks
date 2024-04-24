@@ -8,22 +8,24 @@ import '../Library.css';
 const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
-    const handleViewStack = () => {
+    const handlePlayStack = () => {
         localStorage.setItem("setId", stack._id);
-        navigate('/view');
+        navigate('/game');
     };
 
+    const handleViewStack = () => {
+      localStorage.setItem("setId", stack._id);
+      navigate('/view');
+  };
+
     return (
-        <div className="stack-template">
-            <div className="stack-content">
-                <span className="stack-name">{stack.SetName}</span>
-                <span className="description">{stack.Description}</span>
-                <button onClick={handleViewStack}>
-                    <img src={PlayLightIcon} alt="View" />
+        <button className="stack-template"onClick={(e) => handleViewStack(set._id)}>
+                <span className="stack-name">{stack.SetName}</span><br />
+                <span className="description">{stack.Description}</span><br />
+                <button onClick={handlePlayStack}>
+                    <img src={PlayLightIcon} alt="play" />
                 </button>
-                {/* Add other buttons and interactions here */}
-            </div>
-        </div>
+        </button>
     );
 };
 

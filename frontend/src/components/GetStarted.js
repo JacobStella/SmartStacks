@@ -9,7 +9,7 @@ function GetStarted() {
             {/* Instructions or guide elements */}
             <h2>Get Started</h2>
             {/* Placeholder text */}
-            <p>View or play study games with public Stacks created by other users in the Browse page, or create an account and start building your own Stacks in the Create page. You can view and organize your own stacks using the Library page or play a study game with one of your stacks using the Play page. </p>
+            <p>Make your own study stacks in the Create page.<br />View and organize your personal stacks in the Library page.<br />Find public stack made by other users in the Browse page.<br />Try a new study strategy in the Game page with our matching game.</p>
         </div>
     );
 }

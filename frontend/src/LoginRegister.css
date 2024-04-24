@@ -291,7 +291,7 @@ span#myPopup.popuptext {
 }
 
 
-input#newPassword, input#confirmPassword{
+input#newPassword, input#confirmNewPassword{
   background-color: #d8dcff;
 border: 3px solid #004346;
 border-radius: 5px;

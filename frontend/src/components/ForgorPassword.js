@@ -51,7 +51,7 @@ function ResetPasswordPage() {
             <h1 id="title">Reset Your Password</h1>
             <form onSubmit={resetPassword}>
                 <input type="password" id="newPassword" placeholder="New Password" ref={(c) => newPassword = c} required />
-                <input type="password" id="confirmPassword" placeholder="Confirm New Password" ref={(c) => confirmPassword = c} required />
+                <input type="password" id="confirmNewPassword" placeholder="Confirm New Password" ref={(c) => confirmPassword = c} required />
                 <button type="submit" id="resetPasswordButton" className="buttons">Reset Password</button>
                 <a href="/login" className="back-to-login">&lt; Back to Login</a>
             </form>

@@ -267,3 +267,6 @@ h2.stack-description {
 .fullscreen-active .hide-in-fullscreen {
   display: none;
 }
+.fullscreen-active {
+  overflow: hidden; /* Hide scroll bars when in full-screen mode */
+}

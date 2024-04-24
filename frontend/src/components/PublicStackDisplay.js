@@ -17,6 +17,7 @@ const StackContainer = ({ stack }) => {
         <div className="stack-template">
             <div className="stack-content">
                 <span className="stack-name">{stack.SetName}</span>
+                <span className="description">{stack.Description}</span>
                 <button onClick={handleViewStack}>
                     <img src={PlayLightIcon} alt="View" />
                 </button>

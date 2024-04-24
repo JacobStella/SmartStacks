@@ -144,8 +144,12 @@ const ViewStackPage = () => {
         <div className="all-cards-info">
             {cards.map((card, index) => (
                 <div key={index} className="card-info">
-                    <p><b>Term:</b> {card.Term}</p>
-                    <p><b>Definition:</b> {card.Definition}</p>
+                    <div className="term">
+                        <p><b>Term:</b> {card.Term}</p>
+                    </div>
+                    <div className="def">
+                        <p className="definition"><b>Definition:</b> {card.Definition}</p>
+                    </div>
                 </div>
             ))}
         </div>

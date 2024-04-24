@@ -19,7 +19,7 @@ const StackContainer = ({ stack }) => {
   };
 
     return (
-        <button className="stack-template"onClick={(e) => handleViewStack(set._id)}>
+        <button className="stack-template"onClick={(e) => handleViewStack}>
                 <span className="stack-name">{stack.SetName}</span><br />
                 <span className="description">{stack.Description}</span><br />
                 <button onClick={handlePlayStack}>

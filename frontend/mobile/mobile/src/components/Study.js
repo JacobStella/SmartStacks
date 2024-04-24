@@ -70,7 +70,7 @@ const LoggedInNav = async (item) => {
     let filteredCards = await CardFilter(item.Id);
           setCards(filteredCards);
           //console.log(Cards);
-          navigation.navigate('ViewCard', {cards: filteredCards});
+          navigation.navigate('StudyGame', {cards: filteredCards});
     ScrollToTop();
    };
 

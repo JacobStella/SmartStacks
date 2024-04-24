@@ -341,6 +341,10 @@ return (
       <Stack.Screen
         name="Settings"
         component={Settings} />
+      <Stack.Screen
+      name="StudyGame"
+      component={StudyGame} />
+
       
     </Stack.Navigator>
   );

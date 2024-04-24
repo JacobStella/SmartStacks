@@ -127,7 +127,6 @@ const ViewStackPage = () => {
     <div className="view-stack-page">
         {!isFullScreen && <NavBar2 />}
         {!isFullScreen && <PlayButton />}
-        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
         <h1 className="stack-title">{stackName || 'Stack Title'}</h1>
         {cards.length > 0 && (
             <FlipCard
@@ -140,6 +139,8 @@ const ViewStackPage = () => {
             <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
+        <h1 className="stack-title">Stack Description:</h1>
+        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
         <div className="all-cards-info">
             {cards.map((card, index) => (
                 <div key={index} className="card-info">

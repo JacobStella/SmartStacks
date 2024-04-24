@@ -1,0 +1,42 @@
+button.stack-template button img {
+    width: 95%;
+}
+
+button.stack-template {
+    border: 9px solid #004346;
+    border-radius: 15px;
+    width:45%;
+    display: flex; /* Use flexbox */
+    flex-direction: column;
+}
+
+button.stack-template button {
+    width: 30%;
+    align-self:flex-end;
+    margin-top: auto; 
+}
+
+.stacks-display {
+  display: flex; /* Use flexbox to lay out the children */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  justify-content: space-around; /* Or 'space-between' to space items evenly */
+  /* Adjust if you have other specific styling for the container */
+}
+
+.stack-template {
+  width: 48%; /* Set the width to less than half of the container's width to fit 2 per row */
+  margin-bottom: 20px; /* Optional: adds some space between the rows */
+  /* Keep your other styles here */
+}
+
+button.stack-template span.stack-name {
+    font-size:20px;
+    color: #4298a3
+}
+
+button.stack-template span.description {
+    width:100%;
+    font-size:18px;
+    text-align:center;
+    padding:20px;
+}

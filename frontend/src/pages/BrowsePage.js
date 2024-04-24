@@ -3,7 +3,7 @@ import NavBar2 from '../components/NavBar2';
 import BrowseHeader from '../components/BrowseHeader';
 import PublicStackDisplay from '../components/PublicStackDisplay';
 import { useNavigate, useLocation } from 'react-router-dom'; // Removed unused import 'Link'
-import '../Library.css';
+import '../Browse.css';
 
 
 function buildPath(route)

@@ -3,7 +3,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import PlayLightIcon from '../images/playLight.png';
-import '../Library.css';
+import '../Browse.css';
 
 const StackContainer = ({ stack }) => {
     const navigate = useNavigate();

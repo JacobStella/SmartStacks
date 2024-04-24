@@ -13,13 +13,13 @@ const StackContainer = ({ stack }) => {
         navigate('/game');
     };
 
-    const handleViewStack = () => {
-      localStorage.setItem("setId", stack._id);
+    const handleViewStack = (setId) => {
+      localStorage.setItem("setId", setId);
       navigate('/view');
-  };
+    };
 
     return (
-        <button className="stack-template"onClick={(e) => handleViewStack}>
+        <button className="stack-template"onClick={(e) => handleViewStack(stack._id)}>
                 <span className="stack-name">{stack.SetName}</span><br />
                 <span className="description">{stack.Description}</span><br />
                 <button onClick={handlePlayStack}>

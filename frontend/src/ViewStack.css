@@ -278,3 +278,27 @@ div.card-back, div.card-front {
   text-align:center;
   padding:50px;
 }
+
+.card-container {
+  perspective: 1000px;
+}
+
+/* The flipper will hold the front and back side of the card */
+.card-front, .card-back {
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+/* When the card is flipped, rotate the front and back 180 degrees around the Y axis */
+.card-container.flipped .card-front {
+  transform: rotateY(180deg);
+}
+
+.card-container.flipped .card-back {
+  transform: rotateY(0deg);
+}
+
+/* Initially rotate the back 180 degrees so it faces away */
+.card-back {
+  transform: rotateY(-180deg);
+}

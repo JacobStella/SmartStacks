@@ -148,7 +148,7 @@ const ViewStackPage = () => {
                         <p><b>Term:</b> {card.Term}</p>
                     </div>
                     <div className="def">
-                        <p className="definition"><b>Definition:</b> {card.Definition}</p>
+                        <p><b>Definition:</b> {card.Definition}</p>
                     </div>
                 </div>
             ))}

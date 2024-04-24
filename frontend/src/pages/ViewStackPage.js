@@ -96,18 +96,23 @@ const ViewStackPage = () => {
 
 
   const toggleFullScreen = () => {
+    const rootElement = document.documentElement; // This assumes the root element should toggle the class
+
     if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch((e) => {
-        console.error("Fullscreen mode failed: ", e);
-      });
-      setIsFullScreen(true); // Entering full screen mode
+        rootElement.requestFullscreen().catch((e) => {
+            console.error("Fullscreen mode failed: ", e);
+        });
+        setIsFullScreen(true); // Entering full screen mode
+        rootElement.classList.add('fullscreen-active'); // Add the class to hide elements
     } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
-      setIsFullScreen(false); // Exiting full screen mode
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+        setIsFullScreen(false); // Exiting full screen mode
+        rootElement.classList.remove('fullscreen-active'); // Remove the class to show elements
     }
-  };
+};
+
 
   // Event listener for fullscreen change
   React.useEffect(() => {
@@ -139,16 +144,16 @@ const ViewStackPage = () => {
             <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
-        <h1 className="stack-description">Stack Description:</h1>
-        {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
-        <div className="all-cards-info">
-        <h1 className="list-view">List View:</h1>
+        <h1 className="stack-description hide-in-fullscreen">Stack Description:</h1>
+        {stackDesc && <h2 className="stack-description hide-in-fullscreen">{stackDesc}</h2>}
+        <div className="all-cards-info hide-in-fullscreen">
+        <h1 className="list-view hide-in-fullscreen">List View:</h1>
             {cards.map((card, index) => (
-                <div key={index} className="card-info">
-                    <div className="term">
+                <div key={index} className="card-info hide-in-fullscreen">
+                    <div className="term hide-in-fullscreen">
                         <p> {card.Term}</p>
                     </div>
-                    <div className="def">
+                    <div className="def hide-in-fullscreen">
                         <p> {card.Definition}</p>
                     </div>
                 </div>

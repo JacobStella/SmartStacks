@@ -264,3 +264,6 @@ h2.stack-description {
   margin-bottom: 30px;
   color: #508991;
 }
+.fullscreen-active .hide-in-fullscreen {
+  display: none;
+}

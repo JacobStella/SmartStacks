@@ -145,7 +145,9 @@ const ViewStackPage = () => {
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
         <h1 className="stack-description hide-in-fullscreen">Stack Description:</h1>
-        {stackDesc && <h2 className="stack-description hide-in-fullscreen">{stackDesc}</h2>}
+        <div className="description-container hide-in-fullscreen">
+           {stackDesc && <h2 className="stack-description hide-in-fullscreen">{stackDesc}</h2>}
+        </div>
         <div className="all-cards-info hide-in-fullscreen">
         <h1 className="list-view hide-in-fullscreen">List View:</h1>
             {cards.map((card, index) => (

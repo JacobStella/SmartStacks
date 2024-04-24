@@ -154,7 +154,6 @@ const addFolder = async (folderName) => {
         console.log(res);
             if (response.ok) {
                 setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
-                setMessage("Folder has been added.");
                 console.log('Folders after adding new folder:', folders);
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

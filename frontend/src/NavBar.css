@@ -120,7 +120,7 @@
     }
   }
   
-  .profile-circle {
+  button.profile-circle {
     width: 40px;
     height: 40px;
     background-color: #172a3a; /* Change as per your color scheme */

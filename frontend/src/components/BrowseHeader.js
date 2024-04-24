@@ -67,7 +67,7 @@ const BrowseHeader = () => {
 
     return (
         <header className="library-header">
-            <h1>Your Library</h1>
+            <h1>Browse Page</h1>
             <div className="header-controls">
                 <div className="filter-dropdown">
                     <select className="filter-select">
@@ -80,7 +80,7 @@ const BrowseHeader = () => {
                     </select>
                 </div>
                 <div className="search-container">
-                    <input type="text" placeholder="Browse..." className="search-input" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} ref={searchInputRef}/>
+                    <input type="text" placeholder="Search Public Stacks..." className="search-input" value={searchInput} onChange={(e) => setSearchInput(e.target.value)} ref={searchInputRef}/>
                     <button type="submit" className="search-btn" onClick={handleSearch}>Search</button>
                     {showDropdown && (
                     <div className="search-dropdown">

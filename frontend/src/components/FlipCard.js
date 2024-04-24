@@ -36,11 +36,13 @@ const FlipCard = ({ front, back }) => {
   return (
     <div className={`card-container ${isFlipped ? 'flipped' : ''}`} onClick={handleClick}>
       <div className="card-front">
-        {/* Update the button content based on showSlider state */}
+      {/*
         <button className="slider-toggle-button" onClick={toggleSlider}>
           {showSlider ? '>' : '<'}
         </button>
+        
         {showSlider && <DifficultySlider onChange={handleDifficultyChange} />}
+        */}
         {front}
       </div>
       <div className="card-back">

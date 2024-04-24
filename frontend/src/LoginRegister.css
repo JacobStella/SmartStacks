@@ -318,9 +318,18 @@ width: 33%;
 box-shadow: 0 0 0 0;
 }
 
-div#resetPasswordDiv h1#title{
+div#resetPasswordDiv {
  text-align:center;
   margin-top:50px;
+}
+
+span#resetResult {
+  color:#172a3a;
+  font-size: 20px;
+}
+
+#resetPasswordButton {
+  margin-top:20px;
 }
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/

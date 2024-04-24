@@ -5,13 +5,12 @@ button.stack-template button img {
 button.stack-template {
     border: 9px solid #004346;
     border-radius: 15px;
-    width:45%;
     display: flex; /* Use flexbox */
     flex-direction: column;
 }
 
 button.stack-template button {
-    width: 30%;
+    width: 120px;
     align-self:flex-end;
     margin-top: auto; 
 }
@@ -24,7 +23,7 @@ button.stack-template button {
 }
 
 .stack-template {
-  width: 48%; /* Set the width to less than half of the container's width to fit 2 per row */
+  width: 35%; /* Set the width to less than half of the container's width to fit 2 per row */
   margin-bottom: 20px; /* Optional: adds some space between the rows */
   /* Keep your other styles here */
 }

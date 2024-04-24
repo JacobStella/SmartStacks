@@ -254,17 +254,20 @@ h1.list-view {
 }
 
 h1.stack-description {
-  text-align:left;
-  margin-left: 5%;
+  margin-top:100px;
+  margin-bottom: 25px;
+  margin-left: 10%;
+  text-align: left
 }
 
 h2.stack-description {
-  font-size: 20px;
-  margin-left: 10%;
-  margin-right: 10%;
-  margin-bottom: 30px;
   color: #508991;
+  font-size: 20px;
+  margin-bottom: 50px;
+  margin-left: 15%;
+  margin-right: 10%
 }
+
 .fullscreen-active .hide-in-fullscreen {
   display: none;
 }

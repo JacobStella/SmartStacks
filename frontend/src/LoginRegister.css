@@ -301,10 +301,10 @@ max-width: 300px; /* Maximum width of the input fields */
 padding: 10px;
 margin-top: 30px;
 }
-input#confirmPassword{
+input#confirmNewPassword{
   margin-bottom:40px;
 }
-input#newPassword::placeholder, input#confirmPassword::placeholder{
+input#newPassword::placeholder, input#confirmNewPassword::placeholder{
 color: #172a3a;
 }
 
@@ -328,9 +328,6 @@ span#resetResult {
   font-size: 20px;
 }
 
-#resetPasswordButton {
-  margin-top:20px;
-}
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/
 /*/////////////////////////////////////////login/register END//////////////////////////////////////////////*/
 /*/////////////////////////////////////////////////////////////////////////////////////////////////////////*/

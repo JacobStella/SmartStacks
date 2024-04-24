@@ -142,13 +142,14 @@ const ViewStackPage = () => {
         <h1 className="stack-title">Stack Description:</h1>
         {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
         <div className="all-cards-info">
+        <h1 className="list-view">List View:</h1>
             {cards.map((card, index) => (
                 <div key={index} className="card-info">
                     <div className="term">
-                        <p><b>Term:</b> {card.Term}</p>
+                        <p> {card.Term}</p>
                     </div>
                     <div className="def">
-                        <p><b>Definition:</b> {card.Definition}</p>
+                        <p> {card.Definition}</p>
                     </div>
                 </div>
             ))}

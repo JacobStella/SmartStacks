@@ -139,7 +139,7 @@ const ViewStackPage = () => {
             <span className="card-counter">{currentIndex + 1}/{cards.length}</span>
             <button onClick={goToNextCard}>Next &gt;</button>
         </div>
-        <h1 className="stack-title">Stack Description:</h1>
+        <h1 className="stack-description">Stack Description:</h1>
         {stackDesc && <h2 className="stack-description">{stackDesc}</h2>}
         <div className="all-cards-info">
         <h1 className="list-view">List View:</h1>

@@ -261,11 +261,10 @@ h1.stack-description {
 }
 
 h2.stack-description {
-  color: #508991;
+  color: #172a3a;
   font-size: 20px;
-  margin-bottom: 50px;
-  margin-left: 15%;
-  margin-right: 10%
+  padding:20px;  
+  margin-bottom:0px;  
 }
 
 .fullscreen-active .hide-in-fullscreen {
@@ -304,4 +303,12 @@ div.card-back, div.card-front {
 /* Initially rotate the back 180 degrees so it faces away */
 .card-back {
   transform: rotateY(-180deg);
+}
+
+div.description-container {
+  width:80%;
+  background-color: #508991;
+  margin-left:10%;
+  border-radius:10px;
+  border: 9px solid #004346;
 }

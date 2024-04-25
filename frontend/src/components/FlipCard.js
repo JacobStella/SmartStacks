@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../ViewStack.css';
 import '../Web.css';
 
+/*
 const DifficultySlider = ({ onChange }) => {
   return (
     <div className="difficulty-slider">
@@ -14,6 +15,7 @@ const DifficultySlider = ({ onChange }) => {
     </div>
   );
 };
+*/
 
 const FlipCard = ({ front, back }) => {
   const [isFlipped, setIsFlipped] = useState(false);

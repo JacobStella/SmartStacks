@@ -66,7 +66,7 @@ const library = () => {
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.container}>
                 <View style={styles.imageContainer}>
-                    <Image source={require('../../../assets/Skunk.png')}
+                    <Image source={require('../../../assets/logo_SmartStacks.png')}
                     style = {{width: 150, height: 150}} />
                 </View>
                 <TextInput style = {styles.input}
@@ -76,12 +76,15 @@ const library = () => {
                 <TextInput style = {styles.input}
                 placeholder = "Password"
                 onChangeText = { (input) => formInput("password", input)}/>
-
-                <TouchableOpacity style={styles.buttons} onPress={submit}>
+                <View style={styles.spacing} />
+                <TouchableOpacity style={styles.loginButton} onPress={submit}>
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.buttons} onPress={register}>
-                    <Text style={styles.buttonText}>Register</Text>
+                <View style={styles.spacing}>
+                    <Text style={{color: '#fff', fontSize: 16}}>New User?</Text>
+                </View>
+                <TouchableOpacity style={styles.registerButton} onPress={register}>
+                    <Text style={{fontSize: 22, color: '#fff',}}>Register</Text>
                 </TouchableOpacity>
                 <View style={styles.spacing}/>
                 <Button title ="Testing" onPress = {test} />
@@ -95,15 +98,18 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#508991',
     },
     input: {
         borderWidth: 2,
         borderColor: "black",
-        padding: 5,
+        backgroundColor: '#D8DCFF',
+        padding: 10,
+        paddingLeft: 10,
         marginBottom: 15,
+        borderRadius: 2,
         width: "50%",
-        fontSize: 16,
+        fontSize: 18,
     },
     imageContainer: {
         paddingBottom: 30,
@@ -111,25 +117,40 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     spacing: {
-        marginBottom: 10,
+        marginTop: 18,
+        marginBottom: 3,
     },
-    buttons: {
+    loginButton: {
         width: '30%',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 40,
+        height: 45,
         borderWidth: 1,
         borderRadius: 5,
-        marginTop: '3%',
         backgroundColor: '#09BC8A',
         flexDirection: 'row',
         alignContent: 'flex-start',
         color: '#fff',
     },
-    buttonText: {
-        fontSize: 20,
+    registerButton: {
+        width: '30%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 45,
+        borderWidth: 1,
+        borderColor: '#172A3A',
+        borderRadius: 5,
+        backgroundColor: '#004346',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
         color: '#fff',
+    },
+    buttonText: {
+        fontSize: 22,
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
 

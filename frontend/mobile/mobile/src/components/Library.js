@@ -376,7 +376,7 @@ const StackHeader = () => {
                     
                 </Text>
                 <Text style={styles.stackText}>
-                    {item.cardNumber} Cards
+                    {item.cardNumber}
                 </Text>
 
                 </View>

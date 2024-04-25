@@ -1,10 +1,16 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 require('dotenv').config();
 const url = process.env.MONGODB_URI;
 const MongoClient = require('mongodb').MongoClient;
 const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
+const salt = process.env.SALT;
+
+// email setup
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
+const emailPass = process.env.EMAIL_PASS;
 
 async function connectToMongo() {
   try {
@@ -25,6 +31,8 @@ app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
 
+app.use(cors({ origin: '*' }));
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader(
@@ -38,7 +46,14 @@ app.use((req, res, next) => {
     next();
 });
 
-
+// for email
+const transporter = nodemailer.createTransport({
+	service: "Gmail",
+	auth: {
+		user: "daimondsailer@gmail.com",
+		pass: emailPass,
+	},
+});
 
 app.post('/api/register', async (req, res) => {
   const { email, firstName, lastName, username, password } = req.body;
@@ -55,8 +70,7 @@ app.post('/api/register', async (req, res) => {
       }
 
       // Hash password
-      //const salt = await bcrypt.genSalt(10);
-      //const hashedPassword = await bcrypt.hash(password, salt);
+      const hashedPassword = crypto.pbkdf2Sync(password, salt, 10, 64, 'sha512').toString('hex');
 
       // Insert new user
       await usersCollection.insertOne({
@@ -64,7 +78,7 @@ app.post('/api/register', async (req, res) => {
           FirstName: firstName,
           LastName: lastName,
           Username: username,
-          Password: password,
+          Password: hashedPassword,
           Verified: verified,
       });
 
@@ -75,6 +89,103 @@ app.post('/api/register', async (req, res) => {
   }
 });
 
+// Email Ops
+// Sending Verification
+app.post('/api/send-verif', async (req, res) => {
+	const {userId, email } = req.body;
+	const token = crypto.randomBytes(32).toString('hex');
+
+	// Save token to userId
+	const db = client.db("Group3LargeProject");
+	const result = await db.collection('Users').updateOne({ "_id": new ObjectId(userId) }, { $set: {Token:token}});
+	// make sure above line succeeded
+	if (!result){
+		res.status(400).json({message: "Token could not be saved to User"});
+	}
+
+	// the email
+	const mailOptions = {
+		from: "daimondsailer@gmail.com",
+		to: email,
+		subject: "Verify your email",
+		text: `Click this link to verify your email: http://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/verify/${token}`,
+	};
+
+	// sending the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error){
+			res.status(500).json({message: "Error sending verification email"});
+		} else {
+			res.status(200).json({message: "Verification email sent", token:token});
+		}
+	});
+});
+
+// checking verification
+app.get('/api/verify/:token', async (req, res) => {
+	const {token} = req.params;
+	if(token == null){
+		res.send("no token"); // TESTING
+		res.status(500).json({ message: "Token not recieved" });
+	}
+	
+	try{
+		const db = client.db("Group3LargeProject");
+		const result = await db.collection('Users').findOne({ Token: {$eq:token}});
+		
+		// if a matching token is found, verify the user
+		const verif = await db.collection('Users').updateOne({Token:token}, {$set: {Verified:true}});
+		
+	} catch(e) {
+		error = e.toString();
+		res.status(500).json({error : error});
+		res.send(error); // TESTING
+	}
+	// TESTING
+	res.send("Email verified, redirecting soon");
+	
+  	res.status(200).json({ message: "Verification Succeeded" });
+});
+
+// send forgot password email
+app.post('/api/sendforgot', async (req, res) => {
+	const {email, userId} = req.body;
+	
+	// the email
+	const mailOptions = {
+		from: "daimondsailer@gmail.com",
+		to: email,
+		subject: "Forgot your password",
+		text: "Click this link to reset your password: http://largeprojectgroup3-efcc1eed906f.herokuapp.com",
+	};
+
+	// sending the email
+	transporter.sendMail(mailOptions, (error, info) => {
+		if (error){
+			res.status(500).json({message: "Error sending forgot password email"});
+		} else {
+			res.status(200).json({message: "Forgot password email sent"});
+		}
+	});
+});
+
+app.post('/api/forgot', async (req, res) => {
+	const {userId, newPass} = req.body;
+	
+	try{
+		const db = client.db("Group3LargeProject");
+		const result = await db.collection('Users').updateOne({"_id": new ObjectId(userId)}, {$set: {Password:newPass}});
+		if(!result){
+			res.status(500).json({message: "Could not change pass"});
+		}
+	} catch(e){
+		error = e.toString();
+		res.status(500).json({error : error});
+	}
+	res.status(200).json({message: "Password Reset"});
+});
+
+// Card Ops
 // Add card
 app.post('/api/addcard', async (req, res) => {
   // incoming: userId, term, definition, setId
@@ -134,7 +245,68 @@ app.post('/api/deletecard', async (req, res, next) => {
 	}
 });
 
-// LETS GET EXPERIMENTAL
+// Update Card
+app.post('/api/updatecard', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { cardId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+	
+	switch(code){
+		case 1:
+			// update Term
+			var newTerm = { $set: {Term:newInfo}};
+			break;
+		case 2:
+			// update def
+			var newDef = { $set: {Definition:newInfo}};
+			break;
+		case 3:
+			// update difficulty
+			var newDiff = { $set: {Difficulty:newInfo}};
+		case 4:
+			// update Set
+			var newSet = { $set: {SetId:newInfo}};
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update card
+		switch(code){
+			case 1:
+				// update Term
+				const resultTerm = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newTerm);
+				break;
+			case 2:
+				// update Def
+				const resultDef = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDef);
+				break;
+			case 3:
+				const resultDiff = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newDiff);
+				break;
+			case 4:
+				const resultSet = await db.collection('Cards').updateOne({ "_id": new ObjectId(cardId) }, newSet);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+		
+
+		res.status(200).json({ message: "Card updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+
+// Class ops
+// Add Class
 app.post('/api/addclass', async (req, res, next) => {
   const { userId, className } = req.body; // Removed setIds as it's no longer directly managed here
 
@@ -155,28 +327,90 @@ app.post('/api/addclass', async (req, res, next) => {
   }
 });
 
-app.get('/api/getClassAndSets/:classId', async (req, res) => {
-  const { classId } = req.params; // Get classId from the route parameters
+
+// Delete Class
+app.post('/api/deleteclass', async (req, res, next) => {
+	const { classId } = req.body; // Get cardId from request
+
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+		
+		// delete card
+		const result = await db.collection('Class').deleteOne({ _id: new ObjectId(classId) });
+   
+		res.status(200).json({ message: "Class deleted successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+// Update Class
+app.post('/api/updateclass', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { classId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+
+	// control code
+	switch(code){
+		case 1:
+			// update Name
+			var newName = { $set: {className:newInfo}};
+			break;
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update class control code
+		switch(code){
+			case 1:
+				// update className
+				const resultTerm = await db.collection('Class').updateOne({ "_id": new ObjectId(classId) }, newName);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+		
+		res.status(200).json({ message: "Class updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+app.get('/api/getClassAndSets/:userId', async (req, res) => {
+  const { userId } = req.params;
 
   try {
-      const db = client.db("Group3LargeProject");
-      const classDoc = await db.collection('Class').findOne({ _id: new ObjectId(classId) });
-      if (!classDoc) {
-          res.status(404).json({ error: "Class not found" });
-          return;
-      }
+    const db = client.db("Group3LargeProject");
+    // Assuming classes are related to users by a userId field in the Class collection
+    const classes = await db.collection('Class').find({ userId: userId }).toArray();
 
-      const sets = await db.collection('Sets').find({ classId: classId }).toArray();
-      const result = {
-          ...classDoc,
-          sets: sets
+    if (!classes.length) {
+      res.status(404).json({ error: "No classes found for this user" });
+      return;
+    }
+
+    // For each class, find the associated sets
+    const classesWithSets = await Promise.all(classes.map(async (classDoc) => {
+      const sets = await db.collection('Sets').find({ classId: classDoc._id.toString() }).toArray();
+      return {
+        ...classDoc,
+        sets: sets
       };
+    }));
 
-      res.status(200).json(result);
-  } catch(e) {
-      res.status(500).json({ error: e.toString() });
+    res.status(200).json(classesWithSets);
+  } catch (e) {
+    res.status(500).json({ error: e.toString() });
   }
 });
+
 
 app.get('/api/search', async (req, res) => {
   // Destructure with default empty strings to prevent undefined errors
@@ -344,7 +578,9 @@ app.post('/api/validate-test', async (req, res) => {
 
 
 
-
+// Set Ops
+// Add Set
+/*
 app.post('/api/addset', async (req, res) => {
   const { UserId, SetName, public, classId } = req.body;
 
@@ -368,7 +604,81 @@ app.post('/api/addset', async (req, res) => {
       res.status(500).json({ error: e.toString() });
   }
 });
+*/
 
+// Delete Set
+app.post('/api/deleteset', async (req, res, next) => {
+	const { setId } = req.body; // Get setId from request
+
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+		
+		// delete set
+		const result = await db.collection('Sets').deleteOne({ _id: new ObjectId(setId) });
+   		
+		if(result){
+			res.status(200).json({ message: "Set deleted successfully"});
+		}
+		
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
+
+// Update Set
+app.post('/api/updateset', async (req, res) => {
+	// cardId of card to be updated, UPdated INformation to be added, and code for what to change
+	const { setId, newInfo, code } = req.body; 
+	// const newTerm = { $set: {Term:Term}};
+
+	// control code
+	switch(code){
+		case 1:
+			// update Name
+			var newName = { $set: {SetName:newInfo}};
+			break;
+		case 2:
+			// update public value
+			var newPub = { $set: {public:newInfo}};
+			break;
+		case 3:
+			// update description
+			var newDesc = { $set: {Description:newInfo}};
+			break;
+		default:
+			res.status(500).json({ error: "Control Code not found (assignment)" });
+	}
+	
+  	var error = '';
+	
+	// Running command
+	try {
+		const db = client.db("Group3LargeProject");
+
+		// update class control code
+		switch(code){
+			case 1:
+				// update SetName
+				const resultTerm = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newName);
+				break;
+			case 2:
+				// update set public value
+				const resultVal = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newPub);
+				break;
+			case 3:
+				// update description
+				const resultDesc = await db.collection('Sets').updateOne({ "_id": new ObjectId(setId) }, newDesc);
+				break;
+			default:
+				res.status(500).json({ error: "Control Code not found (update func)" });
+		}
+
+		res.status(200).json({ message: "Set updated successfully"});
+	} catch(e) {
+		res.status(500).json({ error: e.toString() });
+	}
+});
 
 const { ObjectId } = require('mongodb');
 
@@ -401,9 +711,79 @@ app.get('/api/getset/:setId', async (req, res) => {
 });
 
 
+app.get('/api/public-search', async (req, res) => {
+  const { searchTerm = '' } = req.query; // Only extract searchTerm from query
+
+  try {
+    const db = client.db("Group3LargeProject");
+
+    const searchRegex = new RegExp(searchTerm.trim(), 'i'); // Create a case-insensitive regex from searchTerm
+
+    // Define a variable to determine if a searchTerm is provided
+    const isSearchTermProvided = searchTerm.trim() !== '';
+
+    // Fetch classes without filtering by userId, and conditionally filter by searchTerm if provided
+    const classes = isSearchTermProvided ? await db.collection('Class').find({
+      className: { $regex: searchRegex }
+    }).toArray() : await db.collection('Class').find({}).toArray();
+
+    // Fetch sets without filtering by userId, and conditionally filter by searchTerm if provided
+    const sets = isSearchTermProvided ? await db.collection('Sets').find({
+      SetName: { $regex: searchRegex }
+    }).toArray() : await db.collection('Sets').find({}).toArray();
+
+    // Fetch cards without filtering by userId, and conditionally filter by searchTerm if provided
+    const cardsQuery = isSearchTermProvided ? {
+      $or: [
+        { Term: { $regex: searchRegex } },
+        { Definition: { $regex: searchRegex } }
+      ]
+    } : {};
+
+    const cards = await db.collection('Cards').find(cardsQuery).toArray();
+
+    // Combine results into a single object to return
+    const results = {
+      classes,
+      sets,
+      cards
+    };
+
+    res.json(results);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.toString() });
+  }
+});
 
 
 
+//WITH DESC
+app.post('/api/addset', async (req, res) => {
+  // Including "Description" in the destructured object from req.body
+  const { UserId, SetName, Description, public, classId } = req.body;
+
+  try {
+      const db = client.db("Group3LargeProject");
+
+      // Insert the new set document into the 'Sets' collection with the "Description" field
+      const setResult = await db.collection('Sets').insertOne({
+          UserId: UserId,
+          SetName: SetName,
+          Description: Description, // Adding the "Description" field
+          public: public,
+          classId: classId, // Linking set to class via classId
+      });
+
+      if (setResult.acknowledged) {
+          res.status(200).json({ message: "New set added successfully", setId: setResult.insertedId });
+      } else {
+          throw new Error("Failed to add new set");
+      }
+  } catch(e) {
+      res.status(500).json({ error: e.toString() });
+  }
+});
 
 
 // UPDATE CLASS
@@ -442,8 +822,10 @@ app.post('/api/login', async (req, res, next) => {
   const { login, password } = req.body;
 
   const db = client.db("Group3LargeProject");
-  // Adjusted to match directly with plaintext password for demonstration purposes
-  const user = await db.collection('Users').findOne({ Username: login, Password: password });
+	// Password Hashing to check
+	const checkhash = crypto.pbkdf2Sync(password, salt, 10, 64, `sha512`).toString(`hex`);
+  
+  const user = await db.collection('Users').findOne({ Username: login, Password: checkhash });
 
   if (user) {
       var id = user._id; // Using MongoDB's default '_id' field, adjust if using a custom 'UserID'

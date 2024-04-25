@@ -8,20 +8,20 @@ const LandingFooter = () => {
             <div className="footer-container">
                 <div className="footer-section">
                     <h3>About Us</h3>
-                    <Link to="/about">Who We Are</Link>
-                    <Link to="/team">Our Team</Link>
-                    <Link to="/mission">Our Mission</Link>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Who We Are</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Our Team</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Our Mission</a>
                 </div>
                 <div className="footer-section">
                     <h3>Socials</h3>
-                    <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
-                    <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-                    <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Facebook</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Twitter</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Instagram</a>
                 </div>
                 <div className="footer-section">
                     <h3>Legal</h3>
-                    <Link to="/terms">Terms of Use</Link>
-                    <Link to="/privacy">Privacy Policy</Link>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Terms of Use</a>
+                    <a href="https://r.mtdv.me/videos/mYab7lGTaD" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
                     <p>&copy; {new Date().getFullYear()} Skunkworks Inc. All rights reserved.</p>
                 </div>
             </div>

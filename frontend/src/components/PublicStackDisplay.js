@@ -8,8 +8,8 @@ import '../Browse.css';
 const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
-    const handlePlayStack = () => {
-        localStorage.setItem("setId", stack._id);
+    const handlePlayStack = (setId) => {
+        localStorage.setItem("setId", setId);
         navigate('/game');
     };
 
@@ -23,7 +23,7 @@ const StackContainer = ({ stack }) => {
                 <span className="stack-name">{stack.SetName}</span><br />
                 <span className="description">{stack.Description}</span><br />
                 <button onClick={handlePlayStack}>
-                    <img src={PlayLightIcon} alt="play" />
+                    <img src={PlayLightIcon(stack._id)} alt="play" />
                 </button>
         </button>
     );

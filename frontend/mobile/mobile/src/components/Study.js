@@ -95,13 +95,10 @@ const LoggedInNav = async (item) => {
     let filteredCards = await CardFilter(item.Id);
           setCards(filteredCards);
           //console.log(Cards);
-<<<<<<< HEAD
           //navigation.navigate('ViewCard', {cards: filteredCards});
           BackArrowSetVisible(true);
           setViewCardIsVisible(true);
-=======
-          navigation.navigate('StudyGame', {cards: filteredCards});
->>>>>>> 7b8a7129490a3a3cfc6f3c28729e3ee521f0c05f
+          //navigation.navigate('StudyGame', {cards: filteredCards});
     ScrollToTop();
    };
 

@@ -68,6 +68,7 @@ const LibraryPage = () => {
                         console.log(classes);
                     } else {
                         console.log('No classes found for this user.');
+                        addFolder("edit folder name...");
                     }
                 });
             } else {

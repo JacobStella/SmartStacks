@@ -26,13 +26,8 @@ const Register = ({navigation}) => {
   const [message, setMessage] = useState('');
   const handleRegister = async () => {
     const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
-    if (!passwordRegex.test(registerPassword.value)) {
+    if (!passwordRegex.test(data.password)) {
       setMessage('Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.');
-      return;
-    }
-
-    if (registerPassword.value !== confirmPassword.value) {
-      setMessage('Passwords do not match!');
       return;
     }
 
@@ -56,7 +51,7 @@ const Register = ({navigation}) => {
            // console.log(res.status);
         if(res.status === 201){
           console.log("Registered Successfully");
-          const res = await response.json();
+          const res = await res.json(); //was response not res 
           const userId = res.userid;
           console.log("User ID:", userId);
           //navigation.navigate("Login");
@@ -67,7 +62,7 @@ const Register = ({navigation}) => {
             },
             body: JSON.stringify({
               userId: userId,
-              email: email.value,
+              email: data.email,
             }),
           });
           const verificationData = await verificationResponse.json();

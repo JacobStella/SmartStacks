@@ -33,12 +33,14 @@ const Register = ({navigation}) => {
 
     console.log("Call to API -> Register")
       try{
+
         console.log("email", data.email);
         console.log("first", data.firstName);
         console.log("last", data.lastName);
         console.log("user", data.username);
         console.log("pass", data.password);
-        // console.log(JSON.stringify(data));
+
+
         const response = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
           method: "POST",
           headers:{
@@ -52,14 +54,17 @@ const Register = ({navigation}) => {
             password: data.password,
           }),
         });
-        console.log("userId via res", response.userId);
-         console.log("///////////////////////////////////////////////////////////////", res.status);
+
+        //console.log("userId via res", response.userId);
+         //console.log("///////////////////////////////////////////////////////////////", res.status);
+
         if(response.status === 201){
+
           console.log("Registered Successfully");
           const res = await response.json(); //was response not res 
           const userId = res.userId;
           console.log("User ID:", userId);
-          //navigation.navigate("Login");
+
           const verificationResponse = await fetch('/api/send-verif', {
             method: 'POST',
             headers: {
@@ -70,6 +75,7 @@ const Register = ({navigation}) => {
               email: data.email,
             }),
           });
+
           const verificationData = await verificationResponse.json();
 
           if (verificationResponse.ok) {

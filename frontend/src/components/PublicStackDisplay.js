@@ -1,6 +1,87 @@
-/////////////////////////////////////////////
+//////////////////////////////////////////////
 //stack.Description is the description lol
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import PlayLightIcon from '../images/playLight.png';
+import '../Browse.css';
 
+const StackContainer = ({ stack }) => {
+    const navigate = useNavigate();
+
+    const handlePlayStack = (setId) => (e) => {
+        e.stopPropagation();
+        localStorage.setItem("setId", setId);
+        navigate('/game');
+    };
+
+    const handleViewStack = (setId) => {
+      localStorage.setItem("setId", setId);
+      navigate('/view');
+    };
+
+    return (
+        <button className="stack-template"onClick={(e) => handleViewStack(stack._id)}>
+                <span className="stack-name">{stack.SetName}</span><br />
+                <span className="description">{stack.Description}</span><br />
+                <button onClick={(e) => handlePlayStack(stack._id)(e)}>
+                    <img src={PlayLightIcon} alt="play" />
+                </button>
+        </button>
+    );
+};
+
+const PublicStacksDisplay = ({ publicStacks }) => {
+    return (
+      <section className="stacks-display">
+        {publicStacks.map(stack => (
+          <StackContainer key={stack._id} stack={stack} />
+        ))}
+      </section>
+    );
+  };
+  
+export default PublicStacksDisplay;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FolderIcon from '../images/FolderIcon.png';
@@ -66,7 +147,6 @@ const StackContainer = ({ stack }) => {
                 <button onClick={handleViewStack}>
                     <img src={PlayLightIcon} alt="View" />
                 </button>
-                {/* Add other buttons and interactions here */}
             </div>
         </div>
     );
@@ -101,7 +181,7 @@ const PublicStacksDisplay = ({ publicStacks }) => {
 
 
 
-
+*/
 
 
 

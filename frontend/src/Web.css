@@ -147,21 +147,23 @@ a:hover{
 }
 
 .content-container-landing {
-  flex: 1; /* This will allow the content container to expand and fill the available space */
+  align-items: center;
   display: flex;
+  flex: 1 1;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  margin-top: 80px; 
+  margin-top: 80px;
+  margin-bottom: 50px
 }
 
 
 .links-and-started {
+  align-items: center;
   display: flex;
-  align-items: start;
   justify-content: center;
+  min-height: 500px;
   width: 100%;
-  min-height: 500px; /* Example minimum height */
+  margin-bottom:30px;
 }
 
 .link-grid {
@@ -171,12 +173,13 @@ a:hover{
 }
 div.get-started-section {
   max-width: 450px;
-    margin-top:60px;
+    margin-top:5px;
 }
 div.get-started-section p {
-  margin-top: 30px;
-  font-weight: 600;
   font-size: 17px;
+  font-weight: 600;
+  margin-top: 30px;
+  color: #2a6e77;
 }
 
 /* Add a media query for responsive adjustments */

@@ -40,7 +40,7 @@ function buildPath(route)
     }
 }
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
@@ -68,6 +68,7 @@ const LibraryPage = () => {
                         console.log(classes);
                     } else {
                         console.log('No classes found for this user.');
+                        addFolder("Name your first folder...");
                     }
                 });
             } else {
@@ -154,7 +155,6 @@ const addFolder = async (folderName) => {
         console.log(res);
             if (response.ok) {
                 setFolders(prevFolders => [...prevFolders, { _id: res.classId, className: folderName,  isEditing: true }]);
-                setMessage("Folder has been added.");
                 console.log('Folders after adding new folder:', folders);
             } else {
                 setMessage("API Error: " + (res.error || "Failed to add folder."));

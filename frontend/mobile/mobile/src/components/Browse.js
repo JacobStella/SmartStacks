@@ -47,6 +47,8 @@ const [getOuterSets, setOuterSets] = useState();
 
 //temp imports
 const [searchInput, setSearchInput] = useState('');
+const [publicStacks, setPublicStacks] = useState([]);
+
 
 
 
@@ -59,7 +61,7 @@ const fetchPublicSearch = async (searchTerm) => {
     let js = JSON.stringify(obj);
 
     try {
-        const response = await fetch(buildPath('api/public-search'), {
+        const response = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/public-search", {
             method: 'POST',
             body: js,
             headers: {'Content-Type': 'application/json'}
@@ -110,6 +112,10 @@ useEffect(() => {
     handleSearch(" ");
 
 }, []);
+
+const updatePublicStacks = (newStacks) => {
+    setPublicStacks(newStacks);
+};
 
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {

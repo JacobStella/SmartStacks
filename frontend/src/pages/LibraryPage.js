@@ -40,7 +40,7 @@ function buildPath(route)
     }
 }
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
@@ -68,7 +68,7 @@ const LibraryPage = () => {
                         console.log(classes);
                     } else {
                         console.log('No classes found for this user.');
-                        addFolder("edit folder name...");
+                        addFolder("Name your first folder...");
                     }
                 });
             } else {

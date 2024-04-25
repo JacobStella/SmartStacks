@@ -117,6 +117,7 @@ const Register = ({navigation}) => {
           placeholder = "Password"
           onChangeText={text => formInput("password", text)}
           value={data.password} />
+           <Text>{message}</Text>
       </View>
 
       <TouchableOpacity style={styles.loginButton} onPress={handleRegister}>

@@ -86,7 +86,6 @@ const Library = ({navigation}) => {
             setViewCardIsVisible(false);
             BackArrowSetVisible(false);
             setItemData(null);
-            console.log("hi library");
         });
     }, [navigation]);
 
@@ -95,7 +94,6 @@ const Library = ({navigation}) => {
         for(let i = 0; i < Stacks.length; i++){
             if(Stacks[i].Title == stackName){
                 setDescription(Stacks[i].Description);
-                console.log(Stacks[i].Description);
             }
         }
         sheet.current.open();
@@ -133,8 +131,6 @@ const Library = ({navigation}) => {
         setEmptyHeader(true);
         if(!item.IsClass && viewCardIsVisible){
             setViewCardIsVisible(false)
-            //setClassOnly(true);
-            console.log("View");
             setCards([]);
         }
         setInSearch(false);
@@ -165,7 +161,6 @@ const Library = ({navigation}) => {
     };
 
     const filterDescription = (data,className) =>{
-        console.log(data, "HIII");
         data.forEach(item =>{
             if(item.Title == className){
                 return item.Description;
@@ -179,8 +174,6 @@ const Library = ({navigation}) => {
             if(searchData == item.Title){
                 BackArrowSetVisible(true);
                 setItemData(item);
-                console.log("Got it!");
-                console.log(item);
                 setCurItem(item);
                 setInSearch(true);
                 setCards([]);
@@ -232,9 +225,7 @@ const Library = ({navigation}) => {
 
     const data = [...Classes, ...Stacks, ...Cards];
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const loadStack = async()=>{
-        console.log("Loading");
-    }
+    
     let currentIndex = 0;
    
     const renderSetRow = ({item, index, navigation}) => {

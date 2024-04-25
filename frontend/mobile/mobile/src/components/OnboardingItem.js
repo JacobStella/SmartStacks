@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import {Button, LogBox, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, FlatList, useWindowDimensions, Pressable} from "react-native";
-import Animated, {Easing, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming, runOnJS, useDerivedValue,} from 'react-native-reanimated';
-import {TapGestureHandler, State} from 'react-native-gesture-handler';
+import {LogBox, SafeAreaView, StyleSheet, Text, View, useWindowDimensions, Pressable} from "react-native";
+import Animated, {Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming, runOnJS} from 'react-native-reanimated';
 
 LogBox.ignoreAllLogs();
 
@@ -44,7 +43,7 @@ export default OnboardingItem = ({item, numCards}) => {
 
     const spin = useSharedValue(0);
 
-  const rStyle = useAnimatedStyle(() => {
+    const rStyle = useAnimatedStyle(() => {
     const spinVal = interpolate(spin.value, [0, 1], [0, 180]);
     return {
       transform: [

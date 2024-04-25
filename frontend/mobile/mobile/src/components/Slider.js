@@ -108,8 +108,6 @@ const styles = StyleSheet.create({
     
   },
   scrollContainer: {
-    //padding: 10,
-   // width: "100%",
     alignItems: 'center',
     justifyContent: 'center',
     

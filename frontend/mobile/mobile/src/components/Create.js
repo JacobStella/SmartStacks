@@ -3,7 +3,6 @@ import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {Button, LogBox, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 import { getClassesAsync, getUserData, addStack, getJSONfield, addCard} from './CardUI';
-import {fetchUserId} from './Library';
 import {debounce} from 'lodash';
 
 LogBox.ignoreAllLogs();

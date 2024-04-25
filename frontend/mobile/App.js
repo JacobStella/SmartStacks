@@ -1,25 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View, Image, TouchableOpacity, Touchable } from 'react-native';
-import {NavigationContainer, useNavigation, useRoute} from '@react-navigation/native';
+import {View, Image, TouchableOpacity} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './mobile/src/components/Login';
 import Register from './mobile/src/components/Register';
 import Library from './mobile/src/components/Library';
-import About from './mobile/src/components/About';
 import Settings from './mobile/src/components/Settings';
 import Browse from './mobile/src/components/Browse';
 import StudyGame from './mobile/src/components/StudyGame';
-import Study from './mobile/src/components/Study';
-import Search from './mobile/src/components/Search';
 import Page from './mobile/src/components/Library';
 import Create from './mobile/src/components/Create';
 import ViewCard from './mobile/src/components/ViewCard';
 import ForgotPassword from './mobile/src/components/ForgotPassword';
-
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
-import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabBarProps } from '@react-navigation/bottom-tabs';
-/*import { TouchableOpacity } from 'react-native-gesture-handler';*/
+import { createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 
 
@@ -27,9 +21,7 @@ const Stack = createNativeStackNavigator();
 const HamburgerMenu = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const libraryName = 'Library';
-const searchName = 'Search';
 const browseName = 'Browse';
-const studyName = 'Study';
 const viewCardName = 'ViewCard';
 const ForgotPasswordName = 'ForgotPassword';
 
@@ -70,20 +62,11 @@ const NavBar = ({name, navigation}) => {
         tabBarIcon: ({focused, color, size}) => {
           let iconName;
           let rn = route.name;
-          //console.log(rn);
           if(rn == libraryName){
             iconName = focused ? 'library' : 'library-outline'
-          } else if (rn == searchName){
+          }else if (rn == browseName){
             iconName = focused ? 'search' : 'search-outline'
-          } else if (rn == browseName){
-            iconName = focused ? 'search' : 'search-outline'
-          } else if (rn == studyName){
-            iconName = focused ? 'list' : 'list-outline'
-          } 
-           else if (rn == viewCardName){
-          iconName = focused ? 'list' : 'list-outline'
-          } 
-
+          }  
           return <Ionicons name={iconName} size={size} color={color}/>
         },
       })}>
@@ -157,24 +140,6 @@ const customDrawerContent = ({navigation}) => {
       )}
       onPress={() => navigation.toggleDrawer()} />
         <DrawerItem
-        label={"About"}
-        icon={({ focused, size }) => (
-          <Ionicons
-          name="information-outline"
-          size={size}
-          color={focused ? 'black' : 'black'} />
-        )}
-        onPress={() => navigation.navigate("About")} />
-        <DrawerItem label={"Image"}>
-          
-          <View style={{paddingBottom: 30,
-            alignItems: 'center',
-            justifyContent: 'center'}}>
-            <Image source={require('./assets/logo_SmartStacks.png')}
-              style = {{width: 150, height: 150}} />
-          </View>
-        </DrawerItem>
-        <DrawerItem
         label={"Settings"}
         icon={({ focused, size }) => (
           <Ionicons
@@ -203,9 +168,6 @@ return (
     <Stack.Navigator screenOptions={{
       headerShown: false,
     }}>
-      {/* <Stack.Screen
-        name ="NavBar"
-        component={NavBar} /> */}
       <Stack.Screen
         name="Library"
         component={NavBar} />  
@@ -217,10 +179,6 @@ return (
         component={ViewCard} />
       <Stack.Screen
         options={{headerShown: true}}
-        name="About"
-        component={About} />
-      <Stack.Screen
-        options={{headerShown: true}}
         name="Settings"
         component={Settings} />
       <Stack.Screen
@@ -229,8 +187,6 @@ return (
       <Stack.Screen
       name="ForgotPassword"
       component={ForgotPassword} />
-
-      
     </Stack.Navigator>
   );
 };
@@ -241,10 +197,6 @@ return (
 const App = () => {
   return (
     <NavigationContainer>
-      {/* <Stack.Navigator>
-       <Stack.Screen name = "Login" component={Login}/>
-       <Stack.Screen name = "Register" component={Register}/>
-     </Stack.Navigator> */}
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>

@@ -39,7 +39,7 @@ const Register = ({navigation}) => {
         console.log("user", data.username);
         console.log("pass", data.password);
         // console.log(JSON.stringify(data));
-        const res = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
+        const response = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
           method: "POST",
           headers:{
             "Content-Type": "application/json",
@@ -54,9 +54,9 @@ const Register = ({navigation}) => {
         });
         console.log("userId via res", res.userId)
          console.log("///////////////////////////////////////////////////////////////", res.status);
-        if(res.status === 201){
+        if(response.status === 201){
           console.log("Registered Successfully");
-          const res = await res.json(); //was response not res 
+          const res = await response.json(); //was response not res 
           const userId = res.userId;
           console.log("User ID:", userId);
           //navigation.navigate("Login");

@@ -56,6 +56,9 @@ const Register = ({navigation}) => {
            // console.log(res.status);
         if(res.status === 201){
           console.log("Registered Successfully");
+          const res = await response.json();
+          const userId = res.userid;
+          console.log("User ID:", userId);
           //navigation.navigate("Login");
           const verificationResponse = await fetch('/api/send-verif', {
             method: 'POST',
@@ -118,6 +121,7 @@ const Register = ({navigation}) => {
           placeholder = "Password"
           onChangeText={text => formInput("password", text)}
           value={data.password} />
+           <Text>{message}</Text>
       </View>
 
       <TouchableOpacity style={styles.loginButton} onPress={handleRegister}>

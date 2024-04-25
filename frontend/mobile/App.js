@@ -10,7 +10,6 @@ import Settings from './mobile/src/components/Settings';
 import Browse from './mobile/src/components/Browse';
 import StudyGame from './mobile/src/components/StudyGame';
 import Study from './mobile/src/components/Study';
-import Test from './mobile/src/components/Test';
 import Search from './mobile/src/components/Search';
 import Page from './mobile/src/components/Library';
 import Create from './mobile/src/components/Create';
@@ -92,9 +91,6 @@ const NavBar = ({name, navigation}) => {
         <Tab.Screen name={libraryName} component={Library} options = {{
           headerShown:false,
         }}/>
-        <Tab.Screen name={searchName} component={Search}options = {{
-          headerShown:false,
-        }}/>
         <Tab.Screen name={"Create"} component={Create} options={{
           title: 'Create',
           headerShown: false,
@@ -129,9 +125,6 @@ const NavBar = ({name, navigation}) => {
         }}
         />
         <Tab.Screen name={browseName} component={Browse}options = {{
-          headerShown:false,
-        }}/>
-        <Tab.Screen name={studyName} component={Study}options = {{
           headerShown:false,
         }}/>
 
@@ -204,9 +197,6 @@ return (
         name="SmartStacks"
         component={SmartStacks} />
       <Stack.Screen
-        name="Test"
-        component={Test} />
-        <Stack.Screen
         name="ViewCard"
         component={ViewCard} />
       <Stack.Screen

@@ -106,14 +106,14 @@ const fetchUserId = async () => {
 };
 */
 
-React.useEffect(() => {
+useEffect(() => {
     handleSearch(" ");
 
 }, []);
 
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {
-        fetchUserId();
+        handleSearch();
         console.log("hi browse");
     });
     
@@ -226,7 +226,7 @@ const ViewAll = () => {
     setViewCardIsVisible(false);
     BackArrowSetVisible(false);
     setCardsReady(false);
-    fetchUserId();
+    handleSearch();
 
     
 };

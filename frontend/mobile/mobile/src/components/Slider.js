@@ -9,8 +9,11 @@ import {
   Animated,
   useWindowDimensions,
   Image,
+  LogBox,
 } from 'react-native';
 import sample from '../../../assets/sample.png';
+
+LogBox.ignoreAllLogs();
 
 const images = [
   

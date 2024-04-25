@@ -1,10 +1,12 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, {useState, useEffect, useRef, useCallback} from 'react';
-import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
+import {Button, LogBox, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
 import { getClassesAsync, getUserData, addStack, getJSONfield, addCard} from './CardUI';
 import {fetchUserId} from './Library';
 import {debounce} from 'lodash';
+
+LogBox.ignoreAllLogs();
 
 const handleCreate = async (cardPairs, title, isPublic, description, classData) => {
     

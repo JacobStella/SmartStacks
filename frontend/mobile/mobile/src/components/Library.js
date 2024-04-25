@@ -1,4 +1,4 @@
-import{View, Text, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity} from 'react-native'
+import{View, Text, LogBox, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity} from 'react-native'
 import React, {useState, useEffect, useRef, useNavigation, useRoute} from 'react';
 import SliderHeader from './SliderHeader';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -13,7 +13,7 @@ import { setClassesAsync } from './CardUI';
 import { TextInput } from 'react-native-gesture-handler';
 import { filter, forEach, head } from 'lodash';
 
-
+LogBox.ignoreAllLogs();
 
 const Library = ({navigation}) => {
 //let stateName = onLibrary;

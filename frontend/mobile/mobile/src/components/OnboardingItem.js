@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
-import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, FlatList, useWindowDimensions, Pressable} from "react-native";
+import {Button, LogBox, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, FlatList, useWindowDimensions, Pressable} from "react-native";
 import Animated, {Easing, interpolate, useAnimatedStyle, useSharedValue, withSpring, withTiming, runOnJS, useDerivedValue,} from 'react-native-reanimated';
 import {TapGestureHandler, State} from 'react-native-gesture-handler';
 
+LogBox.ignoreAllLogs();
 
 const products = [
     { id: 0, name: "Card1"},

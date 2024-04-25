@@ -1,10 +1,11 @@
 import React, {useState, useRef, useEffect} from "react";
-import {Button, StyleSheet, TextInput, SafeAreaView, View, Text, Image, Animated, Modal, Alert, Pressable, useWindowDimensions, ScrollView, ImageBackground, TouchableOpacity} from "react-native"
+import {Button, LogBox, StyleSheet, TextInput, SafeAreaView, View, Text, Image, Animated, Modal, Alert, Pressable, useWindowDimensions, ScrollView, ImageBackground, TouchableOpacity} from "react-native"
 import {Ionicons} from '@expo/vector-icons';
 import Header from "./SliderHeader";
 import Boxes from "./SliderBox";
 import Sample from "../../../assets/sample.png"
 
+LogBox.ignoreAllLogs();
 
 const Register = ({navigation}) => {
   const [data, newData] = useState({

@@ -1,8 +1,9 @@
 import React, {useState, useEffect, useRef, useNavigation} from 'react';
-import {Button, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, FlatList} from "react-native";
+import {Button, LogBox, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, FlatList} from "react-native";
 import OnBoardingItem from './OnboardingItem';
 import {Cards} from './Library';
 
+LogBox.ignoreAllLogs();
 
 const cards = [
   { id: 0, name: "Card1"},

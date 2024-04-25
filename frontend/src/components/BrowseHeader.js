@@ -67,7 +67,7 @@ const BrowseHeader = () => {
 
     return (
         <header className="library-header">
-            <h1>Browse Page</h1>
+            <h1>Browse Public Stacks</h1>
             <div className="header-controls">
                 <div className="filter-dropdown">
                     <select className="filter-select">

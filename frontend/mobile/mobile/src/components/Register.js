@@ -33,6 +33,11 @@ const Register = ({navigation}) => {
 
     console.log("Call to API -> Register")
       try{
+        console.log("email", data.email);
+        console.log("first", data.firstName);
+        console.log("last", data.lastName);
+        console.log("user", data.username);
+        console.log("pass", data.password);
         // console.log(JSON.stringify(data));
         const res = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
           method: "POST",

@@ -52,7 +52,7 @@ const Register = ({navigation}) => {
             password: data.password,
           }),
         });
-        console.log("userId via res", res.userId)
+        console.log("userId via res", response.userId);
          console.log("///////////////////////////////////////////////////////////////", res.status);
         if(response.status === 201){
           console.log("Registered Successfully");

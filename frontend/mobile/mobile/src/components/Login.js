@@ -51,6 +51,10 @@ const submit = async () => {
     }
 };
 
+const forgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+ };
+
 const register = () => {
    navigation.navigate("Register");
 };

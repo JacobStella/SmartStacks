@@ -306,16 +306,11 @@ const StackHeader = () => {
     
     else{
         if(item.IsClass || !viewCardIsVisible){
-            if(item.IsClass){
-                setClassCur(item.Title);
-            }
-            else{
-                
-            }
+            
 
         return(
                 <View style = {styles.header}>
-                    <Text style={styles.headerText}>Folder: {getClassCur}</Text> 
+                    <Text style={styles.headerText}>Folder: {item.Title}</Text> 
                     {BackArrowVisible && 
                     <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
                     </View>

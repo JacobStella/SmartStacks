@@ -79,7 +79,8 @@ const fetchPublicSearch = async (searchTerm) => {
             console.log("Search results", res);
             // Filter sets with public status true and update state
             const publicSets = res.sets.filter(set => set.public === true);
-            updatePublicStacks(publicSets);
+            //updatePublicStacks(publicSets);
+            setStacks(publicSets.SetName);
             console.log("publicSets", publicSets);
             //setSearchResults(res); // Assuming you still want to keep the original search results
         }
@@ -120,6 +121,7 @@ const fetchUserId = async () => {
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {
         handleSearch();
+        setStacks(publicStacks);
         console.log("hi browse");
     });
     

@@ -64,12 +64,10 @@ const fetchUserId = async () => {
     setAllClasses(totalClasses);
 
     let outerSets = classAndSets.map(field => (field.sets));
-    setOuterSets(outerSets);
-
     let nestedSets = outerSets.flat();
-    let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id}));
+    let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id, Description: field.Description}));
     setAllStacks(finalSets);
-    setStacks(finalSets);
+    //setStacks(finalSets);
     
 
 };
@@ -88,13 +86,17 @@ React.useEffect(() => {
 }, [navigation]);
 
 const openSheet = (item) => {
+    //console.log(item);
 let stackName = item.Title;
     //console.log(getOuterSets);
+    //console.log(item.Title);
     //let des = filterDescription(item,name);
-    
+    //onsole.log("hi");
+    //console.log(Stacks);
     for(let i = 0; i < Stacks.length; i++){
         if(Stacks[i].Title == stackName){
             setDescription(Stacks[i].Description);
+            //console.log(Stacks[i]);
             //console.log("got it!");
             //console.log(Stacks[i].Description);
             //console.log("hiiiiiiiiii")
@@ -171,7 +173,7 @@ const SearchData = (searchData) => {
             setInSearch(true);
             setItemData(item);
             console.log("Found him!");
-            setStacks([item]);
+            setAllStacks([item]);
             //console.log(item.Title);
         }
         else{
@@ -185,7 +187,7 @@ const SearchData = (searchData) => {
 const ViewAll = () => {
     // .log("hi");
     setInSearch(false);
-    setStacks([]);
+    setAllStacks([]);
     setClasses([]);
     setViewCardIsVisible(false);
     BackArrowSetVisible(false);
@@ -245,10 +247,6 @@ const StackHeader = () => {
     const renderSetRow = ({item, index, navigation}) => {
         
         currentIndex = index;
-
-
-        
-       
 
         return(
             
@@ -325,13 +323,14 @@ const StackHeader = () => {
            >
            <View>
            <View style = {styles.innerSheet}>
-           <Ionicons style = {styles.icon} name = "warning" size = {50} color = "black"/>
+           <Ionicons style = {styles.icon} name = "book" size = {50} color = "#508991"/>
            <Text style = {styles.sheetTitle}>
-                Warning
+                Stack Description
+                {'\n'}
+                {getDescription}
             </Text>
-            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}><Text>Close</Text></TouchableOpacity>
-            <TouchableOpacity style = {styles.sheetButton} title = "Edit" onPress = {closeSheet}><Text>Edit</Text></TouchableOpacity>
-            <TouchableOpacity style = {styles.sheetButton} title = "Delete" onPress = {closeSheet}><Text>Delete</Text></TouchableOpacity>
+            <Text>{'\n'}</Text>
+            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}><Text style = {styles.sheetButtonText}>Close</Text></TouchableOpacity>
             </View>
            </View>
            
@@ -415,17 +414,27 @@ const styles = StyleSheet.create({
     sheet:{
         borderTopLeftRadius: 14,
         borderTopRightRadius: 14,
+        backgroundColor: "#004346",
+        borderColor: 'black',
+        borderWidth: 5,
     },
     innerSheet:{
         padding: 24,
         alignItems: 'stretch',
     },
     sheetTitle: {
-        fontSize: 16,
+        fontSize: 25,
         color: 'black',
         marginTop: 15,
-        textAlign: 'center'
+        textAlign: 'center',
+        backgroundColor: "#508991",
+        borderColor: 'black',
+        borderWidth: 5,
+        borderRadius: 5,
+        fontWeight: '900',
+        padding: 10,
     },
+    
     innerSheetText: {
         fontSize: 12,
         color: 'black',
@@ -437,12 +446,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 8,
+        borderRadius: 10,
         backgroundColor: 'fff',
         borderColor: 'black',
-        borderWidth: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
+        borderWidth: 5,
+        backgroundColor: "#508991",
+
+    },
+    sheetButtonText: {
+        fontSize: 25,
+        fontWeight: '900',
+        textAlign: 'center',
     },
     icon: {
         textAlign: 'center',

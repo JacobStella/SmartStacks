@@ -11,7 +11,7 @@ import ViewCard from './ViewCard';
 import {onLibrary} from '../../.././App';
 import { setClassesAsync } from './CardUI';
 import { TextInput } from 'react-native-gesture-handler';
-import { filter, forEach } from 'lodash';
+import { filter, forEach, head } from 'lodash';
 
 
 
@@ -33,6 +33,8 @@ const [CardOnly, setCardOnly] = useState(false);
 const [itemData, setItemData] = useState();
 
 
+const [getClassCur, setClassCur] = useState();
+const [headerTextVisible, setHeaderTextVisible] = useState();
 
 
 const [getVisisble, setVisible] = useState(false);
@@ -74,6 +76,7 @@ const fetchUserId = async () => {
     setAllStacks(finalSets);
     setStacks(finalSets);
     setInSearch(false);
+    setHeaderTextVisible(true);
 
     
 };
@@ -197,17 +200,21 @@ const LoginNav = async (item) => {
 
 
    
-
+    // if(!headerTextVisible){
+    //     console.log("hi");
+    // }
     if(!item.IsClass && viewCardIsVisible){
         setViewCardIsVisible(false)
-        setClassOnly(false);
+        //setClassOnly(true);
         
         console.log("View");
         setCards([]);
-        return;
-        //fetchUserId();
+        //setHeaderTextVisible(false);
        // return;
+        //fetchUserId();
+        ///return;
     }
+    
     //fetchUserId();
     setInSearch(false);
 
@@ -299,17 +306,23 @@ const StackHeader = () => {
     
     else{
         if(item.IsClass || !viewCardIsVisible){
-        
+            if(item.IsClass){
+                setClassCur(item.Title);
+            }
+            else{
+                
+            }
 
         return(
                 <View style = {styles.header}>
-                    <Text style={styles.headerText}>Class: {item.Title}</Text> 
+                    <Text style={styles.headerText}>Folder: {getClassCur}</Text> 
                     {BackArrowVisible && 
                     <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
                     </View>
             );
         }
         else{
+            setHeaderTextVisible(false);
             return(
                 <View style = {styles.header}>
                     <Text style={styles.headerText}>Stack: {item.Title}</Text>
@@ -340,16 +353,17 @@ const StackHeader = () => {
         if(currentIndex == Classes.length && Classes.length %2 != 0 ){
             return LineBreak();
         }
+        
         //console.log(currentIndex);
         return(
             
                 <View style={styles.stackContainer}>
 
-                {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && inSearch && curItem.IsClass && <Text style = {styles.stackTitleText}>Your Class</Text>}
+                {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && inSearch && curItem.IsClass && <Text style = {styles.stackTitleText}>Your Folder</Text>}
                 {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && inSearch && curItem.IsPublic && <Text style = {styles.stackTitleText}>Your Stack</Text>}
 
 
-                {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && !inSearch && <Text style = {styles.stackTitleText}>Classes</Text>}
+                {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && !inSearch && <Text style = {styles.stackTitleText}>Folders</Text>}
                 {currentIndex == 0 && ClassOnly == true && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
                 {currentIndex == 0 && ClassOnly == false && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
                 {currentIndex == 1 && ClassOnly == false && EmptyHeader == false && <Text style = {styles.stackTitleTextFiller}>Filler</Text>}
@@ -432,6 +446,9 @@ const StackHeader = () => {
                     if(currentIndex == Classes.length && Classes.length %2 !== 0){
                         return StackBreak();
                     }
+                    else if(currentIndex == Classes.length-1 && Classes.length %2 == 0){
+                        return StackBreak();
+                    }
                     else{
                         return null;
                     }
@@ -447,7 +464,7 @@ const StackHeader = () => {
            >
            <View>
            <View style = {styles.innerSheet}>
-           <Ionicons style = {styles.icon} name = "pencil" size = {50} color = "white"/>
+           <Ionicons style = {styles.icon} name = "book" size = {50} color = "#508991"/>
            <Text style = {styles.sheetTitle}>
                 Stack Description
                 {'\n'}
@@ -473,7 +490,8 @@ const StackBreak = () => {
     <>
     <View style={styles.line}></View>
     <Text style={styles.stackTitleText}>Stacks</Text>
-
+    
+    
     </>
     );
 }
@@ -558,7 +576,7 @@ const styles = StyleSheet.create({
     sheet:{
         borderTopLeftRadius: 14,
         borderTopRightRadius: 14,
-        backgroundColor: "#508991",
+        backgroundColor: "#004346",
         borderColor: 'black',
         borderWidth: 5,
 
@@ -575,7 +593,7 @@ const styles = StyleSheet.create({
         color: 'black',
         marginTop: 15,
         textAlign: 'center',
-        backgroundColor: "#004346",
+        backgroundColor: "#508991",
         borderColor: 'black',
         borderWidth: 5,
         borderRadius: 5,
@@ -609,7 +627,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'fff',
         borderColor: 'black',
         borderWidth: 5,
-        backgroundColor: "#004346",
+        backgroundColor: "#508991",
 
     },
     sheetButtonText: {

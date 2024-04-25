@@ -61,12 +61,17 @@ const library = () => {
  const test = () => {
     navigation.navigate("SmartStacks");
  };
+ const ForgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+ };
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style = {styles.container}>
+            <Text style = {styles.Title}>"Welcome to Smart Stacks!"</Text>
+
                 <View style={styles.imageContainer}>
-                    <Image source={require('../../../assets/Skunk.png')}
+                    <Image source={require('../../../assets/SmartStacksLogo.png')}
                     style = {{width: 150, height: 150}} />
                 </View>
                 <TextInput style = {styles.input}
@@ -76,6 +81,8 @@ const library = () => {
                 <TextInput style = {styles.input}
                 placeholder = "Password"
                 onChangeText = { (input) => formInput("password", input)}/>
+
+                <Text styles onPress={ForgotPassword}>"Forgot Password?"</Text>
 
                 <TouchableOpacity style={styles.buttons} onPress={submit}>
                     <Text style={styles.buttonText}>Login</Text>
@@ -130,6 +137,24 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         color: '#fff',
+    },
+    Title: {
+        fontSize: 25,
+        color: 'black',
+        marginTop: 15,
+        textAlign: 'center',
+        fontWeight: '900',
+        padding: 10,
+    },
+    
+    InnerTitle: {
+      fontSize: 15,
+      color: 'black',
+      marginTop: 15,
+      marginBottom: 5,
+      textAlign: 'center',
+      fontWeight: '900',
+      padding: 10,
     },
 });
 

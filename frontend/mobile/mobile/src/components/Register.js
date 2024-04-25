@@ -65,7 +65,7 @@ const Register = ({navigation}) => {
                 //navigation.navigate("Login");
 
 
-                const verificationResponse = await fetch('/api/send-verif', {
+                const verificationResponse = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/send-verif", {
                   method: 'POST',
                   headers: {
                       'Content-Type': 'application/json',
@@ -99,11 +99,10 @@ const Register = ({navigation}) => {
         navigation.navigate("Login");
      };
     const [modalVisible, setModalVisible] = useState(true);
+    console.log(message);
     return (
             
                 
-           
-        
         <SafeAreaView style={styles.container}>
             <View style={styles.imageContainer}>
             <Image source={require('../../../assets/Skunk.png')}
@@ -138,7 +137,7 @@ const Register = ({navigation}) => {
                 />
             </View>
            
-            
+            <View>{message}</View>
             <Button title="Submit" onPress={handleRegister} />
             <Button title="Back" onPress={backLogin} />
             

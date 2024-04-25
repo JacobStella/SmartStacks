@@ -6,12 +6,10 @@ import Login from './mobile/src/components/Login';
 import Register from './mobile/src/components/Register';
 import Library from './mobile/src/components/Library';
 import About from './mobile/src/components/About';
-import Settings from './mobile/src/components/Settings';
 import Browse from './mobile/src/components/Browse';
 import StudyGame from './mobile/src/components/StudyGame';
 import Study from './mobile/src/components/Study';
 import Test from './mobile/src/components/Test';
-import Search from './mobile/src/components/Search';
 import Page from './mobile/src/components/Library';
 import Create from './mobile/src/components/Create';
 import ViewCard from './mobile/src/components/ViewCard';
@@ -28,11 +26,8 @@ const Stack = createNativeStackNavigator();
 const HamburgerMenu = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
 const libraryName = 'Library';
-const searchName = 'Search';
 const browseName = 'Browse';
-const studyName = 'Study';
-const viewCardName = 'ViewCard';
-const ForgotPasswordName = 'ForgotPassword';
+
 
 
 const customTabBarButton = ({children,  onPress}) => {
@@ -192,13 +187,9 @@ const NavBar = ({name, navigation}) => {
           //console.log(rn);
           if(rn == libraryName){
             iconName = focused ? 'library' : 'library-outline'
-          } else if (rn == searchName){
-            iconName = focused ? 'search' : 'search-outline'
           } else if (rn == browseName){
             iconName = focused ? 'search' : 'search-outline'
-          } else if (rn == studyName){
-            iconName = focused ? 'list' : 'list-outline'
-          } 
+          }
            else if (rn == viewCardName){
           iconName = focused ? 'list' : 'list-outline'
           } 
@@ -208,9 +199,6 @@ const NavBar = ({name, navigation}) => {
       })}>
         
         <Tab.Screen name={libraryName} component={Library} options = {{
-          headerShown:false,
-        }}/>
-        <Tab.Screen name={searchName} component={Search}options = {{
           headerShown:false,
         }}/>
         <Tab.Screen name={"Create"} component={Create} options={{
@@ -251,9 +239,7 @@ const NavBar = ({name, navigation}) => {
         <Tab.Screen name={browseName} component={Browse}options = {{
           headerShown:false,
         }}/>
-        <Tab.Screen name={studyName} component={Study}options = {{
-          headerShown:false,
-        }}/>
+        
 
       </Tab.Navigator>
       
@@ -284,24 +270,6 @@ const customDrawerContent = ({navigation}) => {
             color={focused ? 'black' : 'black'} />
         )}
         onPress={() => navigation.navigate("Library")} />
-        <DrawerItem
-        label={"About"}
-        icon={({ focused, size }) => (
-          <Ionicons
-            name="information-outline"
-            size={size}
-            color={focused ? 'black' : 'black'} />
-        )}
-        onPress={() => navigation.navigate("About")} />
-        <DrawerItem
-        label={"Settings"}
-        icon={({ focused, size }) => (
-          <Ionicons
-            name="cog-outline"
-            size={size}
-            color={focused ? 'black' : 'black'} />
-        )}
-        onPress={() => navigation.navigate("Settings")} />
         <DrawerItem
         label={"Sign out"}
         icon={({ focused, size }) => (
@@ -342,14 +310,8 @@ return (
         name="StudyGame"
         component={StudyGame} />
       <Stack.Screen
-        name="About"
-        component={About} />
-      <Stack.Screen
-        name="Settings"
-        component={Settings} />
-      <Stack.Screen
-      name="StudyGame"
-      component={StudyGame} />
+      name="ForgotPassword"
+      component={ForgotPassword} />
 
       
     </Stack.Navigator>
@@ -369,6 +331,7 @@ const App = () => {
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>
+        <HamburgerMenu.Screen name = "ForgotPassword" component={ForgotPassword} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Layout" component={Page} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "SmartStacks" component={SmartStacks}/>
     </HamburgerMenu.Navigator>

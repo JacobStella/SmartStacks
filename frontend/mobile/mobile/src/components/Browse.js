@@ -1,4 +1,4 @@
-import{View, Text, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity} from 'react-native'
+import{View, Text, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity, LogBox} from 'react-native'
 import React, {useState, useEffect, useRef, useNavigation} from 'react';
 import SliderHeader from './SliderHeader';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -11,7 +11,7 @@ import ViewCard from './ViewCard';
 import {onLibrary} from '../../.././App';
 import { TextInput } from 'react-native-gesture-handler';
 
-
+LogBox.ignoreAllLogs();
 
 
 const Browse = ({navigation}) => {

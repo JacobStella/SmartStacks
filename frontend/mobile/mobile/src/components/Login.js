@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
+import {Button, SafeAreaView, LogBox, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {setUserData} from "./CardUI";
 
+LogBox.ignoreAllLogs();
 
 const Login = ({navigation}) => {
     const [data, newData] = useState({

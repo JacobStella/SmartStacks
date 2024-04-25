@@ -1,5 +1,7 @@
 import React, {useState} from "react";
-import {Button, StyleSheet, TextInput, SafeAreaView, View, Text} from "react-native"
+import {Button, StyleSheet, TextInput, SafeAreaView, View, Text, LogBox} from "react-native"
+
+LogBox.ignoreAllLogs();
 
 const Test = ({navigation}) => {
     return (

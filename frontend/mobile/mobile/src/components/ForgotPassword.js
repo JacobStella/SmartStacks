@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import {Button, SafeAreaView, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
+import {Button, LogBox, SafeAreaView, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
+
+LogBox.ignoreAllLogs();
 
 const ForgotPassword = ({navigation}) => {
   const [email, setEmail] = useState('');

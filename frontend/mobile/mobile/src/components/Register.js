@@ -127,14 +127,20 @@ const Register = ({navigation}) => {
           placeholder = "Password"
           onChangeText={text => formInput("password", text)}
           value={data.password} />
-           <Text>{message}</Text>
+          <Pressable
+            style={[styles.button, styles.buttonOpen]}
+            onPress={() => setModalVisible(true)}>
+            <Text style={styles.textStyle}>Show Introduction</Text>
+          </Pressable>
+          <Text>{message}</Text>
       </View>
+
 
       <TouchableOpacity style={styles.loginButton} onPress={handleRegister}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>
       <View style={styles.spacing}>
-        <Text style={{color: '#fff', fontSize: 16}}>New User?</Text>
+        <Text style={{color: '#fff', fontSize: 16}}>Existing User?</Text>
       </View>
       <TouchableOpacity style={styles.registerButton} onPress={backLogin}>
         <Text style={{fontSize: 22, color: '#fff',}}>Back</Text>
@@ -167,11 +173,7 @@ const Register = ({navigation}) => {
             </View>
           </View>
         </Modal>
-      <Pressable
-        style={[styles.button, styles.buttonOpen]}
-        onPress={() => setModalVisible(true)}>
-        <Text style={styles.textStyle}>Show Introduction</Text>
-      </Pressable>
+     
       </View>
     </SafeAreaView>
   );

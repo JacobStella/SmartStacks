@@ -165,15 +165,6 @@ const customDrawerContent = ({navigation}) => {
           color={focused ? 'black' : 'black'} />
         )}
         onPress={() => navigation.navigate("About")} />
-        <DrawerItem label={"Image"}>
-          
-          <View style={{paddingBottom: 30,
-            alignItems: 'center',
-            justifyContent: 'center'}}>
-            <Image source={require('./assets/logo_SmartStacks.png')}
-              style = {{width: 150, height: 150}} />
-          </View>
-        </DrawerItem>
         <DrawerItem
         label={"Settings"}
         icon={({ focused, size }) => (

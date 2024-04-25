@@ -25,7 +25,7 @@ const Register = ({navigation}) => {
 
   const [message, setMessage] = useState('');
   const handleRegister = async () => {
-    const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
     if (!passwordRegex.test(data.password)) {
       setMessage('Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.');
       return;
@@ -33,8 +33,15 @@ const Register = ({navigation}) => {
 
     console.log("Call to API -> Register")
       try{
-        // console.log(JSON.stringify(data));
-        const res = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
+
+        console.log("email", data.email);
+        console.log("first", data.firstName);
+        console.log("last", data.lastName);
+        console.log("user", data.username);
+        console.log("pass", data.password);
+
+
+        const response = await fetch("https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/register",{
           method: "POST",
           headers:{
             "Content-Type": "application/json",
@@ -47,24 +54,28 @@ const Register = ({navigation}) => {
             password: data.password,
           }),
         });
-            
-           // console.log(res.status);
-        if(res.status === 201){
+
+        //console.log("userId via res", response.userId);
+         //console.log("///////////////////////////////////////////////////////////////", res.status);
+
+        if(response.status === 201){
+
           console.log("Registered Successfully");
-          const res = await response.json();
-          const userId = res.userid;
+          const res = await response.json(); //was response not res 
+          const userId = res.userId;
           console.log("User ID:", userId);
-          //navigation.navigate("Login");
-          const verificationResponse = await fetch('/api/send-verif', {
+
+          const verificationResponse = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/send-verif', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
               userId: userId,
-              email: email.value,
+              email: data.email,
             }),
           });
+
           const verificationData = await verificationResponse.json();
 
           if (verificationResponse.ok) {

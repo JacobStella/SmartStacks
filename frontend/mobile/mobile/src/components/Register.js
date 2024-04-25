@@ -52,12 +52,12 @@ const Register = ({navigation}) => {
             password: data.password,
           }),
         });
-            
-           // console.log(res.status);
+        console.log("userId via res", res.userId)
+         console.log("///////////////////////////////////////////////////////////////", res.status);
         if(res.status === 201){
           console.log("Registered Successfully");
           const res = await res.json(); //was response not res 
-          const userId = res.userid;
+          const userId = res.userId;
           console.log("User ID:", userId);
           //navigation.navigate("Login");
           const verificationResponse = await fetch('/api/send-verif', {

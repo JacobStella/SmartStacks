@@ -61,18 +61,10 @@ const ViewStackPage = () => {
   };
 
   useEffect(() => {
-    const userDataString = localStorage.getItem('user_data');
-    if (!userDataString) {
-      console.log('No user data found in localStorage.');
-      localStorage.setItem('preLoginPath', location.pathname);
-      navigate('/login');
-    } else {
       const setId = localStorage.getItem('setId');
       if (!setId) {
         console.log('No setId found in local storage');
       } else {
-        const userData = JSON.parse(userDataString);
-        if (userData && userData.id) {
           fetchSetWithCards(setId).then(data => {
             if (data && data.cards && data.cards.length > 0) {
               setCards(data.cards);
@@ -86,13 +78,8 @@ const ViewStackPage = () => {
           }).catch(error => {
             console.error('Error fetching cards:', error);
           });
-        } else {
-          console.log('User data is invalid or ID is missing.');
-          navigate('/login');
-        }
-      }
-    }
-  }, [navigate, location.pathname, setCards]);
+        } 
+  }, [setCards]);
 
 
   const toggleFullScreen = () => {

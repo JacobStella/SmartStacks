@@ -183,31 +183,30 @@ const addSet = async event => {
     }
 };
 
-  useEffect(() => {
-    const userDataString = localStorage.getItem('user_data');
-    if (!userDataString) {
-        console.log('No user data found in localStorage.');
-        localStorage.setItem('preLoginPath', location.pathname);
-        navigate('/login');
-    } else {
-        const userData = JSON.parse(userDataString);
-        if (userData && userData.id) {
-            // Fetch classes as soon as we have the user's ID
-            getClassAndSets(userData.id).then(classes => {
-                if (classes && classes.length > 0) {
-                    setFolders(classes); // Assuming the API returns an array of classes
-                    //console.log("class useStste stuff")
-                    //console.log(classes);
-                } else {
-                    console.log('No classes found for this user.');
-                }
-            });
-        } else {
-            console.log('User data is invalid or ID is missing.');
-            navigate('/login');
-        }
-    }
-    }, [navigate, location.pathname]);
+useEffect(() => {
+  const userDataString = localStorage.getItem('user_data');
+  if (!userDataString) {
+      console.log('No user data found in localStorage.');
+      localStorage.setItem('preLoginPath', location.pathname);
+      navigate('/login');
+  } else {
+      const userData = JSON.parse(userDataString);
+      if (userData && userData.id) {
+          getClassAndSets(userData.id).then(classes => {
+              if (classes && classes.length > 0) {
+                  setFolders(classes); // Assuming the API returns an array of classes
+                  setSelectedFolderId(classes[0]._id); // Set default folder ID
+              } else {
+                  console.log('No classes found for this user.');
+              }
+          });
+      } else {
+          console.log('User data is invalid or ID is missing.');
+          navigate('/login');
+      }
+  }
+}, [navigate, location.pathname]);
+
 
   return (
     <div className="page-container-landing">

@@ -11,10 +11,10 @@ export default class SliderHeader extends React.Component{
         const {setModalVisible, modalVisible} = this.props;
         return(
             <View style = {styles.header}>
-                    <Text style={styles.headerText}>Header</Text>
+                    <Text style={styles.headerText}></Text>
                     <Pressable
               onPress={() => setModalVisible(!modalVisible)}>
-              <Ionicons style = {styles.headerIcon} name = "close" size = {30} color = "black"/>
+              <Ionicons style = {styles.headerIcon} name = "close" size = {40} color = "#004346"/>
             </Pressable>
             </View>
         );
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
         height: '15%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'gray',
+        backgroundColor: '#D8DCFF',
         borderRadius: 20,
         flexDirection: "row",
         
@@ -36,9 +36,7 @@ const styles = StyleSheet.create({
     
     headerIcon: {
         position: 'absolute',
-        left: 80,
+        left: 130,
         bottom: 2,
-        backgroundColor: "red",
-       
     },
 });

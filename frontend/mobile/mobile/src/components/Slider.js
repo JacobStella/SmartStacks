@@ -22,7 +22,7 @@ const images = [
 
 ];
 
-const messages =  ["Hi", "Bye", "Wow", "Test"];
+const messages =  ["Make your own study stacks in the create page", "View and organize your personal stacks in the Library page", "Find public stacks made by other users in the Browse page", "Try a new study strategy in the Game page with a matching game"];
 
 const Slider = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -116,12 +116,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
-    
-    
-    
-    
-    
-    
   },
   textContainer: {
     backgroundColor: 'rgba(0,0,0, 0.7)',
@@ -130,16 +124,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoText: {
-    color: 'white',
+    color: '#172A3A',
     fontSize: 16,
     fontWeight: 'bold',
-    marginTop:'70%',
+    marginTop:'75%',
+    height: '20%'
   },
   normalDot: {
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: 'silver',
+    backgroundColor: '#172A3A',
     marginHorizontal: 4,
   },
   indicatorContainer: {

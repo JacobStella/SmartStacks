@@ -149,6 +149,9 @@ useEffect(() => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <SafeAreaView style={styles.container}>
         <ScrollView>
+            <View style={{justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+                <Text style={{color: '#508991', fontSize: 24, fontWeight: '600'}}>Create a New Stack</Text>
+            </View>
             <View style={styles.titleInputContainer}>
                 <TextInput 
                 style={styles.titleInput}
@@ -186,6 +189,10 @@ useEffect(() => {
                     selectedTextStyle={styles.selectedTextStyle}
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.icon}
+                    iconColor= '#fff'
+                    containerStyle={{backgroundColor: '#508991', borderWidth: 1, borderColor: '#172A3A', borderRadius: 10}}
+                    itemTextStyle={{color: '#172A3A', fontSize: 18}}
+                    //itemContainerStyle={{color: '#172A3A', backgroundColor: '#172A3A'}}
                     //Classes array
                     data={getClasses}
                     //search
@@ -204,7 +211,7 @@ useEffect(() => {
                        // console.log(getCurrentClass);
                         //setIsFocus(false);
                         //console.log(isFocus);
-
+                            
                     }}/>
             </View>
             
@@ -222,7 +229,7 @@ useEffect(() => {
                 <Text style={styles.buttonText}>+ Add Card</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.submitButton} onPress={() => handleCreate(cardPairs, title, isPublic, description, getCurrentClass)}>
-                <Text style={{fontSize: 28, color: '#fff'}}>Create</Text>
+                <Text style={{fontSize: 30, color: '#fff', fontWeight: 'bold'}}>Create</Text>
             </TouchableOpacity>
             
         </ScrollView>
@@ -241,7 +248,7 @@ const styles = StyleSheet.create({
     },
     titleInputContainer: {
         width: '100%',
-        marginTop: 90,
+        marginTop: 30,
         alignItems: 'center',
        // backgroundColor: '#fff'
     },
@@ -249,8 +256,8 @@ const styles = StyleSheet.create({
         height: 45,
         width: '90%',
         borderColor: '#09BC8A',
-        borderWidth: 1,
-        borderRadius: 5,
+        borderWidth: 2,
+        borderRadius: 10,
         paddingLeft: 10,
         paddingRight: 10,
         marginBottom: 20,
@@ -271,11 +278,11 @@ const styles = StyleSheet.create({
         width: '75%',
         height: 100,
         borderColor: '#09BC8A',
-        borderWidth: 1,
-        borderRadius: 5,
+        borderWidth: 2,
+        borderRadius: 10,
         paddingLeft: 10,
         paddingRight: 10,
-        marginBottom: 20,
+        marginBottom: 10,
         marginRight: '7%',
         fontSize: 20,
         color: '#fff',
@@ -285,9 +292,9 @@ const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center',
         justifyContent: 'center',
-        height: 55,
-        borderWidth: 1,
-        borderRadius: 5,
+        height: 60,
+        borderWidth: 2,
+        borderRadius: 10,
         marginBottom: '2%',
         backgroundColor: '#508991',
         flexDirection: 'row',
@@ -298,11 +305,13 @@ const styles = StyleSheet.create({
         borderColor: '#09BC8A',
         borderWidth: 1,
         borderRadius: 5,
-        width: '40%',
+        width: '42%',
         marginTop: '1%',
         marginBottom: '1%',
+        marginRight: '2%',
         paddingLeft: 10,
         paddingRight: 10,
+        justifyContent: 'center',
         fontSize: 16,
         color: '#fff',
         backgroundColor: '#172A3A',
@@ -311,9 +320,7 @@ const styles = StyleSheet.create({
         borderColor: '#09BC8A',
         borderWidth: 1,
         borderRadius: 5,
-        width: '40%',
-        marginLeft: '1%',
-        marginRight: '15%',
+        width: '53%',
         marginTop: '1%',
         marginBottom: '1%',
         paddingLeft: 10,
@@ -323,14 +330,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#172A3A',
     },
     addButton: {
-        width: '90%',
+        width: '75%',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         height: 50,
-        borderWidth: 1,
-        borderRadius: 5,
-        marginBottom: '2%',
+        borderWidth: 2,
+        borderRadius: 10,
+        marginTop: '3%',
         backgroundColor: '#508991',
         flexDirection: 'row',
         alignContent: 'flex-start',
@@ -339,6 +346,7 @@ const styles = StyleSheet.create({
     buttonText: {
         fontSize: 20,
         color: '#fff',
+        fontWeight: 'bold',
     },
     submitButton: {
         width: '40%',
@@ -347,42 +355,48 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         height: 65,
         borderWidth: 2,
-        borderRadius: 5,
-        marginTop: '10%',
+        borderRadius: 15,
+        marginTop: '8%',
+        marginBottom: '6%',
         backgroundColor: '#09BC8A',
         flexDirection: 'row',
         alignContent: 'flex-start',
         color: '#fff',
     },
     dropdown: {
-        height: 55,
+        height: 60,
         backgroundColor: '#508991',
         borderColor: '#09BC8A',
         width: '97%',
         alignSelf: 'center',
-        borderWidth: 1,
+        borderWidth: 2,
         borderRadius: 5,
         paddingHorizontal: 8,
+        marginBottom: 10,
       },
       label: {
         position: 'absolute',
         backgroundColor: '#D8DCFF',
-        left: 22,
+        right: 22,
         top: 8,
         zIndex: 999,
         paddingHorizontal: 8,
         fontSize: 14,
+        borderRadius: 75,
       },
       placeholderStyle: {
-        fontSize: 16,
+        fontSize: 18,
+        color: '#fff',
       },
       selectedTextStyle: {
         color: '#fff',
+        backgroundColor: '#508991',
         fontSize: 18,
       },
       iconStyle: {
         width: 20,
         height: 20,
+        color: '#fff',
       },
       inputSearchStyle: {
         height: 40,

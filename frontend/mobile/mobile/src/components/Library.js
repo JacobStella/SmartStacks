@@ -1,4 +1,4 @@
-import{View, Text, LogBox, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity} from 'react-native'
+import{View, Text, LogBox, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity, Keyboard, TouchableWithoutFeedback} from 'react-native'
 import React, {useState, useEffect, useRef, useNavigation, useRoute} from 'react';
 import SliderHeader from './SliderHeader';
 // import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -16,8 +16,6 @@ import { filter, forEach, head } from 'lodash';
 LogBox.ignoreAllLogs();
 
 const Library = ({navigation}) => {
-    //let stateName = onLibrary;
-    //console.log(stateName);
     const [allClassesAndStacks, setAllClassesAndStacks] = useState([]);
     const [allClasses, setAllClasses] = useState([]);
     const [allStacks, setAllStacks] = useState([]);
@@ -79,49 +77,27 @@ const Library = ({navigation}) => {
 
     React.useEffect(() => {
         const leavePage = navigation.addListener('focus', () => {
-        
-        // if(event.target.name == 'ViewCard' || event.target.name == 'Library'){
-        //     return;
-        // }
-        // else{
-        //currentIndex == 0 && ClassOnly == true && EmptyHeader == true
             fetchUserId();
             setCards([]);
             setClasses([]);
             setStacks([]);
-        //currentIndex = 0;
-        
             setEmptyHeader(true);
             setClassOnly(true);
-        
             setViewCardIsVisible(false);
             BackArrowSetVisible(false);
-
             setItemData(null);
-        
-        //ViewAll();
             console.log("hi library");
-        // }
         });
     }, [navigation]);
 
     const openSheet = (item) => {
-    //setDescription(item);
-    //console.log(getDescription);
         let stackName = item.Title;
-    //console.log(Stacks);
-    //let des = filterDescription(item,name);
         for(let i = 0; i < Stacks.length; i++){
             if(Stacks[i].Title == stackName){
                 setDescription(Stacks[i].Description);
-                //console.log("got it!");
                 console.log(Stacks[i].Description);
-                //console.log("hiiiiiiiiii")
             }
         }
-    //console.log(des);
-//     console.log(name);
-//    console.log(item);
         sheet.current.open();
     };
     const closeSheet = () => {
@@ -135,62 +111,32 @@ const Library = ({navigation}) => {
     };
 
     const LoginNav = async (item) => {
-        //let Description = ()
-        //setDescription(item);
         if(item.IsClass){
             setClassOnly(true);
             setClasses([]);
             setStacks([]);
             StackFilter(item.Title);
-            setItemData(item);
-            //setViewCardIsVisible(false);        
+            setItemData(item);      
         }
         else{
-            //console.log(item);
             let filteredCards = await CardFilter(item.Id);
             setCards(filteredCards);
-            //setStacks([]);
-            //setCards([]);
-            //console.log(Cards);
-            //console.log(item);
             setItemData(item);
-            //setItemData
             setViewCardIsVisible(true);
-            // console.log(Cards);
-            //navigation.navigate('ViewCard', {cards: filteredCards});
-            // console.log("hi");
-            //return <ViewCard></ViewCard>;
-            // setClassOnly(false);
-            // setCardOnly(true);
-            // setClasses([]);
-            // setStacks([]);
-            // //console.log(filteredCards);
-            // setItemData(item);
         }
-        //console.log(item);
         BackArrowSetVisible(true);
         setEmptyHeader(false);
         ScrollToTop();
     };
 
     const ViewAll = () => {
-        // console.log("ViewAll", item);
         setEmptyHeader(true);
-        // if(!headerTextVisible){
-        //     console.log("hi");
-        // }
         if(!item.IsClass && viewCardIsVisible){
             setViewCardIsVisible(false)
             //setClassOnly(true);
             console.log("View");
             setCards([]);
-            //setHeaderTextVisible(false);
-            // return;
-            //fetchUserId();
-            ///return;
         }
-    
-        //fetchUserId();
         setInSearch(false);
         BackArrowSetVisible(false);
         setClassOnly(true);
@@ -230,7 +176,6 @@ const Library = ({navigation}) => {
     const SearchData = (searchData) => {
         setCards([]);
         data.forEach(item =>{
-        //console.log(item.Title);
             if(searchData == item.Title){
                 BackArrowSetVisible(true);
                 setItemData(item);
@@ -254,21 +199,19 @@ const Library = ({navigation}) => {
 
     const StackHeader = () => {
         item = itemData;
-        //console.log(item, "Stack Header current item");
         if(item == undefined || inSearch){
-            // console.log("Stack Header Undefined");
             return(
-                <View style = {styles.header}>
+                <View>
                     <Text style={styles.headerText}></Text> 
                     {BackArrowVisible &&
-                    <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
+                    <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#09BC8A"/></TouchableOpacity>}
                 </View>
             )
         } else{
             if(item.IsClass || !viewCardIsVisible){
                 return(
                     <View style = {styles.header}>
-                        <Text style={styles.headerText}>Folder: {item.Title}</Text> 
+                        <Text style={styles.headerText}>Class: {item.Title}</Text> 
                         {BackArrowVisible && 
                         <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
                     </View>
@@ -280,7 +223,7 @@ const Library = ({navigation}) => {
                     <View style = {styles.header}>
                         <Text style={styles.headerText}>Stack: {item.Title}</Text>
                         {BackArrowVisible && 
-                        <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "black"/></TouchableOpacity>}
+                        <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#09BC8A"/></TouchableOpacity>}
                     </View>
                 );
             }
@@ -290,9 +233,7 @@ const Library = ({navigation}) => {
     const data = [...Classes, ...Stacks, ...Cards];
     const [isRefreshing, setIsRefreshing] = useState(false);
     const loadStack = async()=>{
-        //const data = await getStacks();
         console.log("Loading");
-       // setStacks(data);
     }
     let currentIndex = 0;
    
@@ -301,7 +242,6 @@ const Library = ({navigation}) => {
         if(currentIndex == Classes.length && Classes.length %2 != 0 ){
             return LineBreak();
         }
-        //console.log(currentIndex);
         return(
             <View style={styles.stackContainer}>
                 {currentIndex == 0 && ClassOnly == true && EmptyHeader == true && inSearch && curItem.IsClass && <Text style = {styles.stackTitleText}>Your Folder</Text>}
@@ -315,11 +255,9 @@ const Library = ({navigation}) => {
                 <TouchableOpacity onPress = {() => LoginNav(item)}>
                     <View style={styles.stackBox}>
                         <View style = {styles.stackBoxInner}>
-                        {/* {!item.IsClass && (<Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {() => openSheet(item)} style = {item.IsClass && styles.iconIsVisible}/> */}
-                        {item.IsClass && (<Ionicons name = "ellipsis-vertical" size = {20} color = "black" style = {item.IsClass && styles.iconIsVisible}/>)}
-                        {!item.IsClass && (<Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {() => openSheet(item)}/>)}
+                            {item.IsClass && (<Ionicons name = "ellipsis-vertical" size = {20} color = "black" style = {item.IsClass && styles.iconIsVisible}/>)}
+                            {!item.IsClass && (<Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {() => openSheet(item)}/>)}
                         </View>
-
                         <Text style={styles.stackText}>
                             {item.Title}
                             {item.classId}
@@ -334,22 +272,15 @@ const Library = ({navigation}) => {
     };
 
     if(viewCardIsVisible){
-        //cards: filteredCards
-        //console.log(Cards);
-        //console.log("HIIIII");
-        //console.log(itemData);
-        //console.log(itemData);
-        //console.log("HIII");
-        
         return (
             <View style ={styles.container}>
                 <StackHeader data = {itemData}></StackHeader>
                 <ViewCard cards = {Cards}></ViewCard>
             </View>
         )
-    } else{
-    //setViewCardIsVisible(false);        
+    } else{    
         return(
+            <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style ={styles.container}>
                 <StackHeader data = {itemData}></StackHeader>
                 <TextInput style={styles.searchContainer}
@@ -400,6 +331,7 @@ const Library = ({navigation}) => {
                     </View>
                 </RBSheet>
             </View>
+            </TouchableWithoutFeedback>
         );
     }
 };
@@ -407,8 +339,8 @@ const Library = ({navigation}) => {
 const StackBreak = () => {
     return(
     <>
-    <View style={styles.line}></View>
-    <Text style={styles.stackTitleText}>Stacks</Text>
+        <View style={styles.line}></View>
+        <Text style={styles.stackTitleText}>Stacks</Text>
     </>
     );
 }
@@ -552,7 +484,7 @@ const styles = StyleSheet.create({
         height: '10%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#004346',
         flexDirection: "row",
         borderWidth: 3,
         marginTop: 2,
@@ -560,12 +492,12 @@ const styles = StyleSheet.create({
     headerIcon: {
         position: 'absolute',
         right: '90%',
-        backgroundColor: "#172A3A",
+        backgroundColor: "#09BC8A",
         borderRadius: 20,
     },
     headerText: {
         fontSize: 28,
-        color: '#172A3A',
+        color: '#D8DCFF',
         fontWeight: 'bold',
     },
     searchContainer: {

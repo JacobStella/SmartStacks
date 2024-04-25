@@ -9,42 +9,18 @@ import {debounce} from 'lodash';
 LogBox.ignoreAllLogs();
 
 const handleCreate = async (cardPairs, title, isPublic, description, classData) => {
-    
-
     const cards = cardPairs.map(field=> ({Term: field.Term, Definition: field.Definition}));
-   // console.log(cards);
     const userId = await getJSONfield(getUserData, "id");
     let setResponse = await addStack(userId, title, isPublic, classData.Id, description);
-    //await {fetchUserId};
-
     let setRes = await setResponse.json();
-   
-    //console.log(setRes.setId);
-    //console.log("hi");
-
-    // Iterate through each card and create it with the new setId
     for (let card of cards) {
-    //     //const cardObj = { ...card, UserId: userId, SetId: setId };
-    //     //const cardJs = JSON.stringify(cardObj);
-        
-    //     //export const addCard = async (userId, term, definition, setId)
-         addCard(userId, card.Term, card.Definition, setRes.setId);
+        addCard(userId, card.Term, card.Definition, setRes.setId);
     }
-    //console.log(cardPairs);
-   //console.log(classData.Id);
-   // console.log(value);
-   //console.log(title);
-   //console.log(description);
-   //console.log(isPublic)
-   // console.log(userId);
 }
 
 const fetchClasses = async () => {
     const classes = await getClassesAsync();
-  
 };
-
-
 
 const Create = ({navigation}) => {
 
@@ -61,79 +37,66 @@ const Create = ({navigation}) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
 
-    
-    
-useEffect(() => {
-    const fetchClasses = async () => {
-        const classes = await getClassesAsync();
-        setClasses(classes);
-        //console.log(classes);
-        //console.log(hi);
+    useEffect(() => {
+        const fetchClasses = async () => {
+            const classes = await getClassesAsync();
+            setClasses(classes);
+        };
+        fetchClasses();
+    }, []);
 
+    const CardCreator = ({ index, card, updateCard }) => {
+        const debounceOnTermChange = useRef(
+            debounce((text) => {
+                const newCardPairs = [...cardPairs];
+                newCardPairs[index].Term = text;
+                setCardPairs(newCardPairs);
+            }, 500)
+        ).current;    
+        const debounceOnDefChange = useRef(
+            debounce((text) => {
+                const newCardPairs = [...cardPairs];
+                newCardPairs[index].Definition = text;
+                setCardPairs(newCardPairs);
+            }, 500)
+        ).current;    
+        const TermOnChangeText = (text) => {
+            setTerm(text);
+            debounceOnTermChange(text);
+        };
+            
+        const DefOnChangeText = (text) => {
+            setDef(text);
+            debounceOnDefChange(text);
+        };
+
+        const [getTerm, setTerm] = useState(card.Term);
+        const [getDef, setDef] = useState(card.Definition);
+        return (
+            <View style={styles.cardContainer}>
+                <TextInput
+                    style={styles.cardTermInput}
+                    placeholder="Term"
+                    placeholderTextColor="#fff"
+                    multiline={true}
+                    value={getTerm}
+                    onChangeText={TermOnChangeText}
+                />
+                <TextInput
+                    style={styles.cardDefinitionInput}
+                    placeholder="Definition"
+                    placeholderTextColor="#fff"
+                    multiline={true}
+                    value={getDef}
+                    onChangeText={DefOnChangeText}
+                />
+            </View>
+        );
     };
-    fetchClasses();
-}, []);
-    //console.log(getClasses);
-            //data = getClasses;
-
-
-
-   const CardCreator = ({ index, card, updateCard }) => {
-                const debounceOnTermChange = useRef(
-                    debounce((text) => {
-                        const newCardPairs = [...cardPairs];
-                        newCardPairs[index].Term = text;
-                        setCardPairs(newCardPairs);
-                    }, 500)
-                ).current;
-            
-                const debounceOnDefChange = useRef(
-                    debounce((text) => {
-                        const newCardPairs = [...cardPairs];
-                        newCardPairs[index].Definition = text;
-                        setCardPairs(newCardPairs);
-                    }, 500)
-                ).current;
-            
-                const TermOnChangeText = (text) => {
-                    setTerm(text);
-                    debounceOnTermChange(text);
-                };
-            
-                const DefOnChangeText = (text) => {
-                    setDef(text);
-                    debounceOnDefChange(text);
-                };
-
-                const [getTerm, setTerm] = useState(card.Term);
-                const [getDef, setDef] = useState(card.Definition);
-            
-                return (
-                    <View style={styles.cardContainer}>
-                        <TextInput
-                            style={styles.cardTermInput}
-                            placeholder="Term"
-                            placeholderTextColor="#fff"
-                            multiline={true}
-                            value={getTerm}
-                            onChangeText={TermOnChangeText}
-                        />
-                        <TextInput
-                            style={styles.cardDefinitionInput}
-                            placeholder="Definition"
-                            placeholderTextColor="#fff"
-                            multiline={true}
-                            value={getDef}
-                            onChangeText={DefOnChangeText}
-                        />
-                    </View>
-                );
-            };
 
     const addCardPair = () => {
         setCardPairs([...cardPairs, { id: cardPairs.length }]);
     };
-
 
     //Renders dropdown
     const renderLabel = () => {
@@ -156,29 +119,29 @@ useEffect(() => {
             </View>
             <View style={styles.titleInputContainer}>
                 <TextInput 
-                style={styles.titleInput}
-                placeholder = "Title" 
-                placeholderTextColor={'#fff'}
-                value = {title}
-                onChangeText={setTitle}
+                    style={styles.titleInput}
+                    placeholder = "Title" 
+                    placeholderTextColor={'#fff'}
+                    value = {title}
+                    onChangeText={setTitle}
                 />
             </View>
 
             <View style={styles.descriptionInputContainer}>
                 <TextInput style={styles.descriptionInput}
-                placeholder = "Description"
-                placeholderTextColor={'#fff'}
-                multiline={true}
-                value = {description}
-                onChangeText={setDescription}
+                    placeholder = "Description"
+                    placeholderTextColor={'#fff'}
+                    multiline={true}
+                    value = {description}
+                    onChangeText={setDescription}
                 />
                 <View style={{marginTop: '3%', alignItems: 'center'}}>
-                <Switch trackColor={{false: '#767577', true: '#09BC8A'}}
-                thumbColor={isPublic ? '#f4f3f4' : '#f4f3f4'}
-                ios_backgroundColor="#3e3e3e"
-                onValueChange={toggleSwitch}
-                value={isPublic}
-                style={{transform:[{scaleX: 1.5}, {scaleY: 1.5}], marginBottom: '15%' }}/>
+                    <Switch trackColor={{false: '#767577', true: '#09BC8A'}}
+                        thumbColor={isPublic ? '#f4f3f4' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleSwitch}
+                        value={isPublic}
+                        style={{transform:[{scaleX: 1.5}, {scaleY: 1.5}], marginBottom: '15%' }}/>
                     {isPublic ? <Text style={{color: '#D8DCFF'}}>Public</Text> : <Text style={{color: '#D8DCFF'}}>Private</Text>}
                 </View>
             </View>
@@ -194,26 +157,16 @@ useEffect(() => {
                     iconColor= '#fff'
                     containerStyle={{backgroundColor: '#508991', borderWidth: 1, borderColor: '#172A3A', borderRadius: 10}}
                     itemTextStyle={{color: '#172A3A', fontSize: 18}}
-                    //itemContainerStyle={{color: '#172A3A', backgroundColor: '#172A3A'}}
-                    //Classes array
                     data={getClasses}
-                    //search
                     maxHeight={300}
                     labelField="Title"
                     valueField="Title"
                     placeholder={!isFocus ? 'Select Item' : undefined}
                     searchPlaceholder="Search..."
                     value={value}
-                    //onFocus={() => setIsFocus(true)}
-                    //onBlur={() => setIsFocus(false)}
                     onChange={item => {
                         setValue(item.Title);
-                        //onsole.log(item.Title);
                         setCurrentClass(item);
-                       // console.log(getCurrentClass);
-                        //setIsFocus(false);
-                        //console.log(isFocus);
-                            
                     }}/>
             </View>
             
@@ -223,7 +176,6 @@ useEffect(() => {
                     key={index}
                     index={index}
                     card = {card}
-                    //updateCard={updateCard}
                 />
             ))}
             
@@ -244,15 +196,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#004346',
-       // width: '40%',
-       // marginTop: "50%",
-       // paddingHorizontal: 20,
     },
     titleInputContainer: {
         width: '100%',
         marginTop: 30,
         alignItems: 'center',
-       // backgroundColor: '#fff'
     },
     titleInput: {
         height: 45,

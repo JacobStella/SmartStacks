@@ -62,7 +62,7 @@ const NavBar = ({name, navigation}) => {
       screenOptions={({route}) => ({
         // making the bottom bar look pretty
         tabBarHideOnKeyboard: true,
-        tabBarInactiveBackgroundColor: '#508991',
+        tabBarInactiveBackgroundColor: '#D8DCFF',
         tabBarActiveBackgroundColor: '#004346',
         tabBarActiveTintColor: '#09BC8A',
         tabBarInactiveTintColor: '#004346',

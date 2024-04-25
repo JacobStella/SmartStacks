@@ -8,7 +8,7 @@ import '../Browse.css';
 const StackContainer = ({ stack }) => {
     const navigate = useNavigate();
 
-    const handlePlayStack = (setId) => {
+    const handlePlayStack = (setId) => (e) => {
         e.stopPropagation();
         localStorage.setItem("setId", setId);
         navigate('/game');

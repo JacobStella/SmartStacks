@@ -15,6 +15,8 @@ import Search from './mobile/src/components/Search';
 import Page from './mobile/src/components/Library';
 import Create from './mobile/src/components/Create';
 import ViewCard from './mobile/src/components/ViewCard';
+import ForgotPassword from './mobile/src/components/ForgotPassword';
+
 import {createDrawerNavigator, DrawerItem} from '@react-navigation/drawer';
 import {Ionicons} from '@expo/vector-icons';
 import { createBottomTabNavigator, BottomTabNavigationOptions, BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -29,7 +31,8 @@ const libraryName = 'Library';
 const searchName = 'Search';
 const browseName = 'Browse';
 const studyName = 'Study';
-const viewCardName = 'ViewCard'
+const viewCardName = 'ViewCard';
+const ForgotPasswordName = 'ForgotPassword';
 
 
 const customTabBarButton = ({children,  onPress}) => {

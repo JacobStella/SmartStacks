@@ -97,12 +97,6 @@ const GamePage = () => {
       
 
       useEffect(() => {
-        const userDataString = localStorage.getItem('user_data');
-        if (!userDataString) {
-          console.log('No user data found in localStorage.');
-          localStorage.setItem('preLoginPath', location.pathname);
-          navigate('/login');
-        } else {
           const setId = localStorage.getItem('setId');
           if (!setId) {
             console.log('No setId found in local storage');
@@ -136,7 +130,6 @@ const GamePage = () => {
               navigate('/login');
             }
           }
-        }
       }, [navigate, location.pathname]);
 
       useEffect(() => {

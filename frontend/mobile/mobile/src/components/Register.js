@@ -62,15 +62,35 @@ const Register = ({navigation}) => {
            // console.log(res.status);
             if(res.status === 201){
                 console.log("Registered Successfully");
-                navigation.navigate("Login");
-            }else{
-                const resData = await res.json();
-                console.log(resData);
-                throw new Error("Register failed");
+                //navigation.navigate("Login");
+
+
+                const verificationResponse = await fetch('/api/send-verif', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                      userId: userId,
+                      email: email.value,
+                  }),
+              });
+
+              const verificationData = await verificationResponse.json();
+
+              if (verificationResponse.ok) {
+                setMessage('User registered successfully. Verification email sent.');
+              } else {
+                setMessage('User registered successfully, but failed to send verification email.');
+              }
+
+              }else{
+                setMessage("Failed to register user.");
             }
 
         }catch(e){
-            console.log(e);
+          setMessage('Failed to register user due to an error.');
+            console.log('Registration error',e);
         }
 
         //console.log('User Data: ', data); // shows the inputted user data on console screen

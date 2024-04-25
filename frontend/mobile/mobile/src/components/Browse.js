@@ -55,6 +55,10 @@ const [publicStacks, setPublicStacks] = useState([]);
 const sheet = React.useRef();
 const scrollRef = useRef();
 
+const updatePublicStacks = (newStacks) => {
+        setPublicStacks(newStacks);
+    };
+
 const fetchPublicSearch = async (searchTerm) => {
     console.log("searchTerm:", searchTerm);
     let obj = { searchTerm: searchTerm };
@@ -84,6 +88,10 @@ const fetchPublicSearch = async (searchTerm) => {
     }
 };
 
+useEffect(() => {
+    handleSearch(" ");
+}, []);
+
 const handleSearch = async (event) => {
     console.log("searchInput", searchInput);
     await fetchPublicSearch(searchInput);
@@ -108,14 +116,6 @@ const fetchUserId = async () => {
 };
 */
 
-useEffect(() => {
-    handleSearch(" ");
-
-}, []);
-
-const updatePublicStacks = (newStacks) => {
-    setPublicStacks(newStacks);
-};
 
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {

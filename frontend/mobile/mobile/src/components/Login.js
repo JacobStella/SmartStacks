@@ -63,9 +63,6 @@ const library = () => {
     navigation.navigate("SmartStacks");
  };
 
- const test = () => {
-    navigation.navigate("SmartStacks");
- };
 
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -92,8 +89,7 @@ const library = () => {
                     <Text style={{fontSize: 22, color: '#fff',}}>Register</Text>
                 </TouchableOpacity>
                 <View style={styles.spacing}/>
-                <Button title ="Testing" onPress = {test} />
-            </View>
+                </View>
         </TouchableWithoutFeedback>
     );
 };

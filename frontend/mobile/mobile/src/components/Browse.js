@@ -1,66 +1,36 @@
-import{View, Text, StyleSheet, ListRenderItem, FlatList, Button, TouchableOpacity, LogBox} from 'react-native'
-import React, {useState, useEffect, useRef, useNavigation} from 'react';
-import SliderHeader from './SliderHeader';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
+import{View, Text, StyleSheet, FlatList, TouchableOpacity, LogBox} from 'react-native'
+import React, {useState, useEffect, useRef} from 'react';
 import {Ionicons} from '@expo/vector-icons';
-import { RotateInDownLeft } from 'react-native-reanimated';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassAndSets, getClass, getClassFromData, setClass, addStack, addCard, fetchSetWithCards} from './CardUI';
-import Login from './Login';
+import {getClassFromData, fetchSetWithCards} from './CardUI';
 import ViewCard from './ViewCard';
-import {onLibrary} from '../../.././App';
 import { TextInput } from 'react-native-gesture-handler';
 
 LogBox.ignoreAllLogs();
 
 
 const Browse = ({navigation}) => {
-//let stateName = onLibrary;
-//console.log(stateName);
-const [allClassesAndStacks, setAllClassesAndStacks] = useState([]);
-const [allClasses, setAllClasses] = useState([]);
-const [allStacks, setAllStacks] = useState([]);
 
-const [Classes, setClasses] = useState([]);
-const [Stacks, setStacks] = useState([]);
-const [Cards, setCards] = useState([]);
-
-const [classId, setClassId] = useState('');
-
-const [cardsReady, setCardsReady] = useState(false);
-
-
-const [itemData, setItemData] = useState(null);
-
-const [BackArrowVisible, BackArrowSetVisible] = useState(false);
-const [viewCardIsVisible, setViewCardIsVisible] = useState(false);
-
-
-const [getSearchText, setSearchText] = useState(false);
-
-const [curItem, setCurItem] = useState();
-
-const [inSearch, setInSearch] = useState(false);
-
-const [getDescription, setDescription] = useState();
-const [getOuterSets, setOuterSets] = useState();
-
-//temp imports
-const [searchInput, setSearchInput] = useState('');
-const [publicStacks, setPublicStacks] = useState([]);
-
-
-
-
-const sheet = React.useRef();
-const scrollRef = useRef();
+    
+    const [Stacks, setStacks] = useState([]);
+    const [Cards, setCards] = useState([]);
+    const [cardsReady, setCardsReady] = useState(false);
+    const [itemData, setItemData] = useState(null);
+    const [BackArrowVisible, BackArrowSetVisible] = useState(false);
+    const [viewCardIsVisible, setViewCardIsVisible] = useState(false);
+    const [getSearchText, setSearchText] = useState(false);
+    const [inSearch, setInSearch] = useState(false);
+    const [getDescription, setDescription] = useState();
+    const [searchInput, setSearchInput] = useState('');
+    const [publicStacks, setPublicStacks] = useState([]);
+    const sheet = React.useRef();
+    const scrollRef = useRef();
 
 const updatePublicStacks = (newStacks) => {
         setPublicStacks(newStacks);
     };
 
 const fetchPublicSearch = async (searchTerm) => {
-    console.log("searchTerm:", searchTerm);
     let obj = { searchTerm: searchTerm };
     let js = JSON.stringify(obj);
 
@@ -76,15 +46,11 @@ const fetchPublicSearch = async (searchTerm) => {
         if (res.error) {
             alert(res.error);
         } else {
-            console.log("Search results", res);
             // Filter sets with public status true and update state
             const publicSets = res.sets.filter(set => set.public === true);
             const filteredSets2 = publicSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id, Description: field.Description}));
-        
             updatePublicStacks(filteredSets2);
             setStacks(filteredSets2);
-            console.log("publicSets", publicSets);
-            //setSearchResults(res); // Assuming you still want to keep the original search results
         }
     } catch (e) {
         alert(e.toString());
@@ -96,42 +62,20 @@ useEffect(() => {
 }, []);
 
 const handleSearch = async (event) => {
-    console.log("searchInput", searchInput);
     await fetchPublicSearch(searchInput);
 };
-
-/*
-const fetchUserId = async () => {
-    const userId = await getJSONfield(getUserData, "id");
-
-  
-    const classAndSets = await getClassAndSets(userId);
-    setAllClassesAndStacks(classAndSets);
-    let totalClasses = classAndSets.map(field => ({Title: field.className, IsClass: true, Cards: field.Card, Id: field._id}));
-    setClasses(totalClasses);
-    setAllClasses(totalClasses);
-
-    let outerSets = classAndSets.map(field => (field.sets));
-    let nestedSets = outerSets.flat();
-    let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id, Description: field.Description}));
-    setAllStacks(finalSets);
-    //setStacks(finalSets);
-};
-*/
-
 
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {
         handleSearch();
         setStacks(publicStacks);
-        console.log("hi browse");
     });
     
 }, [navigation]);
 
 const openSheet = (item) => {
-    //console.log(item);
-let stackName = item.Title;
+
+    let stackName = item.Title;
     for(let i = 0; i < Stacks.length; i++){
         if(Stacks[i].Title == stackName){
             setDescription(Stacks[i].Description);
@@ -145,67 +89,43 @@ const closeSheet = () => {
     sheet.current.close();
 };
 
-
 const ScrollToTop = () => {
     scrollRef.current?.scrollToOffset({
         y:0, animated: true
     });
 };
+
 const LoggedInNav = async (item) => {
-//Item contains the set data. Use it to display cards in ViewCard.
-  setItemData(item);
-  let filteredCards = await CardFilter(item.Id);
-        setCards(filteredCards);
-        BackArrowSetVisible(true);
-        setViewCardIsVisible(true);
-        setCardsReady(true);
-  ScrollToTop();
- };
-
- const AddStack = async (item) => {
-  //Item contains the set data. Use it to display cards in ViewCard.
-    //console.log(item);
-    //navigation.navigate('ViewCard');
-    console.log("Stack Added!")
+    //Item contains the set data. Use it to display cards in ViewCard.
+    setItemData(item);
+    let filteredCards = await CardFilter(item.Id);
+    setCards(filteredCards);
+    BackArrowSetVisible(true);
+    setViewCardIsVisible(true);
+    setCardsReady(true);
     ScrollToTop();
-   };
-
+ };
 
 const CardFilter = async (setId) => {
     
     try{
-
-    const temp = await fetchSetWithCards(setId);
-    
-    const filteredCards = temp.cards.map((field, index) => ({Title: field.Term, Definition: field.Definition, Index: index}));
-    return filteredCards;
+        const temp = await fetchSetWithCards(setId);
+        const filteredCards = temp.cards.map((field, index) => ({Title: field.Term, Definition: field.Definition, Index: index}));
+        return filteredCards;
     }catch(error){
         console.log(error);
     }
 
 };
 
-const StackFilter = (className) => {
-    
-    const classCur = getClassFromData(allClassesAndStacks,className);
-    const filteredSets = classCur.sets;
-    console.log(filteredSets);
-    const filteredSets2 = filteredSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id, Description: field.Description}));
-    setStacks(filteredSets2);
-
-};
-
 const SearchData = (searchData) => {
-    //console.log("hi");
+
     data.forEach(item =>{
-        //console.log(item.Title);
         if(searchData == item.Title){
             BackArrowSetVisible(true);
             setInSearch(true);
             setItemData(item);
-            console.log("Found him!");
             setAllStacks([item]);
-            //console.log(item.Title);
         }
         else{
             console.log("Error");
@@ -214,68 +134,51 @@ const SearchData = (searchData) => {
 
 };
 
-
 const ViewAll = () => {
-    // .log("hi");
     setInSearch(false);
     setAllStacks([]);
     setClasses([]);
     setViewCardIsVisible(false);
     BackArrowSetVisible(false);
     setCardsReady(false);
-    handleSearch();
-
-    
+    handleSearch();    
 };
 
-
 const StackHeader = () => {
-        item = itemData;
-        //console.log(item);
-        if(viewCardIsVisible){
-            //BackArrowSetVisible(true);
-            //setViewCardIsVisible(false);
-            
-            return(
-                <View style = {styles.header}>
-                            <Text style={styles.headerText}>Stack: {item.Title}</Text> 
-                            {BackArrowVisible && 
-                            <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
-                            </View>
-                )
-        }
-        else if(inSearch){
-            return(
-                <View style = {styles.header}>
-                            <Text style={styles.headerText}>Your Results</Text> 
-                            {BackArrowVisible && 
-                            <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
-                            </View>
-                )
-        }
-        else{
-            
+    item = itemData;
+    if(viewCardIsVisible){
         return(
             <View style = {styles.header}>
-                <Text style={styles.headerText}>Browse Public Stacks</Text>
+            <Text style={styles.headerText}>Stack: {item.Title}</Text> 
+            {BackArrowVisible && 
+            <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
             </View>
+            )
+    }
+    else if(inSearch){
+        return(
+                <View style = {styles.header}>
+                <Text style={styles.headerText}>Your Results</Text> 
+                {BackArrowVisible && 
+                <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
+                </View>
+                )
+    }
+    else{  
+        return(
+                <View style = {styles.header}>
+                <Text style={styles.headerText}>Browse Public Stacks</Text>
+                </View>
         );
     }
 };
     
     const data = [...Stacks];
     const [isRefreshing, setIsRefreshing] = useState(false);
-    const loadStack = async()=>{
-        //const data = await getStacks();
-        
-        
-        console.log("Loading");
-       // setStacks(data);
-        
-    }
+    
     let currentIndex = 0;
    
-    const renderSetRow = ({item, index, navigation}) => {
+    const renderSetRow = ({item, index}) => {
         
         currentIndex = index;
 
@@ -292,11 +195,8 @@ const StackHeader = () => {
                 
                 </View>
                 
-                
                 <Text style={styles.stackText}>
-                    {item.Title}
-                    
-                    
+                    {item.Title}    
                 </Text>
                 <Text style={styles.stackText}>
                     {item.cardNumber}
@@ -314,64 +214,62 @@ const StackHeader = () => {
 
 
     if(cardsReady){
-        //setViewCardIsVisible(true);
+
         return(
-
-        <View style ={styles.container}>
-            <StackHeader data = {itemData}></StackHeader>
-        <ViewCard cards = {Cards}></ViewCard>
-        </View>
-
+            <View style ={styles.container}>
+                <StackHeader data = {itemData}></StackHeader>
+                <ViewCard cards = {Cards}></ViewCard>
+            </View>
         )
     }else{
 
-    return(
-        <View style ={styles.container}>
-            <StackHeader data = {itemData}></StackHeader>
-            <TextInput style={styles.searchContainer}
-             placeholder='Search' 
-             clearButtonMode='always'
-             placeholderTextColor={'#09BC8A'}
-             onChangeText={(text) => setSearchText(text)} 
-             onSubmitEditing={() => SearchData(getSearchText)}
-             />
-            <FlatList
-              ref={scrollRef} 
-              data = {data}
-              renderItem={renderSetRow}
-              keyExtractor={(item, index) => {
-                return index;
-              }} 
-              numColumns={2}
-              
-              showsVerticalScrollIndicator = {false}
-           /> 
-           <RBSheet
-           customStyles={{container: styles.sheet}}
-           height ={380}
-           openDuration={250}
-           closeDuration={150}
-           ref = {sheet}
-           >
-           <View>
-           <View style = {styles.innerSheet}>
-           <Ionicons style = {styles.icon} name = "book" size = {50} color = "#508991"/>
-           <Text style = {styles.sheetTitle}>
-                Stack Description
-                {'\n'}
-                {getDescription}
-            </Text>
-            <Text>{'\n'}</Text>
-            <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}><Text style = {styles.sheetButtonText}>Close</Text></TouchableOpacity>
+        return(
+            <View style ={styles.container}>
+                <StackHeader data = {itemData}></StackHeader>
+                <TextInput style={styles.searchContainer}
+                placeholder='Search' 
+                clearButtonMode='always'
+                placeholderTextColor={'#09BC8A'}
+                onChangeText={(text) => setSearchText(text)} 
+                onSubmitEditing={() => SearchData(getSearchText)}
+                />
+                <FlatList
+                ref={scrollRef} 
+                data = {data}
+                renderItem={renderSetRow}
+                keyExtractor={(item, index) => {
+                    return index;
+                }} 
+                numColumns={2}
+                
+                showsVerticalScrollIndicator = {false}
+            /> 
+            <RBSheet
+            customStyles={{container: styles.sheet}}
+            height ={380}
+            openDuration={250}
+            closeDuration={150}
+            ref = {sheet}
+            >
+            <View>
+            <View style = {styles.innerSheet}>
+            <Ionicons style = {styles.icon} name = "book" size = {50} color = "#508991"/>
+            <Text style = {styles.sheetTitle}>
+                    Stack Description
+                    {'\n'}
+                    {getDescription}
+                </Text>
+                <Text>{'\n'}</Text>
+                <TouchableOpacity style = {styles.sheetButton} title = "Close" onPress = {closeSheet}><Text style = {styles.sheetButtonText}>Close</Text></TouchableOpacity>
+                </View>
             </View>
-           </View>
-           
-           </RBSheet>
-        </View>
-        
+            
+            </RBSheet>
+            </View>
+            
 
 
-    );
+        );
 }
 };
 

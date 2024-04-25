@@ -140,7 +140,14 @@ const customDrawerContent = ({navigation}) => {
   return (
     <View>
     <DrawerItem
-      
+      label={""}
+      icon={({ focused, size }) => (
+        <Ionicons
+          name="arrow-back-outline"
+          size={size}
+          color={focused ? 'transparent' : 'transparent'} />
+      )}/>
+      <DrawerItem
       label={""}
       icon={({ focused, size }) => (
         <Ionicons
@@ -153,11 +160,20 @@ const customDrawerContent = ({navigation}) => {
         label={"About"}
         icon={({ focused, size }) => (
           <Ionicons
-            name="information-outline"
-            size={size}
-            color={focused ? 'black' : 'black'} />
+          name="information-outline"
+          size={size}
+          color={focused ? 'black' : 'black'} />
         )}
         onPress={() => navigation.navigate("About")} />
+        <DrawerItem label={"Image"}>
+          
+          <View style={{paddingBottom: 30,
+            alignItems: 'center',
+            justifyContent: 'center'}}>
+            <Image source={require('./assets/logo_SmartStacks.png')}
+              style = {{width: 150, height: 150}} />
+          </View>
+        </DrawerItem>
         <DrawerItem
         label={"Settings"}
         icon={({ focused, size }) => (

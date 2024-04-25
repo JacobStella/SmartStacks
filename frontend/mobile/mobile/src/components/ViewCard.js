@@ -40,16 +40,11 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#508991',
         alignItems: 'center',
-       // width: '40%',
-       // marginTop: "50%",
-       // paddingHorizontal: 20,
     },
     cardContainer: {
         width: '100%',
         height: '50%',
-        // marginTop: 90,
         alignItems: 'center',
-       // backgroundColor: '#fff'
     },
 });
 

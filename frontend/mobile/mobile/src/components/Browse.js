@@ -238,7 +238,7 @@ const StackHeader = () => {
             
             return(
                 <View style = {styles.header}>
-                            <Text style={styles.headerText}>Stack: {}</Text> 
+                            <Text style={styles.headerText}>Stack: {item.Title}</Text> 
                             {BackArrowVisible && 
                             <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
                             </View>
@@ -328,9 +328,10 @@ const StackHeader = () => {
     return(
         <View style ={styles.container}>
             <StackHeader data = {itemData}></StackHeader>
-            <TextInput
+            <TextInput style={styles.searchContainer}
              placeholder='Search' 
              clearButtonMode='always'
+             placeholderTextColor={'#09BC8A'}
              onChangeText={(text) => setSearchText(text)} 
              onSubmitEditing={() => SearchData(getSearchText)}
              />
@@ -377,14 +378,14 @@ const StackHeader = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#508991',
     },
     stackContainer:{
         flex: 1,
         flexDirection: 'row',
         flexWrap: 'wrap',
         margin: 5,
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#508991',
     },
     stackBoxContainer: {
         flex: 1,
@@ -392,17 +393,17 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',     
     },
     stackBoxHeader: {
-         flex: 1,
-         flexDirection: 'row',
-         backgroundColor: "white",
-         justifyContent: 'flex-end',
-         borderColor: 'black',
-         borderWidth: 2,
-         borderRadius: 20,  
-     },
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: "white",
+        justifyContent: 'flex-end',
+        borderColor: 'black',
+        borderWidth: 2,
+        borderRadius: 20,  
+    },
     stackBox: {
         flex: 1,
-        backgroundColor: "#508991",
+        backgroundColor: "#D8DCFF",
         borderColor: 'black',
         borderWidth: 5,
         borderRadius: 3,
@@ -465,7 +466,14 @@ const styles = StyleSheet.create({
         fontWeight: '900',
         padding: 10,
     },
-    
+    sheetDescriptionText: {
+        fontSize: 16,
+        color: 'black',
+        marginTop: 15,
+        marginBottom: 15,
+        textAlign: 'center',
+        backgroundColor: "#004346",
+    },
     innerSheetText: {
         fontSize: 12,
         color: 'black',
@@ -482,7 +490,6 @@ const styles = StyleSheet.create({
         borderColor: 'black',
         borderWidth: 5,
         backgroundColor: "#508991",
-
     },
     sheetButtonText: {
         fontSize: 25,
@@ -492,25 +499,41 @@ const styles = StyleSheet.create({
     icon: {
         textAlign: 'center',
     },
+    iconIsVisible: {
+        color: 'transparent',
+    },
     header: {
         width: '100%',
         height: '10%',
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#004346',
         flexDirection: "row",
+        borderWidth: 3,
+        marginTop: 2,
     },
     headerIcon: {
         position: 'absolute',
         right: '90%',
-        backgroundColor: "#172A3A",
+        backgroundColor: "#09BC8A",
         borderRadius: 20,
     },
     headerText: {
         fontSize: 28,
-        color: '#172A3A',
+        color: '#D8DCFF',
         fontWeight: 'bold',
-    }
+    },
+    searchContainer: {
+        borderWidth: 1,
+        borderRadius: 5,
+        marginTop: '1%',
+        paddingLeft: 10,
+        height: '8%',
+        marginRight: '5%',
+        marginLeft: '5%',
+        backgroundColor: '#172A3A',
+        color: '#09BC8A',
+    },
 });
 
 

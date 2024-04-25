@@ -51,14 +51,14 @@ const Create = ({navigation}) => {
                 const newCardPairs = [...cardPairs];
                 newCardPairs[index].Term = text;
                 setCardPairs(newCardPairs);
-            }, 500)
+            }, 9999)
         ).current;    
         const debounceOnDefChange = useRef(
             debounce((text) => {
                 const newCardPairs = [...cardPairs];
                 newCardPairs[index].Definition = text;
                 setCardPairs(newCardPairs);
-            }, 500)
+            }, 9999)
         ).current;    
         const TermOnChangeText = (text) => {
             setTerm(text);

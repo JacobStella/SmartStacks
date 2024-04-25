@@ -71,10 +71,10 @@ export default OnboardingItem = ({item, numCards}) => {
         <View>
             <Pressable onPress={() => (spin.value = spin.value ? 0 : 1)}>
                 <Animated.View style={[styles.front, rStyle]}>
-                    <Text>{item.Title}</Text>
+                    <Text style={{fontSize: 28}}>{item.Title}</Text>
                 </Animated.View>
                 <Animated.View style={[styles.back, bStyle]}>
-                    <Text>{item.Definition}</Text>
+                    <Text style={{fontSize: 28}}>{item.Definition}</Text>
                     
                     {/* <Text style = {styles.index}>{item.Index}</Text> */}
                     {/* <Text style = {styles.indexSlash}>/</Text> */}
@@ -97,7 +97,7 @@ export default OnboardingItem = ({item, numCards}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#D8DCFF',
+        backgroundColor: '#508991',
         alignItems: 'center',
         justifyContent: 'center',
         //height: '50%',
@@ -114,12 +114,12 @@ const styles = StyleSheet.create({
        // height: '40%',
         borderRadius: 5,
         borderWidth: 2,
-        backgroundColor: '#508991',
+        backgroundColor: '#D8DCFF',
     },
     front: {
         height: '90%',
         width: 350,
-        backgroundColor: "#508991",
+        backgroundColor: "#D8DCFF",
         borderRadius: 16,
         borderWidth: 5,
         position: "absolute",
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
       back: {
         height: '90%',
         width: 350,
-        backgroundColor: "#508991",
+        backgroundColor: "#D8DCFF",
         borderRadius: 16,
         borderWidth: 5,
         backfaceVisibility: "hidden",

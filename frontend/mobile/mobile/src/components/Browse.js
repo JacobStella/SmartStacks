@@ -45,14 +45,49 @@ const [inSearch, setInSearch] = useState(false);
 const [getDescription, setDescription] = useState();
 const [getOuterSets, setOuterSets] = useState();
 
-
+//temp imports
+const [searchInput, setSearchInput] = useState('');
 
 
 
 const sheet = React.useRef();
 const scrollRef = useRef();
 
+const fetchPublicSearch = async (searchTerm) => {
+    console.log("searchTerm:", searchTerm);
+    let obj = { searchTerm: searchTerm };
+    let js = JSON.stringify(obj);
 
+    try {
+        const response = await fetch(buildPath('api/public-search'), {
+            method: 'POST',
+            body: js,
+            headers: {'Content-Type': 'application/json'}
+        });
+
+        let res = await response.json();
+
+        if (res.error) {
+            alert(res.error);
+        } else {
+            console.log("Search results", res);
+            // Filter sets with public status true and update state
+            const publicSets = res.sets.filter(set => set.public === true);
+            updatePublicStacks(publicSets);
+            console.log("publicSets", publicSets);
+            //setSearchResults(res); // Assuming you still want to keep the original search results
+        }
+    } catch (e) {
+        alert(e.toString());
+    }
+};
+
+const handleSearch = async (event) => {
+    console.log("searchInput", searchInput);
+    await fetchPublicSearch(searchInput);
+};
+
+/*
 const fetchUserId = async () => {
     const userId = await getJSONfield(getUserData, "id");
 
@@ -68,13 +103,12 @@ const fetchUserId = async () => {
     let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id, Description: field.Description}));
     setAllStacks(finalSets);
     //setStacks(finalSets);
-    
-
 };
+*/
 
 React.useEffect(() => {
-    fetchUserId();
-    
+    handleSearch(" ");
+
 }, []);
 
 React.useEffect(() => {

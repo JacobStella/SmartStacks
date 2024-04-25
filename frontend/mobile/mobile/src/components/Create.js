@@ -1,11 +1,40 @@
 import { useIsFocused } from '@react-navigation/native';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
 import {Button, SafeAreaView, StyleSheet, Switch, Text, TextInput, View, Keyboard, TouchableOpacity, TouchableWithoutFeedback, ScrollView} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
-import { getClassesAsync } from './CardUI';
+import { getClassesAsync, getUserData, addStack, getJSONfield, addCard} from './CardUI';
+import {fetchUserId} from './Library';
+import {debounce} from 'lodash';
 
-const handleCreate = async () => {
+const handleCreate = async (cardPairs, title, isPublic, description, classData) => {
     
+
+    const cards = cardPairs.map(field=> ({Term: field.Term, Definition: field.Definition}));
+   // console.log(cards);
+    const userId = await getJSONfield(getUserData, "id");
+    let setResponse = await addStack(userId, title, isPublic, classData.Id, description);
+    //await {fetchUserId};
+
+    let setRes = await setResponse.json();
+   
+    //console.log(setRes.setId);
+    //console.log("hi");
+
+    // Iterate through each card and create it with the new setId
+    for (let card of cards) {
+    //     //const cardObj = { ...card, UserId: userId, SetId: setId };
+    //     //const cardJs = JSON.stringify(cardObj);
+        
+    //     //export const addCard = async (userId, term, definition, setId)
+         addCard(userId, card.Term, card.Definition, setRes.setId);
+    }
+    //console.log(cardPairs);
+   //console.log(classData.Id);
+   // console.log(value);
+   //console.log(title);
+   //console.log(description);
+   //console.log(isPublic)
+   // console.log(userId);
 }
 
 const fetchClasses = async () => {
@@ -13,19 +42,7 @@ const fetchClasses = async () => {
   
 };
 
-//Classes array
-// const data = [
-//     { label: 'Item 1', value: '1' },
-//     { label: 'Item 2', value: '2' },
-//     { label: 'Item 3', value: '3' },
-//     { label: 'Item 4', value: '4' },
-//     { label: 'Item 5', value: '5' },
-//     { label: 'Item 6', value: '6' },
-//     { label: 'Item 7', value: '7' },
-//     { label: 'Item 8', value: '8' },
-// ];
 
-// I'd like to fix how Description starts in the middle of the container
 
 const Create = ({navigation}) => {
 
@@ -39,62 +56,82 @@ const Create = ({navigation}) => {
 
     const [getClasses, setClasses] = useState([]);
 
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+
+    
+    
+useEffect(() => {
     const fetchClasses = async () => {
         const classes = await getClassesAsync();
         setClasses(classes);
         //console.log(classes);
+        //console.log(hi);
 
     };
     fetchClasses();
-    data = getClasses;
+}, []);
     //console.log(getClasses);
-    const CardCreator = ({ index, card, updateCard}) => {
-        return(
-            <View style={styles.cardContainer}>
-                <TextInput style={styles.cardTermInput}
-                placeholder = "Term" 
-                placeholderTextColor={'#fff'}
-                onChangeText={(text) => updateCard(index, 'Term', text)}
-                />
-                <TextInput style={styles.cardDefinitionInput}
-                placeholder = "Definition"
-                placeholderTextColor={'#fff'}
-                multiline={true}
-                onChangeText={(text) => updateCard(index, 'Definiton', text)}
-                />
-            </View>
-        );
-    };
+            //data = getClasses;
+
+
+
+   const CardCreator = ({ index, card, updateCard }) => {
+                const debounceOnTermChange = useRef(
+                    debounce((text) => {
+                        const newCardPairs = [...cardPairs];
+                        newCardPairs[index].Term = text;
+                        setCardPairs(newCardPairs);
+                    }, 500)
+                ).current;
+            
+                const debounceOnDefChange = useRef(
+                    debounce((text) => {
+                        const newCardPairs = [...cardPairs];
+                        newCardPairs[index].Definition = text;
+                        setCardPairs(newCardPairs);
+                    }, 500)
+                ).current;
+            
+                const TermOnChangeText = (text) => {
+                    setTerm(text);
+                    debounceOnTermChange(text);
+                };
+            
+                const DefOnChangeText = (text) => {
+                    setDef(text);
+                    debounceOnDefChange(text);
+                };
+
+                const [getTerm, setTerm] = useState(card.Term);
+                const [getDef, setDef] = useState(card.Definition);
+            
+                return (
+                    <View style={styles.cardContainer}>
+                        <TextInput
+                            style={styles.cardTermInput}
+                            placeholder="Term"
+                            placeholderTextColor="#fff"
+                            multiline={true}
+                            value={getTerm}
+                            onChangeText={TermOnChangeText}
+                        />
+                        <TextInput
+                            style={styles.cardDefinitionInput}
+                            placeholder="Definition"
+                            placeholderTextColor="#fff"
+                            multiline={true}
+                            value={getDef}
+                            onChangeText={DefOnChangeText}
+                        />
+                    </View>
+                );
+            };
 
     const addCardPair = () => {
         setCardPairs([...cardPairs, { id: cardPairs.length }]);
     };
 
-    const updateCard = (index, field, value) => {
-        const newCardPairs = [...cardPairs];
-        newCardPairs[index][field] = value;
-        setCardPairs(newCardPairs);
-        //console.log(cardPairs);
-      };
-
-    /*const getUserData = () => {
-        const userDataString = localStorage.getItem('user_data');
-        if (!userDataString) {
-            console.log('No user data found in localStorage.');
-            return null;
-        }
-        try {
-            const userData = JSON.parse(userDataString);
-            if (!userData || !userData.id) {
-                console.log('User data is invalid or ID is missing.');
-                return null;
-            }
-            return userData;
-        } catch (error) {
-            console.error('Error parsing user data from localStorage:', error);
-            return null;
-        }
-    };*/
 
     //Renders dropdown
     const renderLabel = () => {
@@ -113,14 +150,23 @@ const Create = ({navigation}) => {
         <SafeAreaView style={styles.container}>
         <ScrollView>
             <View style={styles.titleInputContainer}>
-                <TextInput style={styles.titleInput} placeholder = "Title" placeholderTextColor={'#fff'}/>
+                <TextInput 
+                style={styles.titleInput}
+                placeholder = "Title" 
+                placeholderTextColor={'#fff'}
+                value = {title}
+                onChangeText={setTitle}
+                />
             </View>
 
             <View style={styles.descriptionInputContainer}>
                 <TextInput style={styles.descriptionInput}
                 placeholder = "Description"
                 placeholderTextColor={'#fff'}
-                multiline={true}/>
+                multiline={true}
+                value = {description}
+                onChangeText={setDescription}
+                />
                 <View style={{marginTop: '3%', alignItems: 'center'}}>
                 <Switch trackColor={{false: '#767577', true: '#09BC8A'}}
                 thumbColor={isPublic ? '#f4f3f4' : '#f4f3f4'}
@@ -141,37 +187,41 @@ const Create = ({navigation}) => {
                     inputSearchStyle={styles.inputSearchStyle}
                     iconStyle={styles.icon}
                     //Classes array
-                    data={data}
-                    search
+                    data={getClasses}
+                    //search
                     maxHeight={300}
                     labelField="Title"
-                    valueField="value"
-                    placeholder={!isFocus ? 'Select Item' : '...'}
+                    valueField="Title"
+                    placeholder={!isFocus ? 'Select Item' : undefined}
                     searchPlaceholder="Search..."
                     value={value}
-                    onFocus={() => setIsFocus(true)}
-                    onBlur={() => setIsFocus(false)}
+                    //onFocus={() => setIsFocus(true)}
+                    //onBlur={() => setIsFocus(false)}
                     onChange={item => {
-                        setValue(item.value);
+                        setValue(item.Title);
+                        //onsole.log(item.Title);
                         setCurrentClass(item);
-                        console.log(getCurrentClass);
-                        setIsFocus(false);
+                       // console.log(getCurrentClass);
+                        //setIsFocus(false);
+                        //console.log(isFocus);
+
                     }}/>
             </View>
             
-            {cardPairs.map((cardPair, index) =>(
+            {cardPairs.map((card, index) =>(
                 //Term def fields
                 <CardCreator
-                    key={cardPairs.id}
+                    key={index}
                     index={index}
+                    card = {card}
+                    //updateCard={updateCard}
                 />
             ))}
             
             <TouchableOpacity style={styles.addButton} onPress={addCardPair}>
                 <Text style={styles.buttonText}>+ Add Card</Text>
             </TouchableOpacity>
-            
-            <TouchableOpacity style={styles.submitButton} onPress={handleCreate}>
+            <TouchableOpacity style={styles.submitButton} onPress={() => handleCreate(cardPairs, title, isPublic, description, getCurrentClass)}>
                 <Text style={{fontSize: 28, color: '#fff'}}>Create</Text>
             </TouchableOpacity>
             

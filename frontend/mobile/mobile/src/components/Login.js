@@ -59,7 +59,7 @@ const library = () => {
  };
 
  const test = () => {
-    navigation.navigate("Layout");
+    navigation.navigate("SmartStacks");
  };
 
     return (

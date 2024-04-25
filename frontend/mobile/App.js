@@ -335,6 +335,9 @@ return (
         <Stack.Screen
         name="ViewCard"
         component={ViewCard} />
+        <Stack.Screen
+        name="StudyGame"
+        component={StudyGame} />
       <Stack.Screen
         name="About"
         component={About} />

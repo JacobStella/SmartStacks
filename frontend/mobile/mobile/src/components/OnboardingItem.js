@@ -70,7 +70,7 @@ export default OnboardingItem = ({item, numCards}) => {
         <View>
             <Pressable onPress={() => (spin.value = spin.value ? 0 : 1)}>
                 <Animated.View style={[styles.front, rStyle]}>
-                    <Text>{item.Definition}</Text>
+                    <Text>{item.Title}</Text>
                 </Animated.View>
                 <Animated.View style={[styles.back, bStyle]}>
                     <Text>{item.Definition}</Text>
@@ -79,13 +79,15 @@ export default OnboardingItem = ({item, numCards}) => {
                     {/* <Text style = {styles.indexSlash}>/</Text> */}
                 </Animated.View>
             </Pressable>
+            
             <View style = {styles.indexContainer}>
+              
                       <Text style = {styles.index}>{item.Index+1}</Text>
                       <Text style = {styles.index}>/</Text>
                       <Text style = {styles.index}>{numCards}</Text>
 
 
-                    </View>
+            </View>
         </View>
     </SafeAreaView>
   );
@@ -97,6 +99,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#D8DCFF',
         alignItems: 'center',
         justifyContent: 'center',
+        //height: '50%',
+        //padding: '50%',
        // width: '40%',
        // marginTop: "50%",
        // paddingHorizontal: 20,
@@ -105,14 +109,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center', 
         alignItems: 'center',
         alignItems: 'center',
-        width: '95%',
-        height: '40%',
+        //width: '95%',
+       // height: '40%',
         borderRadius: 5,
         borderWidth: 2,
         backgroundColor: '#508991',
     },
     front: {
-        height: 450,
+        height: '90%',
         width: 350,
         backgroundColor: "#508991",
         borderRadius: 16,
@@ -122,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
       },
       back: {
-        height: 450,
+        height: '90%',
         width: 350,
         backgroundColor: "#508991",
         borderRadius: 16,

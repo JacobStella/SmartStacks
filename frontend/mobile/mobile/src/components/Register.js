@@ -22,8 +22,25 @@ const Register = ({navigation}) => {
         }));
     };
 
-    
+    const [message, setMessage] = useState('');
+
     const handleRegister = async () => {
+
+
+
+      const passwordRegex = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+
+      if (!passwordRegex.test(registerPassword.value)) {
+          setMessage('Password must be at least 8 characters long and include at least one uppercase letter, one number, and one special character.');
+          return;
+      }
+
+      if (registerPassword.value !== confirmPassword.value) {
+          setMessage('Passwords do not match!');
+          return;
+      }
+
+
         console.log("Call to API -> Register")
         try{
           // console.log(JSON.stringify(data));

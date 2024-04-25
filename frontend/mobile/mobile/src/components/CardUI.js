@@ -92,7 +92,7 @@ export const addCard = async (userId, term, definition, setId) => {
     }
 
     let js = JSON.stringify(cardObj);
-
+    console.log(cardObj);
     try{
         const response = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/addcard`,{
         method: 'POST',
@@ -106,6 +106,7 @@ export const addCard = async (userId, term, definition, setId) => {
         console.log("API Error: ", + res.error);
     }
     else{
+        console.log(res);
         console.log('Card added');
 
     }
@@ -173,8 +174,8 @@ export const setClass = async (className, classData) => {
 
     };
 
-    export const addStack = async (userId, StackName, isPublic, classId) => {
-        let stackTemp = {UserId: userId, SetName: StackName, public: isPublic, classId: classId};
+    export const addStack = async (userId, StackName, isPublic, classId, description) => {
+        let stackTemp = {UserId: userId, SetName: StackName, public: isPublic, classId: classId, Description: description};
         let stackActual = JSON.stringify(stackTemp);
         try{
             const stackResponse = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/addset`, {
@@ -183,7 +184,8 @@ export const setClass = async (className, classData) => {
                 headers: {'Content-Type': 'application/json'}
             });
             if(stackResponse){
-                console.log("The Stack was stored");
+                console.log("The stack was added!")
+                return stackResponse;
             }
 
         }

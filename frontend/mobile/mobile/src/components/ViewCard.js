@@ -11,8 +11,10 @@ import {Cards} from './Library';
 //   ];
 //const cards = Cards;
 //console.log(getCards);
-const ViewCard = ({navigation, route}) => {
-    const {cards} = route.params;
+//const ViewCard = ({navigation, route, cards})
+const ViewCard = ({cards}) => {
+   // const {cards} = route.params;
+   const {Cards} = cards;
     const numCards = cards.length;
     return(
         <SafeAreaView style={styles.container}>
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         width: '100%',
-        height: '65%',
+        height: '50%',
         // marginTop: 90,
         alignItems: 'center',
        // backgroundColor: '#fff'

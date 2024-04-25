@@ -9,6 +9,9 @@ import { getUserData, getJSONfield, getUserClassesAndStacks, addClass, getClassA
 import Login from './Login';
 import ViewCard from './ViewCard';
 import {onLibrary} from '../../.././App';
+import { TextInput } from 'react-native-gesture-handler';
+
+
 
 
 const Browse = ({navigation}) => {
@@ -23,6 +26,29 @@ const [Stacks, setStacks] = useState([]);
 const [Cards, setCards] = useState([]);
 
 const [classId, setClassId] = useState('');
+
+const [cardsReady, setCardsReady] = useState(false);
+
+
+const [itemData, setItemData] = useState(null);
+
+const [BackArrowVisible, BackArrowSetVisible] = useState(false);
+const [viewCardIsVisible, setViewCardIsVisible] = useState(false);
+
+
+const [getSearchText, setSearchText] = useState(false);
+
+const [curItem, setCurItem] = useState();
+
+const [inSearch, setInSearch] = useState(false);
+
+const [getDescription, setDescription] = useState();
+const [getOuterSets, setOuterSets] = useState();
+
+
+
+
+
 const sheet = React.useRef();
 const scrollRef = useRef();
 
@@ -36,7 +62,10 @@ const fetchUserId = async () => {
     let totalClasses = classAndSets.map(field => ({Title: field.className, IsClass: true, Cards: field.Card, Id: field._id}));
     setClasses(totalClasses);
     setAllClasses(totalClasses);
+
     let outerSets = classAndSets.map(field => (field.sets));
+    setOuterSets(outerSets);
+
     let nestedSets = outerSets.flat();
     let finalSets = nestedSets.map(field => ({Title: field.SetName, IsPublic: field.public, Cards: field.Card, Id: field._id}));
     setAllStacks(finalSets);
@@ -47,9 +76,31 @@ const fetchUserId = async () => {
 
 React.useEffect(() => {
     fetchUserId();
+    
 }, []);
 
-const openSheet = () => {
+React.useEffect(() => {
+    const leavePage = navigation.addListener('focus', () => {
+        fetchUserId();
+        console.log("hi browse");
+    });
+    
+}, [navigation]);
+
+const openSheet = (item) => {
+let stackName = item.Title;
+    //console.log(getOuterSets);
+    //let des = filterDescription(item,name);
+    
+    for(let i = 0; i < Stacks.length; i++){
+        if(Stacks[i].Title == stackName){
+            setDescription(Stacks[i].Description);
+            //console.log("got it!");
+            //console.log(Stacks[i].Description);
+            //console.log("hiiiiiiiiii")
+        }
+    }   
+
     sheet.current.open();
 };
 
@@ -67,10 +118,15 @@ const ScrollToTop = () => {
 const LoggedInNav = async (item) => {
 //Item contains the set data. Use it to display cards in ViewCard.
   //console.log(item);
+  setItemData(item);
   let filteredCards = await CardFilter(item.Id);
         setCards(filteredCards);
         //console.log(Cards);
-        navigation.navigate('ViewCard', {cards: filteredCards});
+        //navigation.navigate('ViewCard', {cards: filteredCards});
+        //<ViewCard cards = {filteredCards}></ViewCard>
+        BackArrowSetVisible(true);
+        setViewCardIsVisible(true);
+        setCardsReady(true);
   ScrollToTop();
  };
 
@@ -101,18 +157,77 @@ const StackFilter = (className) => {
     const classCur = getClassFromData(allClassesAndStacks,className);
     const filteredSets = classCur.sets;
     console.log(filteredSets);
-    const filteredSets2 = filteredSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id}));
+    const filteredSets2 = filteredSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id, Description: field.Description}));
     setStacks(filteredSets2);
 
 };
 
+const SearchData = (searchData) => {
+    //console.log("hi");
+    data.forEach(item =>{
+        //console.log(item.Title);
+        if(searchData == item.Title){
+            BackArrowSetVisible(true);
+            setInSearch(true);
+            setItemData(item);
+            console.log("Found him!");
+            setStacks([item]);
+            //console.log(item.Title);
+        }
+        else{
+            console.log("Error");
+        }
+    })
+
+};
+
+
+const ViewAll = () => {
+    // .log("hi");
+    setInSearch(false);
+    setStacks([]);
+    setClasses([]);
+    setViewCardIsVisible(false);
+    BackArrowSetVisible(false);
+    setCardsReady(false);
+    fetchUserId();
+
+    
+};
+
+
 const StackHeader = () => {
-   
+        item = itemData;
+        //console.log(item);
+        if(viewCardIsVisible){
+            //BackArrowSetVisible(true);
+            //setViewCardIsVisible(false);
+            
+            return(
+                <View style = {styles.header}>
+                            <Text style={styles.headerText}>Stack: {item.Title}</Text> 
+                            {BackArrowVisible && 
+                            <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
+                            </View>
+                )
+        }
+        else if(inSearch){
+            return(
+                <View style = {styles.header}>
+                            <Text style={styles.headerText}>Your Results</Text> 
+                            {BackArrowVisible && 
+                            <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
+                            </View>
+                )
+        }
+        else{
+            
         return(
             <View style = {styles.header}>
-                <Text style={styles.headerText}>Browse Through the Public Stacks</Text>
+                <Text style={styles.headerText}>Browse through Public Stacks</Text>
             </View>
         );
+    }
 };
     
     const data = [...Stacks];
@@ -130,6 +245,11 @@ const StackHeader = () => {
     const renderSetRow = ({item, index, navigation}) => {
         
         currentIndex = index;
+
+
+        
+       
+
         return(
             
                 <View style={styles.stackContainer}>
@@ -139,8 +259,7 @@ const StackHeader = () => {
                     
                 <View style = {styles.stackBoxInner}>
                     <Text></Text>
-                <TouchableOpacity onPress={()=>AddStack(item)}><Text style = {styles.stackBoxButton}>"Add Stack"</Text></TouchableOpacity>
-                {/* <Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {openSheet} style = {styles.stackBoxInnerLeft}/> */}
+                <Ionicons name = "ellipsis-vertical" size = {20} color = "black" onPress = {() => openSheet(item)} style = {styles.stackBoxInnerLeft}/>
                 
                 </View>
                 
@@ -161,11 +280,31 @@ const StackHeader = () => {
                 </View>
                 
         );
+    
     };
+
+
+    if(cardsReady){
+        //setViewCardIsVisible(true);
+        return(
+
+        <View style ={styles.container}>
+            <StackHeader data = {itemData}></StackHeader>
+        <ViewCard cards = {Cards}></ViewCard>
+        </View>
+
+        )
+    }else{
+
     return(
         <View style ={styles.container}>
-            <StackHeader></StackHeader>
-
+            <StackHeader data = {itemData}></StackHeader>
+            <TextInput
+             placeholder='Search' 
+             clearButtonMode='always'
+             onChangeText={(text) => setSearchText(text)} 
+             onSubmitEditing={() => SearchData(getSearchText)}
+             />
             <FlatList
               ref={scrollRef} 
               data = {data}
@@ -202,6 +341,7 @@ const StackHeader = () => {
 
 
     );
+}
 };
 
 const styles = StyleSheet.create({

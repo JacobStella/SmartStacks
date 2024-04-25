@@ -47,6 +47,8 @@ const [getOuterSets, setOuterSets] = useState();
 
 //temp imports
 const [searchInput, setSearchInput] = useState('');
+const [publicStacks, setPublicStacks] = useState([]);
+
 
 
 
@@ -110,6 +112,10 @@ useEffect(() => {
     handleSearch(" ");
 
 }, []);
+
+const updatePublicStacks = (newStacks) => {
+    setPublicStacks(newStacks);
+};
 
 React.useEffect(() => {
     const leavePage = navigation.addListener('focus', () => {

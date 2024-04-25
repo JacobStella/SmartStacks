@@ -51,7 +51,7 @@ const Register = ({navigation}) => {
            // console.log(res.status);
         if(res.status === 201){
           console.log("Registered Successfully");
-          const res = await response.json();
+          const res = await res.json(); //was response not res 
           const userId = res.userid;
           console.log("User ID:", userId);
           //navigation.navigate("Login");
@@ -62,7 +62,7 @@ const Register = ({navigation}) => {
             },
             body: JSON.stringify({
               userId: userId,
-              email: email.value,
+              email: data.email,
             }),
           });
           const verificationData = await verificationResponse.json();

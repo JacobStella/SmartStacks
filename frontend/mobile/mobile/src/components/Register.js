@@ -65,7 +65,7 @@ const Register = ({navigation}) => {
           const userId = res.userId;
           console.log("User ID:", userId);
 
-          const verificationResponse = await fetch('/api/send-verif', {
+          const verificationResponse = await fetch('https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/send-verif', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

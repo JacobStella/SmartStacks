@@ -4,8 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const setUserData = async (data) => {
     try{
         await AsyncStorage.setItem('userId', JSON.stringify(data));
-        //console.log("hiiiiiiiiiiii");
-        console.log(JSON.stringify(data));
+       
     }
     catch(e){
         console.log("Couldn't store the user ID", e);
@@ -16,7 +15,6 @@ export const setUserData = async (data) => {
 export const getUserData = async () => {
     try{
         const userId = await AsyncStorage.getItem('userId');
-        //console.log(JSON.parse(userId));
         return JSON.parse(userId);
     }
     catch(e){
@@ -31,8 +29,6 @@ export const getJSONfield = async (key, value) => {
         const data = await getUserData(key);
         if(data){
             const dataJSON = JSON.parse(data);
-            //console.log(dataJSON[value]);
-            
             return dataJSON[value];
         }
         else{
@@ -56,7 +52,6 @@ export const getUserClassesAndStacks = async(userId, searchTerm) => {
         }
         
         const resData = await res.json();
-        //console.log("User Classes and Stacks", resData);
         return resData;
     }
     catch (e){
@@ -77,11 +72,8 @@ export const addClass = async(userId, className) => {
             headers: {'Content-Type': 'application/json'}
         });
         
-        let res = await response.json();
-
-        console.log(res);
-      
-          console.log(`Class added successfully ${res.classId}`);  
+        let res = await response.json();      
+        console.log(`Class added successfully ${res.classId}`);  
         
     }
     catch (e){
@@ -89,6 +81,43 @@ export const addClass = async(userId, className) => {
         return null;
     }
 };
+
+export const addCard = async (userId, term, definition, setId) => {
+
+    let cardObj = {
+        userId: userId,
+        term: term,
+        definition: definition,
+        setId: setId,
+    }
+
+    let js = JSON.stringify(cardObj);
+    console.log(cardObj);
+    try{
+        const response = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/addcard`,{
+        method: 'POST',
+        body: js,
+        headers: {'Content-Type': 'application/json'}
+    });
+    
+    let res = await response.json();
+
+    if(res.error){
+        console.log("API Error: ", + res.error);
+    }
+    else{
+        console.log(res);
+        console.log('Card added');
+
+    }
+    }
+    catch(e){
+        console.log("Error, couldn't connect to API");
+    }
+    
+};
+
+
 
 export const getClassAndSets = async(classId) => {
     
@@ -101,7 +130,10 @@ export const getClassAndSets = async(classId) => {
         console.log("Could not get class and sets");
     }
     const classAndSets = await response.json();
-    console.log('Class and sets:', classAndSets);
+    classAndSets.forEach((stack, element) => {
+    
+     });
+    return classAndSets;
 
     }
     catch(e){
@@ -110,3 +142,124 @@ export const getClassAndSets = async(classId) => {
 
 
 };
+
+
+export const getClassFromData = (classAndSets, className) => {
+    
+    
+     let classToReturn = '';
+     classAndSets.forEach((stack) => {
+         if(stack.className == className){
+           classToReturn = stack;
+         }
+         
+    });
+    if(classToReturn == ''){
+        console.log("That class could not be found");
+    }
+    return classToReturn;
+
+
+};
+
+
+export const setClass = async (className, classData) => {
+    try{
+        await AsyncStorage.setItem(className, JSON.stringify(classData));
+        console.log(JSON.stringify(classData)); 
+    }
+    catch(e){
+        console.log("Couldn't store the class", e);
+    }
+
+    };
+
+    export const addStack = async (userId, StackName, isPublic, classId, description) => {
+        let stackTemp = {UserId: userId, SetName: StackName, public: isPublic, classId: classId, Description: description};
+        let stackActual = JSON.stringify(stackTemp);
+        try{
+            const stackResponse = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/addset`, {
+                method: 'POST',
+                body: stackActual,
+                headers: {'Content-Type': 'application/json'}
+            });
+            if(stackResponse){
+                console.log("The stack was added!")
+                return stackResponse;
+            }
+
+        }
+        catch(e){
+            console.log("Couldn't store the stack", e);
+        }
+    
+    };
+
+export const fetchSetWithCards = async (setId) => {
+    
+    try{
+        const response = await fetch(`https://largeprojectgroup3-efcc1eed906f.herokuapp.com/api/getset/${setId}`);
+            if(!response.ok){
+                console.log("Response not ok");
+            }
+            else{
+            const data = await response.json();
+            console.log("Succesfully got the set with cards");
+            return data;
+            }
+        }catch(e){
+            console.log("The set couldn't be fetched.");
+    }
+};
+
+export const setOnLibrary = async (data) => {
+    try{
+        await AsyncStorage.setItem('libraryState', JSON.stringify(data));
+       
+    }
+    catch(e){
+        console.log("Couldn't store the library state", e);
+    }
+
+    };
+
+export const getOnLibrary = async () => {
+    try{
+        const libraryState = await AsyncStorage.getItem('libraryState');
+        return JSON.parse(libraryState);
+    }
+    catch(e){
+        console.log("Couldn't get the library state", e);
+        return null;
+    }
+
+
+    
+};
+
+export const setClassesAsync = async (data) => {
+    try{
+        await AsyncStorage.setItem('Classes', JSON.stringify(data));
+       
+    }
+    catch(e){
+        console.log("Couldn't store the library state", e);
+    }
+
+};
+
+export const getClassesAsync = async () => {
+    try{
+        const classes = await AsyncStorage.getItem('Classes');
+        return JSON.parse(classes);
+    }
+    catch(e){
+        console.log("Couldn't get the current classes", e);
+        return null;
+    }
+
+
+    
+};
+
+

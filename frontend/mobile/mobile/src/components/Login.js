@@ -1,7 +1,8 @@
 import React, {useState} from "react";
-import {Button, SafeAreaView, StyleSheet, TextInput, View, Image} from "react-native";
+import {Button, SafeAreaView, LogBox, StyleSheet, Text, TextInput, View, Image, Keyboard, TouchableWithoutFeedback, TouchableOpacity} from "react-native";
 import {setUserData} from "./CardUI";
 
+LogBox.ignoreAllLogs();
 
 const Login = ({navigation}) => {
     const [data, newData] = useState({
@@ -50,58 +51,107 @@ const submit = async () => {
     }
 };
 
+const forgotPassword = () => {
+    navigation.navigate("ForgotPassword");
+ };
+
 const register = () => {
    navigation.navigate("Register");
 };
 
 const library = () => {
-    navigation.navigate("MainApp");
+    navigation.navigate("SmartStacks");
  };
 
- const test = () => {
-    navigation.navigate("Layout");
- };
 
     return (
-        <View style = {styles.container}>
-            <View style={styles.imageContainer}>
-            <Image source={require('../../../assets/Skunk.png')}
-                   style = {{width: 150, height: 150}} />
-            </View>
-            <TextInput style = {styles.input}
+        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+            <View style = {styles.container}>
+                <View style={styles.imageContainer}>
+                    <Image source={require('../../../assets/logo_SmartStacks.png')}
+                    style = {{width: 150, height: 150}} />
+                </View>
+                <TextInput style = {styles.input}
                 placeholder = "Username"
                 onChangeText = { (input) => formInput("userName", input)}/>
 
-            <TextInput style = {styles.input}
-            placeholder = "Password"
-            onChangeText = { (input) => formInput("password", input)}/>
-
-        <Button title = "Submit" onPress = {submit} />
-        <Button title = "Register" onPress = {register} />
-        <Button title = "test" onPress = {test} />
-        </View>
+                <TextInput style = {styles.input}
+                placeholder = "Password"
+                onChangeText = { (input) => formInput("password", input)}/>
+                <View style={styles.spacing} />
+                <TouchableOpacity style={styles.loginButton} onPress={submit}>
+                    <Text style={styles.buttonText}>Login</Text>
+                </TouchableOpacity>
+                <View style={styles.spacing}>
+                    <Text style={{color: '#fff', fontSize: 16}} onPress={forgotPassword}>Forgot Password?</Text>
+                </View>
+                <TouchableOpacity style={styles.registerButton} onPress={register}>
+                    <Text style={{fontSize: 22, color: '#fff',}}>Register</Text>
+                </TouchableOpacity>
+                <View style={styles.spacing}/>
+                </View>
+        </TouchableWithoutFeedback>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: "50%",
+        flex: 1,
         justifyContent: "center",
         alignItems: "center",
+        backgroundColor: '#508991',
     },
     input: {
         borderWidth: 2,
         borderColor: "black",
-        padding: 5,
-        marginBottom: 5,
+        backgroundColor: '#D8DCFF',
+        padding: 10,
+        paddingLeft: 10,
+        marginBottom: 15,
+        borderRadius: 2,
         width: "50%",
-        
+        fontSize: 18,
     },
     imageContainer: {
         paddingBottom: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        
+    },
+    spacing: {
+        marginTop: 18,
+        marginBottom: 3,
+    },
+    loginButton: {
+        width: '30%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 45,
+        borderWidth: 1,
+        borderRadius: 5,
+        backgroundColor: '#09BC8A',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
+        color: '#fff',
+    },
+    registerButton: {
+        width: '30%',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: 45,
+        borderWidth: 1,
+        borderColor: '#172A3A',
+        borderRadius: 5,
+        backgroundColor: '#004346',
+        flexDirection: 'row',
+        alignContent: 'flex-start',
+        color: '#fff',
+    },
+    buttonText: {
+        fontSize: 22,
+        color: '#fff',
+        fontWeight: 'bold',
     },
 });
 

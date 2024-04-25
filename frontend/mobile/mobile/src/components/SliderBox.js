@@ -1,6 +1,8 @@
 import React from "react";
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, LogBox} from 'react-native';
 import Slider from "./Slider";
+
+LogBox.ignoreAllLogs();
 
 export default class SliderBox extends React.Component{
 
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     },
     inner: {
         flex: 1,
-        backgroundColor: 'gray',
+        backgroundColor: '#D8DCFF',
         alignItems: 'center',
         justifyContent: 'center',
         padding: 10,

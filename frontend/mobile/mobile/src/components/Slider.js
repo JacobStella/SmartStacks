@@ -9,29 +9,30 @@ import {
   Animated,
   useWindowDimensions,
   Image,
+  LogBox,
 } from 'react-native';
 import sample from '../../../assets/sample.png';
+import BrowseCap from '../../../assets/BrowseCap.png'
+import CreateCap from '../../../assets/CreateCap.png'
+import LibraryCap from '../../../assets/LibraryCap.png'
+
+LogBox.ignoreAllLogs();
 
 const images = [
-  
-  <Image source = {sample}></Image>,
-  <Image source = {sample}></Image>,
-  <Image source = {sample}></Image>,
-  <Image source = {sample}></Image>,
-  
-
+  <Image source = {CreateCap}></Image>,
+  <Image source = {LibraryCap}></Image>,
+  <Image source = {BrowseCap}></Image>,
 ];
 
-const messages =  ["Hi", "Bye", "Wow", "Test"];
+const messages =  ["Make your own study stacks in the create page", "View and organize your personal stacks in the Library page", "Find public stacks made by other users in the Browse page", "Try a new study strategy in the Game page with a matching game"];
 
 const Slider = () => {
   const scrollX = useRef(new Animated.Value(0)).current;
   const [imageIdx, setImageIdx] = useState(0);
 
   const {width: windowWidth} = useWindowDimensions();
-const handler = (event) =>{
-  
-}
+  const handler = (event) =>{
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,42 +55,33 @@ const handler = (event) =>{
           ])}
           scrollEventThrottle={1}>
           {images.map((image, imageIndex) => {
-             
             return (
-              <View style={{width: windowWidth*.80, height: 250}} key={imageIndex}>
-                <ImageBackground source={sample} style={styles.card} resizeMode='contain'>
-                <Text style = {styles.infoText}>{messages[imageIndex]}</Text>
+              <View style={{width: windowWidth*.80, height: 600}} key={imageIndex}>
+                <ImageBackground source={images[imageIndex].props.source} style={[styles.card, {width: '100%', height: '100%'}]} resizeMode= 'center'>
                 </ImageBackground>
-                
-      
+                <Text style = {styles.infoText}>{messages[imageIndex]}</Text>
               </View>
             );
           })}
         </ScrollView>
         
-          <View style={styles.indicatorContainer}>
-        
+        <View style={styles.indicatorContainer}>
           {images.map((image, imageIndex) => {
             const width = scrollX.interpolate({
               inputRange: [
                 windowWidth*0.80 * (imageIndex - 1),
                 windowWidth *0.80 *imageIndex,
                 windowWidth *0.80* (imageIndex + 1),
-                
               ],
               outputRange: [8, 16, 8],
               extrapolate: 'clamp',
-             
-              
             });
             return (
-            
               <Animated.View
                 key={imageIndex}
                 style={[styles.normalDot, {width}]}
               />
             );
-            
           })}
         </View>
       </View>
@@ -102,26 +94,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    
+    height: 50,
   },
   scrollContainer: {
-    //padding: 10,
-   // width: "100%",
+    height: '120%',
+    backgroundColor: '#D8DCFF',
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
   card: {
     flex: 1,
     borderRadius: 5,
+    backgroundColor: '#172A3A',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    
-    
-    
-    
-    
-    
   },
   textContainer: {
     backgroundColor: 'rgba(0,0,0, 0.7)',
@@ -130,16 +117,18 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   infoText: {
-    color: 'white',
-    fontSize: 16,
+    color: '#172A3A',
+    alignSelf: 'center',
+    fontSize: 24,
+    marginBottom: 100,
     fontWeight: 'bold',
-    marginTop:'70%',
+    height: '20%'
   },
   normalDot: {
     height: 8,
     width: 8,
     borderRadius: 4,
-    backgroundColor: 'silver',
+    backgroundColor: '#172A3A',
     marginHorizontal: 4,
   },
   indicatorContainer: {

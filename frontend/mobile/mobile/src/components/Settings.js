@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         textAlign: "center",
-        marginBotton: 20,
     },
     subheader: {
         flexDirection: "row",

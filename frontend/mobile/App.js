@@ -210,6 +210,9 @@ return (
       <Stack.Screen
       name="StudyGame"
       component={StudyGame} />
+      <Stack.Screen
+      name="ForgotPassword"
+      component={ForgotPassword} />
 
       
     </Stack.Navigator>
@@ -229,6 +232,7 @@ const App = () => {
     <HamburgerMenu.Navigator drawerContent={customDrawerContent}>
         <HamburgerMenu.Screen name = "Login" component={Login} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Register" component={Register} options = {{headerShown: false}}/>
+        <HamburgerMenu.Screen name = "ForgotPassword" component={ForgotPassword} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "Layout" component={Page} options = {{headerShown: false}}/>
         <HamburgerMenu.Screen name = "SmartStacks" component={SmartStacks}/>
     </HamburgerMenu.Navigator>

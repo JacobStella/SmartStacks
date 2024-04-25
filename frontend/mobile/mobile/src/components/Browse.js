@@ -79,8 +79,10 @@ const fetchPublicSearch = async (searchTerm) => {
             console.log("Search results", res);
             // Filter sets with public status true and update state
             const publicSets = res.sets.filter(set => set.public === true);
-            //updatePublicStacks(publicSets);
-            setStacks(publicSets.SetName);
+            const filteredSets2 = publicSets.map(field => ({Title:field.SetName, IsClass: false, Cards: field.Card, Id: field._id, Description: field.Description}));
+        
+            updatePublicStacks(filteredSets2);
+            setStacks(filteredSets2);
             console.log("publicSets", publicSets);
             //setSearchResults(res); // Assuming you still want to keep the original search results
         }
@@ -130,18 +132,9 @@ React.useEffect(() => {
 const openSheet = (item) => {
     //console.log(item);
 let stackName = item.Title;
-    //console.log(getOuterSets);
-    //console.log(item.Title);
-    //let des = filterDescription(item,name);
-    //onsole.log("hi");
-    //console.log(Stacks);
     for(let i = 0; i < Stacks.length; i++){
         if(Stacks[i].Title == stackName){
             setDescription(Stacks[i].Description);
-            //console.log(Stacks[i]);
-            //console.log("got it!");
-            //console.log(Stacks[i].Description);
-            //console.log("hiiiiiiiiii")
         }
     }   
 
@@ -158,16 +151,11 @@ const ScrollToTop = () => {
         y:0, animated: true
     });
 };
-
 const LoggedInNav = async (item) => {
 //Item contains the set data. Use it to display cards in ViewCard.
-  //console.log(item);
   setItemData(item);
   let filteredCards = await CardFilter(item.Id);
         setCards(filteredCards);
-        //console.log(Cards);
-        //navigation.navigate('ViewCard', {cards: filteredCards});
-        //<ViewCard cards = {filteredCards}></ViewCard>
         BackArrowSetVisible(true);
         setViewCardIsVisible(true);
         setCardsReady(true);
@@ -186,7 +174,8 @@ const LoggedInNav = async (item) => {
 const CardFilter = async (setId) => {
     
     try{
-    let temp = await fetchSetWithCards(setId);
+
+    const temp = await fetchSetWithCards(setId);
     
     const filteredCards = temp.cards.map((field, index) => ({Title: field.Term, Definition: field.Definition, Index: index}));
     return filteredCards;
@@ -249,7 +238,7 @@ const StackHeader = () => {
             
             return(
                 <View style = {styles.header}>
-                            <Text style={styles.headerText}>Stack: {item.Title}</Text> 
+                            <Text style={styles.headerText}>Stack: {}</Text> 
                             {BackArrowVisible && 
                             <TouchableOpacity style = {styles.headerIcon} onPress={ViewAll}><Ionicons name = "arrow-back" size = {30} color = "#D8DCFF"/></TouchableOpacity>}
                             </View>
@@ -268,7 +257,7 @@ const StackHeader = () => {
             
         return(
             <View style = {styles.header}>
-                <Text style={styles.headerText}>Browse through Public Stacks</Text>
+                <Text style={styles.headerText}>Browse Public Stacks</Text>
             </View>
         );
     }
@@ -306,11 +295,11 @@ const StackHeader = () => {
                 
                 <Text style={styles.stackText}>
                     {item.Title}
-                    {item.classId}
+                    
                     
                 </Text>
                 <Text style={styles.stackText}>
-                    {item.cardNumber} Cards
+                    {item.cardNumber}
                 </Text>
 
                 </View>

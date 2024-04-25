@@ -86,7 +86,7 @@ const library = () => {
                     <Text style={styles.buttonText}>Login</Text>
                 </TouchableOpacity>
                 <View style={styles.spacing}>
-                    <Text style={{color: '#fff', fontSize: 16}}>New User?</Text>
+                    <Text style={{color: '#fff', fontSize: 16}} onPress={forgotPassword}>Forgot Password?</Text>
                 </View>
                 <TouchableOpacity style={styles.registerButton} onPress={register}>
                     <Text style={{fontSize: 22, color: '#fff',}}>Register</Text>

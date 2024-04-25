@@ -40,7 +40,8 @@ function buildPath(route)
     }
 }
 const LibraryPage = () => {
-    const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
+    //const [folders, setFolders] = useState([{ _id: 1, name: 'Folder 1' }]);
+    const [folders, setFolders] = useState([{}]);
     const [message, setMessage] = useState("");
     const [isCreating, setIsCreating] = useState(false);
     const [searchFolderInput, setSearchFolderInput] = useState('');
